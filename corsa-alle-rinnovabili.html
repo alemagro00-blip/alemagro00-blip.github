@@ -8,8 +8,8 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0f172a;
-            color: #f8fafc;
+            background-color: #f8fafc; /* Sfondo chiaro */
+            color: #1e293b; /* Testo principale scuro */
             margin: 0;
             padding: 0;
             line-height: 1.8;
@@ -22,9 +22,13 @@
         }
 
         .nav-bar a {
-            color: #38bdf8;
+            color: #0284c7; /* Azzurro per i link */
             text-decoration: none;
             font-weight: 600;
+        }
+
+        .nav-bar a:hover {
+            text-decoration: underline;
         }
 
         .article-container {
@@ -36,15 +40,30 @@
         h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
-            color: #fff;
+            color: #0f172a;
+            font-weight: 800;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #0f172a;
+            margin-top: 40px;
+            margin-bottom: 15px;
         }
 
         .meta {
-            color: #94a3b8;
+            color: #64748b;
             font-size: 0.9rem;
             margin-bottom: 30px;
-            border-bottom: 1px solid #334155;
+            border-bottom: 1px solid #e2e8f0;
             padding-bottom: 15px;
+        }
+
+        .intro-text {
+            font-size: 1.15rem;
+            color: #334155;
+            margin-bottom: 30px;
+            line-height: 1.7;
         }
 
         .streamlit-box {
@@ -52,9 +71,9 @@
             margin: 40px 0;
             border-radius: 12px;
             overflow: hidden;
-            border: 1px solid #334155;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            background-color: #1e293b;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            background-color: #ffffff;
         }
 
         iframe {
@@ -74,15 +93,15 @@
         <h1>La Corsa alle Rinnovabili</h1>
         <div class="meta">Pubblicato nel 2026 &bull; Categoria: Energia & Ambiente</div>
 
-        <p>Un viaggio attraverso 79 economie mondiali per capire a che punto è davvero il passaggio alle fonti pulite, quali fonti continuano a dominare il fabbisogno globale e qual è il vero peso del PIL nel percorso verso la sostenibilità.</p>
+        <p class="intro-text">Un viaggio attraverso 79 economie mondiali per capire a che punto è davvero il passaggio alle fonti pulite, quali fonti continuano a dominare il fabbisogno globale e qual è il vero peso del PIL nel percorso verso la sostenibilità.</p>
 
         <!-- DASHBOARD STREAMLIT INTEGRATA -->
         <div class="streamlit-box">
-            <iframe src="https://corsaallerinnovabili.streamlit.app/?embed=true"></iframe>
+            <iframe src="https://corsaallerinnovabili.streamlit.app/?embed=true&theme.base=light"></iframe>
         </div>
 
         <h2>Considerazioni Principali</h2>
-        <p>Usa i filtri interattivi all'interno della dashboard qui sopra per esplorare nel dettaglio i dati.</p>
+        <p>Usa i filtri interattivi all'interno della dashboard qui sopra per esplorare nel dettaglio i trend regionali e storici.</p>
     </div>
 
 </body>
