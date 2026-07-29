@@ -29,75 +29,42 @@
             line-height: 1.6;
         }
 
-        /* HEADER ELEGANTE - NO VERDE */
+       /* HEADER PULITO PER LOGO IMMAGINE */
         header {
             text-align: center;
-            padding: 70px 20px 50px;
-            background: linear-gradient(180deg, #f1f5f9 0%, #ffffff 100%);
+            padding: 50px 20px 40px;
+            background: #ffffff;
             border-bottom: 1px solid var(--border-color);
         }
-
-        /* BRANDING & LOGO IN CSS */
-       .brand-wrapper {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background-color: #ffffff;
-            padding: 8px 18px;
-            border-radius: 30px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
-            margin-bottom: 20px;
+        
+        /* STILE BRAND LOGO */
+        .brand-container {
+            display: inline-block;
+            margin-bottom: 16px;
         }
         
-        .brand-logo-icon {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, #0284c7, #2563eb);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffffff;
-            font-weight: 800;
-            font-size: 14px;
+        .main-logo {
+            height: 65px; /* Regola l'altezza a piacere (consigliato tra 50px e 70px) */
+            width: auto;
+            display: block;
+            margin: 0 auto;
         }
         
-        .brand-name {
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: var(--text-title);
-            letter-spacing: -0.5px;
-        }
-
         header h1 {
-            font-size: 3.2rem;
+            font-size: 2.5rem;
             font-weight: 800;
-            margin: 0;
+            margin: 16px 0 0 0;
             color: var(--text-title);
-            letter-spacing: -1.5px;
+            letter-spacing: -1px;
         }
-
+        
         header p {
             color: var(--text-muted);
-            font-size: 1.15rem;
-            max-width: 620px;
-            margin: 16px auto 0;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 10px auto 0;
             font-weight: 400;
         }
-
-        .container {
-            max-width: 1100px;
-            margin: 50px auto;
-            padding: 0 20px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 32px;
-        }
-
         /* CARD ELEGANTE */
         .card {
             background-color: var(--card-bg);
@@ -217,11 +184,10 @@
 <body>
 
     <header>
-        <!-- BRAND & LOGO GENERATO IN CSS -->
-        <div class="brand-wrapper">
-            <div class="brand-logo-icon">S</div>
-            <span class="brand-name">Statify</span>
+        <div class="brand-container">
+            <img src="logo_numerica.png" alt="Logo NuMericA" class="main-logo">
         </div>
+        
         <h1>Comprendere il mondo attraverso i dati</h1>
         <p>Analisi visive, mappe interattive e storie spiegate con i numeri.</p>
     </header>
