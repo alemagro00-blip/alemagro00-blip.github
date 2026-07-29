@@ -29,70 +29,53 @@
             line-height: 1.6;
         }
 
-             /* HEADER CON SFONDO GRAFICO DELICATO */
-            header {
-                text-align: center;
-                padding: 70px 20px 60px;
-                background-color: #ffffff;
-                /* Griglia a punti molto leggera */
-                background-image: radial-gradient(#e2e8f0 1.2px, transparent 1.2px);
-                background-size: 24px 24px;
-                border-bottom: 1px solid var(--border-color);
-                position: relative;
-                overflow: hidden;
-            }
-            
-            /* BAGLIORE DI SFONDO PER DARE PROFONDITÀ (Senza appesantire) */
-            header::before {
-                content: '';
-                position: absolute;
-                top: -50px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 600px;
-                height: 250px;
-                background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
-                pointer-events: none;
-            }
-            
-            /* CONTAINER CENTRATO PER IL LOGO */
-            .brand-container {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin-bottom: 20px;
-                position: relative;
-                z-index: 1;
-            }
-            
-            /* LOGO INGRANDITO E CENTRATO */
-            .main-logo {
-                height: 85px; /* Ingrandito da 65px a 85px per dargli più risalto */
-                width: auto;
-                display: block;
-                margin: 0 auto;
-                filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.03));
-            }
-            
-            header h1 {
-                font-size: 2.8rem;
-                font-weight: 800;
-                margin: 16px 0 0 0;
-                color: var(--text-title);
-                letter-spacing: -1.2px;
-                position: relative;
-                z-index: 1;
-            }
-            
-            header p {
-                color: var(--text-muted);
-                font-size: 1.15rem;
-                max-width: 620px;
-                margin: 12px auto 0;
-                font-weight: 400;
-                position: relative;
-                z-index: 1;
-            }
+             /* HEADER CON GRIGLIA A PUNTI PULITA (SENZA AZZURRO) */
+        header {
+            text-align: center;
+            padding: 65px 20px 50px;
+            background-color: #f8fafc; /* Sfondo grigio leggerissimo ed elegante */
+            background-image: radial-gradient(#cbd5e1 1.2px, transparent 1.2px); /* Punti grigi nitidi */
+            background-size: 24px 24px;
+            border-bottom: 1px solid var(--border-color);
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        /* CONTAINER CENTRATO PER IL LOGO */
+        .brand-container {
+            display: flex;
+            justify-content: center; /* Centra orizzontalmente */
+            align-items: center;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        /* LOGO BEN RAGGRUPPATO ED EQUILIBRATO */
+        .main-logo {
+            height: 70px;          /* Dimensione ideale per il logo */
+            width: auto;
+            display: block;
+            margin: 0 auto;        /* Forzatura centraggio */
+            object-fit: contain;
+        }
+        
+        header h1 {
+            font-size: 2.7rem;
+            font-weight: 800;
+            margin: 16px 0 0 0;
+            color: var(--text-title);
+            letter-spacing: -1.2px;
+            text-align: center;
+        }
+        
+        header p {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            max-width: 620px;
+            margin: 12px auto 0;
+            font-weight: 400;
+            text-align: center;
+        }
        
         /* CONTENITORE CENTRATO CON MARGINI AI LATI */
         .container {
