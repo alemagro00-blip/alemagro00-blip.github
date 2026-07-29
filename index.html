@@ -93,6 +93,20 @@
                 position: relative;
                 z-index: 1;
             }
+       
+        /* CONTENITORE CENTRATO CON MARGINI AI LATI */
+        .container {
+            max-width: 1050px;       /* Larghezza massima della griglia */
+            margin: 50px auto;       /* Centra il contenitore e stacca dall'header */
+            padding: 0 24px;         /* Garantisce bordi aria ai lati anche su schermi piccoli */
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+        }
+        
         /* CARD ELEGANTE */
         .card {
             background-color: var(--card-bg);
