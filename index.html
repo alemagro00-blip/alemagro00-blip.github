@@ -13,8 +13,11 @@
             --text-body: #334155;
             --text-muted: #64748b;
             --accent: #0284c7;
+            --accent-hover: #0369a1;
             --accent-light: #e0f2fe;
             --border-color: #e2e8f0;
+            --green-badge-bg: #dcfce7;
+            --green-badge-text: #166534;
         }
 
         body {
@@ -26,26 +29,40 @@
             line-height: 1.6;
         }
 
+        /* HEADER MODERNO CON SFUMATURA SOFT */
         header {
             text-align: center;
-            padding: 70px 20px 50px;
-            background-color: #ffffff;
+            padding: 80px 20px 60px;
+            background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%);
             border-bottom: 1px solid var(--border-color);
         }
 
+        .hero-badge {
+            display: inline-block;
+            background-color: var(--accent-light);
+            color: var(--accent-hover);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+        }
+
         header h1 {
-            font-size: 3rem;
+            font-size: 3.2rem;
             font-weight: 800;
             margin: 0;
             color: var(--text-title);
-            letter-spacing: -1px;
+            letter-spacing: -1.5px;
         }
 
         header p {
             color: var(--text-muted);
             font-size: 1.15rem;
-            max-width: 600px;
-            margin: 15px auto 0;
+            max-width: 620px;
+            margin: 16px auto 0;
             font-weight: 400;
         }
 
@@ -61,27 +78,38 @@
             gap: 32px;
         }
 
+        /* CARD ELEGANTE E INTERATTIVA */
         .card {
             background-color: var(--card-bg);
             border-radius: 16px;
             overflow: hidden;
             border: 1px solid var(--border-color);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
         }
 
         .card:hover {
             transform: translateY(-6px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.08);
             border-color: #cbd5e1;
+        }
+
+        .card-img-wrapper {
+            overflow: hidden;
+            height: 230px;
         }
 
         .card-img {
             width: 100%;
-            height: 220px;
+            height: 100%;
             object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-img {
+            transform: scale(1.04);
         }
 
         .card-body {
@@ -91,17 +119,34 @@
             flex-direction: column;
         }
 
+        .card-header-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
         .card-tag {
             font-size: 0.75rem;
             text-transform: uppercase;
             font-weight: 700;
-            color: var(--accent);
-            letter-spacing: 1.2px;
-            margin-bottom: 10px;
+            background-color: var(--green-badge-bg);
+            color: var(--green-badge-text);
+            padding: 4px 10px;
+            border-radius: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .card-meta {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 500;
         }
 
         .card-title {
-            font-size: 1.4rem;
+            font-size: 1.45rem;
             font-weight: 700;
             margin: 0 0 12px 0;
             color: var(--text-title);
@@ -113,20 +158,28 @@
             font-size: 0.95rem;
             margin-bottom: 24px;
             flex-grow: 1;
+            line-height: 1.6;
         }
 
+        /* BOTTONE CTA */
         .card-link {
             text-decoration: none;
-            color: var(--accent);
+            background-color: var(--text-title);
+            color: #ffffff;
             font-weight: 600;
+            padding: 12px 20px;
+            border-radius: 8px;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            transition: color 0.2s;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            align-self: flex-start;
         }
 
         .card-link:hover {
-            color: #0369a1;
+            background-color: var(--accent-hover);
+            color: #ffffff;
         }
 
         footer {
@@ -143,6 +196,7 @@
 <body>
 
     <header>
+        <span class="hero-badge">📊 Interactive Data Journalism</span>
         <h1>Data & Stories</h1>
         <p>Analisi dati, mappe interattive e approfondimenti visivi per comprendere il mondo attraverso i numeri.</p>
     </header>
@@ -152,9 +206,14 @@
             
             <!-- SCHEDA ARTICOLO 1 -->
             <div class="card">
-            <img src="https://cdn.pixabay.com/photo/2016/11/29/03/42/wind-energy-1867123_1280.jpg" class="card-img" alt="Transazione energetica">
+                <div class="card-img-wrapper">
+                    <img src="https://cdn.pixabay.com/photo/2016/11/29/03/42/wind-energy-1867123_1280.jpg" class="card-img" alt="Transizione energetica">
+                </div>
                 <div class="card-body">
-                    <span class="card-tag">Transizione Ecologica</span>
+                    <div class="card-header-info">
+                        <span class="card-tag">🌱 Transizione Ecologica</span>
+                        <span class="card-meta">⏱️ 6 min • 📊 79 Paesi</span>
+                    </div>
                     <h2 class="card-title">La Corsa alle Rinnovabili</h2>
                     <p class="card-excerpt">Un'analisi globale su 79 paesi: chi guida davvero la transizione energetica, da cosa dipendiamo ancora e quanto conta essere ricchi quando si parla di energia.</p>
                     <a href="corsa-alle-rinnovabili.html?theme=light" class="card-link">Esplora i Dati &rarr;</a>
