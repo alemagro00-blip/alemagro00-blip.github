@@ -86,13 +86,22 @@
         </div>
     </main>
 <script>
-  const iframe = document.querySelector('.iframe-wrapper iframe');
-  if (iframe) {
-    iframe.addEventListener('load', function() {
-      // Riporta la finestra principale in cima appena l'iframe si carica
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
+  window.addEventListener('DOMContentLoaded', () => {
+    const iframe = document.querySelector('.iframe-wrapper iframe');
+    
+    if (iframe) {
+      // 1. Porta subito la pagina in cima all'inizio
+      window.scrollTo(0, 0);
+
+      // 2. Intercetta il caricamento dell'iframe
+      iframe.addEventListener('load', () => {
+        // Piccolo ritardo per neutralizzare l'autofocus di Streamlit
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: 'instant' });
+        }, 100);
+      });
+    }
+  });
 </script>
 </body>
 </html>
