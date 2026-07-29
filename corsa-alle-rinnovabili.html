@@ -81,6 +81,14 @@
             </iframe>
         </div>
     </main>
-
+<script>
+  const iframe = document.querySelector('.iframe-wrapper iframe');
+  if (iframe) {
+    iframe.addEventListener('load', function() {
+      // Riporta la finestra principale in cima appena l'iframe si carica
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+</script>
 </body>
 </html>
