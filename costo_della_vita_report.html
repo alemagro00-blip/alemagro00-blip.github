@@ -85,14 +85,15 @@
 
 	/* Sottotitolo in terracotta allineato alla "Q" */
 	.subtitle-terracotta { 
-	  display: block;
-	  font-size: 1.25rem;
+	  display: block !important;
+	  font-size: 1.1rem !important;
 	  font-weight: 600;
 	  color: var(--terracotta, #c05638);
-	  margin-top: 4px;
-	  margin-left: 5rem; /* Rientro per saltare la larghezza dell'emoji */
+	  margin-top: 8px !important;
+	  margin-left: 0 !important;   /* Annulla qualsiasi rientro rigido */
+	  padding-left: 0 !important;  /* Garantisce che parta dallo stesso bordo del titolo */
 	  font-style: italic;
-	  font-family: 'Fraunces', serif;
+	  font-family: 'Space Grotesk', sans-serif;
 	}
 
 	/* Testo descrittivo in basso */
@@ -337,11 +338,16 @@
 
   footer { padding: 34px 0 60px; text-align: center; color: var(--slate); font-size: 12.5px; }
 
-  @media (max-width:840px){
+	@media (max-width:840px){
+    .wrap { padding: 0 16px; }
+    .hero { padding: 36px 0 40px; }
+    .hero-title, .hero h1 { font-size: 1.9rem; }
+    .subtitle-terracotta { font-size: 1.1rem; }
     .ticker { grid-template-columns: 1fr; }
     .ticker .cell + .cell { border-left: none; border-top: 1px solid var(--line); }
     .method-grid { grid-template-columns: 1fr; }
-    .hero-title, .hero h1 { font-size: 2.1rem; }
+    /* Aggiungi questa riga per i grafici: */
+    .chartbox { padding: 8px 4px; }
   }
 </style>
 </head>
@@ -552,8 +558,12 @@
 
 
 <script>
-  const MAIN_FONT = { family: "Inter, -apple-system, sans-serif", color: "#1C2024", size: 12 };
-  const TITLE_FONT = { family: "Space Grotesk, sans-serif", size: 15, color: "#1C2024" };
+
+// Rileva lo schermo piccolo
+  const isMobile = window.innerWidth <= 600;
+
+  const MAIN_FONT = { family: "Inter, -apple-system, sans-serif", color: "#1C2024", size: isMobile ? 10 : 12 };
+  const TITLE_FONT = { family: "Space Grotesk, sans-serif", size: isMobile ? 13 : 15, color: "#1C2024" };
   const WHITE_BG = "#FFFFFF";
   const LINE_COLOR = "#E2DCD5";
 
@@ -672,3 +682,4 @@
 
 </body>
 </html>
+
