@@ -34,20 +34,19 @@
   .wrap{max-width:920px; margin:0 auto; padding:0 28px;}
   a{color:var(--terracotta);}
 
-  /* Pulsante Torna alla Home */
+  /* Pulsante Torna alla Home TRANSPARENTE che si fonde con lo sfondo */
   .back-link {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 32px;
-    padding: 6px 14px;
-    background: #ffffff;
-    border: 1px solid var(--line);
-    border-radius: 6px;
+    margin-bottom: 28px;
+    padding: 0;
+    background: transparent; /* Nessuno sfondo */
+    border: none;             /* Nessun bordo */
     color: var(--terracotta);
     text-decoration: none;
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
+    font-size: 13.5px;
     font-weight: 600;
     position: relative;
     z-index: 10;
@@ -55,9 +54,8 @@
     transition: all 0.2s ease;
   }
   .back-link:hover {
-    background: var(--terracotta);
-    color: #ffffff;
-    transform: translateX(-3px);
+    color: var(--ink);
+    transform: translateX(-4px);
   }
 
   /* ---------- HERO ---------- */
@@ -70,11 +68,11 @@
 
   .eyebrow {
     font-family: 'IBM Plex Mono', monospace; letter-spacing: .14em; text-transform: uppercase;
-    font-size: 12px; color: var(--terracotta); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; font-weight: 600;
+    font-size: 12px; color: var(--terracotta); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; font-weight: 600;
   }
   .eyebrow::before { content:""; width: 24px; height: 1.5px; background: var(--terracotta); display: inline-block; }
 
-  /* Titolo & Sottotitolo staccato e più piccolo */
+  /* Titolo principale */
   .hero-title, .hero h1 {
     font-size: 2.8rem; 
     font-weight: 700; 
@@ -84,14 +82,22 @@
     font-family: 'Space Grotesk', sans-serif;
     letter-spacing: -0.01em;
   }
-  .hero h1 em { font-style: italic; color: var(--terracotta); }
+
+  /* Sottotitolo in Terracotta ben distanziato */
+  .hero h1 em { 
+    font-style: italic; 
+    color: var(--terracotta); 
+    display: block; 
+    margin-top: 14px; /* Stacco dal titolo nero */
+  }
   
+  /* Testo descrittivo in basso */
   .hero .sub { 
-    max-width: 620px; 
-    margin-top: 24px;          /* Più staccato dal titolo */
-    font-size: 15px;           /* Sottotitolo più piccolo */
+    max-width: 640px; 
+    margin-top: 24px;   /* Più staccato dal sottotitolo terracotta */
+    font-size: 15px; 
     line-height: 1.6;
-    color: var(--slate);       /* Colore più discreto */
+    color: var(--slate);
     font-weight: 400;
   }
 
@@ -133,7 +139,6 @@
   .method p { margin: 0 0 14px; font-size: 14.5px; color: var(--slate); }
   .method-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 18px; }
   
-  /* 3 Card con colori traslucidi differenti */
   .method-grid .card { border-radius: 8px; padding: 18px; border: 1px solid var(--line); }
   .method-grid .card.c1 { background: rgba(194, 89, 67, 0.08); border-color: rgba(194, 89, 67, 0.2); }
   .method-grid .card.c2 { background: rgba(74, 124, 89, 0.08); border-color: rgba(74, 124, 89, 0.2); }
@@ -165,7 +170,7 @@
   /* ---------- CONCLUSIONE ---------- */
   .conclusion { background: var(--pastel-hero); color: var(--ink); border-top: 1px solid var(--line); padding: 56px 0 72px; margin-top: 20px; }
   .conclusion .qnum { color: var(--terracotta); }
-  .conclusion .chartbox { background: #ffffff; border-color: var(--line); } /* Mappa pulita su bianco */
+  .conclusion .chartbox { background: #ffffff; border-color: var(--line); }
   .conclusion .qtext { color: var(--slate); }
   .final-line {
     margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--line);
@@ -371,7 +376,7 @@
       xaxis: { gridcolor: LINE_COLOR }, yaxis: { autorange: "reversed" }
     }, cfg);
 
-    /* 04. IL PARADOSSO (Colori riallineati: Terracotta + Salvia) */
+    /* 04. IL PARADOSSO */
     Plotly.newPlot('plot-paradosso', [
       { type: "bar", name: "Cappuccino", x: ["Milano", "Amsterdam", "Bologna", "Roma", "Londra", "Barcellona", "Berlino", "Praga"], y: [9.4, 9.6, 10.0, 10.8, 12.0, 12.7, 13.4, 15.5], marker: { color: COLOR_TERRACOTTA }, text: ["9.4m", "9.6m", "10.0m", "10.8m", "12.0m", "12.7m", "13.4m", "15.5m"], textposition: "outside" },
       { type: "bar", name: "Birra media", x: ["Milano", "Amsterdam", "Bologna", "Roma", "Londra", "Barcellona", "Berlino", "Praga"], y: [29.7, 15.7, 30.2, 27.9, 20.4, 17.3, 16.1, 12.6], marker: { color: COLOR_SALVIA }, text: ["29.7m", "15.7m", "30.2m", "27.9m", "20.4m", "17.3m", "16.1m", "12.6m"], textposition: "outside" }
@@ -383,7 +388,7 @@
       barmode: "group"
     }, cfg);
 
-    /* 05. VARIABILITA (Colori riallineati) */
+    /* 05. VARIABILITA */
     Plotly.newPlot('plot-cv', [{
       type: "bar", orientation: "h",
       y: ["Abbonamento mezzi", "Affitto mensile", "Cappuccino", "Birra media", "Campo tennis", "Cena ristorante", "Palestra", "Spesa alimentare", "Benzina (1L)"],
@@ -396,7 +401,7 @@
       xaxis: { gridcolor: LINE_COLOR }, yaxis: { autorange: "reversed" }
     }, cfg);
 
-    /* 06. MAPPA GEOGRAFICA (Perfettamente integrata su sfondo Bianco) */
+    /* 06. MAPPA GEOGRAFICA */
     Plotly.newPlot('plot-mappa', [{
       type: "choropleth",
       locationmode: "country names",
