@@ -9,18 +9,16 @@
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 <style>
   :root {
-    /* Palette Pastello Chiara ed Elegante */
-    --ink: #22332B;           /* Verde/Grigio Scuro per massima leggibilità */
+    /* Palette Sabbia / Terracotta / Salvia */
+    --ink: #1C2024;           /* Testo scuro ad alto contrasto */
     --paper: #FAF8F5;         /* Sfondo pagina crema chiaro */
-    --pastel-hero: #E4ECE6;   /* Verde Salvia pastello chiaro (sostituisce il blu scuro) */
-    --pastel-card: #D6E2DA;   /* Pastello leggermente più marcato per card/elementi */
-    --paper2: #EEFAF2;       /* Sfondo riquadri callout */
-    --amber: #B87D3B;         /* Ambra/Bronzo desaturato */
-    --amber-l: #7A5320;       /* Ambra scuro per testi su sfondi chiari */
-    --teal: #3B7A72;          /* Verde Salvia per valori positivi */
-    --rust: #A04B3B;          /* Terracotta per valori negativi */
-    --slate: #5C6B73;         /* Grigio Ardesia soft */
-    --line: #DCE4DD;          /* Linee di separazione chiare */
+    --pastel-hero: #F4EFEA;   /* Sabbia/Crema pastello per la Hero */
+    --paper2: #FFFFFF;        /* Bianco pulito per grafici e card */
+    --terracotta: #C25943;    /* Terracotta pastello acceso */
+    --salvia: #4A7C59;        /* Verde Salvia / Azzurro polvere */
+    --amber: #D99B26;         /* Ambra/Giallo */
+    --slate: #6C757D;         /* Grigio neutro per sottotitoli */
+    --line: #E2DCD5;          /* Bordo morbido */
   }
 
   *{box-sizing:border-box;}
@@ -34,148 +32,153 @@
   h2,h3{font-family:'Space Grotesk',sans-serif; margin:0; color:var(--ink); font-weight:700;}
   .mono{font-family:'IBM Plex Mono',monospace;}
   .wrap{max-width:920px; margin:0 auto; padding:0 28px;}
-  a{color:var(--rust);}
+  a{color:var(--terracotta);}
 
-  /* Pulsante Torna alla Home aggiornato con più spazio e click garantito */
+  /* Pulsante Torna alla Home */
   .back-link {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 32px; /* Più spazio verticale dal testo sottostante */
-    padding: 6px 12px;
-    background: rgba(255, 255, 255, 0.6); /* Sfondino chiaro per renderlo ancora più visibile e cliccabile */
+    margin-bottom: 32px;
+    padding: 6px 14px;
+    background: #ffffff;
     border: 1px solid var(--line);
     border-radius: 6px;
-    color: var(--amber-l);
+    color: var(--terracotta);
     text-decoration: none;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 13px;
     font-weight: 600;
-    letter-spacing: .02em;
     position: relative;
-    z-index: 10; /* Assicura che nessun overlay blocchi il click */
+    z-index: 10;
     cursor: pointer;
     transition: all 0.2s ease;
   }
-
   .back-link:hover {
-    background: #ffffff;
-    color: var(--ink);
+    background: var(--terracotta);
+    color: #ffffff;
     transform: translateX(-3px);
   }
-  /* ---------- HERO (Ora in tono Pastello Chiaro) ---------- */
+
+  /* ---------- HERO ---------- */
   .hero {
     background: var(--pastel-hero); 
     color: var(--ink); 
-    padding: 56px 0 60px; 
+    padding: 52px 0 60px; 
     border-bottom: 1px solid var(--line);
   }
 
   .eyebrow {
     font-family: 'IBM Plex Mono', monospace; letter-spacing: .14em; text-transform: uppercase;
-    font-size: 12.5px; color: var(--amber-l); margin-bottom: 18px; display: flex; align-items: center; gap: 10px; font-weight: 600;
+    font-size: 12px; color: var(--terracotta); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; font-weight: 600;
   }
-  .eyebrow::before { content:""; width: 26px; height: 1.5px; background: var(--amber-l); display: inline-block; }
+  .eyebrow::before { content:""; width: 24px; height: 1.5px; background: var(--terracotta); display: inline-block; }
 
-  /* Titolo in Space Grotesk con la stessa formattazione richiesta */
+  /* Titolo & Sottotitolo staccato e più piccolo */
   .hero-title, .hero h1 {
-    font-size: 2.9rem; 
+    font-size: 2.8rem; 
     font-weight: 700; 
-    line-height: 1.12;
+    line-height: 1.15;
     color: var(--ink);
-    margin: 0 0 0.9rem 0; 
+    margin: 0; 
     font-family: 'Space Grotesk', sans-serif;
     letter-spacing: -0.01em;
   }
-  .hero h1 em { font-style: italic; color: var(--amber-l); }
-  .hero .sub { max-width: 640px; margin-top: 18px; font-size: 17px; color: #43544B; }
+  .hero h1 em { font-style: italic; color: var(--terracotta); }
+  
+  .hero .sub { 
+    max-width: 620px; 
+    margin-top: 24px;          /* Più staccato dal titolo */
+    font-size: 15px;           /* Sottotitolo più piccolo */
+    line-height: 1.6;
+    color: var(--slate);       /* Colore più discreto */
+    font-weight: 400;
+  }
 
   .ticker {
     margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 0;
     border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
-    background: rgba(255,255,255,.65);
+    background: #ffffff;
   }
   .ticker .cell { padding: 24px 28px; position: relative; }
   .ticker .cell + .cell { border-left: 1px solid var(--line); }
-  .ticker .label { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; text-transform: uppercase; letter-spacing: .1em; color: #52635A; font-weight: 600; }
+  .ticker .label { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; text-transform: uppercase; letter-spacing: .1em; color: var(--slate); font-weight: 600; }
   .ticker .num { font-family: 'Space Grotesk', sans-serif; font-size: 38px; margin-top: 4px; font-weight: 700; }
-  .ticker .num.bad { color: var(--rust); }
-  .ticker .num.good { color: var(--teal); }
-  .ticker .cap { font-size: 13.5px; color: #52635A; margin-top: 4px; }
+  .ticker .num.bad { color: var(--terracotta); }
+  .ticker .num.good { color: var(--salvia); }
+  .ticker .cap { font-size: 13.5px; color: var(--slate); margin-top: 4px; }
 
   /* ---------- INTRO / TLDR ---------- */
-  .intro { padding: 52px 0 8px; }
-  .lede { font-size: 18.5px; color: #35473E; max-width: 740px; }
+  .intro { padding: 48px 0 8px; }
+  .lede { font-size: 18px; color: #2C3238; max-width: 740px; }
 
   .tldr {
-    margin: 40px 0; background: var(--pastel-hero); border: 1px solid var(--line); border-radius: 12px;
+    margin: 36px 0; background: var(--pastel-hero); border: 1px solid var(--line); border-radius: 12px;
     padding: 28px 30px;
   }
   .tldr .tldr-label {
     font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
-    color: var(--rust); margin-bottom: 14px; font-weight: 600;
+    color: var(--terracotta); margin-bottom: 14px; font-weight: 600;
   }
   .tldr ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 11px; }
-  .tldr li { padding-left: 22px; position: relative; font-size: 15px; color: #35473E; }
+  .tldr li { padding-left: 22px; position: relative; font-size: 15px; color: #2C3238; }
   .tldr li::before { content: "→"; position: absolute; left: 0; color: var(--amber); font-weight: 700; }
   .tldr b { color: var(--ink); }
 
-  /* ---------- METODOLOGIA ---------- */
+  /* ---------- METODOLOGIA (3 COLORI DIVERSI) ---------- */
   .method {
-    background: var(--pastel-hero); color: var(--ink); border: 1px solid var(--line); border-radius: 12px; padding: 30px 32px; margin: 40px 0;
+    background: #ffffff; color: var(--ink); border: 1px solid var(--line); border-radius: 12px; padding: 30px 32px; margin: 40px 0;
   }
-  .method h3 { color: var(--amber-l); font-size: 15px; text-transform: uppercase; letter-spacing: .08em; font-family: 'IBM Plex Mono', monospace; margin-bottom: 14px; font-weight: 600; }
-  .method p { margin: 0 0 14px; font-size: 14.5px; color: #35473E; }
+  .method h3 { color: var(--terracotta); font-size: 14px; text-transform: uppercase; letter-spacing: .08em; font-family: 'IBM Plex Mono', monospace; margin-bottom: 14px; font-weight: 600; }
+  .method p { margin: 0 0 14px; font-size: 14.5px; color: var(--slate); }
   .method-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 18px; }
-  .method-grid .card { background: rgba(255,255,255,.7); border: 1px solid var(--line); border-radius: 8px; padding: 16px; }
-  .method-grid .card .t { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: var(--amber-l); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; font-weight: 600; }
-  .method-grid .card .d { font-size: 13.5px; color: #35473E; }
+  
+  /* 3 Card con colori traslucidi differenti */
+  .method-grid .card { border-radius: 8px; padding: 18px; border: 1px solid var(--line); }
+  .method-grid .card.c1 { background: rgba(194, 89, 67, 0.08); border-color: rgba(194, 89, 67, 0.2); }
+  .method-grid .card.c2 { background: rgba(74, 124, 89, 0.08); border-color: rgba(74, 124, 89, 0.2); }
+  .method-grid .card.c3 { background: rgba(217, 155, 38, 0.08); border-color: rgba(217, 155, 38, 0.2); }
+  
+  .method-grid .card .t { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; font-weight: 600; }
+  .method-grid .card.c1 .t { color: var(--terracotta); }
+  .method-grid .card.c2 .t { color: var(--salvia); }
+  .method-grid .card.c3 .t { color: var(--amber); }
+  .method-grid .card .d { font-size: 13.5px; color: #2C3238; }
 
   /* ---------- SECTIONS ---------- */
-  section.q { padding: 56px 0; border-top: 1px solid var(--line); }
+  section.q { padding: 52px 0; border-top: 1px solid var(--line); }
   .qhead { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
-  .qnum { font-family: 'IBM Plex Mono', monospace; color: var(--amber); font-size: 14px; font-weight: 600; }
+  .qnum { font-family: 'IBM Plex Mono', monospace; color: var(--terracotta); font-size: 14px; font-weight: 600; }
   section.q h2 { font-size: clamp(22px,3vw,28px); letter-spacing: -.01em; }
-  .qtext { max-width: 700px; color: #35473E; font-size: 15.5px; margin-top: 16px; }
-  .qtext p { margin: 0 0 14px; }
+  .qtext { max-width: 700px; color: var(--slate); font-size: 15.5px; margin-top: 14px; }
 
   .chartbox {
-    margin-top: 26px; background: var(--paper); border: 1px solid var(--line); border-radius: 12px;
-    padding: 16px; box-shadow: 0 1px 3px rgba(34,51,43,.03); overflow: hidden;
+    margin-top: 24px; background: #ffffff; border: 1px solid var(--line); border-radius: 12px;
+    padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.02); overflow: hidden;
   }
   .callout {
-    margin-top: 18px; border-left: 3px solid var(--amber); background: var(--pastel-hero);
-    padding: 14px 18px; font-size: 14.5px; color: #35473E; border-radius: 0 8px 8px 0;
+    margin-top: 18px; border-left: 3px solid var(--terracotta); background: var(--pastel-hero);
+    padding: 14px 18px; font-size: 14.5px; color: #2C3238; border-radius: 0 8px 8px 0;
   }
   .callout b { color: var(--ink); }
-  .stat-pair { display: flex; gap: 14px; margin-top: 20px; flex-wrap: wrap; }
-  .stat-pair .chip {
-    border: 1px solid var(--line); border-radius: 8px; padding: 10px 16px; background: var(--paper);
-    font-size: 13.5px; color: var(--slate);
-  }
-  .stat-pair .chip b { color: var(--ink); font-family: 'IBM Plex Mono', monospace; font-size: 14px; }
 
   /* ---------- CONCLUSIONE ---------- */
-  .conclusion { background: var(--pastel-hero); color: var(--ink); border-top: 1px solid var(--line); padding: 60px 0 72px; margin-top: 20px; }
-  .conclusion .qnum { color: var(--amber-l); }
-  .conclusion h2 { color: var(--ink); }
-  .conclusion .chartbox { background: var(--pastel-hero); border-color: var(--line); }
-  .conclusion .qtext { color: #35473E; }
-  .conclusion .qtext b { color: var(--ink); }
+  .conclusion { background: var(--pastel-hero); color: var(--ink); border-top: 1px solid var(--line); padding: 56px 0 72px; margin-top: 20px; }
+  .conclusion .qnum { color: var(--terracotta); }
+  .conclusion .chartbox { background: #ffffff; border-color: var(--line); } /* Mappa pulita su bianco */
+  .conclusion .qtext { color: var(--slate); }
   .final-line {
-    margin-top: 36px; padding-top: 30px; border-top: 1px solid var(--line);
-    font-family: 'Space Grotesk', sans-serif; font-style: italic; font-size: 20px; color: var(--amber-l); max-width: 720px;
+    margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--line);
+    font-family: 'Space Grotesk', sans-serif; font-style: italic; font-size: 19px; color: var(--terracotta); max-width: 720px;
   }
 
   footer { padding: 34px 0 60px; text-align: center; color: var(--slate); font-size: 12.5px; }
-  footer a { color: var(--slate); text-decoration: underline; }
 
   @media (max-width:640px){
     .ticker { grid-template-columns: 1fr; }
     .ticker .cell + .cell { border-left: none; border-top: 1px solid var(--line); }
     .method-grid { grid-template-columns: 1fr; }
-    .hero { padding: 48px 0 40px; }
-    .hero-title, .hero h1 { font-size: 2.2rem; }
+    .hero-title, .hero h1 { font-size: 2.1rem; }
   }
 </style>
 </head>
@@ -183,14 +186,12 @@
 
 <div class="hero">
   <div class="wrap">
-    <!-- Pulsante ben staccato e cliccabile -->
     <div>
       <a href="index.html" class="back-link">&larr; Torna alla Home</a>
     </div>
 
     <div class="eyebrow">Analisi dati · Numbeo · 8 città europee</div>
     
-    <!-- Titolo aggiornato con font Space Grotesk e icona richiesta -->
     <h1 class="hero-title">🏙️ Quanto vale un’ora della tua vita? <em>L’indice reale di sostenibilità urbana</em></h1>
     <p class="sub">Stipendi, affitti, caffè e birre di otto città europee messi a confronto non in euro, ma nell'unica valuta che conta davvero: le ore di vita necessarie per permetterseli.</p>
 
@@ -211,7 +212,7 @@
 
 <div class="wrap">
   <div class="intro">
-    <p class="lede">Negli ultimi anni l'inflazione e la pressione sul mercato immobiliare hanno ridisegnato l'attrattività economica delle grandi città europee. Confrontare gli stipendi nominali, però, è fuorviante: un salario alto può essere risucchiato da un costo della vita sproporzionato, mentre uno più contenuto può bastare benissimo dove le spese fisse sono basse. Abbiamo incrociato stipendi e prezzi reali di Milano, Roma, Bologna, Amsterdam, Berlino, Londra, Barcellona e Praga per rispondere a una domanda semplice: <b>dove il proprio lavoro vale davvero di più?</b></p>
+    <p class="lede">Negli ultimi anni l'inflazione e la pressione sul mercato immobiliare hanno ridisegnato l'attrattività economica delle grandi città europee. Abbiamo incrociato stipendi e prezzi reali di Milano, Roma, Bologna, Amsterdam, Berlino, Londra, Barcellona e Praga per rispondere a una domanda semplice: <b>dove il proprio lavoro vale davvero di più?</b></p>
   </div>
 
   <div class="tldr">
@@ -222,18 +223,26 @@
       <li>Per il tempo libero, <b>Londra e Amsterdam sono le più costose</b> (oltre 340 €/mese); Praga e Barcellona le più economiche.</li>
       <li>Sull'indice composito del costo quotidiano, <b>Londra è la più cara in assoluto (98,5/100)</b>, Praga la più economica (1/100).</li>
       <li>Il "paradosso del caffè": <b>a Milano un cappuccino costa solo 9 minuti di lavoro</b>, il minimo del campione — ma una birra ne costa quasi 30, il massimo.</li>
-      <li>Alcuni beni (benzina, spesa alimentare) hanno prezzi quasi identici in tutta Europa; altri (trasporti pubblici, affitti) variano fino a 10 volte.</li>
-      <li>Sul quadro d'insieme, <b>la Germania offre il miglior potere d'acquisto reale, l'Italia il peggiore</b>.</li>
     </ul>
   </div>
 
+  <!-- METODOLOGIA A 3 COLORI DIVERSI -->
   <div class="method">
     <h3>Come è costruito il "paniere di vita"</h3>
-    <p>Per confrontare le città in modo onesto non basta guardare affitti o prezzi dei ristoranti isolatamente: serve un paniere standardizzato, costruito su dati Numbeo, che rappresenti lo stile di vita di un lavoratore single in un monolocale/bilocale in centro, senza auto propria.</p>
+    <p>Un paniere standardizzato, costruito su dati Numbeo, che rappresenta lo stile di vita di un lavoratore single in un monolocale/bilocale in centro.</p>
     <div class="method-grid">
-      <div class="card"><div class="t">Casa &amp; trasporti fissi</div><div class="d">Affitto in centro città + abbonamento mensile ai mezzi pubblici</div></div>
-      <div class="card"><div class="t">Sussistenza &amp; benessere</div><div class="d">Spesa alimentare mensile (~2.400 kcal/giorno) + abbonamento palestra</div></div>
-      <div class="card"><div class="t">Tempo libero &amp; socialità</div><div class="d">20 caffè, 8 birre da 0,5l, 4 cene economiche, 2h di campo da tennis</div></div>
+      <div class="card c1">
+        <div class="t">1. Casa &amp; trasporti</div>
+        <div class="d">Affitto in centro città + abbonamento mensile ai mezzi pubblici</div>
+      </div>
+      <div class="card c2">
+        <div class="t">2. Sussistenza &amp; benessere</div>
+        <div class="d">Spesa alimentare mensile (~2.400 kcal/giorno) + abbonamento palestra</div>
+      </div>
+      <div class="card c3">
+        <div class="t">3. Tempo libero</div>
+        <div class="d">20 caffè, 8 birre da 0,5l, 4 cene economiche, 2h di campo da tennis</div>
+      </div>
     </div>
   </div>
 
@@ -241,66 +250,42 @@
     <div class="qhead"><span class="qnum">01</span></div>
     <h2>Salario vs costo della vita: l'indice di sostenibilità urbana</h2>
     <div class="qtext">
-      <p>Non conta lo stipendio nominale, ma quanta parte del salario mensile viene assorbita dalle spese fondamentali. Qui trasformiamo il paniere in <b>ore di lavoro necessarie per pagarlo</b>: sopra le 160 ore — un mese lavorativo pieno — il salario medio non basta più.</p>
+      <p>Quanta parte del salario mensile viene assorbita dalle spese fondamentali. Sopra le 160 ore — un mese lavorativo pieno — il salario medio non basta più.</p>
     </div>
     <div class="chartbox"><div id="plot-sostenibilita" style="width:100%;height:430px;"></div></div>
     <div class="callout">
-      <b>Berlino, Praga e Amsterdam</b> restano sotto le 120 ore, con un margine di risparmio reale del 25–33% dello stipendio. <b>Bologna, Londra, Barcellona e Roma</b> assorbono tra l'84% e il 98% del salario. <b>Milano</b> è l'unico caso oltre la soglia del 100%: un lavoratore medio non riesce a coprire lo stile di vita di riferimento con il solo stipendio.
+      <b>Berlino, Praga e Amsterdam</b> restano sotto le 120 ore. <b>Milano</b> è l'unico caso oltre la soglia del 100%: un lavoratore medio non riesce a coprire lo stile di vita di riferimento con il solo stipendio.
     </div>
   </section>
 
   <section class="q" id="paniere">
     <div class="qhead"><span class="qnum">02</span></div>
     <h2>Chi ha il caffè più caro? Il costo del tempo libero</h2>
-    <div class="qtext">
-      <p>Oltre alle spese fisse, la vita sociale ha un prezzo: 20 caffè, 8 birre, 4 cene fuori, palestra e un paio d'ore di tennis al mese. Ecco quanto costa restare socialmente attivi, città per città.</p>
-    </div>
     <div class="chartbox"><div id="plot-paniere" style="width:100%;height:480px;"></div></div>
-    <div class="callout">
-      <b>Londra e Amsterdam</b> guidano la classifica (340–348 €/mese), spinte da uscite serali e cene costose. <b>Milano</b> è terza (306 €) — ma non per colpa del caffè, che resta economico: a pesare sono palestra e tennis. <b>Praga e Barcellona</b> restano sotto i 226 €, oltre un terzo in meno rispetto al Nord Europa.
-    </div>
   </section>
 
   <section class="q" id="indice">
     <div class="qhead"><span class="qnum">03</span></div>
     <h2>L'indice composito: il "costo della vita quotidiana"</h2>
-    <div class="qtext">
-      <p>Sommare prezzi assoluti non basta: affitto, spesa, tempo libero e trasporti hanno un peso diverso sul budget reale. Abbiamo normalizzato ogni voce su scala 0–100 e pesato affitto 50%, spesa alimentare 25%, tempo libero 15%, trasporti 10%, per ottenere un indice sintetico e comparabile.</p>
-    </div>
     <div class="chartbox"><div id="plot-indice" style="width:100%;height:430px;"></div></div>
-    <div class="callout">
-      <b>Londra (98,5)</b> e <b>Amsterdam (80,8)</b> sono fuori scala, trainate da affitti fino a 2.600 € e — a Londra — trasporti record (233 €/mese). <b>Berlino e Milano</b> pareggiano quasi sullo stesso indice (~40), ma con potere d'acquisto opposto: lo stipendio berlinese assorbe quel costo molto meglio. <b>Praga</b> chiude al minimo assoluto (1,0).
-    </div>
   </section>
 
   <section class="q" id="paradosso">
     <div class="qhead"><span class="qnum">04</span></div>
     <h2>Il paradosso del potere d'acquisto</h2>
     <div class="qtext">
-      <p>Il prezzo assoluto di un caffè o di una birra racconta solo metà della storia. Incrociandolo con lo stipendio orario netto, ogni acquisto diventa "minuti di lavoro necessari" — e la classifica costruita sui soli prezzi si ribalta.</p>
+      <p>Incrociando i prezzi con lo stipendio orario netto, ogni acquisto diventa "minuti di lavoro necessari".</p>
     </div>
     <div class="chartbox"><div id="plot-paradosso" style="width:100%;height:440px;"></div></div>
-    <div class="stat-pair">
-      <div class="chip">Cappuccino più "veloce" da guadagnare: <b>Milano, 9,4 min</b></div>
-      <div class="chip">Cappuccino più "lento": <b>Praga, 15,5 min</b> (+65%)</div>
-      <div class="chip">Birra più "veloce": <b>Praga, 12,6 min</b></div>
-      <div class="chip">Birra più "lenta": <b>Bologna, 30,2 min</b></div>
-    </div>
     <div class="callout">
-      Il quadro si ribalta quasi completamente da un prodotto all'altro: Milano è la più conveniente sul caffè ma tra le più "costose in tempo" sulla birra, e viceversa per Praga. <b>Il potere d'acquisto non è un valore unico</b>: dipende dalla combinazione specifica tra prezzo del singolo bene e stipendio orario locale.
+      Milano è la più conveniente sul caffè (9,4 min) ma tra le più "costose in tempo" sulla birra (29,7 min).
     </div>
   </section>
 
   <section class="q" id="cv">
     <div class="qhead"><span class="qnum">05</span></div>
     <h2>Le voci più "eque" vs più diseguali</h2>
-    <div class="qtext">
-      <p>Non tutti i beni si comportano allo stesso modo tra le città. Il Coefficiente di Variazione (CV%) misura quanto un prezzo si discosta dalla media europea: basso = bene omogeneo ovunque, alto = fortemente legato al contesto locale.</p>
-    </div>
     <div class="chartbox"><div id="plot-cv" style="width:100%;height:450px;"></div></div>
-    <div class="callout">
-      <b>L'abbonamento ai mezzi pubblici è il bene più diseguale</b> (CV ~100%): dai 22 € di Praga ai 233 € di Londra, riflesso di scelte politiche opposte su sussidi ai trasporti. All'estremo opposto, <b>benzina e spesa alimentare</b> sono quasi identiche ovunque (CV sotto il 13%): trattandosi di commodity globali, la grande distribuzione europea ne livella i prezzi molto più del mercato immobiliare o dei servizi locali.
-    </div>
   </section>
 </div>
 
@@ -308,196 +293,129 @@
   <div class="wrap">
     <div class="qhead"><span class="qnum">06 · Conclusione</span></div>
     <h2>Il quadro d'insieme: dove il lavoro vale davvero di più</h2>
-    <div class="qtext">
-      <p>Ricomponendo tutte le voci di spesa in un unico indicatore — le ore di lavoro mensili necessarie per l'intero paniere — il paradosso iniziale si chiude in un quadro nitido.</p>
-    </div>
     
-    <!-- RIPRISTINATO IL GRAFICO A MAPPA GEOGRAFICA -->
+    <!-- MAPPA PULITA E INTEGRATA IN BIANCO -->
     <div class="chartbox"><div id="plot-mappa" style="width:100%;height:500px;"></div></div>
     
-    <div class="qtext" style="margin-top:22px;">
-      <p>La <b>Germania</b>, che sul singolo cappuccino si piazzava solo a metà classifica, risulta il paese con il miglior potere d'acquisto reale: bastano <b>105 ore di lavoro al mese</b> per coprire l'intero paniere. La <b>Repubblica Ceca</b> conferma la doppia natura già vista con la birra: seconda in classifica nonostante uno degli stipendi orari più bassi del gruppo. L'<b>Italia</b> chiude invece all'ultimo posto, con una media di quasi <b>152 ore mensili</b> — pur ospitando la città con il caffè "più economico in minuti" di tutto il campione.</p>
-    </div>
-    <p class="final-line">Il vero indicatore del potere d'acquisto non è il prezzo di un singolo scontrino, ma il tempo di lavoro che quel prezzo rappresenta — ed è solo mettendo in relazione ogni voce di spesa con lo stipendio reale che il costo della vita smette di essere un'illusione statistica.</p>
+    <p class="final-line">Il vero indicatore del potere d'acquisto non è il prezzo di un singolo scontrino, ma il tempo di lavoro che quel prezzo rappresenta.</p>
   </div>
 </div>
 
 <footer>
-  <div class="wrap">Dati: Numbeo · Elaborazione indipendente su 8 città europee · Milano, Roma, Bologna, Amsterdam, Berlino, Londra, Barcellona, Praga</div>
+  <div class="wrap">Dati: Numbeo · Elaborazione indipendente su 8 città europee</div>
 </footer>
 
 <script>
-  const MAIN_FONT = { family: "Inter, -apple-system, sans-serif", color: "#22332B", size: 12 };
-  const TITLE_FONT = { family: "Space Grotesk, sans-serif", size: 16, color: "#22332B" };
-  const PAPER_BG = "#FAF8F5";
-  const PASTEL_BG = "#E4ECE6";
-  const LINE_COLOR = "#DCE4DD";
+  const MAIN_FONT = { family: "Inter, -apple-system, sans-serif", color: "#1C2024", size: 12 };
+  const TITLE_FONT = { family: "Space Grotesk, sans-serif", size: 15, color: "#1C2024" };
+  const WHITE_BG = "#FFFFFF";
+  const LINE_COLOR = "#E2DCD5";
+
+  // Palette principale coerente
+  const COLOR_TERRACOTTA = "#C25943";
+  const COLOR_SALVIA = "#4A7C59";
+  const COLOR_AMBER = "#D99B26";
 
   const cfg = { displayModeBar: false, responsive: true };
 
   document.addEventListener('DOMContentLoaded', function(){
     
-    /* ---------------- 01. SOSTENIBILITA ---------------- */
+    /* 01. SOSTENIBILITA */
     Plotly.newPlot('plot-sostenibilita', [{
       type: "bar",
       x: ["Berlino", "Praga", "Amsterdam", "Bologna", "Londra", "Barcellona", "Roma", "Milano"],
       y: [104.9, 114.7, 119.4, 130.3, 146.9, 148.2, 151.2, 173.2],
       marker: {
         color: [66.6, 74.7, 74.9, 84.2, 88.1, 95.2, 97.6, 111.0],
-        cmid: 100,
-        colorscale: [[0.0, "#3B7A72"], [0.5, "#DFC696"], [1.0, "#A04B3B"]],
+        colorscale: [[0.0, COLOR_SALVIA], [0.5, COLOR_AMBER], [1.0, COLOR_TERRACOTTA]],
         colorbar: { title: { text: "% stipendio" }, ticksuffix: "%", len: 0.8 }
       },
       text: ["105h", "115h", "119h", "130h", "147h", "148h", "151h", "173h"],
-      textposition: "outside",
-      cliponaxis: false,
-      customdata: [66.6, 74.7, 74.9, 84.2, 88.1, 95.2, 97.6, 111.0],
-      hovertemplate: "<b>%{x}</b><br>%{y:.1f} ore/mese<br>%{customdata:.1f}% dello stipendio<extra></extra>"
+      textposition: "outside"
     }], {
-      font: MAIN_FONT,
-      paper_bgcolor: PAPER_BG,
-      plot_bgcolor: PAPER_BG,
-      margin: { l: 40, r: 40, t: 60, b: 50 },
-      title: { text: "Ore di lavoro necessarie per coprire il paniere di vita", font: TITLE_FONT, x: 0 },
-      xaxis: { gridcolor: LINE_COLOR, linecolor: LINE_COLOR },
-      yaxis: { title: { text: "Ore di lavoro / mese" }, gridcolor: LINE_COLOR, range: [0, 195] },
-      shapes: [{ type: "line", x0: -0.5, x1: 7.5, y0: 160, y1: 160, line: { color: "#5C6B73", dash: "dot", width: 1.5 } }],
-      annotations: [{ x: 6.2, y: 165, text: "160h = soglia stipendio", showarrow: false, font: { color: "#5C6B73", size: 10.5 } }]
+      font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
+      margin: { l: 40, r: 40, t: 50, b: 50 },
+      title: { text: "Ore di lavoro necessarie per coprire il paniere", font: TITLE_FONT, x: 0 },
+      xaxis: { gridcolor: LINE_COLOR },
+      yaxis: { title: { text: "Ore / mese" }, gridcolor: LINE_COLOR, range: [0, 195] },
+      shapes: [{ type: "line", x0: -0.5, x1: 7.5, y0: 160, y1: 160, line: { color: "#6C757D", dash: "dot", width: 1.5 } }]
     }, cfg);
 
-    /* ---------------- 02. TEMPO LIBERO ---------------- */
+    /* 02. PANIERE */
     Plotly.newPlot('plot-paniere', [
-      { type: "bar", orientation: "h", name: "20x Cappuccino", y: ["Londra", "Amsterdam", "Milano", "Berlino", "Bologna", "Roma", "Barcellona", "Praga"], x: [96.2, 80.6, 38.0, 81.6, 39.6, 38.6, 55.0, 66.4], marker: { color: "#DFC696" } },
-      { type: "bar", orientation: "h", name: "8x Birra media", y: ["Londra", "Amsterdam", "Milano", "Berlino", "Bologna", "Roma", "Barcellona", "Praga"], x: [65.28, 52.8, 48.0, 39.2, 48.0, 40.0, 30.0, 21.52], marker: { color: "#B87D3B" } },
-      { type: "bar", orientation: "h", name: "4x Cena ristorante", y: ["Londra", "Amsterdam", "Milano", "Berlino", "Bologna", "Roma", "Barcellona", "Praga"], x: [93.28, 88.0, 80.0, 60.0, 80.0, 60.0, 64.0, 38.04], marker: { color: "#A04B3B" } },
-      { type: "bar", orientation: "h", name: "Palestra (mese)", y: ["Londra", "Amsterdam", "Milano", "Berlino", "Bologna", "Roma", "Barcellona", "Praga"], x: [54.24, 57.89, 77.89, 35.59, 57.36, 60.0, 47.45, 56.93], marker: { color: "#5C6B73" } },
-      { type: "bar", orientation: "h", name: "2h Campo tennis", y: ["Londra", "Amsterdam", "Milano", "Berlino", "Bologna", "Roma", "Barcellona", "Praga"], x: [38.76, 61.66, 61.88, 65.24, 48.0, 49.84, 29.12, 32.76], marker: { color: "#3B7A72" } }
+      { type: "bar", orientation: "h", name: "Caffè", y: ["Londra", "Amsterdam", "Milano", "Berlino", "Bologna", "Roma", "Barcellona", "Praga"], x: [96.2, 80.6, 38.0, 81.6, 39.6, 38.6, 55.0, 66.4], marker: { color: "#E8C88B" } },
+      { type: "bar", orientation: "h", name: "Birra", y: ["Londra", "Amsterdam", "Milano", "Berlino", "Bologna", "Roma", "Barcellona", "Praga"], x: [65.28, 52.8, 48.0, 39.2, 48.0, 40.0, 30.0, 21.52], marker: { color: COLOR_AMBER } },
+      { type: "bar", orientation: "h", name: "Cene", y: ["Londra", "Amsterdam", "Milano", "Berlino", "Bologna", "Roma", "Barcellona", "Praga"], x: [93.28, 88.0, 80.0, 60.0, 80.0, 60.0, 64.0, 38.04], marker: { color: COLOR_TERRACOTTA } },
+      { type: "bar", orientation: "h", name: "Palestra", y: ["Londra", "Amsterdam", "Milano", "Berlino", "Bologna", "Roma", "Barcellona", "Praga"], x: [54.24, 57.89, 77.89, 35.59, 57.36, 60.0, 47.45, 56.93], marker: { color: "#6C757D" } },
+      { type: "bar", orientation: "h", name: "Tennis", y: ["Londra", "Amsterdam", "Milano", "Berlino", "Bologna", "Roma", "Barcellona", "Praga"], x: [38.76, 61.66, 61.88, 65.24, 48.0, 49.84, 29.12, 32.76], marker: { color: COLOR_SALVIA } }
     ], {
-      font: MAIN_FONT,
-      paper_bgcolor: PAPER_BG,
-      plot_bgcolor: PAPER_BG,
-      margin: { l: 90, r: 60, t: 70, b: 40 },
-      title: { text: "Composizione del costo mensile del tempo libero", font: TITLE_FONT, x: 0 },
-      xaxis: { title: { text: "€ / mese" }, range: [0, 410], gridcolor: LINE_COLOR },
-      yaxis: { autorange: "reversed" },
-      barmode: "stack",
-      legend: { orientation: "h", yanchor: "bottom", y: 1.02, xanchor: "left", x: 0, font: { size: 10 } },
-      annotations: [
-        { x: 354, y: "Londra", text: "<b>348 €</b>", showarrow: false, xanchor: "left", font: { size: 11, color: "#22332B" } },
-        { x: 347, y: "Amsterdam", text: "<b>341 €</b>", showarrow: false, xanchor: "left", font: { size: 11, color: "#22332B" } },
-        { x: 312, y: "Milano", text: "<b>306 €</b>", showarrow: false, xanchor: "left", font: { size: 11, color: "#22332B" } },
-        { x: 288, y: "Berlino", text: "<b>282 €</b>", showarrow: false, xanchor: "left", font: { size: 11, color: "#22332B" } },
-        { x: 279, y: "Bologna", text: "<b>273 €</b>", showarrow: false, xanchor: "left", font: { size: 11, color: "#22332B" } },
-        { x: 255, y: "Roma", text: "<b>248 €</b>", showarrow: false, xanchor: "left", font: { size: 11, color: "#22332B" } },
-        { x: 232, y: "Barcellona", text: "<b>226 €</b>", showarrow: false, xanchor: "left", font: { size: 11, color: "#22332B" } },
-        { x: 222, y: "Praga", text: "<b>216 €</b>", showarrow: false, xanchor: "left", font: { size: 11, color: "#22332B" } }
-      ]
+      font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
+      margin: { l: 90, r: 50, t: 50, b: 40 },
+      title: { text: "Costo mensile del tempo libero (€)", font: TITLE_FONT, x: 0 },
+      xaxis: { gridcolor: LINE_COLOR }, yaxis: { autorange: "reversed" }, barmode: "stack"
     }, cfg);
 
-    /* ---------------- 03. INDICE COMPOSITO ---------------- */
+    /* 03. INDICE */
     Plotly.newPlot('plot-indice', [{
       type: "bar", orientation: "h",
       x: [98.5, 80.8, 40.0, 39.6, 20.3, 18.9, 17.3, 1.0],
       y: ["Londra", "Amsterdam", "Berlino", "Milano", "Barcellona", "Bologna", "Roma", "Praga"],
-      marker: {
-        color: [98.5, 80.8, 40.0, 39.6, 20.3, 18.9, 17.3, 1.0],
-        colorscale: [[0.0, "#DFC696"], [0.5, "#B87D3B"], [1.0, "#A04B3B"]],
-        showscale: false
-      },
-      hovertemplate: "<b>%{y}</b><br>Indice: <b>%{x:.1f}/100</b><extra></extra>"
+      marker: { color: [98.5, 80.8, 40.0, 39.6, 20.3, 18.9, 17.3, 1.0], colorscale: [[0.0, COLOR_SALVIA], [0.5, COLOR_AMBER], [1.0, COLOR_TERRACOTTA]] }
     }], {
-      font: MAIN_FONT,
-      paper_bgcolor: PAPER_BG,
-      plot_bgcolor: PAPER_BG,
-      margin: { l: 90, r: 50, t: 50, b: 40 },
-      title: { text: "Ranking del costo della vita quotidiana (indice 0–100)", font: TITLE_FONT, x: 0 },
-      xaxis: { title: { text: "0 = più economica · 100 = più cara" }, range: [0, 115], gridcolor: LINE_COLOR },
-      yaxis: { autorange: "reversed" },
-      annotations: [
-        { x: 101, y: "Londra", text: "<b>98.5</b>", showarrow: false, xanchor: "left" },
-        { x: 83, y: "Amsterdam", text: "<b>80.8</b>", showarrow: false, xanchor: "left" },
-        { x: 42, y: "Berlino", text: "<b>40.0</b>", showarrow: false, xanchor: "left" },
-        { x: 42, y: "Milano", text: "<b>39.6</b>", showarrow: false, xanchor: "left" },
-        { x: 23, y: "Barcellona", text: "<b>20.3</b>", showarrow: false, xanchor: "left" },
-        { x: 21, y: "Bologna", text: "<b>18.9</b>", showarrow: false, xanchor: "left" },
-        { x: 19, y: "Roma", text: "<b>17.3</b>", showarrow: false, xanchor: "left" },
-        { x: 3, y: "Praga", text: "<b>1.0</b>", showarrow: false, xanchor: "left" }
-      ]
+      font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
+      margin: { l: 90, r: 50, t: 40, b: 40 },
+      title: { text: "Ranking costo della vita (0–100)", font: TITLE_FONT, x: 0 },
+      xaxis: { gridcolor: LINE_COLOR }, yaxis: { autorange: "reversed" }
     }, cfg);
 
-    /* ---------------- 04. IL PARADOSSO ---------------- */
+    /* 04. IL PARADOSSO (Colori riallineati: Terracotta + Salvia) */
     Plotly.newPlot('plot-paradosso', [
-      { type: "bar", name: "Cappuccino", x: ["Milano", "Amsterdam", "Bologna", "Roma", "Londra", "Barcellona", "Berlino", "Praga"], y: [9.4, 9.6, 10.0, 10.8, 12.0, 12.7, 13.4, 15.5], marker: { color: "#B87D3B" }, text: ["9.4m", "9.6m", "10.0m", "10.8m", "12.0m", "12.7m", "13.4m", "15.5m"], textposition: "outside", cliponaxis: false },
-      { type: "bar", name: "Birra media", x: ["Milano", "Amsterdam", "Bologna", "Roma", "Londra", "Barcellona", "Berlino", "Praga"], y: [29.7, 15.7, 30.2, 27.9, 20.4, 17.3, 16.1, 12.6], marker: { color: "#5C6B73" }, text: ["29.7m", "15.7m", "30.2m", "27.9m", "20.4m", "17.3m", "16.1m", "12.6m"], textposition: "outside", cliponaxis: false }
+      { type: "bar", name: "Cappuccino", x: ["Milano", "Amsterdam", "Bologna", "Roma", "Londra", "Barcellona", "Berlino", "Praga"], y: [9.4, 9.6, 10.0, 10.8, 12.0, 12.7, 13.4, 15.5], marker: { color: COLOR_TERRACOTTA }, text: ["9.4m", "9.6m", "10.0m", "10.8m", "12.0m", "12.7m", "13.4m", "15.5m"], textposition: "outside" },
+      { type: "bar", name: "Birra media", x: ["Milano", "Amsterdam", "Bologna", "Roma", "Londra", "Barcellona", "Berlino", "Praga"], y: [29.7, 15.7, 30.2, 27.9, 20.4, 17.3, 16.1, 12.6], marker: { color: COLOR_SALVIA }, text: ["29.7m", "15.7m", "30.2m", "27.9m", "20.4m", "17.3m", "16.1m", "12.6m"], textposition: "outside" }
     ], {
-      font: MAIN_FONT,
-      paper_bgcolor: PAPER_BG,
-      plot_bgcolor: PAPER_BG,
-      margin: { l: 40, r: 40, t: 60, b: 40 },
-      title: { text: "Minuti di lavoro necessari per un cappuccino o una birra", font: TITLE_FONT, x: 0 },
-      xaxis: { gridcolor: LINE_COLOR, linecolor: LINE_COLOR },
-      yaxis: { title: { text: "Minuti di lavoro" }, gridcolor: LINE_COLOR, range: [0, 36] },
-      barmode: "group",
-      legend: { orientation: "h", yanchor: "bottom", y: 1.02, xanchor: "right", x: 1 }
+      font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
+      margin: { l: 40, r: 40, t: 50, b: 40 },
+      title: { text: "Minuti di lavoro necessari per un acquisto", font: TITLE_FONT, x: 0 },
+      xaxis: { gridcolor: LINE_COLOR }, yaxis: { title: { text: "Minuti" }, gridcolor: LINE_COLOR, range: [0, 36] },
+      barmode: "group"
     }, cfg);
 
-    /* ---------------- 05. VARIABILITA (CV%) ---------------- */
+    /* 05. VARIABILITA (Colori riallineati) */
     Plotly.newPlot('plot-cv', [{
       type: "bar", orientation: "h",
-      y: ["Abbonamento mezzi", "Affitto mensile", "Cappuccino", "Birra media", "Campo tennis (1h)", "Cena ristorante", "Abbonamento palestra", "Spesa alimentare", "Benzina (1L)"],
+      y: ["Abbonamento mezzi", "Affitto mensile", "Cappuccino", "Birra media", "Campo tennis", "Cena ristorante", "Palestra", "Spesa alimentare", "Benzina (1L)"],
       x: [102.3, 39.3, 36.5, 31.6, 28.7, 25.9, 21.3, 12.4, 10.9],
-      marker: {
-        color: [102.3, 39.3, 36.5, 31.6, 28.7, 25.9, 21.3, 12.4, 10.9],
-        colorscale: [[0.0, "#A3B3AA"], [1.0, "#22332B"]],
-        showscale: false
-      },
-      hovertemplate: "<b>%{y}</b><br>Variabilità: <b>%{x:.1f}%</b><extra></extra>"
+      marker: { color: [102.3, 39.3, 36.5, 31.6, 28.7, 25.9, 21.3, 12.4, 10.9], colorscale: [[0.0, COLOR_SALVIA], [1.0, COLOR_TERRACOTTA]] }
     }], {
-      font: MAIN_FONT,
-      paper_bgcolor: PAPER_BG,
-      plot_bgcolor: PAPER_BG,
-      margin: { l: 140, r: 50, t: 50, b: 40 },
-      title: { text: "I beni più \"equi\" vs più diseguali in Europa (CV %)", font: TITLE_FONT, x: 0 },
-      xaxis: { title: { text: "Coefficiente di variazione (%)" }, range: [0, 118], gridcolor: LINE_COLOR },
-      yaxis: { autorange: "reversed" },
-      annotations: [
-        { x: 105, y: "Abbonamento mezzi", text: "<b>102%</b>", showarrow: false, xanchor: "left" },
-        { x: 42, y: "Affitto mensile", text: "<b>39%</b>", showarrow: false, xanchor: "left" },
-        { x: 39, y: "Cappuccino", text: "<b>37%</b>", showarrow: false, xanchor: "left" },
-        { x: 34, y: "Birra media", text: "<b>32%</b>", showarrow: false, xanchor: "left" },
-        { x: 31, y: "Campo tennis (1h)", text: "<b>29%</b>", showarrow: false, xanchor: "left" },
-        { x: 28, y: "Cena ristorante", text: "<b>26%</b>", showarrow: false, xanchor: "left" },
-        { x: 24, y: "Abbonamento palestra", text: "<b>21%</b>", showarrow: false, xanchor: "left" },
-        { x: 15, y: "Spesa alimentare", text: "<b>12%</b>", showarrow: false, xanchor: "left" },
-        { x: 13, y: "Benzina (1L)", text: "<b>11%</b>", showarrow: false, xanchor: "left" }
-      ]
+      font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
+      margin: { l: 140, r: 50, t: 40, b: 40 },
+      title: { text: "I beni più \"equi\" vs più diseguali (CV %)", font: TITLE_FONT, x: 0 },
+      xaxis: { gridcolor: LINE_COLOR }, yaxis: { autorange: "reversed" }
     }, cfg);
 
-    /* ---------------- 06. MAPPA GEOGRAFICA RIPRISTINATA ---------------- */
+    /* 06. MAPPA GEOGRAFICA (Perfettamente integrata su sfondo Bianco) */
     Plotly.newPlot('plot-mappa', [{
       type: "choropleth",
       locationmode: "country names",
       locations: ["Czech Republic", "Germany", "Italy", "Netherlands", "Spain", "United Kingdom"],
       z: [114.7, 104.9, 151.6, 119.4, 148.2, 146.9],
       text: ["Praga", "Berlino", "Milano, Roma, Bologna", "Amsterdam", "Barcellona", "Londra"],
-      customdata: [12.85, 18.3, 11.6, 25.15, 12.97, 23.99],
-      colorscale: [[0.0, "#3B7A72"], [0.5, "#DFC696"], [1.0, "#A04B3B"]],
-      colorbar: { title: { text: "Ore / mese" }, len: 0.8 },
-      hovertemplate: "<b>%{location}</b><br>%{text}<br>Ore/mese: %{z:.1f}<br>Stipendio orario: €%{customdata:.2f}<extra></extra>"
+      colorscale: [[0.0, COLOR_SALVIA], [0.5, COLOR_AMBER], [1.0, COLOR_TERRACOTTA]],
+      colorbar: { title: { text: "Ore / mese" }, len: 0.8 }
     }], {
       font: MAIN_FONT,
-      paper_bgcolor: PASTEL_BG,
-      plot_bgcolor: PASTEL_BG,
-      margin: { l: 10, r: 10, t: 50, b: 10 },
-      title: { text: "Il vero potere d'acquisto: ore di lavoro mensili per coprire il paniere", font: TITLE_FONT, x: 0 },
+      paper_bgcolor: WHITE_BG,
+      plot_bgcolor: WHITE_BG,
+      margin: { l: 10, r: 10, t: 40, b: 10 },
+      title: { text: "Potere d'acquisto: ore di lavoro mensili per coprire il paniere", font: TITLE_FONT, x: 0 },
       geo: {
         scope: "europe",
         showframe: false,
         showcoastlines: false,
         fitbounds: "locations",
-        bgcolor: PASTEL_BG,
-        landcolor: "#FAF8F5",
-        lakecolor: PASTEL_BG,
+        bgcolor: WHITE_BG,
+        landcolor: "#F4EFEA",
+        lakecolor: WHITE_BG,
         subunitcolor: LINE_COLOR
       },
       height: 480
@@ -505,9 +423,6 @@
 
   });
 </script>
-
-</body>
-</html>
 
 </body>
 </html>
