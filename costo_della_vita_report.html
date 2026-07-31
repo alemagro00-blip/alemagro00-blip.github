@@ -177,6 +177,93 @@
   .tldr li::before { content: "→"; position: absolute; left: 0; color: var(--amber); font-weight: 700; }
   .tldr b { color: var(--ink); }
 
+
+	/* CONTAINER DELL'INDICE */
+	.toc-container{
+		width:100%;
+		margin:16px 0 8px;
+		padding:22px;
+
+		background:#fbf9f5;
+		border:1px solid #e5ded4;
+		border-radius:16px;
+	}
+
+	.toc-header {
+	  font-family: 'IBM Plex Mono', monospace;
+	  font-size: 11px;
+	  text-transform: uppercase;
+	  letter-spacing: 0.08em;
+	  color: #c05638;
+	  font-weight: 600;
+	  margin-bottom: 12px;
+	}
+
+	/* GRIGLIA: Forzata a 3 colonne su desktop, responsive su mobile */
+	.toc-grid {
+	  display: grid;
+	  grid-template-columns: repeat(3, 1fr);
+	  gap: 8px;
+	}
+	
+	@media (max-width: 768px) {
+	  .toc-grid {
+		grid-template-columns: 1fr; /* 1 colonna per smartphone */
+	  }
+	}
+
+	/* CARDS */
+	.toc-card {
+	  display: flex;
+	  align-items: center;
+	  gap: 8px;
+	  background-color: #ffffff;
+	  border: 1px solid #eae5dd;
+	  border-radius: 8px;
+	  padding: 10px 12px;
+	  text-decoration: none;
+	  color: #1f2421;
+	  font-family: 'Space Grotesk', sans-serif;
+	  font-size: 13.5px;
+	  line-height: 1.3;
+	  box-sizing: border-box;
+	  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+	}
+
+	.toc-card:hover {
+	  border-color: #c05638;
+	  color: #c05638;
+	  transform: translateY(-1px);
+	  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+	}
+
+	.toc-icon {
+	  font-size: 15px;
+	  flex-shrink: 0;
+	}
+
+	.toc-label {
+	  font-weight: 500;
+	}
+
+	.toc-num {
+	  font-family: 'IBM Plex Mono', monospace;
+	  font-weight: 600;
+	  font-size: 11.5px;
+	  color: #c05638;
+	  margin-right: 2px;
+	}
+
+	/* GESTIONE DELLO SPAZIO DEL TESTO SOTTO */
+	.intro {
+	  margin-top: 0 !important;
+	  margin-bottom: 24px !important;
+	}
+
+	.intro p.lede {
+	  margin: 0 !important;
+	}
+
   /* ---------- METODOLOGIA (3 COLORI DIVERSI) ---------- */
   .method {
     background: #ffffff; color: var(--ink); border: 1px solid var(--line); border-radius: 12px; padding: 30px 32px; margin: 40px 0;
@@ -299,44 +386,83 @@
   </div>
 </div>
 
+<!-- INDICE AUTO-CONTENUTO (Apriamo e chiudiamo solo i nostri div) -->
 <div class="wrap">
+
+  <!-- INDICE -->
+  <div class="toc-container">
+    <div class="toc-header">IN QUESTO REPORT</div>
+
+    <div class="toc-grid">
+      <a href="#sostenibilita" class="toc-card">
+        <span class="toc-icon">⚖️</span>
+        <span class="toc-label"><span class="toc-num">01.</span> Salario vs costo della vita</span>
+      </a>
+
+      <a href="#paniere" class="toc-card">
+        <span class="toc-icon">☕</span>
+        <span class="toc-label"><span class="toc-num">02.</span> Il costo del tempo libero</span>
+      </a>
+
+      <a href="#indice" class="toc-card">
+        <span class="toc-icon">📊</span>
+        <span class="toc-label"><span class="toc-num">03.</span> L'indice di vita quotidiana</span>
+      </a>
+
+      <a href="#paradosso" class="toc-card">
+        <span class="toc-icon">⏱️</span>
+        <span class="toc-label"><span class="toc-num">04.</span> Il paradosso del potere d'acquisto</span>
+      </a>
+
+      <a href="#cv" class="toc-card">
+        <span class="toc-icon">📈</span>
+        <span class="toc-label"><span class="toc-num">05.</span> Prezzi equi vs diseguali</span>
+      </a>
+
+      <a href="#conclusione" class="toc-card">
+        <span class="toc-icon">📌</span>
+        <span class="toc-label">Conclusioni</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- INTRODUZIONE -->
   <div class="intro">
-    <p class="lede">Negli ultimi anni l'inflazione e la pressione sul mercato immobiliare hanno ridisegnato l'attrattività economica delle grandi città europee. Abbiamo incrociato stipendi e prezzi reali di Milano, Roma, Bologna, Amsterdam, Berlino, Londra, Barcellona e Praga per rispondere a una domanda semplice: <b>dove il proprio lavoro vale davvero di più?</b></p>
+    <p class="lede">
+      Negli ultimi anni l'inflazione e la pressione sul mercato immobiliare hanno ridisegnato l'attrattività economica delle grandi città europee. Abbiamo incrociato stipendi e prezzi reali di Milano, Roma, Bologna, Amsterdam, Berlino, Londra, Barcellona e Praga per rispondere a una domanda semplice: <b>dove il proprio lavoro vale davvero di più?</b>
+    </p>
   </div>
 
-  <div class="tldr">
-    <div class="tldr-label">In breve</div>
-    <ul>
-      <li><b>Milano è l'unica città del campione matematicamente insostenibile</b>: il paniere di vita standard costa più dello stipendio medio (111%).</li>
-      <li><b>Berlino ha il miglior rapporto salario/costo della vita</b> (66,6%), seguita da Praga e Amsterdam.</li>
-      <li>Per il tempo libero, <b>Londra e Amsterdam sono le più costose</b> (oltre 340 €/mese); Praga e Barcellona le più economiche.</li>
-      <li>Sull'indice composito del costo quotidiano, <b>Londra è la più cara in assoluto (98,5/100)</b>, Praga la più economica (1/100).</li>
-      <li>Il "paradosso del caffè": <b>a Milano un cappuccino costa solo 9 minuti di lavoro</b>, il minimo del campione — ma una birra ne costa quasi 30, il massimo.</li>
-      <li>Alcuni beni (benzina, spesa alimentare) hanno prezzi quasi identici in tutta Europa; altri (trasporti pubblici, affitti) variano fino a 10 volte.</li>
-      <li>Sul quadro d'insieme, <b>la Germania</b> offre il miglior potere d'acquisto reale</li>
-    </ul>
-  </div>
-
-  <!-- METODOLOGIA A 3 COLORI DIVERSI -->
+  <!-- METODOLOGIA -->
   <div class="method">
     <h3>Come è costruito il "paniere di vita"</h3>
-    <p>Per confrontare le città in modo onesto non basta guardare affitti o prezzi dei ristoranti isolatamente: serve un paniere standardizzato che rappresenti lo stile di vita di un lavoratore single in un monolocale/bilocale in centro, senza auto propria.</p>
-<div class="method-grid">
+
+    <p>
+      Per confrontare le città in modo onesto non basta guardare affitti o prezzi dei ristoranti isolatamente: serve un paniere standardizzato che rappresenti lo stile di vita di un lavoratore single in un monolocale/bilocale in centro, senza auto propria.
+    </p>
+
+    <div class="method-grid">
+
       <div class="card c1">
         <div class="t">1. Casa &amp; trasporti</div>
         <div class="d">Affitto in centro città + abbonamento mensile ai mezzi pubblici</div>
       </div>
+
       <div class="card c2">
         <div class="t">2. Sussistenza &amp; benessere</div>
         <div class="d">Spesa alimentare mensile (~2.400 kcal/giorno) + abbonamento palestra</div>
       </div>
+
       <div class="card c3">
         <div class="t">3. Tempo libero</div>
         <div class="d">20 caffè, 8 birre da 0,5l, 4 cene economiche, 2h di campo da tennis</div>
-	  </div>
+      </div>
+
     </div>
-	<p><br/><i>Fonte dati: Numbeo</i></p>
-</div>
+
+    <p><br><i>Fonte dati: Numbeo</i></p>
+
+  </div>
 
   <section class="q" id="sostenibilita">
     <div class="qhead"><span class="qnum">01</span></div>
