@@ -72,51 +72,97 @@
   }
   .eyebrow::before { content:""; width: 24px; height: 1.5px; background: var(--terracotta); display: inline-block; }
 
-  /* Titolo principale */
-  .hero-title, .hero h1 {
-    font-size: 2.8rem; 
-    font-weight: 700; 
-    line-height: 1.15;
-    color: var(--ink);
-    margin: 0; 
-    font-family: 'Space Grotesk', sans-serif;
-    letter-spacing: -0.01em;
-  }
+	/* Titolo principale */
+	.hero-title, .hero h1 {
+	  font-size: 2.8rem; 
+	  font-weight: 700; 
+	  line-height: 1.15;
+	  color: var(--ink);
+	  margin: 0; 
+	  font-family: 'Space Grotesk', sans-serif;
+	  letter-spacing: -0.01em;
+	}
 
-  /* Sottotitolo in Terracotta ben distanziato */
-  .hero h1 em { 
-    font-style: italic; 
-    color: var(--terracotta); 
-    display: block; 
-    margin-top: 14px; /* Stacco dal titolo nero */
-  }
-  
-  /* Testo descrittivo in basso */
-  .hero .sub { 
-    max-width: 640px; 
-    margin-top: 24px;   /* Più staccato dal sottotitolo terracotta */
-    font-size: 15px; 
-    line-height: 1.6;
-    color: var(--slate);
-    font-weight: 400;
-  }
+	/* Sottotitolo in terracotta allineato alla "Q" */
+	.subtitle-terracotta { 
+	  display: block;
+	  font-size: 1.25rem;
+	  font-weight: 600;
+	  color: var(--terracotta, #c05638);
+	  margin-top: 4px;
+	  margin-left: 5rem; /* Rientro per saltare la larghezza dell'emoji */
+	  font-style: italic;
+	  font-family: 'Fraunces', serif;
+	}
 
-  .ticker {
-    margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 0;
-    border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
-    background: #ffffff;
-  }
-  .ticker .cell { padding: 24px 28px; position: relative; }
-  .ticker .cell + .cell { border-left: 1px solid var(--line); }
-  .ticker .label { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; text-transform: uppercase; letter-spacing: .1em; color: var(--slate); font-weight: 600; }
-  .ticker .num { font-family: 'Space Grotesk', sans-serif; font-size: 38px; margin-top: 4px; font-weight: 700; }
-  .ticker .num.bad { color: var(--terracotta); }
-  .ticker .num.good { color: var(--salvia); }
-  .ticker .cap { font-size: 13.5px; color: var(--slate); margin-top: 4px; }
+	/* Testo descrittivo in basso */
+	.hero .sub { 
+	  max-width: 840px; 
+	  margin-top: 24px;
+	  font-size: 15px; 
+	  line-height: 1.6;
+	  color: var(--slate);
+	  font-weight: 400;
+	}
+
+	/* Griglia due riquadri (Ticker) */
+	.ticker {
+	  margin-top: 40px; 
+	  display: grid; 
+	  grid-template-columns: 1fr 1fr; 
+	  gap: 0;
+	  border: 1px solid var(--line); 
+	  border-radius: 12px; 
+	  overflow: hidden;
+	  background: #ffffff;
+	}
+
+	.ticker .cell { 
+	  padding: 24px 28px; 
+	  position: relative; 
+	}
+
+	.ticker .cell + .cell { 
+	  border-left: 1px solid var(--line); 
+	}
+
+	/* Etichette Milano / Berlino: più grandi e colorate */
+	.ticker .label { 
+	  font-family: 'IBM Plex Mono', monospace; 
+	  font-size: 13px;          /* Ingrandito */
+	  text-transform: uppercase; 
+	  letter-spacing: .08em; 
+	  font-weight: 700; 
+	  color: var(--slate);
+	}
+
+	.ticker .label.bad { 
+	  color: var(--terracotta, #c05638); /* Rosso/terracotta per Milano */
+	}
+
+	.ticker .label.good { 
+	  color: var(--salvia, #2d6a4f);     /* Verde per Berlino */
+	}
+
+	.ticker .num { 
+	  font-family: 'Space Grotesk', sans-serif; 
+	  font-size: 42px;          /* Leggermente più grande per dare impatto */
+	  margin-top: 6px; 
+	  font-weight: 700; 
+	}
+
+	.ticker .num.bad { color: var(--terracotta, #c05638); }
+	.ticker .num.good { color: var(--salvia, #2d6a4f); }
+
+	.ticker .cap { 
+	  font-size: 13.5px; 
+	  color: var(--slate); 
+	  margin-top: 4px; 
+	}
 
   /* ---------- INTRO / TLDR ---------- */
   .intro { padding: 48px 0 8px; }
-  .lede { font-size: 18px; color: #2C3238; max-width: 740px; }
+  .lede { font-size: 18px; color: #2C3238; max-width: 840px; }
 
   .tldr {
     margin: 36px 0; background: var(--pastel-hero); border: 1px solid var(--line); border-radius: 12px;
@@ -155,7 +201,7 @@
   .qhead { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
   .qnum { font-family: 'IBM Plex Mono', monospace; color: var(--terracotta); font-size: 14px; font-weight: 600; }
   section.q h2 { font-size: clamp(22px,3vw,28px); letter-spacing: -.01em; }
-  .qtext { max-width: 700px; color: var(--slate); font-size: 15.5px; margin-top: 14px; }
+  .qtext { max-width: 840px; color: var(--slate); font-size: 15.5px; margin-top: 14px; }
 
   .chartbox {
     margin-top: 24px; background: #ffffff; border: 1px solid var(--line); border-radius: 12px;
@@ -166,6 +212,31 @@
     padding: 14px 18px; font-size: 14.5px; color: #2C3238; border-radius: 0 8px 8px 0;
   }
   .callout b { color: var(--ink); }
+  
+  .stat-pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.chip {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 13.5px;
+  color: var(--slate);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.chip b {
+  display: block;
+  color: var(--ink);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 15px;
+  margin-top: 4px;
+}
 
   /* ---------- CONCLUSIONE ---------- */
   .conclusion { background: var(--pastel-hero); color: var(--ink); border-top: 1px solid var(--line); padding: 56px 0 72px; margin-top: 20px; }
@@ -174,12 +245,12 @@
   .conclusion .qtext { color: var(--slate); }
   .final-line {
     margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--line);
-    font-family: 'Space Grotesk', sans-serif; font-style: italic; font-size: 19px; color: var(--terracotta); max-width: 720px;
+    font-family: 'Space Grotesk', sans-serif; font-style: italic; font-size: 19px; color: var(--terracotta); max-width: 840px;
   }
 
   footer { padding: 34px 0 60px; text-align: center; color: var(--slate); font-size: 12.5px; }
 
-  @media (max-width:640px){
+  @media (max-width:840px){
     .ticker { grid-template-columns: 1fr; }
     .ticker .cell + .cell { border-left: none; border-top: 1px solid var(--line); }
     .method-grid { grid-template-columns: 1fr; }
@@ -195,23 +266,36 @@
       <a href="index.html" class="back-link">&larr; Torna alla Home</a>
     </div>
 
-    <div class="eyebrow">DATA STORIES | Economia & Società </div>
+    <div class="eyebrow">
+      <span>DATA STORIES</span> | Economia & Società 
+    </div>
     
-    <h1 class="hero-title">🏙️ Quanto vale un’ora della tua vita? <em>L’indice reale di sostenibilità urbana</em></h1>
-    <p class="sub">Stipendi, affitti, caffè e birre di otto città europee messi a confronto non in euro, ma nell'unica valuta che conta davvero: le ore di vita necessarie per permetterseli.</p>
+    <!-- Titolo principale SENZA il sottotitolo dentro -->
+    <h1 class="hero-title">🏙️ Quanto vale un’ora della tua vita?</h1>
+    
+    <!-- Sottotitolo in terracotta separato con il rientro a sinistra -->
+    <p class="subtitle-terracotta">L’indice reale di sostenibilità urbana</p>
+    
+    <p class="sub">
+      Otto città europee a confronto attraverso la metrica che conta davvero: non gli euro, ma le ore di vita necessarie per sostenere il costo della vita.
+    </p>
 
     <div class="ticker">
+      <!-- Riquadro Milano -->
       <div class="cell">
-        <div class="label">Milano · il caso critico</div>
+        <div class="label bad">MILANO • IL CASO CRITICO</div>
         <div class="num bad">111%</div>
-        <div class="cap">dello stipendio medio netto va nel paniere di vita standard — mancano <b class="mono">159&nbsp;€</b> al mese</div>
+        <div class="cap">dello stipendio medio netto va nel paniere di vita standard — serve un <b>9% di reddito in più</b> ogni mese</div>
       </div>
+
+      <!-- Riquadro Berlino -->
       <div class="cell">
-        <div class="label">Berlino · il modello virtuoso</div>
+        <div class="label good">BERLINO • IL MODELLO VIRTUOSO</div>
         <div class="num good">66,6%</div>
-        <div class="cap">dello stipendio basta a coprire lo stesso paniere — ne restano oltre <b class="mono">1.000&nbsp;€</b> al mese</div>
+        <div class="cap">dello stipendio basta a coprire lo stesso paniere — risparmio reale del <b>33%</b> di stipendio al mese</div>
       </div>
     </div>
+    
   </div>
 </div>
 
@@ -228,14 +312,16 @@
       <li>Per il tempo libero, <b>Londra e Amsterdam sono le più costose</b> (oltre 340 €/mese); Praga e Barcellona le più economiche.</li>
       <li>Sull'indice composito del costo quotidiano, <b>Londra è la più cara in assoluto (98,5/100)</b>, Praga la più economica (1/100).</li>
       <li>Il "paradosso del caffè": <b>a Milano un cappuccino costa solo 9 minuti di lavoro</b>, il minimo del campione — ma una birra ne costa quasi 30, il massimo.</li>
+      <li>Alcuni beni (benzina, spesa alimentare) hanno prezzi quasi identici in tutta Europa; altri (trasporti pubblici, affitti) variano fino a 10 volte.</li>
+      <li>Sul quadro d'insieme, <b>la Germania</b> offre il miglior potere d'acquisto reale</li>
     </ul>
   </div>
 
   <!-- METODOLOGIA A 3 COLORI DIVERSI -->
   <div class="method">
     <h3>Come è costruito il "paniere di vita"</h3>
-    <p>Un paniere standardizzato, costruito su dati Numbeo, che rappresenta lo stile di vita di un lavoratore single in un monolocale/bilocale in centro.</p>
-    <div class="method-grid">
+    <p>Per confrontare le città in modo onesto non basta guardare affitti o prezzi dei ristoranti isolatamente: serve un paniere standardizzato che rappresenti lo stile di vita di un lavoratore single in un monolocale/bilocale in centro, senza auto propria.</p>
+<div class="method-grid">
       <div class="card c1">
         <div class="t">1. Casa &amp; trasporti</div>
         <div class="d">Affitto in centro città + abbonamento mensile ai mezzi pubblici</div>
@@ -247,50 +333,75 @@
       <div class="card c3">
         <div class="t">3. Tempo libero</div>
         <div class="d">20 caffè, 8 birre da 0,5l, 4 cene economiche, 2h di campo da tennis</div>
-      </div>
+	  </div>
     </div>
-  </div>
+	<p><br/><i>Fonte dati: Numbeo</i></p>
+</div>
 
   <section class="q" id="sostenibilita">
     <div class="qhead"><span class="qnum">01</span></div>
     <h2>Salario vs costo della vita: l'indice di sostenibilità urbana</h2>
-    <div class="qtext">
-      <p>Quanta parte del salario mensile viene assorbita dalle spese fondamentali. Sopra le 160 ore — un mese lavorativo pieno — il salario medio non basta più.</p>
+	<div class="qtext">
+      <p>Non conta lo stipendio nominale, ma quanta parte del salario mensile viene assorbita dalle spese fondamentali. Qui trasformiamo il paniere in <b>ore di lavoro necessarie per pagarlo</b>: sopra le 160 ore — un mese lavorativo pieno — il salario medio non basta più.</p>
     </div>
-    <div class="chartbox"><div id="plot-sostenibilita" style="width:100%;height:430px;"></div></div>
+    <div class="chartbox"><div id="plot-sostenibilita" style="width:100%;height:420px;"></div></div>
     <div class="callout">
-      <b>Berlino, Praga e Amsterdam</b> restano sotto le 120 ore. <b>Milano</b> è l'unico caso oltre la soglia del 100%: un lavoratore medio non riesce a coprire lo stile di vita di riferimento con il solo stipendio.
+      <b>Berlino, Praga e Amsterdam</b> restano sotto le 120 ore, con un margine di risparmio reale del 25–33% dello stipendio. <b>Bologna, Londra, Barcellona e Roma</b> assorbono tra l'84% e il 98% del salario. <b>Milano</b> è l'unico caso oltre la soglia del 100%: un lavoratore medio non riesce a coprire lo stile di vita di riferimento con il solo stipendio.
     </div>
   </section>
 
   <section class="q" id="paniere">
     <div class="qhead"><span class="qnum">02</span></div>
     <h2>Chi ha il caffè più caro? Il costo del tempo libero</h2>
-    <div class="chartbox"><div id="plot-paniere" style="width:100%;height:480px;"></div></div>
+	<div class="qtext">
+      <p>Oltre alle spese fisse, la vita sociale ha un prezzo: 20 caffè, 8 birre, 4 cene fuori, palestra e un paio d'ore di tennis al mese. Ecco quanto costa restare socialmente attivi, città per città.</p>
+    </div>
+    <div class="chartbox"><div id="plot-paniere" style="width:100%;height:460px;"></div></div>
+    <div class="callout">
+      <b>Londra e Amsterdam</b> guidano la classifica (340–348 €/mese), spinte da uscite serali e cene costose. <b>Milano</b> è terza (306 €) — ma non per colpa del caffè, che resta economico: a pesare sono palestra e tennis. <b>Praga e Barcellona</b> restano sotto i 226 €, oltre un terzo in meno rispetto al Nord Europa.
+    </div>
   </section>
 
   <section class="q" id="indice">
     <div class="qhead"><span class="qnum">03</span></div>
     <h2>L'indice composito: il "costo della vita quotidiana"</h2>
-    <div class="chartbox"><div id="plot-indice" style="width:100%;height:430px;"></div></div>
+    <div class="qtext">
+      <p>Sommare prezzi assoluti non basta: affitto, spesa, tempo libero e trasporti hanno un peso diverso sul budget reale. Abbiamo normalizzato ogni voce su scala 0–100 e pesato affitto 50%, spesa alimentare 25%, tempo libero 15%, trasporti 10%, per ottenere un indice sintetico e comparabile.</p>
+    </div>
+    <div class="chartbox"><div id="plot-indice" style="width:100%;height:420px;"></div></div>
+    <div class="callout">
+      <b>Londra (98,5)</b> e <b>Amsterdam (80,8)</b> sono fuori scala, trainate da affitti fino a 2.600 € e — a Londra — trasporti record (233 €/mese). <b>Berlino e Milano</b> pareggiano quasi sullo stesso indice (~40), ma con potere d'acquisto opposto: lo stipendio berlinese assorbe quel costo molto meglio. <b>Praga</b> chiude al minimo assoluto (1,0).
+    </div>
   </section>
 
   <section class="q" id="paradosso">
     <div class="qhead"><span class="qnum">04</span></div>
     <h2>Il paradosso del potere d'acquisto</h2>
     <div class="qtext">
-      <p>Incrociando i prezzi con lo stipendio orario netto, ogni acquisto diventa "minuti di lavoro necessari".</p>
+      <p>Il prezzo assoluto di un caffè o di una birra racconta solo metà della storia. Incrociandolo con lo stipendio orario netto, ogni acquisto diventa "minuti di lavoro necessari" — e la classifica costruita sui soli prezzi si ribalta.</p>
     </div>
-    <div class="chartbox"><div id="plot-paradosso" style="width:100%;height:440px;"></div></div>
+    <div class="chartbox"><div id="plot-paradosso" style="width:100%;height:420px;"></div></div>
+    <div class="stat-pair">
+      <div class="chip">Cappuccino più "veloce" da guadagnare: <b>Milano, 9,4 min</b></div>
+      <div class="chip">Cappuccino più "lento": <b>Praga, 15,5 min</b> (+65%)</div>
+      <div class="chip">Birra più "veloce": <b>Praga, 12,6 min</b></div>
+      <div class="chip">Birra più "lenta": <b>Bologna, 30,2 min</b></div>
+    </div>
     <div class="callout">
-      Milano è la più conveniente sul caffè (9,4 min) ma tra le più "costose in tempo" sulla birra (29,7 min).
+      Il quadro si ribalta quasi completamente da un prodotto all'altro: Milano è la più conveniente sul caffè ma tra le più "costose in tempo" sulla birra, e viceversa per Praga. <b>Il potere d'acquisto non è un valore unico</b>: dipende dalla combinazione specifica tra prezzo del singolo bene e stipendio orario locale.
     </div>
   </section>
 
   <section class="q" id="cv">
     <div class="qhead"><span class="qnum">05</span></div>
     <h2>Le voci più "eque" vs più diseguali</h2>
-    <div class="chartbox"><div id="plot-cv" style="width:100%;height:450px;"></div></div>
+    <div class="qtext">
+      <p>Non tutti i beni si comportano allo stesso modo tra le città. Il Coefficiente di Variazione (CV%) misura quanto un prezzo si discosta dalla media europea: basso = bene omogeneo ovunque, alto = fortemente legato al contesto locale.</p>
+    </div>
+    <div class="chartbox"><div id="plot-cv" style="width:100%;height:420px;"></div></div>
+    <div class="callout">
+      <b>L'abbonamento ai mezzi pubblici è il bene più diseguale</b> (CV ~100%): dai 22 € di Praga ai 233 € di Londra, riflesso di scelte politiche opposte su sussidi ai trasporti. All'estremo opposto, <b>benzina e spesa alimentare</b> sono quasi identiche ovunque (CV sotto il 13%): trattandosi di commodity globali, la grande distribuzione europea ne livella i prezzi molto più del mercato immobiliare o dei servizi locali.
+    </div>
   </section>
 </div>
 
@@ -299,19 +410,20 @@
     <div class="qhead"><span class="qnum">06 · Conclusione</span></div>
     <h2>Il quadro d'insieme: dove il lavoro vale davvero di più</h2>
     <div class="qtext">
-      <p>Ricomponendo tutte le voci di spesa in un unico indicatore — le ore di lavoro mensili necessarie per l'intero paniere — il paradosso iniziale si chiude in un quadro nitido.</p>
+      <p>Ricomponendo tutte le voci di spesa in un unico indicatore il paradosso iniziale si chiude in un quadro nitido.</p>
     </div>
     <div class="chartbox"><div id="plot-mappa" style="width:100%;height:520px;"></div></div>
     <div class="qtext" style="margin-top:22px;">
       <p>La <b>Germania</b>, che sul singolo cappuccino si piazzava solo a metà classifica, risulta il paese con il miglior potere d'acquisto reale: bastano <b>105 ore di lavoro al mese</b> per coprire l'intero paniere. La <b>Repubblica Ceca</b> conferma la doppia natura già vista con la birra: seconda in classifica nonostante uno degli stipendi orari più bassi del gruppo. L'<b>Italia</b> chiude invece all'ultimo posto, con una media di quasi <b>152 ore mensili</b> — pur ospitando la città con il caffè "più economico in minuti" di tutto il campione.</p>
     </div>
-    <p class="final-line">Il vero indicatore del potere d'acquisto non è il prezzo di un singolo scontrino, ma il tempo di lavoro che quel prezzo rappresenta — ed è solo mettendo in relazione ogni voce di spesa con lo stipendio reale che il costo della vita smette di essere un'illusione statistica.</p>
+    <p class="final-line"><b>Il vero indicatore del potere d'acquisto non è il prezzo di un singolo scontrino, ma il tempo di lavoro che quel prezzo rappresenta — ed è solo mettendo in relazione ogni voce di spesa con lo stipendio reale che il costo della vita smette di essere un'illusione statistica.</b></p>
   </div>
 </div>
 
 <footer>
-  <div class="wrap">Dati: Numbeo · Elaborazione indipendente su 8 città europee</div>
+  <div class="wrap">Dati: Numbeo · Elaborazione indipendente su 8 città europee · Milano, Roma, Bologna, Amsterdam, Berlino, Londra, Barcellona, Praga</div>
 </footer>
+
 
 <script>
   const MAIN_FONT = { family: "Inter, -apple-system, sans-serif", color: "#1C2024", size: 12 };
