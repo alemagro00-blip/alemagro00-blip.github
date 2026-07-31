@@ -16,8 +16,12 @@
             --accent-hover: #0369a1;
             --accent-light: #f0f9ff;
             --border-color: #e2e8f0;
-            --badge-bg: #e0f2fe;
-            --badge-text: #0369a1;
+            /* Badge Energia & Ambiente (Azzurro) */
+            --badge-bg-env: #e0f2fe;
+            --badge-text-env: #0369a1;
+            /* Badge Economia & Società (Dorato/Ambra) */
+            --badge-bg-eco: #fef3c7;
+            --badge-text-eco: #b45309;
         }
 
         body {
@@ -29,34 +33,31 @@
             line-height: 1.6;
         }
 
-        /* HEADER CON GRIGLIA A PUNTI PULITA (SENZA AZZURRO) */
+        /* HEADER CON GRIGLIA A PUNTI PULITA */
         header {
             text-align: center;
             padding: 65px 20px 50px;
-            background-color: #f8fafc; /* Sfondo grigio leggerissimo ed elegante */
-            background-image: radial-gradient(#cbd5e1 1.2px, transparent 1.2px); /* Punti grigi nitidi */
+            background-color: #f8fafc;
+            background-image: radial-gradient(#cbd5e1 1.2px, transparent 1.2px);
             background-size: 24px 24px;
             border-bottom: 1px solid var(--border-color);
             width: 100%;
             box-sizing: border-box;
         }
         
-        /* CONTAINER CENTRATO PER IL LOGO */
         .brand-container {
             display: flex;
-            justify-content: center; /* Centra orizzontalmente */
+            justify-content: center;
             align-items: center;
             width: 100%;
             margin-bottom: 10px;
         }
         
-        /* LOGO BEN RAGGRUPPATO ED EQUILIBRATO */
         .main-logo {
-            height: 70px;          /* Dimensione ideale per il logo */
+            height: 70px;
             width: auto;
             display: block;
-            margin: 0 auto;        /* Forzatura centraggio */
-            /* Sposta l'immagine verso sinistra per bilanciarla otticamente al centro */
+            margin: 0 auto;
             transform: translateX(65px); 
         }
         
@@ -78,11 +79,10 @@
             text-align: center;
         }
        
-        /* CONTENITORE CENTRATO CON MARGINI AI LATI */
         .container {
-            max-width: 1050px;       /* Larghezza massima della griglia */
-            margin: 50px auto;       /* Centra il contenitore e stacca dall'header */
-            padding: 0 24px;         /* Garantisce bordi aria ai lati anche su schermi piccoli */
+            max-width: 1050px;
+            margin: 50px auto;
+            padding: 0 24px;
         }
         
         .grid {
@@ -146,11 +146,20 @@
             font-size: 0.75rem;
             text-transform: uppercase;
             font-weight: 700;
-            background-color: var(--badge-bg);
-            color: var(--badge-text);
             padding: 4px 10px;
             border-radius: 6px;
             letter-spacing: 0.5px;
+        }
+
+        /* Colori Badge Specifici */
+        .card-tag.economia {
+            background-color: var(--badge-bg-env);
+            color: var(--badge-text-env);
+        }
+
+        .card-tag.energia {
+            background-color: var(--badge-bg-eco);
+            color: var(--badge-text-eco);
         }
 
         .card-meta {
@@ -175,7 +184,6 @@
             line-height: 1.6;
         }
 
-        /* BOTTONE CTA */
         .card-link {
             text-decoration: none;
             background-color: var(--text-title);
@@ -221,19 +229,19 @@
     <div class="container">
         <div class="grid">
             
-            <!-- SCHEDA ARTICOLO 1: COSTO DELLA VITA -->
+            <!-- SCHEDA ARTICOLO 1: COSTO DELLA VITA (Città: Roma) -->
             <div class="card">
                 <div class="card-img-wrapper">
-                    <!-- Immagine di una città europea (Parigi/Cafè vibe) da Unsplash -->
-                    <img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=1000&q=80" class="card-img" alt="Città europea">
+                    <!-- Immagine di Roma (San Pietro al tramonto) -->
+                    <img src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1000&q=80" class="card-img" alt="Roma">
                 </div>
                 <div class="card-body">
                     <div class="card-header-info">
-                        <span class="card-tag">🏙️ Economia & Società</span>
+                        <span class="card-tag economia">💰 Economia & Società</span>
                         <span class="card-meta">⏱️ 5 min</span>
                     </div>
                     <h2 class="card-title">Il costo nascosto della vita</h2>
-                    <p class="card-excerpt">Stipendi, affitti, caffè e birre di otto città europee messi a confronto non in euro, ma nell'unica valuta che conta davvero: le ore di lavoro necessarie per permetterseli.</p>
+                    <p class="card-excerpt">Otto città europee a confronto attraverso la metrica che conta davvero: non gli euro, ma le ore di vita necessarie per sostenere il costo della vita.</p>
                     <a href="costo_della_vita_report.html" class="card-link">Esplora i Dati &rarr;</a>
                 </div>
             </div>
@@ -241,12 +249,11 @@
             <!-- SCHEDA ARTICOLO 2: RINNOVABILI -->
             <div class="card">
                 <div class="card-img-wrapper">
-                    <!-- URL AFFIDABILE DA UNSPLASH SOURCE -->
                     <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=1000&q=80" class="card-img" alt="Transizione energetica">
                 </div>
                 <div class="card-body">
                     <div class="card-header-info">
-                        <span class="card-tag">🌱 Energia & Ambiente</span>
+                        <span class="card-tag energia">🌱 Energia & Ambiente</span>
                         <span class="card-meta">⏱️ 6 min</span>
                     </div>
                     <h2 class="card-title">La Corsa alle Rinnovabili</h2>
@@ -264,3 +271,5 @@
 
 </body>
 </html>
+
+
