@@ -36,23 +36,33 @@
   .wrap{max-width:920px; margin:0 auto; padding:0 28px;}
   a{color:var(--rust);}
 
-  /* Pulsante Torna alla Home */
+  /* Pulsante Torna alla Home aggiornato con più spazio e click garantito */
   .back-link {
-    display: inline-block;
-    margin-bottom: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 32px; /* Più spazio verticale dal testo sottostante */
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.6); /* Sfondino chiaro per renderlo ancora più visibile e cliccabile */
+    border: 1px solid var(--line);
+    border-radius: 6px;
     color: var(--amber-l);
     text-decoration: none;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 13px;
     font-weight: 600;
     letter-spacing: .02em;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-  }
-  .back-link:hover {
-    opacity: 0.8;
-    transform: translateX(-4px);
+    position: relative;
+    z-index: 10; /* Assicura che nessun overlay blocchi il click */
+    cursor: pointer;
+    transition: all 0.2s ease;
   }
 
+  .back-link:hover {
+    background: #ffffff;
+    color: var(--ink);
+    transform: translateX(-3px);
+  }
   /* ---------- HERO (Ora in tono Pastello Chiaro) ---------- */
   .hero {
     background: var(--pastel-hero); 
