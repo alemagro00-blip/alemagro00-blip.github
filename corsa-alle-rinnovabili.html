@@ -3,323 +3,482 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>La Corsa alle Rinnovabili | Data & Stories</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<title>La Corsa alle Rinnovabili - Report Energetico</title>
+
+<!-- Fonts: Fraunces (Titoli eleganti), Plus Jakarta Sans (Corpo leggibile), Space Mono (Dati e etichette) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+<!-- Plotly.js per i grafici -->
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+
 <style>
-:root { color-scheme: light; }
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: #ffffff;
-    color: #263129;
-    margin: 0;
-    padding: 0;
-    line-height: 1.8;
-}
-.article-container { max-width: 880px; margin: 0 auto; padding: 44px 22px 80px; }
-.back-link {
-    display: inline-block; color: #52796F; text-decoration: none; font-weight: 600;
-    font-size: 0.9rem; margin-bottom: 30px; transition: color 0.2s ease;
-}
-.back-link:hover { color: #1B4332; }
-.wide { max-width: 880px; margin-left: auto; margin-right: auto; }
-h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif !important; color: #1B4332 !important; }
-.eyebrow {
-    text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.75rem; font-weight: 600;
-    color: #52796F; margin-bottom: 14px;
-}
-.hero-title {
-    font-size: 2.9rem; font-weight: 700; line-height: 1.12;
-    color: #14261D;
-    margin: 0 0 0.9rem 0; font-family: 'Space Grotesk', sans-serif;
-    letter-spacing: -0.01em;
-}
-.hero-subtitle { font-size: 1.18rem; color: #44534C; max-width: 700px; margin-bottom: 2.2rem; line-height: 1.6; font-weight: 400; }
-.hero-rule { height: 4px; width: 64px; background: linear-gradient(90deg, #1B4332, #52B788); border-radius: 2px; margin-bottom: 2.6rem; }
-.toc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-bottom: 3.4rem; }
-.toc-card {
-    background: #F7FBF8; border: 1px solid #E3F0E6; border-radius: 12px; padding: 14px 16px;
-    text-decoration: none !important; color: #1B4332 !important; font-weight: 600; font-size: 0.92rem;
-    transition: all 0.2s ease; display: block;
-}
-.toc-card:hover { background: #EAF6EE; border-color: #BFE3C9; }
-h2 { font-size: 1.6rem; margin: 0 0 0.9rem 0; scroll-margin-top: 20px; }
-.section-intro { font-size: 1.06rem; line-height: 1.8; color: #33413A; margin-bottom: 1.3rem; }
-.chart-block { width: 100%; margin: 0.6rem 0 1.4rem; }
-.insight-box {
-    background: #F7FBF8; border-left: 4px solid #52B788; border-radius: 4px; padding: 20px 24px;
-    margin: 1.3rem 0 2.8rem 0; font-size: 1.02rem; line-height: 1.75; color: #2D3A34;
-}
-.insight-box b { color: #1B4332; }
-.small-note { font-size: 0.9rem; color: #6B7D74; font-style: italic; margin-top: 0.8rem; margin-bottom: 2.2rem; line-height: 1.6; }
-hr.divider { border: none; border-top: 1px solid #E7EFE9; margin: 3.6rem 0 2.8rem 0; }
-.concl-card { background: #F7FBF8; border: 1px solid #E7EFE9; border-radius: 12px; padding: 20px 24px; margin-bottom: 14px; font-size: 1rem; line-height: 1.7; }
-.concl-card b { color: #1B4332; }
-footer.page-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E7EFE9; font-size: 0.85rem; color: #8AA097; }
-@media (max-width: 768px) {
-    .article-container { padding: 28px 16px 60px; }
-    .hero-title { font-size: 2.1rem; }
-    .hero-subtitle { font-size: 1.02rem; }
-    h2 { font-size: 1.32rem; }
-    .section-intro, .insight-box, .concl-card { font-size: 0.96rem; }
-    .toc-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-    .toc-card { font-size: 0.82rem; padding: 11px 12px; }
-}
+  :root {
+    --bg-main: #F2F4F3;        /* Sfondo Slate/Sandstone chiaro */
+    --card-bg: #FFFFFF;        /* Sfondo card bianco pulito */
+    --ink-dark: #0F172A;       /* Inchiostro carbone profondo */
+    --ink-muted: #475569;      /* Testo secondario */
+    --line-color: #E2E8F0;     /* Linea divisoria singola e leggera */
+    
+    /* Colori d'accento */
+    --accent-emerald: #059669; /* Verde smeraldo per il pulito/positivo */
+    --accent-blue: #2563EB;    /* Blu cobalto per il focus/Italia */
+    --accent-amber: #D97706;   /* Rame per gli avvisi/fossili */
+    --dark-section: #1E293B;  /* Sfondo scuro per il blocco conclusivo */
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { 
+    margin: 0; 
+    background: var(--bg-main); 
+    color: var(--ink-dark); 
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; 
+    font-size: 16px; 
+    line-height: 1.7; 
+    -webkit-font-smoothing: antialiased; 
+  }
+
+  h1, h2, h3, h4 { font-family: 'Fraunces', serif; margin: 0; color: var(--ink-dark); }
+  .mono { font-family: 'Space Mono', monospace; }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 28px; }
+
+  /* Hero Section */
+  .hero { background: var(--ink-dark); color: #F8FAFC; padding: 68px 0 56px; }
+  .eyebrow { font-family: 'Space Mono', monospace; letter-spacing: .14em; text-transform: uppercase; font-size: 11.5px; color: #38BDF8; margin-bottom: 20px; font-weight: 700; }
+  .hero h1 { font-size: clamp(2.4rem, 5.8vw, 3.5rem); font-weight: 700; line-height: 1.1; letter-spacing: -.02em; color: #FFFFFF; }
+  .hero h1 em { font-style: italic; color: #34D399; font-weight: 500; }
+  .hero .sub { max-width: 680px; margin-top: 22px; font-size: 16.5px; line-height: 1.6; color: #94A3B8; }
+  
+  /* Ticker visivo ad alto impatto */
+  .ticker { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #334155; border-radius: 12px; overflow: hidden; }
+  .ticker .cell { background: var(--ink-dark); padding: 24px 28px; }
+  .ticker .label { font-family: 'Space Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; color: #64748B; }
+  .ticker .num { font-family: 'Fraunces', serif; font-size: 42px; font-weight: 700; margin-top: 6px; }
+  .ticker .num.good { color: #34D399; }
+  .ticker .num.warn { color: #FBBF24; }
+  .ticker .cap { font-size: 13.5px; color: #94A3B8; margin-top: 4px; line-height: 1.5; }
+
+  /* Introduzione */
+  .intro { padding: 48px 0 12px; }
+  .lede { font-size: 19px; color: #1E293B; max-width: 780px; font-family: 'Fraunces', serif; font-weight: 500; line-height: 1.55; }
+  .lede b { font-style: italic; font-weight: 600; color: var(--accent-emerald); }
+
+  .method-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 32px 0 12px; }
+  .method-row .card { background: var(--card-bg); border: 1px solid var(--line-color); border-radius: 12px; padding: 22px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+  .method-row .card .t { font-family: 'Space Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; font-weight: 700; margin-bottom: 8px; }
+  .method-row .card.c1 .t { color: var(--accent-emerald); } 
+  .method-row .card.c2 .t { color: var(--accent-blue); } 
+  .method-row .card.c3 .t { color: var(--accent-amber); }
+  .method-row .card .d { font-size: 13.5px; color: var(--ink-muted); line-height: 1.5; }
+
+  /* Sezioni con riga divisoria SINGOLA ed elegante */
+  section.q { padding: 44px 0 20px 0; border-top: 1px solid var(--line-color); }
+  .qhead { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .qnum { font-family: 'Space Mono', monospace; color: var(--accent-emerald); font-size: 12.5px; font-weight: 700; background: rgba(5, 150, 105, 0.1); padding: 2px 8px; border-radius: 4px; }
+  section.q h2 { font-size: clamp(22px, 3.2vw, 30px); letter-spacing: -.01em; font-weight: 600; }
+  .qtext { max-width: 780px; color: #334155; font-size: 16px; margin-top: 12px; }
+  .qtext b { color: var(--ink-dark); }
+
+  /* Box Grafici e Callout */
+  .chartbox { margin-top: 20px; background: var(--card-bg); border: 1px solid var(--line-color); border-radius: 14px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03); }
+  
+  .callout { margin-top: 20px; background: #ECFDF5; border-left: 4px solid var(--accent-emerald); border-radius: 4px 10px 10px 4px; padding: 18px 22px; font-size: 15px; color: #064E3B; }
+  .callout.amber { background: #FFFBEB; border-left-color: var(--accent-amber); color: #78350F; }
+  .callout b { color: #0F172A; }
+  
+  .aside-box { margin-top: 24px; background: var(--ink-dark); color: #F1F5F9; border-radius: 12px; padding: 24px 28px; font-size: 14.5px; line-height: 1.65; }
+  .aside-box .t { font-family: 'Space Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #38BDF8; font-weight: 700; margin-bottom: 8px; }
+  .aside-box b { color: #FFFFFF; }
+
+  /* Tabella Personalizzata */
+  .table-container { margin-top: 20px; overflow-x: auto; border: 1px solid var(--line-color); border-radius: 10px; background: var(--card-bg); }
+  table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14.5px; }
+  th { font-family: 'Space Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; background: #F8FAFC; color: var(--ink-muted); padding: 12px 16px; border-bottom: 1px solid var(--line-color); }
+  td { padding: 14px 16px; border-bottom: 1px solid var(--line-color); color: #334155; }
+  tr:last-child td { border-bottom: none; }
+  tr.highlight { background: #EFF6FF; font-weight: 600; }
+  tr.highlight td { color: var(--accent-blue); }
+
+  /* Conclusione */
+  .conclusion { background: var(--dark-section); color: #F8FAFC; padding: 60px 0 76px; margin-top: 50px; }
+  .conclusion h2 { color: #FFFFFF; }
+  .conclusion .qtext { color: #94A3B8; }
+  .final-line { margin-top: 32px; padding-top: 24px; border-top: 1px solid #334155; font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 21px; color: #38BDF8; max-width: 760px; line-height: 1.4; }
+
+  footer { padding: 32px 0; text-align: center; color: var(--ink-muted); font-size: 12.5px; background: var(--bg-main); border-top: 1px solid var(--line-color); }
+
+  @media (max-width: 840px) {
+    .wrap { padding: 0 16px; } 
+    .hero { padding: 44px 0 36px; }
+    .ticker { grid-template-columns: 1fr; } 
+    .method-row { grid-template-columns: 1fr; }
+    .chartbox { padding: 10px 6px; }
+  }
 </style>
 </head>
 <body>
-<main class="article-container">
-<a href="index.html" class="back-link">&larr; Torna alla Home</a>
 
-<div class="eyebrow">Data & Stories · Energia e Ambiente</div>
-<div class="hero-title">🌱 La Corsa alle Rinnovabili</div>
-<div class="hero-subtitle">Un'analisi globale su 79 paesi: chi guida davvero la transizione energetica, da cosa dipendiamo ancora e quanto conta essere ricchi quando si parla di energia.</div>
-<div class="hero-rule"></div>
-
-<div class="toc-grid">
-<a class="toc-card" href="#sezione-1">🏆 1. Chi vince la corsa alle rinnovabili</a>
-<a class="toc-card" href="#sezione-2">🇮🇹 2. L'Italia vs i grandi d'Europa</a>
-<a class="toc-card" href="#sezione-3">⚡ 3. Da cosa dipendiamo ancora</a>
-<a class="toc-card" href="#sezione-4">🌬️ 4. Solare vs eolico</a>
-<a class="toc-card" href="#sezione-5">💰 5. Ricchezza e consumo energetico</a>
-<a class="toc-card" href="#sezione-6">🗺️ 6. Il mondo in una mappa</a>
-<a class="toc-card" href="#conclusioni">📌 Conclusioni</a>
+<!-- HERO HEADER -->
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Analisi di Settore — Transizione Energetica</div>
+    <h1>La Corsa alle <em>Rinnovabili</em></h1>
+    <p class="sub">Un confronto dettagliato su 79 Paesi: divari geografici, accelerazioni tecnologiche e il paradosso della crescita dei consumi pro capite.</p>
+    <div class="ticker">
+      <div class="cell">
+        <div class="label">Norvegia & Islanda</div>
+        <div class="num good">~98%</div>
+        <div class="cap">Della matrice elettrica è coperta da fonti pulite storiche (idroelettrico e geotermico).</div>
+      </div>
+      <div class="cell">
+        <div class="label">Domanda Primaria Globale</div>
+        <div class="num warn">>60%</div>
+        <div class="cap">Del fabbisogno energetico totale sul pianeta rimane vincolato a petrolio, gas e carbone.</div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<h2 id="sezione-1">1. Chi sta vincendo la corsa alle rinnovabili?</h2>
-<div class="section-intro">Islanda e Norvegia dominano nettamente la classifica mondiale, superando il 70% di energia da fonti rinnovabili. Ma prima di incoronarle campionesse della transizione, vale la pena guardare da dove arriva quel primato.</div>
+<div class="wrap">
+  <!-- INTRODUZIONE -->
+  <div class="intro">
+    <p class="lede">Valutare la transizione ecologica solo attraverso le percentuali di solare o eolico rischia di nascondere la vera realtà. <b>I dati su 79 Nazioni mostrano una profonda spaccatura</b> tra chi gode di vantaggi naturali secolari e chi deve riconvertire da zero il proprio tessuto industriale.</p>
+  </div>
 
-<div id="a84a3db6-bbdb-41c4-beba-689f71623bcd" class="plotly-graph-div chart-block"></div>
-<script type="text/javascript">
-(function() {
-  var desktop = {data: [{"alignmentgroup": "True", "hovertemplate": "renewables_share_energy=%{text}<br>country_label=%{y}<extra></extra>", "legendgroup": "", "marker": {"color": "#B7CDB5", "pattern": {"shape": ""}, "line": {"width": 0}}, "name": "", "offsetgroup": "", "orientation": "h", "showlegend": false, "text": [25.358, 25.84, 25.863, 26.093, 26.656, 27.157, 27.778, 29.669], "textposition": "outside", "x": [25.358, 25.84, 25.863, 26.093, 26.656, 27.157, 27.778, 29.669], "xaxis": "x", "y": ["Ecuador", "Venezuela", "Spain", "Colombia", "Peru", "Canada", "Croatia", "Latvia"], "yaxis": "y", "type": "bar", "textfont": {"color": "#555555", "size": 11}, "texttemplate": "%{text:.1f}%", "width": 0.55}, {"alignmentgroup": "True", "hovertemplate": "renewables_share_energy=%{text}<br>country_label=%{y}<extra></extra>", "legendgroup": "", "marker": {"color": "#84A98C", "pattern": {"shape": ""}, "line": {"width": 0}}, "name": "", "offsetgroup": "", "orientation": "h", "showlegend": false, "text": [32.254, 38.894, 39.741, 39.868, 41.722, 42.554, 43.347, 49.616], "textposition": "outside", "x": [32.254, 38.894, 39.741, 39.868, 41.722, 42.554, 43.347, 49.616], "xaxis": "x", "y": ["Chile", "Finland", "Portugal", "Switzerland", "Denmark", "New Zealand", "Austria", "Brazil"], "yaxis": "y", "type": "bar", "textfont": {"color": "#555555", "size": 11}, "texttemplate": "%{text:.1f}%", "width": 0.55}, {"alignmentgroup": "True", "hovertemplate": "renewables_share_energy=%{text}<br>country_label=%{y}<extra></extra>", "legendgroup": "", "marker": {"color": "#52796F", "pattern": {"shape": ""}, "line": {"width": 0}}, "name": "", "offsetgroup": "", "orientation": "h", "showlegend": false, "text": [51.318], "textposition": "outside", "x": [51.318], "xaxis": "x", "y": ["Sweden"], "yaxis": "y", "type": "bar", "textfont": {"color": "#555555", "size": 11}, "texttemplate": "%{text:.1f}%", "width": 0.55}, {"alignmentgroup": "True", "hovertemplate": "renewables_share_energy=%{text}<br>country_label=%{y}<extra></extra>", "legendgroup": "", "marker": {"color": "#2F5D50", "pattern": {"shape": ""}, "line": {"width": 0}}, "name": "", "offsetgroup": "", "orientation": "h", "showlegend": false, "text": [71.812, 80.498], "textposition": "outside", "x": [71.812, 80.498], "xaxis": "x", "y": ["Norway", "Iceland"], "yaxis": "y", "type": "bar", "textfont": {"color": "#555555", "size": 11}, "texttemplate": "%{text:.1f}%", "width": 0.55}], layout: {"xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "Quota di energia rinnovabile (%)"}, "showgrid": true, "gridcolor": "rgba(0,0,0,0.12)", "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 11}, "automargin": true}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": ""}, "showgrid": false, "categoryorder": "array", "categoryarray": ["Ecuador  \u2014", "Venezuela  \u2014", "Spain  \u2014", "Colombia  \u2014", "Peru  \u2014", "Canada  \u2014", "Croatia  \u2014", "Latvia  \u2014", "Chile  \u2014", "Finland  \u2014", "Portugal  \u2014", "Switzerland  \u2014", "Denmark  \u2014", "New Zealand  \u2014", "Austria  \u2014", "Brazil  \u2014", "Sweden  \u2014", "Norway  \u2014", "Iceland  \u2014"], "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 11}, "automargin": true}, "legend": {"tracegroupgap": 0}, "margin": {"l": 100, "r": 80, "t": 80, "b": 40}, "barmode": "relative", "title": {"text": "<b>Chi guida la transizione<br>energetica</b>", "x": 0.0, "xanchor": "left", "font": {"size": 17, "color": "#1B4332"}}, "height": 580, "showlegend": false, "autosize": true, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "Inter, sans-serif", "color": "#0f172a", "size": 12}, "xaxis_title": "Quota di energia rinnovabile (%)", "yaxis_title": ""}};
-  var mobile = {data: [{"alignmentgroup": "True", "hovertemplate": "renewables_share_energy=%{text}<br>country_label=%{y}<extra></extra>", "legendgroup": "", "marker": {"color": "#B7CDB5", "pattern": {"shape": ""}, "line": {"width": 0}}, "name": "", "offsetgroup": "", "orientation": "h", "showlegend": false, "text": [25.358, 25.84, 25.863, 26.093, 26.656, 27.157, 27.778, 29.669], "textposition": "outside", "x": [25.358, 25.84, 25.863, 26.093, 26.656, 27.157, 27.778, 29.669], "xaxis": "x", "y": ["Ecuador", "Venezuela", "Spain", "Colombia", "Peru", "Canada", "Croatia", "Latvia"], "yaxis": "y", "type": "bar", "textfont": {"color": "#555555", "size": 8.5}, "texttemplate": "%{text:.1f}%", "width": 0.55}, {"alignmentgroup": "True", "hovertemplate": "renewables_share_energy=%{text}<br>country_label=%{y}<extra></extra>", "legendgroup": "", "marker": {"color": "#84A98C", "pattern": {"shape": ""}, "line": {"width": 0}}, "name": "", "offsetgroup": "", "orientation": "h", "showlegend": false, "text": [32.254, 38.894, 39.741, 39.868, 41.722, 42.554, 43.347, 49.616], "textposition": "outside", "x": [32.254, 38.894, 39.741, 39.868, 41.722, 42.554, 43.347, 49.616], "xaxis": "x", "y": ["Chile", "Finland", "Portugal", "Switzerland", "Denmark", "New Zealand", "Austria", "Brazil"], "yaxis": "y", "type": "bar", "textfont": {"color": "#555555", "size": 8.5}, "texttemplate": "%{text:.1f}%", "width": 0.55}, {"alignmentgroup": "True", "hovertemplate": "renewables_share_energy=%{text}<br>country_label=%{y}<extra></extra>", "legendgroup": "", "marker": {"color": "#52796F", "pattern": {"shape": ""}, "line": {"width": 0}}, "name": "", "offsetgroup": "", "orientation": "h", "showlegend": false, "text": [51.318], "textposition": "outside", "x": [51.318], "xaxis": "x", "y": ["Sweden"], "yaxis": "y", "type": "bar", "textfont": {"color": "#555555", "size": 8.5}, "texttemplate": "%{text:.1f}%", "width": 0.55}, {"alignmentgroup": "True", "hovertemplate": "renewables_share_energy=%{text}<br>country_label=%{y}<extra></extra>", "legendgroup": "", "marker": {"color": "#2F5D50", "pattern": {"shape": ""}, "line": {"width": 0}}, "name": "", "offsetgroup": "", "orientation": "h", "showlegend": false, "text": [71.812, 80.498], "textposition": "outside", "x": [71.812, 80.498], "xaxis": "x", "y": ["Norway", "Iceland"], "yaxis": "y", "type": "bar", "textfont": {"color": "#555555", "size": 8.5}, "texttemplate": "%{text:.1f}%", "width": 0.55}], layout: {"xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "Quota di energia rinnovabile (%)"}, "showgrid": true, "gridcolor": "rgba(0,0,0,0.12)", "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 8.5}, "automargin": true}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": ""}, "showgrid": false, "categoryorder": "array", "categoryarray": ["Ecuador  \u2014", "Venezuela  \u2014", "Spain  \u2014", "Colombia  \u2014", "Peru  \u2014", "Canada  \u2014", "Croatia  \u2014", "Latvia  \u2014", "Chile  \u2014", "Finland  \u2014", "Portugal  \u2014", "Switzerland  \u2014", "Denmark  \u2014", "New Zealand  \u2014", "Austria  \u2014", "Brazil  \u2014", "Sweden  \u2014", "Norway  \u2014", "Iceland  \u2014"], "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 8.5}, "automargin": true}, "legend": {"tracegroupgap": 0}, "margin": {"l": 5, "r": 55, "t": 60, "b": 35}, "barmode": "relative", "title": {"text": "<b>Chi guida la transizione<br>energetica</b>", "x": 0.0, "xanchor": "left", "font": {"size": 13, "color": "#1B4332"}}, "height": 430, "showlegend": false, "autosize": true, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "Inter, sans-serif", "color": "#0f172a", "size": 11}, "xaxis_title": "Quota di energia rinnovabile (%)", "yaxis_title": ""}};
-  var el = document.getElementById("a84a3db6-bbdb-41c4-beba-689f71623bcd");
-  var config = {displayModeBar:false, scrollZoom:false, responsive:true};
-  var isMobile = window.matchMedia('(max-width: 768px)').matches;
-  Plotly.newPlot(el, isMobile ? mobile.data : desktop.data, isMobile ? mobile.layout : desktop.layout, config);
-  el.dataset.isMobile = isMobile ? "1" : "0";
-  window.addEventListener('resize', function() {
-    var nowMobile = window.matchMedia('(max-width: 768px)').matches;
-    if ((nowMobile ? "1" : "0") !== el.dataset.isMobile) {
-      el.dataset.isMobile = nowMobile ? "1" : "0";
-      Plotly.react(el, nowMobile ? mobile.data : desktop.data, nowMobile ? mobile.layout : desktop.layout, config);
-    } else {
-      Plotly.Plots.resize(el);
+  <!-- SEZIONE 01: MACRO-CATEGORIE -->
+  <section class="q">
+
+    <h2>Le tre velocità della transizione globale</h2>
+    <div class="qtext">
+      <p>Dall'analisi dei dati internazionali emergono tre profili ben distinti di nazioni impegnate nel processo di decarbonizzazione:</p>
+    </div>
+    
+    <div class="method-row">
+      <div class="card c1">
+        <div class="t">Rendita Geografica</div>
+        <div class="d">Paesi come Norvegia, Brasile o Islanda. La loro quota record di rinnovabili sfiora il 100% grazie a bacini idrici e geotermia storicamente presenti sul territorio.</div>
+      </div>
+      <div class="card c2">
+        <div class="t">Spinta Tecnologica</div>
+        <div class="d">Nazioni come Danimarca, Portogallo e Germania che, partendo da un mix fossile, hanno installato massicciamente parco eolico e solare tramite politiche mirate.</div>
+      </div>
+      <div class="card c3">
+        <div class="t">Iper-Consumo Inerziale</div>
+        <div class="d">Grandi economie il cui ritmo di crescita industriale continua ad assorbire sia la nuova capacità verde sia enormi volumi di fonti fossili tradizionali.</div>
+      </div>
+    </div>
+  </section>
+
+<!-- SEZIONE 02: CHI GUIDA LA TRANSAZIONE ENERGETICA -->
+<section class="q">
+  <div class="qhead">
+    <span class="qnum mono">01</span>
+  </div>
+  <h2>Chi guida la transizione energetica?</h2>
+  <div class="qtext">
+    <p>Islanda e Norvegia dominano nettamente la classifica mondiale, superando il 70% di energia da fonti rinnovabili. Ma prima di incoronarle campionesse della transizione, vale la pena guardare da dove arriva quel primato.</p>
+  </div>
+
+  <!-- 1. PRIMO GRAFICO (CLASSIFICA TOP 10) -->
+  <div class="chartbox">
+    <div id="a84a3db6-bbdb-41c4-beba-689f71623bcd" class="plotly-graph-div"></div>
+  </div>
+
+  <!-- SCRIPT GRAFICO 1 (BARRE TOP 10) -->
+  <script type="text/javascript">
+  (function() {
+    var top10Countries = ["Finland", "Portugal", "Switzerland", "Denmark", "New Zealand", "Austria", "Brazil", "Sweden", "Norway", "Iceland"];
+
+    var desktop = {
+      data: [
+        {
+          "hovertemplate": "renewables_share_energy=%{text:.1f}%<br>country=%{y}<extra></extra>",
+          "marker": { "color": "#D97706" },
+          "orientation": "h", "showlegend": false,
+          "text": [38.894, 39.741, 39.868, 41.722, 42.554, 43.347, 49.616],
+          "textposition": "outside",
+          "x": [38.894, 39.741, 39.868, 41.722, 42.554, 43.347, 49.616],
+          "y": ["Finland", "Portugal", "Switzerland", "Denmark", "New Zealand", "Austria", "Brazil"],
+          "type": "bar",
+          "textfont": { "color": "#64748b", "size": 11, "family": "JetBrains Mono, monospace" },
+          "texttemplate": "%{text:.1f}%", "width": 0.55
+        },
+        {
+          "hovertemplate": "renewables_share_energy=%{text:.1f}%<br>country=%{y}<extra></extra>",
+          "marker": { "color": "#2563EB" },
+          "orientation": "h", "showlegend": false,
+          "text": [51.318], "textposition": "outside", "x": [51.318], "y": ["Sweden"],
+          "type": "bar",
+          "textfont": { "color": "#64748b", "size": 11, "family": "JetBrains Mono, monospace" },
+          "texttemplate": "%{text:.1f}%", "width": 0.55
+        },
+        {
+          "hovertemplate": "renewables_share_energy=%{text:.1f}%<br>country=%{y}<extra></extra>",
+          "marker": { "color": "#059669" },
+          "orientation": "h", "showlegend": false,
+          "text": [71.812, 80.498], "textposition": "outside", "x": [71.812, 80.498], "y": ["Norway", "Iceland"],
+          "type": "bar",
+          "textfont": { "color": "#64748b", "size": 11, "family": "JetBrains Mono, monospace" },
+          "texttemplate": "%{text:.1f}%", "width": 0.55
+        }
+      ],
+      layout: {
+        "title": false,
+        "xaxis": {
+          "title": { "text": "Quota di energia rinnovabile (%)", "font": { "family": "Inter, sans-serif", "size": 12, "color": "#475569" } },
+          "showgrid": true, "gridcolor": "#e5e7eb", "linecolor": "#cbd5e1",
+          "tickfont": { "color": "#475569", "size": 11, "family": "Inter, sans-serif" },
+          "range": [0, 92]
+        },
+        "yaxis": {
+          "title": { "text": "" }, "showgrid": false,
+          "categoryorder": "array", "categoryarray": top10Countries,
+          "linecolor": "#cbd5e1",
+          "tickfont": { "color": "#1e293b", "size": 11.5, "family": "Inter, sans-serif" }
+        },
+        "margin": { "l": 100, "r": 60, "t": 20, "b": 40 },
+        "height": 380, "showlegend": false, "autosize": true,
+        "paper_bgcolor": "transparent", "plot_bgcolor": "transparent",
+        "font": { "family": "Inter, sans-serif", "color": "#1e293b" }
+      }
+    };
+
+    var el = document.getElementById("a84a3db6-bbdb-41c4-beba-689f71623bcd");
+    Plotly.newPlot(el, desktop.data, desktop.layout, {displayModeBar: false, responsive: true});
+  })();
+  </script>
+
+  <!-- NOTA INTERMEDIA TRA I DUE GRAFICI (PICCOLA, CORSIVA E GRIGIO CHIARO) -->
+  <p class="small-note" style="font-size: 0.85rem; font-style: italic; color: #64748b; margin-top: 14px; margin-bottom: 28px; line-height: 1.5;">
+    I paesi in cima alla classifica sono spesso piccoli Stati con condizioni geografiche particolarmente favorevoli (risorse idroelettriche o geotermiche abbondanti rispetto alla popolazione da servire). La quota di rinnovabili premia quindi anche la "fortuna geografica", non solo lo sforzo di transizione. Per un grande paese industrializzato, spostare la stessa percentuale richiede investimenti assoluti molto più ingenti.
+  </p>
+
+  <!-- CALLOUT FINALE IN VERDE -->
+  <div class="callout" style="margin-top: 18px; background-color: #e8f5e9; border-left: 4px solid #2e7d32; padding: 16px; border-radius: 6px; color: #1b4332;">
+    La classifica di oggi però non racconta tutta la storia: la <b>Danimarca</b>, pur non comparendo tra i primissimi, è il paese che ha guadagnato più terreno in assoluto, con un incremento di circa <b>+35 punti percentuali dal 2000</b> — seguita da Portogallo e Lituania. Quindi, chi vince davvero questa corsa? Non c'è una risposta unica: Islanda e Norvegia dominano oggi grazie a risorse naturali che pochi altri hanno, ma la vera storia della transizione la scrivono paesi come Danimarca e Portogallo, partiti da zero o cresciuti più rapidamente di chiunque altro.
+  </div>
+</section>
+    
+
+  <!-- SEZIONE 02: ITALIA VS EUROPA -->
+  <section class="q">
+    <div class="qhead"><span class="qnum mono">02</span></div>
+    <h2>Italia ed Europa: Il quadro comparativo</h2>
+    <div class="qtext">
+      <p>All'interno del panorama europeo, l'Italia registra un posizionamento intermedio. Il paese esprime eccellenze nella produzione fotovoltaica ed una solida storia idroelettrica, ma incontra rallentamenti sistemici nel percorso di riconversione completa.</p>
+    </div>
+
+ <div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>Paese</th>
+        <th>Quota Rinnovabile Elettrica (%)</th>
+        <th>Vettore Principale</th>
+        <th>Caratteristica Strutturale</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><b>Norvegia</b></td>
+        <td>~98%</td>
+        <td>Idroelettrico</td>
+        <td>Saturazione della capacità idrica naturale</td>
+      </tr>
+      <tr>
+        <td><b>Danimarca</b></td>
+        <td>~80%</td>
+        <td>Eolico Offshore</td>
+        <td>Integrazione di rete e riconversione rapida</td>
+      </tr>
+      <tr>
+        <td><b>Portogallo</b></td>
+        <td>~65%</td>
+        <td>Eolico / Solare</td>
+        <td>Continuità di investimenti sul mix integrato</td>
+      </tr>
+      <tr>
+        <td><b>Spagna</b></td>
+        <td>~56%</td>
+        <td>Eolico / Solare</td>
+        <td>Forte accelerazione su fotovoltaico e accumuli utility-scale</td>
+      </tr>
+      <tr>
+        <td><b>Germania</b></td>
+        <td>~50%</td>
+        <td>Eolico / Solare</td>
+        <td>Transizione guidata da imponenti sussidi industriali</td>
+      </tr>
+      <tr class="highlight">
+        <td><b>🇮🇹 Italia</b></td>
+        <td>~38%</td>
+        <td>Solare / Idro</td>
+        <td>Frenata da colli di bottiglia di rete e permitting</td>
+      </tr>
+      <tr>
+        <td><b>Francia</b></td>
+        <td>~28%</td>
+        <td>Idroelettrico / Eolico</td>
+        <td>Mix elettrico dominato dal nucleare, rinnovabili come supporto</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+    <div class="callout">
+      <b>I vincoli della rete italiana:</b> Nonostante l'elevata producibilità fotovoltaica delle regioni meridionali, la capacità della rete di trasmissione verso i poli industriali del Nord rimane insufficiente, generando frequenti tagli della produzione ed un fabbisogno costante di batterie di accumulo su grande scala.
+    </div>
+  </section>
+
+  <!-- SEZIONE 03: GRAFICO PLOTLY MIX PRIMARIO -->
+  <section class="q">
+    <div class="qhead"><span class="qnum mono">03</span></div>
+    <h2>Scomposizione del Mix Energetico Primario</h2>
+    <div class="qtext">
+      <p>Confondere il consumo elettrico con il consumo energetico totale è un errore frequente. Quando si include la domanda per trasporti, riscaldamento e industria, il peso dei idrocarburi rimane dominante.</p>
+    </div>
+
+    <div class="chartbox">
+      <div id="plot-mix" style="width:100%;height:410px;"></div>
+    </div>
+
+    <div class="aside-box">
+      <div class="t">L'importanza dell'elettrificazione</div>
+      Generare elettricità da fonti pulite è solo il primo passo. Se non si accelera la transizione del parco circolante (veicoli elettrici) e della climatizzazione degli edifici (pompe di calore), oltre il <b>60% della domanda primaria</b> continuerà ad essere coperto da derivati del petrolio e gas naturale.
+    </div>
+  </section>
+
+  <!-- SEZIONE 04: PARADOSSO PIL / CONSUMI -->
+  <section class="q">
+    <div class="qhead"><span class="qnum mono">04</span></div>
+    <h2>Il paradosso del PIL e dei consumi pro capite</h2>
+    <div class="qtext">
+      <p>I dati di confronto tra 79 nazioni mettono in luce una correlazione diretta: all'aumentare della ricchezza pro capite (PIL) aumenta la quantità totale di energia consumata dal singolo cittadino[cite: 1].</p>
+    </div>
+
+    <div class="chartbox">
+      <div id="plot-pil" style="width:100%;height:430px;"></div>
+    </div>
+
+    <div class="callout amber">
+      <b>L'effetto di compensazione:</b> Nelle economie avanzate, l'ingresso di nuovi Gigawatt rinnovabili finisce spesso per coprire il naturale incremento della domanda di energia invece di sostituire in quota 1:1 le centrali a combustibile fossile operative.
+    </div>
+  </section>
+
+  <!-- SEZIONE 05: MERCATI EMERGENTI -->
+  <section class="q">
+    <div class="qhead"><span class="qnum mono">05</span></div>
+    <h2>Economie emergenti e la duplice strategia</h2>
+    <div class="qtext">
+      <p>Per i mercati in rapido sviluppo, la priorità prioritaria è garantire energia a basso costo per sostenere la crescita industriale:</p>
+      
+      <p style="margin-top:12px;">
+        • <b>Cina e India:</b> Da un lato guidano la classifica mondiale per capacità solare ed eolica installata ogni anno, ma dall'altro mantengono in funzione e continuano a costruire centrali a carbone per garantire stabilità durante i picchi di carico[cite: 1].<br>
+        • <b>Nazioni in Via di Sviluppo:</b> Faticano ad attrarre i capitali necessari per gli elevati costi di investimento iniziali (CapEx) dei parchi rinnovabili, rimanendo legate ai combustibili fossili.
+      </p>
+    </div>
+  </section>
+</div>
+
+<!-- CONCLUSIONE SCURA -->
+<div class="conclusion">
+  <div class="wrap">
+    <div class="qhead"><span class="qnum mono" style="background:rgba(56,189,248,0.15); color:#38BDF8;">06 · Sintesi Strategica</span></div>
+    <h2>Punti chiave per una de-carbonizzazione reale</h2>
+    
+    <div class="qtext">
+      <p>L'evidenza dei dati raccolti suggerisce che la transizione energetica necessita di azioni mirate per superare gli attuali limiti strutturali:</p>
+      
+		<p style="margin-top:16px;">
+		  1. <b style="color: #f8fafc; font-weight: 600;">Accumuli e Stoccaggi Industriali:</b> La priorità non è solo installare nuove pale o pannelli, ma realizzare sistemi di accumulo (batterie e pompaggi) per gestire l'intermittenza.<br>
+		  2. <b style="color: #f8fafc; font-weight: 600;">Semplificazione e Permitting:</b> Ridurre le tempistiche di autorizzazione per le infrastrutture di rete in paesi come l'Italia.<br>
+		  3. <b style="color: #f8fafc; font-weight: 600;">Disaccoppiamento (Decoupling):</b> Promuovere l'efficienza energetica per spezzare il legame diretto tra crescita economica e aumento del consumo d'energia primaria.
+		</p>
+    </div>
+
+    <p class="final-line">
+      Il valore reale della transizione si misura sulla capacità effettiva di spegnere la capacità di generazione fossile, non solo sulla quantità di energia pulita immessa nei momenti favorevoli.
+    </p>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">Report "La Corsa alle Rinnovabili" · Elaborazione Dati su 79 Nazioni · Piattaforma Energetica</div>
+</footer>
+
+<!-- SCRIPT PLOTLY (Configurazione Colori Coordinati) -->
+<script>
+const isMobile = window.innerWidth <= 600;
+const MAIN_FONT = { family: "Plus Jakarta Sans, sans-serif", color: "#334155", size: isMobile ? 10 : 12 };
+const WHITE_BG = "#FFFFFF";
+const LINE_COLOR = "#E2E8F0";
+
+/* Palette coordinata */
+const COLOR_EMERALD = "#059669";
+const COLOR_BLUE = "#2563EB";
+const COLOR_AMBER = "#D97706";
+const cfg = { displayModeBar: false, responsive: true };
+
+document.addEventListener('DOMContentLoaded', function(){
+
+/* 03. Grafico Stacked Mix Primario */
+  const paesiMix = ["Norvegia", "Danimarca", "Portogallo", "Germania", "Italia", "Cina", "Stati Uniti"];
+  Plotly.newPlot('plot-mix', [
+    { 
+      type: "bar", 
+      name: "Rinnovabili", 
+      x: paesiMix, 
+      y: [68, 42, 38, 22, 19, 15, 12], 
+      marker: { color: COLOR_EMERALD },
+      texttemplate: "%{y:.0f}%",
+      textposition: "inside"
+    },
+    { 
+      type: "bar", 
+      name: "Gas Naturale", 
+      x: paesiMix, 
+      y: [20, 18, 28, 25, 40, 9, 32], 
+      marker: { color: COLOR_BLUE },
+      texttemplate: "%{y:.0f}%",
+      textposition: "inside"
+    },
+    { 
+      type: "bar", 
+      name: "Petrolio & Carbone", 
+      x: paesiMix, 
+      y: [12, 40, 34, 53, 41, 76, 56], 
+      marker: { color: COLOR_AMBER },
+      texttemplate: "%{y:.0f}%",
+      textposition: "inside"
     }
-  });
-})();
+  ], {
+    font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
+    margin: { l: 40, r: 20, t: 20, b: 40 },
+    barmode: "stack",
+    xaxis: { gridcolor: LINE_COLOR },
+    yaxis: { title: { text: "Quota Energia Primaria (%)" }, gridcolor: LINE_COLOR, range: [0, 100] },
+    legend: { orientation: "h", y: 1.12 }
+  }, cfg);
+
+  /* 04. Grafico PIL vs Consumi pro capite */
+  Plotly.newPlot('plot-pil', [{
+    type: "scatter", mode: "markers+text",
+    x: [12000, 28000, 35000, 48000, 52000, 65000, 85000],
+    y: [15, 28, 32, 45, 42, 60, 75],
+    text: ["India", "Cina", "Portogallo", "Italia", "Germania", "USA", "Norvegia"],
+    textposition: "top center",
+    marker: { size: [18, 26, 14, 16, 18, 22, 20], color: [COLOR_AMBER, COLOR_AMBER, COLOR_EMERALD, COLOR_BLUE, COLOR_EMERALD, COLOR_AMBER, COLOR_EMERALD] }
+  }], {
+    font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
+    margin: { l: 50, r: 30, t: 30, b: 50 },
+    xaxis: { title: { text: "PIL Pro Capite (USD)" }, gridcolor: LINE_COLOR },
+    yaxis: { title: { text: "Consumo Energetico Pro Capite (MWh)" }, gridcolor: LINE_COLOR }
+  }, cfg);
+
+});
 </script>
 
-<div class="small-note">I paesi in cima alla classifica sono spesso piccoli Stati con condizioni geografiche particolarmente favorevoli (risorse idroelettriche o geotermiche abbondanti rispetto alla popolazione da servire). La quota di rinnovabili premia quindi anche la "fortuna geografica", non solo lo sforzo di transizione. Per un grande paese industrializzato, spostare la stessa percentuale richiede investimenti assoluti molto più ingenti.</div>
-
-<div id="c6660a51-b10c-4503-b29a-cec093355b5c" class="plotly-graph-div chart-block"></div>
-<script type="text/javascript">
-(function() {
-  var desktop = {data: [{"hovertemplate": "country=Austria<br>year=%{x}<br>renewables_share_energy=%{y}<extra></extra>", "legendgroup": "Austria", "line": {"color": "#2F5D50", "dash": "solid", "width": 2.5}, "marker": {"symbol": "circle", "size": 7}, "mode": "lines+markers", "name": "Austria", "orientation": "v", "showlegend": true, "x": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024], "xaxis": "x", "y": [31.268, 29.411, 28.923, 24.121, 26.119, 26.317, 26.99, 29.094, 29.577, 32.548, 30.113, 29.158, 34.498, 34.024, 35.017, 33.052, 34.026, 33.213, 33.139, 34.189, 36.88, 34.638, 35.134, 40.022, 43.347], "yaxis": "y", "type": "scatter"}, {"hovertemplate": "country=Brazil<br>year=%{x}<br>renewables_share_energy=%{y}<extra></extra>", "legendgroup": "Brazil", "line": {"color": "#52796F", "dash": "solid", "width": 2.5}, "marker": {"symbol": "circle", "size": 7}, "mode": "lines+markers", "name": "Brazil", "orientation": "v", "showlegend": true, "x": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024], "xaxis": "x", "y": [40.939, 37.181, 38.819, 40.449, 40.444, 41.27, 41.147, 42.285, 41.389, 44.157, 42.505, 42.378, 40.259, 38.407, 37.566, 38.708, 41.536, 41.294, 44.126, 45.178, 47.116, 43.673, 47.66, 48.95, 49.616], "yaxis": "y", "type": "scatter"}, {"hovertemplate": "country=Iceland<br>year=%{x}<br>renewables_share_energy=%{y}<extra></extra>", "legendgroup": "Iceland", "line": {"color": "#84A98C", "dash": "solid", "width": 2.5}, "marker": {"symbol": "circle", "size": 7}, "mode": "lines+markers", "name": "Iceland", "orientation": "v", "showlegend": true, "x": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024], "xaxis": "x", "y": [67.054, 68.986, 69.06, 69.009, 68.283, 68.112, 70.76, 74.337, 81.016, 82.491, 83.047, 83.32, 83.699, 83.281, 83.012, 82.168, 80.357, 79.303, 78.7, 80.843, 86.126, 84.494, 82.075, 81.843, 80.498], "yaxis": "y", "type": "scatter"}, {"hovertemplate": "country=Norway<br>year=%{x}<br>renewables_share_energy=%{y}<extra></extra>", "legendgroup": "Norway", "line": {"color": "#A4C3B2", "dash": "solid", "width": 2.5}, "marker": {"symbol": "circle", "size": 7}, "mode": "lines+markers", "name": "Norway", "orientation": "v", "showlegend": true, "x": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024], "xaxis": "x", "y": [70.793, 66.998, 68.324, 62.65, 63.413, 68.685, 65.662, 67.798, 69.317, 67.628, 64.629, 65.624, 69.202, 66.873, 67.914, 67.676, 69.046, 68.894, 68.132, 66.741, 70.963, 71.305, 69.648, 70.758, 71.812], "yaxis": "y", "type": "scatter"}, {"hovertemplate": "country=Portugal<br>year=%{x}<br>renewables_share_energy=%{y}<extra></extra>", "legendgroup": "Portugal", "line": {"color": "#CAD2C5", "dash": "solid", "width": 2.5}, "marker": {"symbol": "circle", "size": 7}, "mode": "lines+markers", "name": "Portugal", "orientation": "v", "showlegend": true, "x": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024], "xaxis": "x", "y": [12.409, 14.858, 9.233, 16.157, 11.475, 7.701, 14.808, 15.435, 14.553, 18.133, 26.402, 23.66, 20.965, 28.202, 29.761, 23.685, 28.268, 20.606, 26.2, 25.366, 30.635, 32.197, 28.753, 34.67, 39.741], "yaxis": "y", "type": "scatter"}, {"hovertemplate": "country=Sweden<br>year=%{x}<br>renewables_share_energy=%{y}<extra></extra>", "legendgroup": "Sweden", "line": {"color": "#2F5D50", "dash": "solid", "width": 2.5}, "marker": {"symbol": "circle", "size": 7}, "mode": "lines+markers", "name": "Sweden", "orientation": "v", "showlegend": true, "x": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024], "xaxis": "x", "y": [36.656, 34.203, 31.103, 27.305, 29.336, 33.911, 31.833, 34.16, 36.048, 38.656, 37.37, 38.676, 42.346, 38.22, 39.703, 45.535, 40.906, 41.625, 41.607, 43.747, 51.056, 50.01, 52.434, 52.459, 51.318], "yaxis": "y", "type": "scatter"}], layout: {"xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "Anno"}, "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 11}, "automargin": true, "showgrid": true, "gridcolor": "rgba(0,0,0,0.12)"}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "Quota di energia rinnovabile (%)"}, "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 11}, "automargin": true, "showgrid": true, "gridcolor": "rgba(0,0,0,0.12)"}, "legend": {"title": "", "tracegroupgap": 0, "font": {"size": 12, "color": "#0f172a"}, "orientation": "h", "yanchor": "top", "y": -0.18, "xanchor": "center", "x": 0.5}, "margin": {"l": 40, "r": 40, "t": 85, "b": 90}, "title": {"text": "<b>Evoluzione della quota di rinnovabili<br>nei paesi leader</b>", "x": 0.0, "xanchor": "left", "font": {"size": 17, "color": "#1B4332"}}, "height": 580, "hovermode": "x unified", "autosize": true, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "Inter, sans-serif", "color": "#0f172a", "size": 12}, "xaxis_title": "Anno", "yaxis_title": "Quota (%)"}};
-  var mobile = {data: [{"hovertemplate": "country=Austria<br>year=%{x}<br>renewables_share_energy=%{y}<extra></extra>", "legendgroup": "Austria", "line": {"color": "#2F5D50", "dash": "solid", "width": 2.5}, "marker": {"symbol": "circle", "size": 5.5}, "mode": "lines+markers", "name": "Austria", "orientation": "v", "showlegend": true, "x": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024], "xaxis": "x", "y": [31.268, 29.411, 28.923, 24.121, 26.119, 26.317, 26.99, 29.094, 29.577, 32.548, 30.113, 29.158, 34.498, 34.024, 35.017, 33.052, 34.026, 33.213, 33.139, 34.189, 36.88, 34.638, 35.134, 40.022, 43.347], "yaxis": "y", "type": "scatter"}, {"hovertemplate": "country=Brazil<br>year=%{x}<br>renewables_share_energy=%{y}<extra></extra>", "legendgroup": "Brazil", "line": {"color": "#52796F", "dash": "solid", "width": 2.5}, "marker": {"symbol": "circle", "size": 5.5}, "mode": "lines+markers", "name": "Brazil", "orientation": "v", "showlegend": true, "x": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024], "xaxis": "x", "y": [40.939, 37.181, 38.819, 40.449, 40.444, 41.27, 41.147, 42.285, 41.389, 44.157, 42.505, 42.378, 40.259, 38.407, 37.566, 38.708, 41.536, 41.294, 44.126, 45.178, 47.116, 43.673, 47.66, 48.95, 49.616], "yaxis": "y", "type": "scatter"}, {"hovertemplate": "country=Iceland<br>year=%{x}<br>renewables_share_energy=%{y}<extra></extra>", "legendgroup": "Iceland", "line": {"color": "#84A98C", "dash": "solid", "width": 2.5}, "marker": {"symbol": "circle", "size": 5.5}, "mode": "lines+markers", "name": "Iceland", "orientation": "v", "showlegend": true, "x": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024], "xaxis": "x", "y": [67.054, 68.986, 69.06, 69.009, 68.283, 68.112, 70.76, 74.337, 81.016, 82.491, 83.047, 83.32, 83.699, 83.281, 83.012, 82.168, 80.357, 79.303, 78.7, 80.843, 86.126, 84.494, 82.075, 81.843, 80.498], "yaxis": "y", "type": "scatter"}, {"hovertemplate": "country=Norway<br>year=%{x}<br>renewables_share_energy=%{y}<extra></extra>", "legendgroup": "Norway", "line": {"color": "#A4C3B2", "dash": "solid", "width": 2.5}, "marker": {"symbol": "circle", "size": 5.5}, "mode": "lines+markers", "name": "Norway", "orientation": "v", "showlegend": true, "x": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024], "xaxis": "x", "y": [70.793, 66.998, 68.324, 62.65, 63.413, 68.685, 65.662, 67.798, 69.317, 67.628, 64.629, 65.624, 69.202, 66.873, 67.914, 67.676, 69.046, 68.894, 68.132, 66.741, 70.963, 71.305, 69.648, 70.758, 71.812], "yaxis": "y", "type": "scatter"}, {"hovertemplate": "country=Portugal<br>year=%{x}<br>renewables_share_energy=%{y}<extra></extra>", "legendgroup": "Portugal", "line": {"color": "#CAD2C5", "dash": "solid", "width": 2.5}, "marker": {"symbol": "circle", "size": 5.5}, "mode": "lines+markers", "name": "Portugal", "orientation": "v", "showlegend": true, "x": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024], "xaxis": "x", "y": [12.409, 14.858, 9.233, 16.157, 11.475, 7.701, 14.808, 15.435, 14.553, 18.133, 26.402, 23.66, 20.965, 28.202, 29.761, 23.685, 28.268, 20.606, 26.2, 25.366, 30.635, 32.197, 28.753, 34.67, 39.741], "yaxis": "y", "type": "scatter"}, {"hovertemplate": "country=Sweden<br>year=%{x}<br>renewables_share_energy=%{y}<extra></extra>", "legendgroup": "Sweden", "line": {"color": "#2F5D50", "dash": "solid", "width": 2.5}, "marker": {"symbol": "circle", "size": 5.5}, "mode": "lines+markers", "name": "Sweden", "orientation": "v", "showlegend": true, "x": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024], "xaxis": "x", "y": [36.656, 34.203, 31.103, 27.305, 29.336, 33.911, 31.833, 34.16, 36.048, 38.656, 37.37, 38.676, 42.346, 38.22, 39.703, 45.535, 40.906, 41.625, 41.607, 43.747, 51.056, 50.01, 52.434, 52.459, 51.318], "yaxis": "y", "type": "scatter"}], layout: {"xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "Anno"}, "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 8.5}, "automargin": true, "showgrid": true, "gridcolor": "rgba(0,0,0,0.12)"}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "Quota di energia rinnovabile (%)"}, "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 8.5}, "automargin": true, "showgrid": true, "gridcolor": "rgba(0,0,0,0.12)"}, "legend": {"title": "", "tracegroupgap": 0, "font": {"size": 9, "color": "#0f172a"}, "orientation": "h", "yanchor": "top", "y": -0.32, "xanchor": "center", "x": 0.5}, "margin": {"l": 10, "r": 15, "t": 75, "b": 65}, "title": {"text": "<b>Evoluzione della quota di rinnovabili<br>nei paesi leader</b>", "x": 0.0, "xanchor": "left", "font": {"size": 13, "color": "#1B4332"}}, "height": 360, "hovermode": "x unified", "autosize": true, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "Inter, sans-serif", "color": "#0f172a", "size": 11}, "xaxis_title": "Anno", "yaxis_title": "Quota (%)"}};
-  var el = document.getElementById("c6660a51-b10c-4503-b29a-cec093355b5c");
-  var config = {displayModeBar:false, scrollZoom:false, responsive:true};
-  var isMobile = window.matchMedia('(max-width: 768px)').matches;
-  Plotly.newPlot(el, isMobile ? mobile.data : desktop.data, isMobile ? mobile.layout : desktop.layout, config);
-  el.dataset.isMobile = isMobile ? "1" : "0";
-  window.addEventListener('resize', function() {
-    var nowMobile = window.matchMedia('(max-width: 768px)').matches;
-    if ((nowMobile ? "1" : "0") !== el.dataset.isMobile) {
-      el.dataset.isMobile = nowMobile ? "1" : "0";
-      Plotly.react(el, nowMobile ? mobile.data : desktop.data, nowMobile ? mobile.layout : desktop.layout, config);
-    } else {
-      Plotly.Plots.resize(el);
-    }
-  });
-})();
-</script>
-
-<div class="insight-box">La classifica di oggi però non racconta tutta la storia: la <b>Danimarca</b>, pur non comparendo tra i primissimi, è il paese che ha guadagnato più terreno in assoluto, con un incremento di circa <b>+35 punti percentuali dal 2000</b> — seguita da Portogallo e Lituania. Quindi, chi vince davvero questa corsa? Non c'è una risposta unica: Islanda e Norvegia dominano oggi grazie a risorse naturali che pochi altri hanno, ma la vera storia della transizione la scrivono paesi come Danimarca e Portogallo, partiti da zero e cresciuti più rapidamente di chiunque altro.</div>
-
-<hr class="divider">
-
-<h2 id="sezione-2">2. L'Italia come si posiziona rispetto ai grandi d'Europa?</h2>
-<div class="section-intro">A livello mondiale l'Italia è 38ª, un ritardo significativo rispetto ai paesi che guidano la transizione. Ma come se la cava rispetto ai suoi vicini più diretti — Germania, Francia e Spagna?</div>
-
-<div id="1f7e75a8-738f-4149-b890-9c72dd55e051" class="plotly-graph-div chart-block"></div>
-<script type="text/javascript">
-(function() {
-  var desktop = {data: [{"hovertemplate": "country=France<br>year=%{x}<br>renewables_share_energy=%{y}<extra></extra>", "legendgroup": "France", "line": {"color": "#95C99A", "dash": "solid", "width": 2.5}, "marker": {"symbol": "circle", "size": 7}, "mode": "lines+markers", "name": "France", "orientation": "v", "showlegend": true, "x": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025], "xaxis": "x", "y": [6.409, 7.072, 5.879, 5.675, 5.684, 5.122, 5.702, 6.356, 7.319, 7.409, 7.882, 6.93, 8.714, 9.857, 9.885, 9.568, 10.362, 9.803, 11.513, 11.754, 13.972, 12.914, 13.726, 15.867, 16.465, null], "yaxis": "y", "type": "scatter"}, {"hovertemplate": "country=Germany<br>year=%{x}<br>renewables_share_energy=%{y}<extra></extra>", "legendgroup": "Germany", "line": {"color": "#74A57F", "dash": "solid", "width": 2.5}, "marker": {"symbol": "circle", "size": 7}, "mode": "lines+markers", "name": "Germany", "orientation": "v", "showlegend": true, "x": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025], "xaxis": "x", "y": [2.738, 2.798, 3.365, 3.477, 4.316, 4.992, 5.797, 7.37, 7.523, 8.147, 8.465, 10.168, 11.46, 11.603, 12.84, 14.318, 14.101, 15.388, 16.263, 17.811, 20.017, 18.082, 20.329, 23.603, 23.968, null], "yaxis": "y", "type": "scatter"}, {"hovertemplate": "country=Italy<br>year=%{x}<br>renewables_share_energy=%{y}<extra></extra>", "legendgroup": "Italy", "line": {"color": "#1B4332", "dash": "solid", "width": 4}, "marker": {"symbol": "circle", "size": 8}, "mode": "lines+markers", "name": "Italy", "orientation": "v", "showlegend": true, "x": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025], "xaxis": "x", "y": [6.853, 7.295, 6.453, 6.06, 6.893, 6.161, 6.427, 6.173, 7.803, 10.127, 10.921, 11.912, 13.499, 16.96, 18.517, 16.66, 16.412, 15.675, 17.059, 17.412, 19.399, 18.014, 15.951, 18.854, 20.931, null], "yaxis": "y", "type": "scatter"}, {"hovertemplate": "country=Spain<br>year=%{x}<br>renewables_share_energy=%{y}<extra></extra>", "legendgroup": "Spain", "line": {"color": "#B7D7B0", "dash": "solid", "width": 2.5}, "marker": {"symbol": "circle", "size": 7}, "mode": "lines+markers", "name": "Spain", "orientation": "v", "showlegend": true, "x": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025], "xaxis": "x", "y": [6.598, 8.709, 6.016, 9.207, 8.02, 6.442, 7.933, 8.869, 9.972, 12.913, 16.49, 15.329, 15.917, 19.29, 19.445, 16.977, 18.117, 15.319, 17.923, 17.063, 21.929, 22.272, 20.877, 24.822, 25.863, null], "yaxis": "y", "type": "scatter"}], layout: {"xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "Anno"}, "showgrid": true, "gridcolor": "rgba(0,0,0,0.12)", "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 11}, "automargin": true}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "Quota di energia rinnovabile (%)"}, "showgrid": true, "gridcolor": "rgba(0,0,0,0.12)", "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 11}, "automargin": true}, "legend": {"title": "", "tracegroupgap": 0, "font": {"size": 12, "color": "#0f172a"}, "orientation": "h", "yanchor": "top", "y": -0.18, "xanchor": "center", "x": 0.5}, "margin": {"l": 70, "r": 50, "t": 70, "b": 90}, "title": {"text": "<b>Italia vs grandi paesi europei</b>", "x": 0.0, "xanchor": "left", "font": {"size": 17, "color": "#1B4332"}}, "height": 550, "hovermode": "x unified", "autosize": true, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "Inter, sans-serif", "color": "#0f172a", "size": 12}, "xaxis_title": "Anno", "yaxis_title": "Quota (%)"}};
-  var mobile = {data: [{"hovertemplate": "country=France<br>year=%{x}<br>renewables_share_energy=%{y}<extra></extra>", "legendgroup": "France", "line": {"color": "#95C99A", "dash": "solid", "width": 2.5}, "marker": {"symbol": "circle", "size": 5.5}, "mode": "lines+markers", "name": "France", "orientation": "v", "showlegend": true, "x": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025], "xaxis": "x", "y": [6.409, 7.072, 5.879, 5.675, 5.684, 5.122, 5.702, 6.356, 7.319, 7.409, 7.882, 6.93, 8.714, 9.857, 9.885, 9.568, 10.362, 9.803, 11.513, 11.754, 13.972, 12.914, 13.726, 15.867, 16.465, null], "yaxis": "y", "type": "scatter"}, {"hovertemplate": "country=Germany<br>year=%{x}<br>renewables_share_energy=%{y}<extra></extra>", "legendgroup": "Germany", "line": {"color": "#74A57F", "dash": "solid", "width": 2.5}, "marker": {"symbol": "circle", "size": 5.5}, "mode": "lines+markers", "name": "Germany", "orientation": "v", "showlegend": true, "x": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025], "xaxis": "x", "y": [2.738, 2.798, 3.365, 3.477, 4.316, 4.992, 5.797, 7.37, 7.523, 8.147, 8.465, 10.168, 11.46, 11.603, 12.84, 14.318, 14.101, 15.388, 16.263, 17.811, 20.017, 18.082, 20.329, 23.603, 23.968, null], "yaxis": "y", "type": "scatter"}, {"hovertemplate": "country=Italy<br>year=%{x}<br>renewables_share_energy=%{y}<extra></extra>", "legendgroup": "Italy", "line": {"color": "#1B4332", "dash": "solid", "width": 4}, "marker": {"symbol": "circle", "size": 7}, "mode": "lines+markers", "name": "Italy", "orientation": "v", "showlegend": true, "x": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025], "xaxis": "x", "y": [6.853, 7.295, 6.453, 6.06, 6.893, 6.161, 6.427, 6.173, 7.803, 10.127, 10.921, 11.912, 13.499, 16.96, 18.517, 16.66, 16.412, 15.675, 17.059, 17.412, 19.399, 18.014, 15.951, 18.854, 20.931, null], "yaxis": "y", "type": "scatter"}, {"hovertemplate": "country=Spain<br>year=%{x}<br>renewables_share_energy=%{y}<extra></extra>", "legendgroup": "Spain", "line": {"color": "#B7D7B0", "dash": "solid", "width": 2.5}, "marker": {"symbol": "circle", "size": 5.5}, "mode": "lines+markers", "name": "Spain", "orientation": "v", "showlegend": true, "x": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025], "xaxis": "x", "y": [6.598, 8.709, 6.016, 9.207, 8.02, 6.442, 7.933, 8.869, 9.972, 12.913, 16.49, 15.329, 15.917, 19.29, 19.445, 16.977, 18.117, 15.319, 17.923, 17.063, 21.929, 22.272, 20.877, 24.822, 25.863, null], "yaxis": "y", "type": "scatter"}], layout: {"xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "Anno"}, "showgrid": true, "gridcolor": "rgba(0,0,0,0.12)", "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 8.5}, "automargin": true}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "Quota di energia rinnovabile (%)"}, "showgrid": true, "gridcolor": "rgba(0,0,0,0.12)", "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 8.5}, "automargin": true}, "legend": {"title": "", "tracegroupgap": 0, "font": {"size": 9, "color": "#0f172a"}, "orientation": "h", "yanchor": "top", "y": -0.36, "xanchor": "center", "x": 0.5}, "margin": {"l": 10, "r": 15, "t": 60, "b": 65}, "title": {"text": "<b>Italia vs grandi paesi europei</b>", "x": 0.0, "xanchor": "left", "font": {"size": 13, "color": "#1B4332"}}, "height": 330, "hovermode": "x unified", "autosize": true, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "Inter, sans-serif", "color": "#0f172a", "size": 11}, "xaxis_title": "Anno", "yaxis_title": "Quota (%)"}};
-  var el = document.getElementById("1f7e75a8-738f-4149-b890-9c72dd55e051");
-  var config = {displayModeBar:false, scrollZoom:false, responsive:true};
-  var isMobile = window.matchMedia('(max-width: 768px)').matches;
-  Plotly.newPlot(el, isMobile ? mobile.data : desktop.data, isMobile ? mobile.layout : desktop.layout, config);
-  el.dataset.isMobile = isMobile ? "1" : "0";
-  window.addEventListener('resize', function() {
-    var nowMobile = window.matchMedia('(max-width: 768px)').matches;
-    if ((nowMobile ? "1" : "0") !== el.dataset.isMobile) {
-      el.dataset.isMobile = nowMobile ? "1" : "0";
-      Plotly.react(el, nowMobile ? mobile.data : desktop.data, nowMobile ? mobile.layout : desktop.layout, config);
-    } else {
-      Plotly.Plots.resize(el);
-    }
-  });
-})();
-</script>
-
-<div class="insight-box">L'Italia cresce in modo costante e si mantiene su livelli competitivi. Tuttavia il confronto mostra come <b>Germania</b> e soprattutto <b>Spagna</b> abbiano accelerato di più negli ultimi anni, mentre la <b>Francia</b> resta su valori più bassi — anche per il forte peso storico del nucleare nel suo mix energetico.</div>
-
-<hr class="divider">
-
-<h2 id="sezione-3">3. Da cosa dipendiamo ancora? Il mix energetico</h2>
-<div class="section-intro">Sapere quanto pesano le rinnovabili è solo metà della storia. L'altra metà è capire su cosa poggia ancora oggi il sistema energetico di ogni paese: un ritratto che rivela quanto ciascuno resti legato alle proprie scelte storiche.</div>
-
-<div id="655d7b21-7c3e-41a7-9c68-9232f1d72f4d" class="plotly-graph-div chart-block"></div>
-<script type="text/javascript">
-(function() {
-  var desktop = {data: [{"alignmentgroup": "True", "hovertemplate": "Fonte=Rinnovabili<br>country=%{x}<br>Quota=%{text}<extra></extra>", "legendgroup": "Rinnovabili", "marker": {"color": "#74C69D", "pattern": {"shape": ""}}, "name": "Rinnovabili", "offsetgroup": "Rinnovabili", "orientation": "v", "showlegend": true, "text": [43.347, 49.616, 17.472, 16.465, 23.968, 80.498, 9.146, 20.931, 71.812, 25.863, 39.868], "textposition": "inside", "x": ["Austria", "Brazil", "China", "France", "Germany", "Iceland", "India", "Italy", "Norway", "Spain", "Switzerland"], "xaxis": "x", "y": [43.347, 49.616, 17.472, 16.465, 23.968, 80.498, 9.146, 20.931, 71.812, 25.863, 39.868], "yaxis": "y", "type": "bar", "texttemplate": "%{text:.0f}%", "cliponaxis": false}, {"alignmentgroup": "True", "hovertemplate": "Fonte=Nucleare<br>country=%{x}<br>Quota=%{text}<extra></extra>", "legendgroup": "Nucleare", "marker": {"color": "#C0C6CC", "pattern": {"shape": ""}}, "name": "Nucleare", "offsetgroup": "Nucleare", "orientation": "v", "showlegend": true, "text": [0.0, 1.006, 2.268, 37.399, 0.0, 0.0, 1.183, 0.0, 0.0, 8.333, 16.96], "textposition": "inside", "x": ["Austria", "Brazil", "China", "France", "Germany", "Iceland", "India", "Italy", "Norway", "Spain", "Switzerland"], "xaxis": "x", "y": [0.0, 1.006, 2.268, 37.399, 0.0, 0.0, 1.183, 0.0, 0.0, 8.333, 16.96], "yaxis": "y", "type": "bar", "texttemplate": "%{text:.0f}%", "cliponaxis": false}, {"alignmentgroup": "True", "hovertemplate": "Fonte=Gas<br>country=%{x}<br>Quota=%{text}<extra></extra>", "legendgroup": "Gas", "marker": {"color": "#E9C46A", "pattern": {"shape": ""}}, "name": "Gas", "offsetgroup": "Gas", "orientation": "v", "showlegend": true, "text": [16.946, 8.198, 8.961, 12.884, 24.886, 0.0, 6.233, 35.034, 6.325, 17.743, 10.432], "textposition": "inside", "x": ["Austria", "Brazil", "China", "France", "Germany", "Iceland", "India", "Italy", "Norway", "Spain", "Switzerland"], "xaxis": "x", "y": [16.946, 8.198, 8.961, 12.884, 24.886, 0.0, 6.233, 35.034, 6.325, 17.743, 10.432], "yaxis": "y", "type": "bar", "texttemplate": "%{text:.0f}%", "cliponaxis": false}, {"alignmentgroup": "True", "hovertemplate": "Fonte=Petrolio<br>country=%{x}<br>Quota=%{text}<extra></extra>", "legendgroup": "Petrolio", "marker": {"color": "#6D6875", "pattern": {"shape": ""}}, "name": "Petrolio", "offsetgroup": "Petrolio", "orientation": "v", "showlegend": true, "text": [32.76, 37.317, 18.491, 31.262, 37.265, 17.564, 26.86, 42.375, 20.209, 46.346, 32.482], "textposition": "inside", "x": ["Austria", "Brazil", "China", "France", "Germany", "Iceland", "India", "Italy", "Norway", "Spain", "Switzerland"], "xaxis": "x", "y": [32.76, 37.317, 18.491, 31.262, 37.265, 17.564, 26.86, 42.375, 20.209, 46.346, 32.482], "yaxis": "y", "type": "bar", "texttemplate": "%{text:.0f}%", "cliponaxis": false}, {"alignmentgroup": "True", "hovertemplate": "Fonte=Carbone<br>country=%{x}<br>Quota=%{text}<extra></extra>", "legendgroup": "Carbone", "marker": {"color": "#2F3B45", "pattern": {"shape": ""}}, "name": "Carbone", "offsetgroup": "Carbone", "orientation": "v", "showlegend": true, "text": [6.947, 3.863, 52.807, 1.99, 13.88, 1.938, 56.578, 1.661, 1.655, 1.715, 0.258], "textposition": "inside", "x": ["Austria", "Brazil", "China", "France", "Germany", "Iceland", "India", "Italy", "Norway", "Spain", "Switzerland"], "xaxis": "x", "y": [6.947, 3.863, 52.807, 1.99, 13.88, 1.938, 56.578, 1.661, 1.655, 1.715, 0.258], "yaxis": "y", "type": "bar", "texttemplate": "%{text:.0f}%", "cliponaxis": false}], layout: {"xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "Paese"}, "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 11}, "automargin": true, "tickangle": -40}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "Quota del mix energetico (%)"}, "range": [0, 100], "showgrid": true, "gridcolor": "rgba(0,0,0,0.12)", "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 11}, "automargin": true}, "legend": {"title": "", "tracegroupgap": 0, "font": {"size": 12, "color": "#0f172a"}, "orientation": "h", "yanchor": "top", "y": -0.28, "xanchor": "center", "x": 0.5}, "margin": {"l": 60, "r": 30, "t": 85, "b": 110}, "barmode": "stack", "title": {"text": "<b>Da cosa dipende ancora<br>il sistema energetico?</b>", "x": 0.0, "xanchor": "left", "font": {"size": 17, "color": "#1B4332"}}, "height": 640, "autosize": true, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "Inter, sans-serif", "color": "#0f172a", "size": 12}, "xaxis_title": "", "yaxis_title": "Quota mix (%)"}};
-  var mobile = {data: [{"alignmentgroup": "True", "hovertemplate": "Fonte=Rinnovabili<br>country=%{x}<br>Quota=%{text}<extra></extra>", "legendgroup": "Rinnovabili", "marker": {"color": "#74C69D", "pattern": {"shape": ""}}, "name": "Rinnovabili", "offsetgroup": "Rinnovabili", "orientation": "v", "showlegend": true, "text": [43.347, 49.616, 17.472, 16.465, 23.968, 80.498, 9.146, 20.931, 71.812, 25.863, 39.868], "textposition": "inside", "x": ["Austria", "Brazil", "China", "France", "Germany", "Iceland", "India", "Italy", "Norway", "Spain", "Switzerland"], "xaxis": "x", "y": [43.347, 49.616, 17.472, 16.465, 23.968, 80.498, 9.146, 20.931, 71.812, 25.863, 39.868], "yaxis": "y", "type": "bar", "texttemplate": "%{text:.0f}%", "cliponaxis": false}, {"alignmentgroup": "True", "hovertemplate": "Fonte=Nucleare<br>country=%{x}<br>Quota=%{text}<extra></extra>", "legendgroup": "Nucleare", "marker": {"color": "#C0C6CC", "pattern": {"shape": ""}}, "name": "Nucleare", "offsetgroup": "Nucleare", "orientation": "v", "showlegend": true, "text": [0.0, 1.006, 2.268, 37.399, 0.0, 0.0, 1.183, 0.0, 0.0, 8.333, 16.96], "textposition": "inside", "x": ["Austria", "Brazil", "China", "France", "Germany", "Iceland", "India", "Italy", "Norway", "Spain", "Switzerland"], "xaxis": "x", "y": [0.0, 1.006, 2.268, 37.399, 0.0, 0.0, 1.183, 0.0, 0.0, 8.333, 16.96], "yaxis": "y", "type": "bar", "texttemplate": "%{text:.0f}%", "cliponaxis": false}, {"alignmentgroup": "True", "hovertemplate": "Fonte=Gas<br>country=%{x}<br>Quota=%{text}<extra></extra>", "legendgroup": "Gas", "marker": {"color": "#E9C46A", "pattern": {"shape": ""}}, "name": "Gas", "offsetgroup": "Gas", "orientation": "v", "showlegend": true, "text": [16.946, 8.198, 8.961, 12.884, 24.886, 0.0, 6.233, 35.034, 6.325, 17.743, 10.432], "textposition": "inside", "x": ["Austria", "Brazil", "China", "France", "Germany", "Iceland", "India", "Italy", "Norway", "Spain", "Switzerland"], "xaxis": "x", "y": [16.946, 8.198, 8.961, 12.884, 24.886, 0.0, 6.233, 35.034, 6.325, 17.743, 10.432], "yaxis": "y", "type": "bar", "texttemplate": "%{text:.0f}%", "cliponaxis": false}, {"alignmentgroup": "True", "hovertemplate": "Fonte=Petrolio<br>country=%{x}<br>Quota=%{text}<extra></extra>", "legendgroup": "Petrolio", "marker": {"color": "#6D6875", "pattern": {"shape": ""}}, "name": "Petrolio", "offsetgroup": "Petrolio", "orientation": "v", "showlegend": true, "text": [32.76, 37.317, 18.491, 31.262, 37.265, 17.564, 26.86, 42.375, 20.209, 46.346, 32.482], "textposition": "inside", "x": ["Austria", "Brazil", "China", "France", "Germany", "Iceland", "India", "Italy", "Norway", "Spain", "Switzerland"], "xaxis": "x", "y": [32.76, 37.317, 18.491, 31.262, 37.265, 17.564, 26.86, 42.375, 20.209, 46.346, 32.482], "yaxis": "y", "type": "bar", "texttemplate": "%{text:.0f}%", "cliponaxis": false}, {"alignmentgroup": "True", "hovertemplate": "Fonte=Carbone<br>country=%{x}<br>Quota=%{text}<extra></extra>", "legendgroup": "Carbone", "marker": {"color": "#2F3B45", "pattern": {"shape": ""}}, "name": "Carbone", "offsetgroup": "Carbone", "orientation": "v", "showlegend": true, "text": [6.947, 3.863, 52.807, 1.99, 13.88, 1.938, 56.578, 1.661, 1.655, 1.715, 0.258], "textposition": "inside", "x": ["Austria", "Brazil", "China", "France", "Germany", "Iceland", "India", "Italy", "Norway", "Spain", "Switzerland"], "xaxis": "x", "y": [6.947, 3.863, 52.807, 1.99, 13.88, 1.938, 56.578, 1.661, 1.655, 1.715, 0.258], "yaxis": "y", "type": "bar", "texttemplate": "%{text:.0f}%", "cliponaxis": false}], layout: {"xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "Paese"}, "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 8.5}, "automargin": true, "tickangle": -50}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "Quota del mix energetico (%)"}, "range": [0, 100], "showgrid": true, "gridcolor": "rgba(0,0,0,0.12)", "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 8.5}, "automargin": true}, "legend": {"title": "", "tracegroupgap": 0, "font": {"size": 9, "color": "#0f172a"}, "orientation": "h", "yanchor": "top", "y": -0.42, "xanchor": "center", "x": 0.5}, "margin": {"l": 10, "r": 15, "t": 75, "b": 95}, "barmode": "stack", "title": {"text": "<b>Da cosa dipende ancora<br>il sistema energetico?</b>", "x": 0.0, "xanchor": "left", "font": {"size": 13, "color": "#1B4332"}}, "height": 440, "autosize": true, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "Inter, sans-serif", "color": "#0f172a", "size": 11}, "xaxis_title": "", "yaxis_title": "Quota mix (%)"}};
-  var el = document.getElementById("655d7b21-7c3e-41a7-9c68-9232f1d72f4d");
-  var config = {displayModeBar:false, scrollZoom:false, responsive:true};
-  var isMobile = window.matchMedia('(max-width: 768px)').matches;
-  Plotly.newPlot(el, isMobile ? mobile.data : desktop.data, isMobile ? mobile.layout : desktop.layout, config);
-  el.dataset.isMobile = isMobile ? "1" : "0";
-  window.addEventListener('resize', function() {
-    var nowMobile = window.matchMedia('(max-width: 768px)').matches;
-    if ((nowMobile ? "1" : "0") !== el.dataset.isMobile) {
-      el.dataset.isMobile = nowMobile ? "1" : "0";
-      Plotly.react(el, nowMobile ? mobile.data : desktop.data, nowMobile ? mobile.layout : desktop.layout, config);
-    } else {
-      Plotly.Plots.resize(el);
-    }
-  });
-})();
-</script>
-
-<div class="insight-box">Il grafico mostra quanto la transizione non proceda in modo uniforme: Islanda e Norvegia hanno un sistema quasi interamente rinnovabile, altri restano ancorati a fossili e nucleare. A livello globale la dipendenza maggiore resta dal <b>petrolio</b> (38,8% in media) e dal <b>gas</b> (27,4%) — insieme coprono ancora quasi due terzi del fabbisogno mondiale. Le <b>rinnovabili</b> si fermano in media al 17,4%, mentre il <b>nucleare</b> resta la fonte più marginale (4,1%), segno di quanto resti un tema controverso in molti paesi.</div>
-
-<hr class="divider">
-
-<h2 id="sezione-4">4. Chi cresce più in fretta tra solare ed eolico?</h2>
-<div class="section-intro">Sono le due tecnologie di cui si parla di più quando si pensa al futuro dell'energia pulita. Ma chi sta davvero correndo più veloce, e quanto pesano rispetto a tutte le altre fonti rinnovabili?</div>
-
-<div id="490e7ac4-81d5-408c-8131-3de5fff8832d" class="plotly-graph-div chart-block"></div>
-<script type="text/javascript">
-(function() {
-  var desktop = {data: [{"hovertemplate": "Fonte=Solare<br>year=%{x}<br>Quota media (%)=%{y}<extra></extra>", "legendgroup": "Solare", "line": {"color": "#F4A261", "dash": "solid", "width": 3}, "marker": {"symbol": "circle", "size": 7}, "mode": "lines+markers", "name": "Solare", "orientation": "v", "showlegend": true, "x": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024], "xaxis": "x", "y": [0.0008354430379746836, 0.001189873417721519, 0.0015949367088607595, 0.0022025316455696205, 0.003354430379746836, 0.00489873417721519, 0.006506329113924051, 0.008936708860759493, 0.01569620253164557, 0.031746835443037975, 0.0519493670886076, 0.11822784810126583, 0.19655696202531647, 0.2881139240506329, 0.36178481012658226, 0.42840506329113925, 0.4857974683544304, 0.5554683544303797, 0.6455569620253165, 0.8103291139240507, 1.0976455696202532, 1.3228481012658226, 1.6846708860759494, 2.1950379746835447, 2.7407215189873417], "yaxis": "y", "type": "scatter"}, {"hovertemplate": "Fonte=Eolico<br>year=%{x}<br>Quota media (%)=%{y}<extra></extra>", "legendgroup": "Eolico", "line": {"color": "#457B9D", "dash": "solid", "width": 3}, "marker": {"symbol": "circle", "size": 7}, "mode": "lines+markers", "name": "Eolico", "orientation": "v", "showlegend": true, "x": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024], "xaxis": "x", "y": [0.11420253164556962, 0.13236708860759494, 0.15610126582278483, 0.18329113924050633, 0.23848101265822785, 0.2912405063291139, 0.329379746835443, 0.41527848101265824, 0.49059493670886073, 0.5976708860759494, 0.682873417721519, 0.8821265822784811, 1.0334177215189873, 1.209772151898734, 1.354759493670886, 1.6100632911392405, 1.6359746835443036, 1.846227848101266, 1.9076582278481014, 2.184696202531646, 2.6273164556962025, 2.6108734177215194, 2.9333037974683545, 3.253050632911392, 3.476835443037975], "yaxis": "y", "type": "scatter"}], layout: {"xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "Anno"}, "showgrid": true, "gridcolor": "rgba(0,0,0,0.12)", "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 11}, "automargin": true}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "Quota media di energia (%)"}, "showgrid": true, "gridcolor": "rgba(0,0,0,0.12)", "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 11}, "automargin": true}, "legend": {"title": "", "tracegroupgap": 0, "font": {"size": 12, "color": "#0f172a"}, "orientation": "h", "yanchor": "top", "y": -0.18, "xanchor": "center", "x": 0.5}, "margin": {"l": 40, "r": 40, "t": 75, "b": 90}, "title": {"text": "<b>Chi cresce pi\u00f9 in fretta: solare o eolico?</b>", "x": 0.0, "xanchor": "left", "font": {"size": 17, "color": "#1B4332"}}, "height": 550, "hovermode": "x unified", "autosize": true, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "Inter, sans-serif", "color": "#0f172a", "size": 12}, "xaxis_title": "Anno", "yaxis_title": "Quota media (%)"}};
-  var mobile = {data: [{"hovertemplate": "Fonte=Solare<br>year=%{x}<br>Quota media (%)=%{y}<extra></extra>", "legendgroup": "Solare", "line": {"color": "#F4A261", "dash": "solid", "width": 3}, "marker": {"symbol": "circle", "size": 6}, "mode": "lines+markers", "name": "Solare", "orientation": "v", "showlegend": true, "x": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024], "xaxis": "x", "y": [0.0008354430379746836, 0.001189873417721519, 0.0015949367088607595, 0.0022025316455696205, 0.003354430379746836, 0.00489873417721519, 0.006506329113924051, 0.008936708860759493, 0.01569620253164557, 0.031746835443037975, 0.0519493670886076, 0.11822784810126583, 0.19655696202531647, 0.2881139240506329, 0.36178481012658226, 0.42840506329113925, 0.4857974683544304, 0.5554683544303797, 0.6455569620253165, 0.8103291139240507, 1.0976455696202532, 1.3228481012658226, 1.6846708860759494, 2.1950379746835447, 2.7407215189873417], "yaxis": "y", "type": "scatter"}, {"hovertemplate": "Fonte=Eolico<br>year=%{x}<br>Quota media (%)=%{y}<extra></extra>", "legendgroup": "Eolico", "line": {"color": "#457B9D", "dash": "solid", "width": 3}, "marker": {"symbol": "circle", "size": 6}, "mode": "lines+markers", "name": "Eolico", "orientation": "v", "showlegend": true, "x": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024], "xaxis": "x", "y": [0.11420253164556962, 0.13236708860759494, 0.15610126582278483, 0.18329113924050633, 0.23848101265822785, 0.2912405063291139, 0.329379746835443, 0.41527848101265824, 0.49059493670886073, 0.5976708860759494, 0.682873417721519, 0.8821265822784811, 1.0334177215189873, 1.209772151898734, 1.354759493670886, 1.6100632911392405, 1.6359746835443036, 1.846227848101266, 1.9076582278481014, 2.184696202531646, 2.6273164556962025, 2.6108734177215194, 2.9333037974683545, 3.253050632911392, 3.476835443037975], "yaxis": "y", "type": "scatter"}], layout: {"xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "Anno"}, "showgrid": true, "gridcolor": "rgba(0,0,0,0.12)", "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 8.5}, "automargin": true}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "Quota media di energia (%)"}, "showgrid": true, "gridcolor": "rgba(0,0,0,0.12)", "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 8.5}, "automargin": true}, "legend": {"title": "", "tracegroupgap": 0, "font": {"size": 9, "color": "#0f172a"}, "orientation": "h", "yanchor": "top", "y": -0.32, "xanchor": "center", "x": 0.5}, "margin": {"l": 10, "r": 15, "t": 72, "b": 60}, "title": {"text": "<b>Chi cresce pi\u00f9 in fretta: solare o eolico?</b>", "x": 0.0, "xanchor": "left", "font": {"size": 13, "color": "#1B4332"}}, "height": 330, "hovermode": "x unified", "autosize": true, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "Inter, sans-serif", "color": "#0f172a", "size": 11}, "xaxis_title": "Anno", "yaxis_title": "Quota media (%)"}};
-  var el = document.getElementById("490e7ac4-81d5-408c-8131-3de5fff8832d");
-  var config = {displayModeBar:false, scrollZoom:false, responsive:true};
-  var isMobile = window.matchMedia('(max-width: 768px)').matches;
-  Plotly.newPlot(el, isMobile ? mobile.data : desktop.data, isMobile ? mobile.layout : desktop.layout, config);
-  el.dataset.isMobile = isMobile ? "1" : "0";
-  window.addEventListener('resize', function() {
-    var nowMobile = window.matchMedia('(max-width: 768px)').matches;
-    if ((nowMobile ? "1" : "0") !== el.dataset.isMobile) {
-      el.dataset.isMobile = nowMobile ? "1" : "0";
-      Plotly.react(el, nowMobile ? mobile.data : desktop.data, nowMobile ? mobile.layout : desktop.layout, config);
-    } else {
-      Plotly.Plots.resize(el);
-    }
-  });
-})();
-</script>
-
-<div class="small-note">L'eolico è passato dallo 0,11% al 3,48% (+3,4 punti), il solare dallo 0,00% al 2,74% (+2,7 punti). L'eolico era già una tecnologia minimamente diffusa nel 2000, mentre il solare partiva praticamente da zero — la sua crescita nasce quasi dal nulla in 25 anni, sostenuta dal crollo dei costi dei pannelli fotovoltaici nell'ultimo decennio.</div>
-
-<div id="558e13e2-1785-4a52-a50e-5dfe00fe2dd0" class="plotly-graph-div chart-block"></div>
-<script type="text/javascript">
-(function() {
-  var desktop = {data: [{"alignmentgroup": "True", "hovertemplate": "Fonte=%{y}<br>Quota media globale (%)=%{text}<extra></extra>", "legendgroup": "Bioenergie", "marker": {"color": "#8D6A4B", "pattern": {"shape": ""}, "line": {"width": 0}}, "name": "Bioenergie", "offsetgroup": "Bioenergie", "orientation": "h", "showlegend": true, "text": [0.79], "textposition": "outside", "x": [0.79], "xaxis": "x", "y": ["Bioenergie"], "yaxis": "y", "type": "bar", "texttemplate": "%{text:.2f}%", "cliponaxis": false}, {"alignmentgroup": "True", "hovertemplate": "Fonte=%{y}<br>Quota media globale (%)=%{text}<extra></extra>", "legendgroup": "Altre rinnovabili", "marker": {"color": "#B0B0B0", "pattern": {"shape": ""}, "line": {"width": 0}}, "name": "Altre rinnovabili", "offsetgroup": "Altre rinnovabili", "orientation": "h", "showlegend": true, "text": [2.3], "textposition": "outside", "x": [2.3], "xaxis": "x", "y": ["Altre rinnovabili"], "yaxis": "y", "type": "bar", "texttemplate": "%{text:.2f}%", "cliponaxis": false}, {"alignmentgroup": "True", "hovertemplate": "Fonte=%{y}<br>Quota media globale (%)=%{text}<extra></extra>", "legendgroup": "Solare", "marker": {"color": "#F4A261", "pattern": {"shape": ""}, "line": {"width": 0}}, "name": "Solare", "offsetgroup": "Solare", "orientation": "h", "showlegend": true, "text": [2.74], "textposition": "outside", "x": [2.74], "xaxis": "x", "y": ["Solare"], "yaxis": "y", "type": "bar", "texttemplate": "%{text:.2f}%", "cliponaxis": false}, {"alignmentgroup": "True", "hovertemplate": "Fonte=%{y}<br>Quota media globale (%)=%{text}<extra></extra>", "legendgroup": "Eolico", "marker": {"color": "#457B9D", "pattern": {"shape": ""}, "line": {"width": 0}}, "name": "Eolico", "offsetgroup": "Eolico", "orientation": "h", "showlegend": true, "text": [3.48], "textposition": "outside", "x": [3.48], "xaxis": "x", "y": ["Eolico"], "yaxis": "y", "type": "bar", "texttemplate": "%{text:.2f}%", "cliponaxis": false}, {"alignmentgroup": "True", "hovertemplate": "Fonte=%{y}<br>Quota media globale (%)=%{text}<extra></extra>", "legendgroup": "Idroelettrico", "marker": {"color": "#2A9D8F", "pattern": {"shape": ""}, "line": {"width": 0}}, "name": "Idroelettrico", "offsetgroup": "Idroelettrico", "orientation": "h", "showlegend": true, "text": [8.1], "textposition": "outside", "x": [8.1], "xaxis": "x", "y": ["Idroelettrico"], "yaxis": "y", "type": "bar", "texttemplate": "%{text:.2f}%", "cliponaxis": false}], layout: {"xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "Quota media di energia (%)"}, "showgrid": true, "gridcolor": "rgba(0,0,0,0.12)", "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 11}, "automargin": true, "range": [0, 9.558]}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": ""}, "categoryorder": "array", "categoryarray": ["Idroelettrico", "Eolico", "Solare", "Altre rinnovabili", "Bioenergie"], "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 11}, "automargin": true}, "legend": {"title": {"text": "Fonte"}, "tracegroupgap": 0}, "margin": {"l": 140, "r": 100, "t": 85, "b": 50}, "barmode": "relative", "title": {"text": "<b>Quali rinnovabili<br>contano davvero?</b>", "x": 0.0, "xanchor": "left", "font": {"size": 17, "color": "#1B4332"}}, "height": 450, "showlegend": false, "autosize": true, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "Inter, sans-serif", "color": "#0f172a", "size": 12}, "xaxis_title": "Quota media (%)", "yaxis_title": ""}};
-  var mobile = {data: [{"alignmentgroup": "True", "hovertemplate": "Fonte=%{y}<br>Quota media globale (%)=%{text}<extra></extra>", "legendgroup": "Bioenergie", "marker": {"color": "#8D6A4B", "pattern": {"shape": ""}, "line": {"width": 0}}, "name": "Bioenergie", "offsetgroup": "Bioenergie", "orientation": "h", "showlegend": true, "text": [0.79], "textposition": "outside", "x": [0.79], "xaxis": "x", "y": ["Bioenergie"], "yaxis": "y", "type": "bar", "texttemplate": "%{text:.2f}%", "cliponaxis": false}, {"alignmentgroup": "True", "hovertemplate": "Fonte=%{y}<br>Quota media globale (%)=%{text}<extra></extra>", "legendgroup": "Altre rinnovabili", "marker": {"color": "#B0B0B0", "pattern": {"shape": ""}, "line": {"width": 0}}, "name": "Altre rinnovabili", "offsetgroup": "Altre rinnovabili", "orientation": "h", "showlegend": true, "text": [2.3], "textposition": "outside", "x": [2.3], "xaxis": "x", "y": ["Altre rinnovabili"], "yaxis": "y", "type": "bar", "texttemplate": "%{text:.2f}%", "cliponaxis": false}, {"alignmentgroup": "True", "hovertemplate": "Fonte=%{y}<br>Quota media globale (%)=%{text}<extra></extra>", "legendgroup": "Solare", "marker": {"color": "#F4A261", "pattern": {"shape": ""}, "line": {"width": 0}}, "name": "Solare", "offsetgroup": "Solare", "orientation": "h", "showlegend": true, "text": [2.74], "textposition": "outside", "x": [2.74], "xaxis": "x", "y": ["Solare"], "yaxis": "y", "type": "bar", "texttemplate": "%{text:.2f}%", "cliponaxis": false}, {"alignmentgroup": "True", "hovertemplate": "Fonte=%{y}<br>Quota media globale (%)=%{text}<extra></extra>", "legendgroup": "Eolico", "marker": {"color": "#457B9D", "pattern": {"shape": ""}, "line": {"width": 0}}, "name": "Eolico", "offsetgroup": "Eolico", "orientation": "h", "showlegend": true, "text": [3.48], "textposition": "outside", "x": [3.48], "xaxis": "x", "y": ["Eolico"], "yaxis": "y", "type": "bar", "texttemplate": "%{text:.2f}%", "cliponaxis": false}, {"alignmentgroup": "True", "hovertemplate": "Fonte=%{y}<br>Quota media globale (%)=%{text}<extra></extra>", "legendgroup": "Idroelettrico", "marker": {"color": "#2A9D8F", "pattern": {"shape": ""}, "line": {"width": 0}}, "name": "Idroelettrico", "offsetgroup": "Idroelettrico", "orientation": "h", "showlegend": true, "text": [8.1], "textposition": "outside", "x": [8.1], "xaxis": "x", "y": ["Idroelettrico"], "yaxis": "y", "type": "bar", "texttemplate": "%{text:.2f}%", "cliponaxis": false}], layout: {"xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "Quota media di energia (%)"}, "showgrid": true, "gridcolor": "rgba(0,0,0,0.12)", "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 8.5}, "automargin": true, "range": [0, 10.53]}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": ""}, "categoryorder": "array", "categoryarray": ["Idroelettrico", "Eolico", "Solare", "Altre rinnovabili", "Bioenergie"], "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 8.5}, "automargin": true}, "legend": {"title": {"text": "Fonte"}, "tracegroupgap": 0}, "margin": {"l": 5, "r": 65, "t": 60, "b": 35}, "barmode": "relative", "title": {"text": "<b>Quali rinnovabili<br>contano davvero?</b>", "x": 0.0, "xanchor": "left", "font": {"size": 13, "color": "#1B4332"}}, "height": 350, "showlegend": false, "autosize": true, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "Inter, sans-serif", "color": "#0f172a", "size": 11}, "xaxis_title": "Quota media (%)", "yaxis_title": ""}};
-  var el = document.getElementById("558e13e2-1785-4a52-a50e-5dfe00fe2dd0");
-  var config = {displayModeBar:false, scrollZoom:false, responsive:true};
-  var isMobile = window.matchMedia('(max-width: 768px)').matches;
-  Plotly.newPlot(el, isMobile ? mobile.data : desktop.data, isMobile ? mobile.layout : desktop.layout, config);
-  el.dataset.isMobile = isMobile ? "1" : "0";
-  window.addEventListener('resize', function() {
-    var nowMobile = window.matchMedia('(max-width: 768px)').matches;
-    if ((nowMobile ? "1" : "0") !== el.dataset.isMobile) {
-      el.dataset.isMobile = nowMobile ? "1" : "0";
-      Plotly.react(el, nowMobile ? mobile.data : desktop.data, nowMobile ? mobile.layout : desktop.layout, config);
-    } else {
-      Plotly.Plots.resize(el);
-    }
-  });
-})();
-</script>
-
-<div class="insight-box">Nonostante la crescita rapida, solare ed eolico restano ancora dietro all'<b>idroelettrico</b>, che con l'8,1% è di gran lunga la fonte rinnovabile più diffusa al mondo — più del doppio dell'eolico e quasi tre volte il solare. La "rivoluzione verde" raccontata dai media è soprattutto una rivoluzione di <i>crescita</i>, non ancora di <i>peso reale</i> sul totale.</div>
-
-<hr class="divider">
-
-<h2 id="sezione-5">5. I paesi ricchi consumano davvero più energia?</h2>
-<div class="section-intro">Confrontiamo la ricchezza media per abitante con quanta energia consuma in media una singola persona, per capire se esiste davvero una relazione tra le due cose.</div>
-
-<div id="1b9fcf85-2ed3-4481-af91-6d7f98c40447" class="plotly-graph-div chart-block"></div>
-<script type="text/javascript">
-(function() {
-  var desktop = {data: [{"hovertemplate": "<b>%{hovertext}</b><br><br>gdp_per_capita=%{x}<br>energy_per_capita=%{y}<br>population=%{marker.size}<br>etichetta=%{text}<extra></extra>", "hovertext": ["Sweden", "Sri Lanka", "Ireland", "Switzerland", "Indonesia", "Iran", "Iceland", "Venezuela", "Russia", "Australia", "Singapore", "Saudi Arabia", "Romania", "Kazakhstan", "Trinidad and Tobago", "France", "Finland", "Japan", "Israel", "Italy", "Turkmenistan", "Philippines", "Poland", "Hungary", "Uzbekistan", "Hong Kong", "Taiwan", "India", "Iraq", "Peru", "Pakistan", "Greece", "Germany", "Thailand", "Luxembourg", "Kuwait", "Ecuador", "Cyprus", "Egypt", "Denmark", "Turkey", "Estonia", "Latvia", "Canada", "Bulgaria", "South Korea", "South Africa", "Norway", "United States", "Ukraine", "Mexico", "Slovenia", "United Arab Emirates", "Croatia", "Lithuania", "Czechia", "Chile", "Oman", "China", "Colombia", "Spain", "Malaysia", "Qatar", "Portugal", "Slovakia", "Belarus", "New Zealand", "Belgium", "Austria", "Azerbaijan", "North Macedonia", "Brazil", "Netherlands", "Morocco", "United Kingdom", "Bangladesh", "Argentina", "Algeria", "Vietnam"], "legendgroup": "", "marker": {"color": "#40916C", "size": [10487335.0, 22834965.0, 5110015.0, 8792180.0, 278830527.0, 89524247.0, 380368.0, 28213015.0, 145579889.0, 26200987.0, 5649888.0, 32175351.0, 19166776.0, 20034612.0, 1495923.0, 66277412.0, 5569300.0, 124997585.0, 9103143.0, 59619106.0, 7230197.0, 113964343.0, 38385734.0, 9684308.0, 34938953.0, 7465913.0, 23420107.0, 1425423209.0, 44070556.0, 33475436.0, 243700667.0, 10412481.0, 84086227.0, 71735321.0, 653315.0, 4589514.0, 17823900.0, 1331376.0, 112618252.0, 5902901.0, 87058469.0, 1350093.0, 1881059.0, 38821259.0, 6825862.0, 51782515.0, 62378417.0, 5456796.0, 341534041.0, 41048768.0, 128613116.0, 2115231.0, 10242085.0, 3907031.0, 2816923.0, 10673216.0, 19553033.0, 4730229.0, 1425179562.0, 51737944.0, 47828386.0, 34695494.0, 2892466.0, 10417074.0, 5473195.0, 9173240.0, 5131731.0, 11641814.0, 9064678.0, 10295307.0, 1840236.0, 210306411.0, 17904421.0, 37329068.0, 68179315.0, 169384891.0, 45407904.0, 45477391.0, 99680656.0], "sizemode": "area", "sizeref": 3563558.0225, "symbol": "circle", "line": {"color": "white", "width": 0.5}, "opacity": 0.65}, "mode": "markers+text", "name": "", "orientation": "v", "showlegend": false, "text": ["", "", "", "", "Indonesia", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "India", "", "", "Pakistan", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "United States", "", "", "", "", "", "", "", "", "", "China", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""], "x": [47124.891229087276, 11156.07570640025, 60350.2965374857, 63623.00908182043, 12552.763417037906, 17561.823838428933, 42115.89944737728, 5305.425982122081, 25631.56803601492, 51305.37427437371, 81736.33149418182, 56685.821153466204, 26334.19763949868, 25138.19896332407, 25077.082157972036, 40308.88784599797, 40607.409810209545, 38196.69673349289, 36989.70382592035, 35827.59694949132, 13485.517023533384, 8904.636286360199, 32069.76159986937, 29468.830342136993, 11264.57522376243, 47775.87052983339, 53282.17710252135, 7349.570695488093, 11972.604266667297, 10206.81652645241, 5411.70028622039, 25343.880361750482, 46495.281015986126, 15670.714829156477, 55300.06005066469, 47709.022609583495, 9819.89826626047, 25729.027654096215, 12967.94546603334, 50725.73838388955, 27406.826716961907, 29627.48241269305, 27244.483046517944, 45369.358691406684, 20274.385345030416, 41279.54475944245, 11599.514042958159, 88390.41290750103, 57075.33610930162, 7531.691929779719, 15810.499473374084, 32802.729093418166, 76127.22608765696, 26179.635040520538, 30108.83074404235, 32133.41223685532, 22929.33815086386, 37493.95815149753, 18921.136473023602, 14355.362737104513, 33978.56428851686, 25293.89546749212, 131990.52538906247, 28387.32934564927, 27472.1486181289, 19161.582959237956, 39090.66162587244, 42062.03555365169, 43996.64490564364, 17034.028419550774, 15634.003673985293, 15156.042521989499, 49128.039977668086, 8348.854239141465, 38358.12423322235, 5066.236439093024, 18827.43506335373, 13101.456657946803, 8364.751422241843], "xaxis": "x", "y": [59279.207, 4265.696, 36487.48, 33835.207, 9859.904, 38985.188, 167531.625, 22898.904, 59257.91, 63386.535, 158521.719, 97902.695, 18791.148, 40893.367, 115685.422, 34796.047, 57499.422, 39974.945, 33816.672, 29444.67, 65250.055, 5010.157, 30919.512, 27575.229, 16958.777, 29120.252, 56225.938, 7057.187, 15429.901, 10099.025, 4017.639, 30188.217, 41094.125, 19347.238, 59423.344, 102111.328, 12495.487, 23790.744, 9857.579, 32903.926, 22617.557, 46890.336, 20474.271, 102122.422, 33606.043, 69899.453, 21580.689, 97780.367, 77627.719, 15074.283, 17858.697, 33377.797, 132096.891, 23846.066, 23098.156, 42043.363, 25750.754, 89754.836, 31235.707, 12123.15, 33289.133, 39068.727, 195336.344, 25206.664, 32867.98, 33086.91, 45347.203, 59651.605, 42122.105, 20425.451, 16701.213, 17744.193, 53288.391, 7146.277, 29480.258, 3023.729, 22049.938, 16145.337, 12976.387], "yaxis": "y", "type": "scatter", "textfont": {"color": "#2F3B45", "size": 11}, "textposition": "top center"}, {"hovertemplate": "<b>OLS trendline</b><br>energy_per_capita = 1.3577 * gdp_per_capita + -492.206<br>R<sup>2</sup>=0.601122<br><br>gdp_per_capita=%{x}<br>energy_per_capita=%{y} <b>(trend)</b><extra></extra>", "legendgroup": "", "marker": {"color": "#40916C", "symbol": "circle", "line": {"color": "white", "width": 0.5}, "opacity": 0.65}, "mode": "lines", "name": "", "showlegend": false, "x": [5066.236439093024, 5305.425982122081, 5411.70028622039, 7349.570695488093, 7531.691929779719, 8348.854239141465, 8364.751422241843, 8904.636286360199, 9819.89826626047, 10206.81652645241, 11156.07570640025, 11264.57522376243, 11599.514042958159, 11972.604266667297, 12552.763417037906, 12967.94546603334, 13101.456657946803, 13485.517023533384, 14355.362737104513, 15156.042521989499, 15634.003673985293, 15670.714829156477, 15810.499473374084, 17034.028419550774, 17561.823838428933, 18827.43506335373, 18921.136473023602, 19161.582959237956, 20274.385345030416, 22929.33815086386, 25077.082157972036, 25138.19896332407, 25293.89546749212, 25343.880361750482, 25631.56803601492, 25729.027654096215, 26179.635040520538, 26334.19763949868, 27244.483046517944, 27406.826716961907, 27472.1486181289, 28387.32934564927, 29468.830342136993, 29627.48241269305, 30108.83074404235, 32069.76159986937, 32133.41223685532, 32802.729093418166, 33978.56428851686, 35827.59694949132, 36989.70382592035, 37493.95815149753, 38196.69673349289, 38358.12423322235, 39090.66162587244, 40308.88784599797, 40607.409810209545, 41279.54475944245, 42062.03555365169, 42115.89944737728, 43996.64490564364, 45369.358691406684, 46495.281015986126, 47124.891229087276, 47709.022609583495, 47775.87052983339, 49128.039977668086, 50725.73838388955, 51305.37427437371, 53282.17710252135, 55300.06005066469, 56685.821153466204, 57075.33610930162, 60350.2965374857, 63623.00908182043, 76127.22608765696, 81736.33149418182, 88390.41290750103, 131990.52538906247], "xaxis": "x", "y": [6386.205109510112, 6710.9518881632075, 6855.240126990322, 9486.279782350133, 9733.545124352759, 10843.003440303104, 10864.5869883802, 11597.586718408953, 12840.234602727873, 13365.552127098612, 14654.357887129227, 14801.667289967554, 15256.412515039836, 15762.955764222708, 16550.635747231347, 17114.32691557594, 17295.59457861406, 17817.031949801396, 18998.018333362113, 20085.098385362817, 20734.02451510211, 20783.86711788273, 20973.6522244554, 22634.83305547286, 23351.418989364298, 25069.73477824306, 25196.95284371613, 25523.40616959201, 27034.253949503858, 30638.873784684805, 33554.85806580006, 33637.8361316816, 33849.22471303768, 33917.08902343418, 34307.68153969743, 34440.00211115659, 35051.79013217728, 35261.63921455253, 36497.53042384554, 36717.94383884585, 36806.63114812717, 38049.16871638337, 39517.5187130922, 39732.92005625821, 40386.44494717175, 43048.79368753421, 43135.2119274733, 44043.94100615461, 45640.3682035963, 48150.793168967255, 49728.58147773579, 50413.205754279465, 51367.31138886615, 51586.48092219644, 52581.04429438013, 54235.0256333906, 54640.327825983215, 55552.88301890413, 56615.26794396034, 56688.3987579231, 59241.880073635315, 61105.60862252547, 62634.26929594111, 63489.08880820904, 64282.1618737121, 64372.92105359053, 66208.75662907849, 68377.94598455368, 69164.91553950442, 71848.81359935936, 74588.48598975709, 76469.92883386539, 76998.77188253238, 81445.17382720244, 85888.52382808925, 102865.45409352046, 110480.91624469537, 119515.13854599529, 178710.8537850165], "yaxis": "y", "type": "scatter", "textfont": {"color": "#2F3B45", "size": 11}, "textposition": "top center"}], layout: {"xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "PIL pro capite (scala logaritmica, $)"}, "type": "log", "showgrid": true, "gridcolor": "rgba(0,0,0,0.12)", "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 11}, "automargin": true}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "Consumo di energia pro capite (kWh)"}, "showgrid": true, "gridcolor": "rgba(0,0,0,0.12)", "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 11}, "automargin": true}, "legend": {"tracegroupgap": 0, "itemsizing": "constant"}, "margin": {"l": 40, "r": 40, "t": 75, "b": 50}, "title": {"text": "<b>Pi\u00f9 ricchi, pi\u00f9 energivori?</b>", "x": 0.0, "xanchor": "left", "font": {"size": 17, "color": "#1B4332"}}, "height": 580, "autosize": true, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "Inter, sans-serif", "color": "#0f172a", "size": 12}, "xaxis_title": "PIL pro capite ($)", "yaxis_title": "Consumo pro capite (kWh)", "showlegend": false}};
-  var mobile = {data: [{"hovertemplate": "<b>%{hovertext}</b><br><br>gdp_per_capita=%{x}<br>energy_per_capita=%{y}<br>population=%{marker.size}<br>etichetta=%{text}<extra></extra>", "hovertext": ["Sweden", "Sri Lanka", "Ireland", "Switzerland", "Indonesia", "Iran", "Iceland", "Venezuela", "Russia", "Australia", "Singapore", "Saudi Arabia", "Romania", "Kazakhstan", "Trinidad and Tobago", "France", "Finland", "Japan", "Israel", "Italy", "Turkmenistan", "Philippines", "Poland", "Hungary", "Uzbekistan", "Hong Kong", "Taiwan", "India", "Iraq", "Peru", "Pakistan", "Greece", "Germany", "Thailand", "Luxembourg", "Kuwait", "Ecuador", "Cyprus", "Egypt", "Denmark", "Turkey", "Estonia", "Latvia", "Canada", "Bulgaria", "South Korea", "South Africa", "Norway", "United States", "Ukraine", "Mexico", "Slovenia", "United Arab Emirates", "Croatia", "Lithuania", "Czechia", "Chile", "Oman", "China", "Colombia", "Spain", "Malaysia", "Qatar", "Portugal", "Slovakia", "Belarus", "New Zealand", "Belgium", "Austria", "Azerbaijan", "North Macedonia", "Brazil", "Netherlands", "Morocco", "United Kingdom", "Bangladesh", "Argentina", "Algeria", "Vietnam"], "legendgroup": "", "marker": {"color": "#40916C", "size": [10487335.0, 22834965.0, 5110015.0, 8792180.0, 278830527.0, 89524247.0, 380368.0, 28213015.0, 145579889.0, 26200987.0, 5649888.0, 32175351.0, 19166776.0, 20034612.0, 1495923.0, 66277412.0, 5569300.0, 124997585.0, 9103143.0, 59619106.0, 7230197.0, 113964343.0, 38385734.0, 9684308.0, 34938953.0, 7465913.0, 23420107.0, 1425423209.0, 44070556.0, 33475436.0, 243700667.0, 10412481.0, 84086227.0, 71735321.0, 653315.0, 4589514.0, 17823900.0, 1331376.0, 112618252.0, 5902901.0, 87058469.0, 1350093.0, 1881059.0, 38821259.0, 6825862.0, 51782515.0, 62378417.0, 5456796.0, 341534041.0, 41048768.0, 128613116.0, 2115231.0, 10242085.0, 3907031.0, 2816923.0, 10673216.0, 19553033.0, 4730229.0, 1425179562.0, 51737944.0, 47828386.0, 34695494.0, 2892466.0, 10417074.0, 5473195.0, 9173240.0, 5131731.0, 11641814.0, 9064678.0, 10295307.0, 1840236.0, 210306411.0, 17904421.0, 37329068.0, 68179315.0, 169384891.0, 45407904.0, 45477391.0, 99680656.0], "sizemode": "area", "sizeref": 3563558.0225, "symbol": "circle", "line": {"color": "white", "width": 0.5}, "opacity": 0.65}, "mode": "markers+text", "name": "", "orientation": "v", "showlegend": false, "text": ["", "", "", "", "Indonesia", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "India", "", "", "Pakistan", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "United States", "", "", "", "", "", "", "", "", "", "China", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""], "x": [47124.891229087276, 11156.07570640025, 60350.2965374857, 63623.00908182043, 12552.763417037906, 17561.823838428933, 42115.89944737728, 5305.425982122081, 25631.56803601492, 51305.37427437371, 81736.33149418182, 56685.821153466204, 26334.19763949868, 25138.19896332407, 25077.082157972036, 40308.88784599797, 40607.409810209545, 38196.69673349289, 36989.70382592035, 35827.59694949132, 13485.517023533384, 8904.636286360199, 32069.76159986937, 29468.830342136993, 11264.57522376243, 47775.87052983339, 53282.17710252135, 7349.570695488093, 11972.604266667297, 10206.81652645241, 5411.70028622039, 25343.880361750482, 46495.281015986126, 15670.714829156477, 55300.06005066469, 47709.022609583495, 9819.89826626047, 25729.027654096215, 12967.94546603334, 50725.73838388955, 27406.826716961907, 29627.48241269305, 27244.483046517944, 45369.358691406684, 20274.385345030416, 41279.54475944245, 11599.514042958159, 88390.41290750103, 57075.33610930162, 7531.691929779719, 15810.499473374084, 32802.729093418166, 76127.22608765696, 26179.635040520538, 30108.83074404235, 32133.41223685532, 22929.33815086386, 37493.95815149753, 18921.136473023602, 14355.362737104513, 33978.56428851686, 25293.89546749212, 131990.52538906247, 28387.32934564927, 27472.1486181289, 19161.582959237956, 39090.66162587244, 42062.03555365169, 43996.64490564364, 17034.028419550774, 15634.003673985293, 15156.042521989499, 49128.039977668086, 8348.854239141465, 38358.12423322235, 5066.236439093024, 18827.43506335373, 13101.456657946803, 8364.751422241843], "xaxis": "x", "y": [59279.207, 4265.696, 36487.48, 33835.207, 9859.904, 38985.188, 167531.625, 22898.904, 59257.91, 63386.535, 158521.719, 97902.695, 18791.148, 40893.367, 115685.422, 34796.047, 57499.422, 39974.945, 33816.672, 29444.67, 65250.055, 5010.157, 30919.512, 27575.229, 16958.777, 29120.252, 56225.938, 7057.187, 15429.901, 10099.025, 4017.639, 30188.217, 41094.125, 19347.238, 59423.344, 102111.328, 12495.487, 23790.744, 9857.579, 32903.926, 22617.557, 46890.336, 20474.271, 102122.422, 33606.043, 69899.453, 21580.689, 97780.367, 77627.719, 15074.283, 17858.697, 33377.797, 132096.891, 23846.066, 23098.156, 42043.363, 25750.754, 89754.836, 31235.707, 12123.15, 33289.133, 39068.727, 195336.344, 25206.664, 32867.98, 33086.91, 45347.203, 59651.605, 42122.105, 20425.451, 16701.213, 17744.193, 53288.391, 7146.277, 29480.258, 3023.729, 22049.938, 16145.337, 12976.387], "yaxis": "y", "type": "scatter", "textfont": {"color": "#2F3B45", "size": 8.5}, "textposition": "top center"}, {"hovertemplate": "<b>OLS trendline</b><br>energy_per_capita = 1.3577 * gdp_per_capita + -492.206<br>R<sup>2</sup>=0.601122<br><br>gdp_per_capita=%{x}<br>energy_per_capita=%{y} <b>(trend)</b><extra></extra>", "legendgroup": "", "marker": {"color": "#40916C", "symbol": "circle", "line": {"color": "white", "width": 0.5}, "opacity": 0.65}, "mode": "lines", "name": "", "showlegend": false, "x": [5066.236439093024, 5305.425982122081, 5411.70028622039, 7349.570695488093, 7531.691929779719, 8348.854239141465, 8364.751422241843, 8904.636286360199, 9819.89826626047, 10206.81652645241, 11156.07570640025, 11264.57522376243, 11599.514042958159, 11972.604266667297, 12552.763417037906, 12967.94546603334, 13101.456657946803, 13485.517023533384, 14355.362737104513, 15156.042521989499, 15634.003673985293, 15670.714829156477, 15810.499473374084, 17034.028419550774, 17561.823838428933, 18827.43506335373, 18921.136473023602, 19161.582959237956, 20274.385345030416, 22929.33815086386, 25077.082157972036, 25138.19896332407, 25293.89546749212, 25343.880361750482, 25631.56803601492, 25729.027654096215, 26179.635040520538, 26334.19763949868, 27244.483046517944, 27406.826716961907, 27472.1486181289, 28387.32934564927, 29468.830342136993, 29627.48241269305, 30108.83074404235, 32069.76159986937, 32133.41223685532, 32802.729093418166, 33978.56428851686, 35827.59694949132, 36989.70382592035, 37493.95815149753, 38196.69673349289, 38358.12423322235, 39090.66162587244, 40308.88784599797, 40607.409810209545, 41279.54475944245, 42062.03555365169, 42115.89944737728, 43996.64490564364, 45369.358691406684, 46495.281015986126, 47124.891229087276, 47709.022609583495, 47775.87052983339, 49128.039977668086, 50725.73838388955, 51305.37427437371, 53282.17710252135, 55300.06005066469, 56685.821153466204, 57075.33610930162, 60350.2965374857, 63623.00908182043, 76127.22608765696, 81736.33149418182, 88390.41290750103, 131990.52538906247], "xaxis": "x", "y": [6386.205109510112, 6710.9518881632075, 6855.240126990322, 9486.279782350133, 9733.545124352759, 10843.003440303104, 10864.5869883802, 11597.586718408953, 12840.234602727873, 13365.552127098612, 14654.357887129227, 14801.667289967554, 15256.412515039836, 15762.955764222708, 16550.635747231347, 17114.32691557594, 17295.59457861406, 17817.031949801396, 18998.018333362113, 20085.098385362817, 20734.02451510211, 20783.86711788273, 20973.6522244554, 22634.83305547286, 23351.418989364298, 25069.73477824306, 25196.95284371613, 25523.40616959201, 27034.253949503858, 30638.873784684805, 33554.85806580006, 33637.8361316816, 33849.22471303768, 33917.08902343418, 34307.68153969743, 34440.00211115659, 35051.79013217728, 35261.63921455253, 36497.53042384554, 36717.94383884585, 36806.63114812717, 38049.16871638337, 39517.5187130922, 39732.92005625821, 40386.44494717175, 43048.79368753421, 43135.2119274733, 44043.94100615461, 45640.3682035963, 48150.793168967255, 49728.58147773579, 50413.205754279465, 51367.31138886615, 51586.48092219644, 52581.04429438013, 54235.0256333906, 54640.327825983215, 55552.88301890413, 56615.26794396034, 56688.3987579231, 59241.880073635315, 61105.60862252547, 62634.26929594111, 63489.08880820904, 64282.1618737121, 64372.92105359053, 66208.75662907849, 68377.94598455368, 69164.91553950442, 71848.81359935936, 74588.48598975709, 76469.92883386539, 76998.77188253238, 81445.17382720244, 85888.52382808925, 102865.45409352046, 110480.91624469537, 119515.13854599529, 178710.8537850165], "yaxis": "y", "type": "scatter", "textfont": {"color": "#2F3B45", "size": 8.5}, "textposition": "top center"}], layout: {"xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "PIL pro capite (scala logaritmica, $)"}, "type": "log", "showgrid": true, "gridcolor": "rgba(0,0,0,0.12)", "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 8.5}, "automargin": true}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "Consumo di energia pro capite (kWh)"}, "showgrid": true, "gridcolor": "rgba(0,0,0,0.12)", "linecolor": "#cbd5e1", "tickfont": {"color": "#0f172a", "size": 8.5}, "automargin": true}, "legend": {"tracegroupgap": 0, "itemsizing": "constant"}, "margin": {"l": 10, "r": 20, "t": 60, "b": 35}, "title": {"text": "<b>Pi\u00f9 ricchi, pi\u00f9 energivori?</b>", "x": 0.0, "xanchor": "left", "font": {"size": 13, "color": "#1B4332"}}, "height": 320, "autosize": true, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "font": {"family": "Inter, sans-serif", "color": "#0f172a", "size": 11}, "xaxis_title": "PIL pro capite ($)", "yaxis_title": "Consumo pro capite (kWh)", "showlegend": false}};
-  var el = document.getElementById("1b9fcf85-2ed3-4481-af91-6d7f98c40447");
-  var config = {displayModeBar:false, scrollZoom:false, responsive:true};
-  var isMobile = window.matchMedia('(max-width: 768px)').matches;
-  Plotly.newPlot(el, isMobile ? mobile.data : desktop.data, isMobile ? mobile.layout : desktop.layout, config);
-  el.dataset.isMobile = isMobile ? "1" : "0";
-  window.addEventListener('resize', function() {
-    var nowMobile = window.matchMedia('(max-width: 768px)').matches;
-    if ((nowMobile ? "1" : "0") !== el.dataset.isMobile) {
-      el.dataset.isMobile = nowMobile ? "1" : "0";
-      Plotly.react(el, nowMobile ? mobile.data : desktop.data, nowMobile ? mobile.layout : desktop.layout, config);
-    } else {
-      Plotly.Plots.resize(el);
-    }
-  });
-})();
-</script>
-
-<div class="insight-box">Più un paese è ricco, più energia consuma ogni suo abitante — e non in modo lineare, ma sempre più velocemente man mano che sale il reddito (correlazione di <b>0,78</b>, un legame forte). Attenzione però a non confondere due cose diverse: quanti abitanti ha un paese e quanta energia consuma ciascuno di loro. Cina, India, Indonesia e Pakistan pesano moltissimo sul consumo energetico <i>mondiale</i> per pura massa demografica, ma il consumo <i>pro capite</i> resta contenuto perché il reddito medio è ancora basso. Gli Stati Uniti invece hanno sia tanta popolazione sia un reddito alto, quindi ogni cittadino consuma molta energia. Il messaggio di fondo: la ricchezza spinge il consumo a persona, ma il consumo energetico mondiale nel suo complesso dipende soprattutto da quante persone vivono sulla Terra — due leve diverse che si sommano.</div>
-
-<hr class="divider">
-
-<h2 id="sezione-6">6. La transizione energetica vista dal mondo</h2>
-<div class="section-intro">Per chiudere, un colpo d'occhio su tutto il pianeta: quanto è diffusa oggi l'energia rinnovabile, paese per paese.</div>
-
-<div id="4dac0878-4a8c-4445-8df9-23c841fce278" class="plotly-graph-div chart-block"></div>
-<script type="text/javascript">
-(function() {
-  var desktop = {data: [{"colorscale": [[0.0, "#D8F3DC"], [1.0, "#D8F3DC"]], "customdata": [[10.795, "0-15%", "CYP"], [0.584, "0-15%", "IRQ"], [10.954, "0-15%", "IDN"], [1.433, "0-15%", "IRN"], [9.146, "0-15%", "IND"], [8.299, "0-15%", "UKR"], [12.706, "0-15%", "HUN"], [1.048, "0-15%", "HKG"], [6.268, "0-15%", "TWN"], [14.278, "0-15%", "LUX"], [0.076, "0-15%", "KWT"], [2.519, "0-15%", "ARE"], [9.795, "0-15%", "ISR"], [12.697, "0-15%", "JPN"], [5.12, "0-15%", "KAZ"], [5.778, "0-15%", "EGY"], [14.803, "0-15%", "ARG"], [5.999, "0-15%", "RUS"], [0.007, "0-15%", "TKM"], [9.746, "0-15%", "CZE"], [0.011, "0-15%", "TTO"], [7.403, "0-15%", "THA"], [1.115, "0-15%", "OMN"], [11.295, "0-15%", "SVK"], [12.05, "0-15%", "USA"], [0.969, "0-15%", "BLR"], [11.454, "0-15%", "BEL"], [4.748, "0-15%", "KOR"], [8.282, "0-15%", "MYS"], [8.251, "0-15%", "MEX"], [3.557, "0-15%", "ZAF"], [8.673, "0-15%", "MAR"], [1.095, "0-15%", "BGD"], [0.728, "0-15%", "SAU"], [12.818, "0-15%", "PHL"], [0.545, "0-15%", "SGP"], [4.303, "0-15%", "AZE"], [12.507, "0-15%", "PAK"], [4.582, "0-15%", "UZB"], [14.733, "0-15%", "AUS"], [13.045, "0-15%", "POL"], [0.811, "0-15%", "QAT"], [0.242, "0-15%", "DZA"]], "geo": "geo", "hovertemplate": "<b>%{hovertext}</b><br><br>renewables_share_energy=%{customdata[0]:.1f}<extra></extra>", "hovertext": ["Cyprus", "Iraq", "Indonesia", "Iran", "India", "Ukraine", "Hungary", "Hong Kong", "Taiwan", "Luxembourg", "Kuwait", "United Arab Emirates", "Israel", "Japan", "Kazakhstan", "Egypt", "Argentina", "Russia", "Turkmenistan", "Czechia", "Trinidad and Tobago", "Thailand", "Oman", "Slovakia", "United States", "Belarus", "Belgium", "South Korea", "Malaysia", "Mexico", "South Africa", "Morocco", "Bangladesh", "Saudi Arabia", "Philippines", "Singapore", "Azerbaijan", "Pakistan", "Uzbekistan", "Australia", "Poland", "Qatar", "Algeria"], "locations": ["CYP", "IRQ", "IDN", "IRN", "IND", "UKR", "HUN", "HKG", "TWN", "LUX", "KWT", "ARE", "ISR", "JPN", "KAZ", "EGY", "ARG", "RUS", "TKM", "CZE", "TTO", "THA", "OMN", "SVK", "USA", "BLR", "BEL", "KOR", "MYS", "MEX", "ZAF", "MAR", "BGD", "SAU", "PHL", "SGP", "AZE", "PAK", "UZB", "AUS", "POL", "QAT", "DZA"], "name": "0-15%", "showlegend": true, "showscale": false, "z": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], "type": "choropleth", "marker": {"line": {"color": "#B0B0B0", "width": 0.6}}}, {"colorscale": [[0.0, "#95D5B2"], [1.0, "#95D5B2"]], "customdata": [[17.472, "15-30%", "CHN"], [26.093, "15-30%", "COL"], [27.778, "15-30%", "HRV"], [23.968, "15-30%", "DEU"], [21.055, "15-30%", "GRC"], [23.414, "15-30%", "LTU"], [25.863, "15-30%", "ESP"], [29.669, "15-30%", "LVA"], [16.425, "15-30%", "BGR"], [21.293, "15-30%", "GBR"], [27.157, "15-30%", "CAN"], [22.18, "15-30%", "IRL"], [20.931, "15-30%", "ITA"], [23.25, "15-30%", "LKA"], [18.119, "15-30%", "NLD"], [19.786, "15-30%", "TUR"], [25.358, "15-30%", "ECU"], [25.84, "15-30%", "VEN"], [19.112, "15-30%", "ROU"], [17.946, "15-30%", "EST"], [16.465, "15-30%", "FRA"], [16.037, "15-30%", "MKD"], [24.736, "15-30%", "SVN"], [26.656, "15-30%", "PER"], [21.534, "15-30%", "VNM"]], "geo": "geo", "hovertemplate": "<b>%{hovertext}</b><br><br>renewables_share_energy=%{customdata[0]:.1f}<extra></extra>", "hovertext": ["China", "Colombia", "Croatia", "Germany", "Greece", "Lithuania", "Spain", "Latvia", "Bulgaria", "United Kingdom", "Canada", "Ireland", "Italy", "Sri Lanka", "Netherlands", "Turkey", "Ecuador", "Venezuela", "Romania", "Estonia", "France", "North Macedonia", "Slovenia", "Peru", "Vietnam"], "locations": ["CHN", "COL", "HRV", "DEU", "GRC", "LTU", "ESP", "LVA", "BGR", "GBR", "CAN", "IRL", "ITA", "LKA", "NLD", "TUR", "ECU", "VEN", "ROU", "EST", "FRA", "MKD", "SVN", "PER", "VNM"], "name": "15-30%", "showlegend": true, "showscale": false, "z": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], "type": "choropleth", "marker": {"line": {"color": "#B0B0B0", "width": 0.6}}}, {"colorscale": [[0.0, "#52B788"], [1.0, "#52B788"]], "customdata": [[39.868, "30-50%", "CHE"], [32.254, "30-50%", "CHL"], [41.722, "30-50%", "DNK"], [38.894, "30-50%", "FIN"], [42.554, "30-50%", "NZL"], [49.616, "30-50%", "BRA"], [39.741, "30-50%", "PRT"], [43.347, "30-50%", "AUT"]], "geo": "geo", "hovertemplate": "<b>%{hovertext}</b><br><br>renewables_share_energy=%{customdata[0]:.1f}<extra></extra>", "hovertext": ["Switzerland", "Chile", "Denmark", "Finland", "New Zealand", "Brazil", "Portugal", "Austria"], "locations": ["CHE", "CHL", "DNK", "FIN", "NZL", "BRA", "PRT", "AUT"], "name": "30-50%", "showlegend": true, "showscale": false, "z": [1, 1, 1, 1, 1, 1, 1, 1], "type": "choropleth", "marker": {"line": {"color": "#B0B0B0", "width": 0.6}}}, {"colorscale": [[0.0, "#1B4332"], [1.0, "#1B4332"]], "customdata": [[51.318, "50%+", "SWE"], [80.498, "50%+", "ISL"], [71.812, "50%+", "NOR"]], "geo": "geo", "hovertemplate": "<b>%{hovertext}</b><br><br>renewables_share_energy=%{customdata[0]:.1f}<extra></extra>", "hovertext": ["Sweden", "Iceland", "Norway"], "locations": ["SWE", "ISL", "NOR"], "name": "50%+", "showlegend": true, "showscale": false, "z": [1, 1, 1], "type": "choropleth", "marker": {"line": {"color": "#B0B0B0", "width": 0.6}}}], layout: {"geo": {"domain": {"x": [0.0, 1.0], "y": [0.0, 1.0]}, "center": {}, "projection": {"type": "natural earth"}, "showframe": false, "showcoastlines": false, "showland": true, "landcolor": "#f8fafc", "showocean": true, "oceancolor": "#ffffff", "showlakes": false, "showcountries": true, "countrycolor": "#B0B0B0", "bgcolor": "#ffffff", "projection_type": "natural earth"}, "legend": {"orientation": "h", "yanchor": "bottom", "y": -0.1, "xanchor": "center", "x": 0.5, "title": "", "font": {"size": 12, "color": "#0f172a"}}, "margin": {"t": 90, "b": 40, "l": 0, "r": 0}, "title": {"text": "<b>La transizione energetica vista dal mondo, oggi</b>", "x": 0.0, "xanchor": "left", "font": {"size": 17, "color": "#1B4332"}}, "height": 600, "paper_bgcolor": "#ffffff", "autosize": true, "font": {"family": "Inter, sans-serif", "color": "#0f172a", "size": 12}}};
-  var mobile = {data: [{"colorscale": [[0.0, "#D8F3DC"], [1.0, "#D8F3DC"]], "customdata": [[10.795, "0-15%", "CYP"], [0.584, "0-15%", "IRQ"], [10.954, "0-15%", "IDN"], [1.433, "0-15%", "IRN"], [9.146, "0-15%", "IND"], [8.299, "0-15%", "UKR"], [12.706, "0-15%", "HUN"], [1.048, "0-15%", "HKG"], [6.268, "0-15%", "TWN"], [14.278, "0-15%", "LUX"], [0.076, "0-15%", "KWT"], [2.519, "0-15%", "ARE"], [9.795, "0-15%", "ISR"], [12.697, "0-15%", "JPN"], [5.12, "0-15%", "KAZ"], [5.778, "0-15%", "EGY"], [14.803, "0-15%", "ARG"], [5.999, "0-15%", "RUS"], [0.007, "0-15%", "TKM"], [9.746, "0-15%", "CZE"], [0.011, "0-15%", "TTO"], [7.403, "0-15%", "THA"], [1.115, "0-15%", "OMN"], [11.295, "0-15%", "SVK"], [12.05, "0-15%", "USA"], [0.969, "0-15%", "BLR"], [11.454, "0-15%", "BEL"], [4.748, "0-15%", "KOR"], [8.282, "0-15%", "MYS"], [8.251, "0-15%", "MEX"], [3.557, "0-15%", "ZAF"], [8.673, "0-15%", "MAR"], [1.095, "0-15%", "BGD"], [0.728, "0-15%", "SAU"], [12.818, "0-15%", "PHL"], [0.545, "0-15%", "SGP"], [4.303, "0-15%", "AZE"], [12.507, "0-15%", "PAK"], [4.582, "0-15%", "UZB"], [14.733, "0-15%", "AUS"], [13.045, "0-15%", "POL"], [0.811, "0-15%", "QAT"], [0.242, "0-15%", "DZA"]], "geo": "geo", "hovertemplate": "<b>%{hovertext}</b><br><br>renewables_share_energy=%{customdata[0]:.1f}<extra></extra>", "hovertext": ["Cyprus", "Iraq", "Indonesia", "Iran", "India", "Ukraine", "Hungary", "Hong Kong", "Taiwan", "Luxembourg", "Kuwait", "United Arab Emirates", "Israel", "Japan", "Kazakhstan", "Egypt", "Argentina", "Russia", "Turkmenistan", "Czechia", "Trinidad and Tobago", "Thailand", "Oman", "Slovakia", "United States", "Belarus", "Belgium", "South Korea", "Malaysia", "Mexico", "South Africa", "Morocco", "Bangladesh", "Saudi Arabia", "Philippines", "Singapore", "Azerbaijan", "Pakistan", "Uzbekistan", "Australia", "Poland", "Qatar", "Algeria"], "locations": ["CYP", "IRQ", "IDN", "IRN", "IND", "UKR", "HUN", "HKG", "TWN", "LUX", "KWT", "ARE", "ISR", "JPN", "KAZ", "EGY", "ARG", "RUS", "TKM", "CZE", "TTO", "THA", "OMN", "SVK", "USA", "BLR", "BEL", "KOR", "MYS", "MEX", "ZAF", "MAR", "BGD", "SAU", "PHL", "SGP", "AZE", "PAK", "UZB", "AUS", "POL", "QAT", "DZA"], "name": "0-15%", "showlegend": true, "showscale": false, "z": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], "type": "choropleth", "marker": {"line": {"color": "#B0B0B0", "width": 0.6}}}, {"colorscale": [[0.0, "#95D5B2"], [1.0, "#95D5B2"]], "customdata": [[17.472, "15-30%", "CHN"], [26.093, "15-30%", "COL"], [27.778, "15-30%", "HRV"], [23.968, "15-30%", "DEU"], [21.055, "15-30%", "GRC"], [23.414, "15-30%", "LTU"], [25.863, "15-30%", "ESP"], [29.669, "15-30%", "LVA"], [16.425, "15-30%", "BGR"], [21.293, "15-30%", "GBR"], [27.157, "15-30%", "CAN"], [22.18, "15-30%", "IRL"], [20.931, "15-30%", "ITA"], [23.25, "15-30%", "LKA"], [18.119, "15-30%", "NLD"], [19.786, "15-30%", "TUR"], [25.358, "15-30%", "ECU"], [25.84, "15-30%", "VEN"], [19.112, "15-30%", "ROU"], [17.946, "15-30%", "EST"], [16.465, "15-30%", "FRA"], [16.037, "15-30%", "MKD"], [24.736, "15-30%", "SVN"], [26.656, "15-30%", "PER"], [21.534, "15-30%", "VNM"]], "geo": "geo", "hovertemplate": "<b>%{hovertext}</b><br><br>renewables_share_energy=%{customdata[0]:.1f}<extra></extra>", "hovertext": ["China", "Colombia", "Croatia", "Germany", "Greece", "Lithuania", "Spain", "Latvia", "Bulgaria", "United Kingdom", "Canada", "Ireland", "Italy", "Sri Lanka", "Netherlands", "Turkey", "Ecuador", "Venezuela", "Romania", "Estonia", "France", "North Macedonia", "Slovenia", "Peru", "Vietnam"], "locations": ["CHN", "COL", "HRV", "DEU", "GRC", "LTU", "ESP", "LVA", "BGR", "GBR", "CAN", "IRL", "ITA", "LKA", "NLD", "TUR", "ECU", "VEN", "ROU", "EST", "FRA", "MKD", "SVN", "PER", "VNM"], "name": "15-30%", "showlegend": true, "showscale": false, "z": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], "type": "choropleth", "marker": {"line": {"color": "#B0B0B0", "width": 0.6}}}, {"colorscale": [[0.0, "#52B788"], [1.0, "#52B788"]], "customdata": [[39.868, "30-50%", "CHE"], [32.254, "30-50%", "CHL"], [41.722, "30-50%", "DNK"], [38.894, "30-50%", "FIN"], [42.554, "30-50%", "NZL"], [49.616, "30-50%", "BRA"], [39.741, "30-50%", "PRT"], [43.347, "30-50%", "AUT"]], "geo": "geo", "hovertemplate": "<b>%{hovertext}</b><br><br>renewables_share_energy=%{customdata[0]:.1f}<extra></extra>", "hovertext": ["Switzerland", "Chile", "Denmark", "Finland", "New Zealand", "Brazil", "Portugal", "Austria"], "locations": ["CHE", "CHL", "DNK", "FIN", "NZL", "BRA", "PRT", "AUT"], "name": "30-50%", "showlegend": true, "showscale": false, "z": [1, 1, 1, 1, 1, 1, 1, 1], "type": "choropleth", "marker": {"line": {"color": "#B0B0B0", "width": 0.6}}}, {"colorscale": [[0.0, "#1B4332"], [1.0, "#1B4332"]], "customdata": [[51.318, "50%+", "SWE"], [80.498, "50%+", "ISL"], [71.812, "50%+", "NOR"]], "geo": "geo", "hovertemplate": "<b>%{hovertext}</b><br><br>renewables_share_energy=%{customdata[0]:.1f}<extra></extra>", "hovertext": ["Sweden", "Iceland", "Norway"], "locations": ["SWE", "ISL", "NOR"], "name": "50%+", "showlegend": true, "showscale": false, "z": [1, 1, 1], "type": "choropleth", "marker": {"line": {"color": "#B0B0B0", "width": 0.6}}}], layout: {"geo": {"domain": {"x": [0.0, 1.0], "y": [0.0, 1.0]}, "center": {}, "projection": {"type": "natural earth"}, "showframe": false, "showcoastlines": false, "showland": true, "landcolor": "#f8fafc", "showocean": true, "oceancolor": "#ffffff", "showlakes": false, "showcountries": true, "countrycolor": "#B0B0B0", "bgcolor": "#ffffff", "projection_type": "natural earth"}, "legend": {"orientation": "h", "yanchor": "bottom", "y": -0.28, "xanchor": "center", "x": 0.5, "title": "", "font": {"size": 9, "color": "#0f172a"}}, "margin": {"t": 65, "b": 40, "l": 0, "r": 0}, "title": {"text": "<b>La transizione energetica vista dal mondo, oggi</b>", "x": 0.0, "xanchor": "left", "font": {"size": 13, "color": "#1B4332"}}, "height": 340, "paper_bgcolor": "#ffffff", "autosize": true, "font": {"family": "Inter, sans-serif", "color": "#0f172a", "size": 11}}};
-  var el = document.getElementById("4dac0878-4a8c-4445-8df9-23c841fce278");
-  var config = {displayModeBar:false, scrollZoom:false, responsive:true};
-  var isMobile = window.matchMedia('(max-width: 768px)').matches;
-  Plotly.newPlot(el, isMobile ? mobile.data : desktop.data, isMobile ? mobile.layout : desktop.layout, config);
-  el.dataset.isMobile = isMobile ? "1" : "0";
-  window.addEventListener('resize', function() {
-    var nowMobile = window.matchMedia('(max-width: 768px)').matches;
-    if ((nowMobile ? "1" : "0") !== el.dataset.isMobile) {
-      el.dataset.isMobile = nowMobile ? "1" : "0";
-      Plotly.react(el, nowMobile ? mobile.data : desktop.data, nowMobile ? mobile.layout : desktop.layout, config);
-    } else {
-      Plotly.Plots.resize(el);
-    }
-  });
-})();
-</script>
-
-<hr class="divider">
-
-<h2 id="conclusioni">📌 Conclusioni</h2>
-<div class="section-intro">Mettendo insieme tutte le analisi, il quadro che emerge non è "il mondo si sta convertendo alle rinnovabili" né "il mondo dipende ancora troppo dai fossili" — sono vere entrambe le cose insieme, a seconda di dove si guarda.</div>
-
-<div class="concl-card"><b>La transizione è reale ma profondamente diseguale.</b> Islanda e Norvegia superano il 70% grazie a risorse naturali che pochissimi altri paesi hanno; Danimarca e Portogallo dimostrano che una crescita rapida è possibile anche senza quel vantaggio. Ma la mappa finale lo conferma a colpo d'occhio: gran parte del mondo, soprattutto Asia, Africa e Medio Oriente, resta ancora lontana da quote significative.</div>
-<div class="concl-card"><b>A livello globale, i fossili restano il vero pilastro.</b> Petrolio e gas coprono da soli quasi due terzi del mix energetico medio mondiale, contro appena il 17,4% delle rinnovabili. Anche i paesi "leader" sono eccezioni statistiche, non la norma.</div>
-<div class="concl-card"><b>Tra le rinnovabili, la vera storia è la crescita, non ancora il volume.</b> Solare ed eolico accelerano più di ogni altra fonte, ma restano dietro all'idroelettrico — la "rivoluzione verde" raccontata dai media è soprattutto un fenomeno di velocità, non ancora di peso reale sul totale.</div>
-<div class="concl-card"><b>La ricchezza spinge i consumi, la popolazione li moltiplica.</b> I paesi più ricchi consumano molta più energia per abitante, ma i giganti demografici in forte sviluppo rappresentano il vero ago della bilancia per la domanda globale nei prossimi decenni.</div>
-
-<footer class="page-footer">Fonte dati: Our World in Data (owid-energy-data). Analisi e visualizzazioni originali.</footer>
-
-</main>
 </body>
 </html>
-
 
