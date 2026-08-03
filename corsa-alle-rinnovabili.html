@@ -45,6 +45,8 @@
 
   /* Hero Section */
   .hero { background: var(--ink-dark); color: #F8FAFC; padding: 68px 0 56px; }
+  .back-link { display:inline-flex; align-items:center; gap:8px; margin-bottom:22px; background:transparent; border:none; color:#F8FAFC; opacity:.6; text-decoration:none; font-family:'Space Mono',monospace; font-size:13px; font-weight:600; cursor:pointer; transition:.2s ease; }
+  .back-link:hover { opacity:1; transform:translateX(-4px); }
   .eyebrow { font-family: 'Space Mono', monospace; letter-spacing: .14em; text-transform: uppercase; font-size: 11.5px; color: #38BDF8; margin-bottom: 20px; font-weight: 700; }
   .hero h1 { font-size: clamp(2.4rem, 5.8vw, 3.5rem); font-weight: 700; line-height: 1.1; letter-spacing: -.02em; color: #FFFFFF; }
   .hero h1 em { font-style: italic; color: #34D399; font-weight: 500; }
@@ -122,6 +124,7 @@
 <!-- HERO HEADER -->
 <div class="hero">
   <div class="wrap">
+    <a href="index.html" class="back-link">&larr; Torna alla Home</a>
     <div class="eyebrow">Analisi di Settore — Transizione Energetica</div>
     <h1>La Corsa alle <em>Rinnovabili</em></h1>
     <p class="sub">Un confronto dettagliato su 79 Paesi: divari geografici, accelerazioni tecnologiche e il paradosso della crescita dei consumi pro capite.</p>
@@ -481,4 +484,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
 </body>
 </html>
+
+
 
