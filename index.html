@@ -148,25 +148,41 @@
     .catalog-item-all.active .count { color: #fff; opacity: 0.85; }
 
     .catalog-group { padding-top: 4px; margin-top: 6px; border-top: 1px solid var(--line); }
+    .catalog-cat-row { display: flex; align-items: center; gap: 2px; }
 
     .catalog-cat {
-        width: 100%; text-align: left;
+        flex: 1; min-width: 0;
+        text-align: left;
         background: none; border: none;
         font-family: 'Inter', sans-serif;
         font-weight: 600; font-size: 0.87rem;
         color: var(--ink);
-        padding: 12px 12px;
+        padding: 12px 8px 12px 12px;
         cursor: pointer;
         border-radius: 14px;
         display: flex; justify-content: space-between; align-items: center;
+        gap: 8px;
         transition: background-color 0.18s ease;
     }
     .catalog-cat:hover { background-color: rgba(23,23,27,0.06); }
     .catalog-cat.active { color: var(--coral-deep); }
+    .catalog-cat .label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-    .catalog-cat .count { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--faint); }
-    .catalog-cat .chevron { display: inline-block; margin-left: 8px; font-size: 0.7rem; color: var(--faint); transition: transform 0.25s ease; }
-    .catalog-group.open .chevron { transform: rotate(90deg); }
+    .catalog-cat .count { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--faint); flex-shrink: 0; }
+
+    .catalog-toggle {
+        flex-shrink: 0;
+        width: 34px; height: 34px;
+        background: none; border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        color: var(--faint);
+        font-size: 0.8rem;
+        transition: background-color 0.18s ease, transform 0.25s ease;
+    }
+    .catalog-toggle:hover { background-color: rgba(23,23,27,0.06); }
+    .catalog-group.open .catalog-toggle { transform: rotate(90deg); }
 
     .catalog-articles { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; padding-left: 10px; }
     .catalog-group.open .catalog-articles { max-height: 200px; }
@@ -367,9 +383,12 @@
     <button class="catalog-item-all active" data-filter="all">Tutti gli articoli <span class="count">2</span></button>
 
     <div class="catalog-group open" data-group="economia">
-        <button class="catalog-cat" data-filter="economia">
-            💰 Economia &amp; Società <span><span class="count">1</span><span class="chevron">›</span></span>
-        </button>
+        <div class="catalog-cat-row">
+            <button class="catalog-cat" data-filter="economia">
+                <span class="label">💰 Economia &amp; Società</span> <span class="count">1</span>
+            </button>
+            <button class="catalog-toggle" aria-label="Apri/chiudi categoria">›</button>
+        </div>
         <div class="catalog-articles">
             <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/costo_della_vita_report.html" class="catalog-article">
                 <span class="code">ECO·01</span> Il costo nascosto della vita
@@ -378,9 +397,12 @@
     </div>
 
     <div class="catalog-group open" data-group="energia">
-        <button class="catalog-cat" data-filter="energia">
-            🌱 Energia &amp; Ambiente <span><span class="count">1</span><span class="chevron">›</span></span>
-        </button>
+        <div class="catalog-cat-row">
+            <button class="catalog-cat" data-filter="energia">
+                <span class="label">🌱 Energia &amp; Ambiente</span> <span class="count">1</span>
+            </button>
+            <button class="catalog-toggle" aria-label="Apri/chiudi categoria">›</button>
+        </div>
         <div class="catalog-articles">
             <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/corsa-alle-rinnovabili.html?theme=light" class="catalog-article">
                 <span class="code">ENE·01</span> La Corsa alle Rinnovabili
@@ -482,10 +504,14 @@
     }
 
     catalogItemAll.addEventListener('click', () => setActiveFilter('all'));
-    catalogCats.forEach(btn => btn.addEventListener('click', () => {
-        setActiveFilter(btn.dataset.filter);
-        btn.closest('.catalog-group').classList.toggle('open');
-    }));
+    catalogCats.forEach(btn => btn.addEventListener('click', () => setActiveFilter(btn.dataset.filter)));
+
+    document.querySelectorAll('.catalog-toggle').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            btn.closest('.catalog-group').classList.toggle('open');
+        });
+    });
 
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebarOverlay');
