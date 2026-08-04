@@ -136,6 +136,8 @@
       font-size: 10px; text-transform: uppercase; letter-spacing: .05em;
       color: var(--ink-muted); margin-bottom: 2px;
     }
+    .hero::before, .hero::after, .conclusion::before { filter:blur(40px); }
+    .ticker .cell, .back-link { backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
   }
 </style>
 </head>
@@ -478,11 +480,11 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   ], {
     font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
-    margin: { l: 40, r: 20, t: 20, b: isMobile ? 80 : 40 },
+    margin: { l: 40, r: 20, t: isMobile ? 60 : 20, b: isMobile ? 80 : 40 },
     barmode: "stack",
     xaxis: { gridcolor: LINE_COLOR, tickangle: isMobile ? -45 : 0 },
     yaxis: { title: { text: "Quota Energia Primaria (%)" }, gridcolor: LINE_COLOR, range: [0, 100] },
-    legend: { orientation: "h", y: 1.12, font: { size: isMobile ? 9 : 12 } }
+    legend: { orientation: "h", y: isMobile ? 1.28 : 1.12, font: { size: isMobile ? 9 : 12 } }
   }, cfg);
 
   /* 04. Grafico PIL vs Consumi pro capite */
@@ -505,7 +507,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
 </body>
 </html>
-
 
 
 
