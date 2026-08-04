@@ -120,13 +120,21 @@
     .hero { padding: 44px 0 36px; }
     .ticker { grid-template-columns: 1fr; } 
     .method-row { grid-template-columns: 1fr; }
-    .chartbox { padding: 14px 10px 10px; }
-    .chartbox > div { min-width: 600px; }
-    .chartbox::before {
-      content: '◄ scorri per esplorare il grafico ►';
-      display: block; font-family: 'JetBrains Mono', monospace; font-size: 10px;
-      text-transform: uppercase; letter-spacing: .08em; color: var(--ink-muted);
-      margin-bottom: 10px; text-align: center;
+    .chartbox { padding: 12px 8px; }
+
+    .table-container { overflow-x: visible; }
+    .table-container table, .table-container thead, .table-container tbody,
+    .table-container th, .table-container td, .table-container tr { display: block; width: 100%; }
+    .table-container thead { display: none; }
+    .table-container tr { padding: 14px 16px; border-bottom: 1px solid var(--line-color); }
+    .table-container tr:last-child { border-bottom: none; }
+    .table-container td { border: none; padding: 5px 0; }
+    .table-container td::before {
+      content: attr(data-label);
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; text-transform: uppercase; letter-spacing: .05em;
+      color: var(--ink-muted); margin-bottom: 2px;
     }
   }
 </style>
@@ -203,6 +211,7 @@
   <!-- SCRIPT GRAFICO 1 (BARRE TOP 10) -->
   <script type="text/javascript">
   (function() {
+    var isMobileTop10 = window.innerWidth <= 600;
     var top10Countries = ["Finland", "Portugal", "Switzerland", "Denmark", "New Zealand", "Austria", "Brazil", "Sweden", "Norway", "Iceland"];
 
     var desktop = {
@@ -241,18 +250,18 @@
       layout: {
         "title": false,
         "xaxis": {
-          "title": { "text": "Quota di energia rinnovabile (%)", "font": { "family": "Inter, sans-serif", "size": 12, "color": "#475569" } },
+          "title": { "text": "Quota di energia rinnovabile (%)", "font": { "family": "Inter, sans-serif", "size": isMobileTop10 ? 10 : 12, "color": "#475569" } },
           "showgrid": true, "gridcolor": "#e5e7eb", "linecolor": "#cbd5e1",
-          "tickfont": { "color": "#475569", "size": 11, "family": "Inter, sans-serif" },
+          "tickfont": { "color": "#475569", "size": isMobileTop10 ? 9 : 11, "family": "Inter, sans-serif" },
           "range": [0, 92]
         },
         "yaxis": {
           "title": { "text": "" }, "showgrid": false,
           "categoryorder": "array", "categoryarray": top10Countries,
           "linecolor": "#cbd5e1",
-          "tickfont": { "color": "#1e293b", "size": 11.5, "family": "Inter, sans-serif" }
+          "tickfont": { "color": "#1e293b", "size": isMobileTop10 ? 9.5 : 11.5, "family": "Inter, sans-serif" }
         },
-        "margin": { "l": 100, "r": 60, "t": 20, "b": 40 },
+        "margin": { "l": isMobileTop10 ? 78 : 100, "r": isMobileTop10 ? 34 : 60, "t": 20, "b": 40 },
         "height": 380, "showlegend": false, "autosize": true,
         "paper_bgcolor": "transparent", "plot_bgcolor": "transparent",
         "font": { "family": "Inter, sans-serif", "color": "#1e293b" }
@@ -296,46 +305,46 @@
     </thead>
     <tbody>
       <tr>
-        <td><b>Norvegia</b></td>
-        <td>~98%</td>
-        <td>Idroelettrico</td>
-        <td>Saturazione della capacità idrica naturale</td>
+        <td data-label="Paese"><b>Norvegia</b></td>
+        <td data-label="Quota rinnovabile elettrica">~98%</td>
+        <td data-label="Vettore principale">Idroelettrico</td>
+        <td data-label="Caratteristica strutturale">Saturazione della capacità idrica naturale</td>
       </tr>
       <tr>
-        <td><b>Danimarca</b></td>
-        <td>~80%</td>
-        <td>Eolico Offshore</td>
-        <td>Integrazione di rete e riconversione rapida</td>
+        <td data-label="Paese"><b>Danimarca</b></td>
+        <td data-label="Quota rinnovabile elettrica">~80%</td>
+        <td data-label="Vettore principale">Eolico Offshore</td>
+        <td data-label="Caratteristica strutturale">Integrazione di rete e riconversione rapida</td>
       </tr>
       <tr>
-        <td><b>Portogallo</b></td>
-        <td>~65%</td>
-        <td>Eolico / Solare</td>
-        <td>Continuità di investimenti sul mix integrato</td>
+        <td data-label="Paese"><b>Portogallo</b></td>
+        <td data-label="Quota rinnovabile elettrica">~65%</td>
+        <td data-label="Vettore principale">Eolico / Solare</td>
+        <td data-label="Caratteristica strutturale">Continuità di investimenti sul mix integrato</td>
       </tr>
       <tr>
-        <td><b>Spagna</b></td>
-        <td>~56%</td>
-        <td>Eolico / Solare</td>
-        <td>Forte accelerazione su fotovoltaico e accumuli utility-scale</td>
+        <td data-label="Paese"><b>Spagna</b></td>
+        <td data-label="Quota rinnovabile elettrica">~56%</td>
+        <td data-label="Vettore principale">Eolico / Solare</td>
+        <td data-label="Caratteristica strutturale">Forte accelerazione su fotovoltaico e accumuli utility-scale</td>
       </tr>
       <tr>
-        <td><b>Germania</b></td>
-        <td>~50%</td>
-        <td>Eolico / Solare</td>
-        <td>Transizione guidata da imponenti sussidi industriali</td>
+        <td data-label="Paese"><b>Germania</b></td>
+        <td data-label="Quota rinnovabile elettrica">~50%</td>
+        <td data-label="Vettore principale">Eolico / Solare</td>
+        <td data-label="Caratteristica strutturale">Transizione guidata da imponenti sussidi industriali</td>
       </tr>
       <tr class="highlight">
-        <td><b>🇮🇹 Italia</b></td>
-        <td>~38%</td>
-        <td>Solare / Idro</td>
-        <td>Frenata da colli di bottiglia di rete e permitting</td>
+        <td data-label="Paese"><b>🇮🇹 Italia</b></td>
+        <td data-label="Quota rinnovabile elettrica">~38%</td>
+        <td data-label="Vettore principale">Solare / Idro</td>
+        <td data-label="Caratteristica strutturale">Frenata da colli di bottiglia di rete e permitting</td>
       </tr>
       <tr>
-        <td><b>Francia</b></td>
-        <td>~28%</td>
-        <td>Idroelettrico / Eolico</td>
-        <td>Mix elettrico dominato dal nucleare, rinnovabili come supporto</td>
+        <td data-label="Paese"><b>Francia</b></td>
+        <td data-label="Quota rinnovabile elettrica">~28%</td>
+        <td data-label="Vettore principale">Idroelettrico / Eolico</td>
+        <td data-label="Caratteristica strutturale">Mix elettrico dominato dal nucleare, rinnovabili come supporto</td>
       </tr>
     </tbody>
   </table>
@@ -469,11 +478,11 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   ], {
     font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
-    margin: { l: 40, r: 20, t: 20, b: 40 },
+    margin: { l: 40, r: 20, t: 20, b: isMobile ? 80 : 40 },
     barmode: "stack",
-    xaxis: { gridcolor: LINE_COLOR },
+    xaxis: { gridcolor: LINE_COLOR, tickangle: isMobile ? -45 : 0 },
     yaxis: { title: { text: "Quota Energia Primaria (%)" }, gridcolor: LINE_COLOR, range: [0, 100] },
-    legend: { orientation: "h", y: 1.12 }
+    legend: { orientation: "h", y: 1.12, font: { size: isMobile ? 9 : 12 } }
   }, cfg);
 
   /* 04. Grafico PIL vs Consumi pro capite */
