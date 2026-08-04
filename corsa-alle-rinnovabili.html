@@ -450,7 +450,35 @@ document.addEventListener('DOMContentLoaded', function(){
 
 /* 03. Grafico Stacked Mix Primario */
   const paesiMix = ["Norvegia", "Danimarca", "Portogallo", "Germania", "Italia", "Cina", "Stati Uniti"];
-  Plotly.newPlot('plot-mix', [
+  Plotly.newPlot('plot-mix', isMobile ? [
+    {
+      type: "bar", orientation: "h",
+      name: "Rinnovabili",
+      y: paesiMix,
+      x: [68, 42, 38, 22, 19, 15, 12],
+      marker: { color: COLOR_EMERALD },
+      texttemplate: "%{x:.0f}%",
+      textposition: "inside"
+    },
+    {
+      type: "bar", orientation: "h",
+      name: "Gas Naturale",
+      y: paesiMix,
+      x: [20, 18, 28, 25, 40, 9, 32],
+      marker: { color: COLOR_BLUE },
+      texttemplate: "%{x:.0f}%",
+      textposition: "inside"
+    },
+    {
+      type: "bar", orientation: "h",
+      name: "Petrolio & Carbone",
+      y: paesiMix,
+      x: [12, 40, 34, 53, 41, 76, 56],
+      marker: { color: COLOR_AMBER },
+      texttemplate: "%{x:.0f}%",
+      textposition: "inside"
+    }
+  ] : [
     { 
       type: "bar", 
       name: "Rinnovabili", 
@@ -480,11 +508,12 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   ], {
     font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
-    margin: { l: 40, r: 20, t: isMobile ? 60 : 20, b: isMobile ? 80 : 40 }, height: isMobile ? 400 : 410,
+    margin: isMobile ? { l: 95, r: 20, t: 20, b: 40 } : { l: 40, r: 20, t: 20, b: 40 },
+    height: isMobile ? 400 : 410,
     barmode: "stack",
-    xaxis: { gridcolor: LINE_COLOR, tickangle: isMobile ? -45 : 0 },
-    yaxis: { title: { text: "Quota Energia Primaria (%)" }, gridcolor: LINE_COLOR, range: [0, 100] },
-    legend: { orientation: "h", y: isMobile ? 1.28 : 1.12, font: { size: isMobile ? 9 : 12 } }
+    xaxis: isMobile ? { gridcolor: LINE_COLOR, title: { text: "Quota Energia Primaria (%)" }, range: [0, 100] } : { gridcolor: LINE_COLOR },
+    yaxis: isMobile ? { automargin: true } : { title: { text: "Quota Energia Primaria (%)" }, gridcolor: LINE_COLOR, range: [0, 100] },
+    legend: { orientation: "h", y: isMobile ? 1.1 : 1.12, font: { size: isMobile ? 9 : 12 } }
   }, cfg);
 
   /* 04. Grafico PIL vs Consumi pro capite */
@@ -507,8 +536,3 @@ document.addEventListener('DOMContentLoaded', function(){
 
 </body>
 </html>
-
-
-
-
-
