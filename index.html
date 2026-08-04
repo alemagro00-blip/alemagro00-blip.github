@@ -240,6 +240,7 @@
         box-shadow: 0 6px 16px -8px rgba(23,23,27,0.15);
     }
     .eyebrow::before { content:''; width:7px; height:7px; border-radius:50%; background: var(--coral); box-shadow: 0 0 0 4px var(--coral-light); }
+    .eyebrow-logo { height: 18px; width: auto; display: block; }
 
     header h1 {
         font-family: 'Bricolage Grotesque', sans-serif;
@@ -379,7 +380,7 @@
 
 <aside class="sidebar" id="sidebar">
     <div class="sidebar-brand">
-        <img src="logo_numerica_mono.png" alt="Logo nuMericA">
+        <span>nuMericA</span>
     </div>
     <div class="sidebar-tagline">Archivio di analisi dati</div>
 
@@ -422,7 +423,7 @@
     <header>
         <div class="hero-grid">
             <div>
-                <div class="eyebrow">Data storytelling</div>
+                <div class="eyebrow"><img src="logo_numerica_mono.png" alt="Logo nuMericA" class="eyebrow-logo"></div>
                 <h1>Comprendere il mondo <span class="grad">attraverso i dati</span></h1>
                 <p>Analisi visive, mappe interattive e storie spiegate con i numeri.</p>
             </div>
@@ -554,3 +555,4 @@
 
 </body>
 </html>
+
