@@ -635,6 +635,643 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
 
 </body>
+</html><!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quanto tempo costa vivere qui?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<style>
+  :root {
+    --ink:#15140F; --paper:#FAFAF6; --card:#FFFFFF;
+    --coral:#FF6A4D; --coral-deep:#E14F31; --moss:#4C7A63; --amber:#D9AD5C; --line:#E4E1D6; --slate:#6B6659;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:'Inter',-apple-system,sans-serif; font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3{font-family:'Bricolage Grotesque',sans-serif; margin:0; color:var(--ink);}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .wrap{max-width:900px; margin:0 auto; padding:0 28px;}
+  a{color:var(--coral);}
+  .back-link { display:inline-flex; align-items:center; gap:8px; margin-bottom:26px; background:rgba(255,255,255,0.1); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.16); border-radius:999px; padding:8px 16px; color:var(--paper); opacity:.85; text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; cursor:pointer; transition:.2s ease; position:relative; z-index:1; }
+  .back-link:hover { opacity:1; transform:translateX(-4px); }
+
+  .hero { position:relative; background:var(--ink); color:var(--paper); padding:64px 0 56px; overflow:hidden; }
+  .hero::before, .hero::after {
+    content:''; position:absolute; border-radius:50%; filter:blur(80px); pointer-events:none; z-index:0;
+  }
+  .hero::before { width:480px; height:480px; background:radial-gradient(circle, rgba(255,106,77,0.45), transparent 70%); top:-200px; left:-100px; }
+  .hero::after { width:420px; height:420px; background:radial-gradient(circle, rgba(155,107,255,0.3), transparent 70%); bottom:-220px; right:-80px; }
+  .hero .wrap { position:relative; z-index:1; }
+  .eyebrow { font-family:'JetBrains Mono',monospace; letter-spacing:.16em; text-transform:uppercase; font-size:11.5px; color:var(--amber); margin-bottom:22px; font-weight:700; }
+  .hero h1 { font-size:clamp(2.4rem,6vw,3.6rem); font-weight:700; line-height:1.05; letter-spacing:-.01em; color:#fff; }
+  .hero h1 em { font-style:italic; color:var(--coral); padding-right:.08em; }
+  .hero .sub { max-width:620px; margin-top:22px; font-size:16.5px; line-height:1.6; color:#C9C4B4; }
+  .ticker {
+    margin-top:44px; display:grid; grid-template-columns:1fr 1fr; gap:1px;
+    background:rgba(255,255,255,0.12); border-radius:18px; overflow:hidden;
+    border:1px solid rgba(255,255,255,0.14);
+  }
+  .ticker .cell {
+    background:rgba(255,255,255,0.06);
+    backdrop-filter:blur(16px) saturate(1.6); -webkit-backdrop-filter:blur(16px) saturate(1.6);
+    padding:26px 28px;
+  }
+  .ticker .label { font-family:'JetBrains Mono',monospace; font-size:11.5px; text-transform:uppercase; letter-spacing:.1em; font-weight:700; color:#8B8677; }
+  .ticker .num { font-family:'Bricolage Grotesque',sans-serif; font-size:44px; font-weight:700; margin-top:8px; }
+  .ticker .num.bad { color:var(--coral); }
+  .ticker .num.good { color:#6FBF8F; }
+  .ticker .cap { font-size:13px; color:#9C9788; margin-top:6px; line-height:1.5; }
+
+  .intro { padding:52px 0 0; }
+  .lede { font-size:19px; color:#2B2B23; max-width:760px; font-family:'Bricolage Grotesque',sans-serif; font-weight:500; line-height:1.5; }
+  .lede b { font-style:italic; font-weight:600; }
+
+  .method-row { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:36px 0 8px; }
+  .method-row .card { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:20px; }
+  .method-row .card .t { font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.06em; font-weight:700; margin-bottom:8px; }
+  .method-row .card.c1 .t{color:var(--coral);} .method-row .card.c2 .t{color:var(--moss);} .method-row .card.c3 .t{color:var(--amber);}
+  .method-row .card .d { font-size:13.5px; color:var(--slate); line-height:1.5; }
+  .foot-note { font-size:13px; color:var(--slate); margin-top:16px; max-width:760px; }
+
+  section.q { padding:40px 0; }
+  .qhead { display:flex; align-items:baseline; gap:12px; margin-bottom:10px; }
+  .qnum { font-family:'JetBrains Mono',monospace; color:var(--coral); font-size:13px; font-weight:700; }
+  .qline { flex:1; height:1px; background:var(--line); }
+  section.q h2 { font-size:clamp(24px,3.4vw,32px); letter-spacing:-.01em; font-weight:600; }
+  .qtext { max-width:740px; color:#3A392F; font-size:16px; margin-top:14px; }
+  .qtext b { color:var(--ink); }
+  .conclusion .qtext b { color:#fff; }
+
+  .chartbox { margin-top:24px; background:var(--card); border:1px solid var(--line); border-radius:20px; padding:18px; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .callout { margin-top:20px; background:#FBEBDA; border-left:4px solid var(--coral); border-radius:4px 10px 10px 4px; padding:18px 24px; font-size:15px; color:#2B2B23; }
+  .callout b { color:var(--ink); }
+  .aside-box { margin-top:20px; background:var(--ink); color:#EDE9DC; border-radius:18px; padding:22px 26px; font-size:14.5px; line-height:1.6; }
+  .aside-box .t { font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--amber); font-weight:700; margin-bottom:10px; }
+  .aside-box b { color:#fff; }
+
+  .stat-pair { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:10px; margin-top:20px; }
+  .chip { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px; font-size:13px; color:var(--slate); }
+
+  .simulator-controls { display:flex; flex-wrap:wrap; gap:20px; align-items:flex-end; margin-top:24px; }
+  .sim-field label { display:block; font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--slate); margin-bottom:8px; }
+  .sim-input-wrap { display:flex; align-items:center; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:10px 16px; gap:6px; }
+  .sim-currency { font-family:'Bricolage Grotesque',sans-serif; font-weight:700; color:var(--coral-deep); font-size:18px; }
+  .sim-input-wrap input { border:none; outline:none; background:transparent; font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:18px; color:var(--ink); width:130px; }
+  .sim-toggle { display:flex; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:4px; gap:4px; }
+  .sim-toggle-btn { border:none; background:none; padding:9px 18px; border-radius:9px; font-family:'Inter',sans-serif; font-weight:600; font-size:14px; color:var(--slate); cursor:pointer; transition:.15s ease; }
+  .sim-toggle-btn.active { background:var(--ink); color:#fff; }
+  #sim-summary b { color:var(--ink); }
+  .chip b { display:block; color:var(--ink); font-family:'JetBrains Mono',monospace; font-size:16px; margin-top:5px; }
+
+  h3.sub-h { font-family:'Bricolage Grotesque',sans-serif; font-size:19px; font-weight:600; margin:32px 0 4px; }
+  h3.sub-h.centro { color:var(--coral); } h3.sub-h.periferia { color:var(--moss); }
+
+  .conclusion { position:relative; background:var(--ink); color:var(--paper); padding:60px 0 76px; overflow:hidden; }
+  .conclusion::before { content:''; position:absolute; width:420px; height:420px; border-radius:50%; filter:blur(90px); background:radial-gradient(circle, rgba(5,150,105,0.28), transparent 70%); bottom:-200px; left:-100px; pointer-events:none; z-index:0; }
+  .conclusion .wrap { position:relative; z-index:1; }
+  .conclusion h2 { color:#fff; }
+  .conclusion .qtext { color:#B8B3A2; }
+  .conclusion .chartbox { background:rgba(255,255,255,0.05); backdrop-filter:blur(16px); border-color:rgba(255,255,255,0.14); }
+  .final-line { margin-top:32px; padding-top:26px; border-top:1px solid #2A2D35; font-family:'Bricolage Grotesque',sans-serif; font-style:italic; font-weight:500; font-size:21px; color:var(--amber); max-width:740px; line-height:1.4; }
+
+  footer { padding:30px 0 56px; text-align:center; color:var(--slate); font-size:12px; }
+
+  @media (max-width:840px){
+    .wrap{padding:0 16px;} .hero{padding:44px 0 40px;}
+    .ticker{grid-template-columns:1fr;} .method-row{grid-template-columns:1fr;}
+    .chartbox{padding:12px 8px;}
+    .hero::before, .hero::after, .conclusion::before { filter:blur(40px); }
+    .ticker .cell, .conclusion .chartbox, .back-link { backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
+    .simulator-controls { flex-direction:column; align-items:stretch; }
+    .sim-input-wrap input { width:100%; }
+    #plot-mappa { height:340px !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/" class="back-link">&larr; Torna alla Home</a>
+    <div class="eyebrow">Data Stories — Economia & Società</div>
+    <h1>Quanto tempo costa <em>vivere qui</em>?</h1>
+    <p class="sub">Dieci città europee, una sola domanda: quante ore devi lavorare ogni mese per permetterti la tua vita — non quanto costa in euro, ma quanto costa in tempo.</p>
+    <div class="ticker">
+      <div class="cell">
+        <div class="label">Milano</div>
+        <div class="num bad">82%</div>
+        <div class="cap">dello stipendio se ne va solo per i costi essenziali in centro. È l'unica città del gruppo in rosso.</div>
+      </div>
+      <div class="cell">
+        <div class="label">Copenaghen</div>
+        <div class="num good">149%</div>
+        <div class="cap">di margine sullo stipendio anche vivendo in centro — il miglior rapporto tra guadagno e spesa del gruppo.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="intro">
+    <p class="lede">Un cappuccino a 4€ ad Amsterdam pesa diversamente sul portafoglio di chi guadagna 25€ l'ora rispetto a chi ne guadagna 10. <b>Il prezzo da solo non dice niente</b> — quello che conta è quante ore di lavoro serve per permetterselo. Abbiamo confrontato Milano, Roma, Bologna, Amsterdam, Berlino, Barcellona, Praga, Budapest, Copenaghen e Parigi su questa base.</p>
+  </div>
+
+  <section class="q" id="paniere" style="border-top:none;">
+    <div class="qhead"><span class="qnum mono">01</span><span class="qline"></span></div>
+    <h2>Il paniere: cosa confrontiamo</h2>
+    <div class="qtext"><p>Abbiamo incrociato due fonti: i prezzi reali raccolti da chi vive in queste città, e i numeri ufficiali pubblicati dall'Unione Europea su redditi e prezzi.</p></div>
+    <div class="method-row">
+      <div class="card c1"><div class="t">Prezzi quotidiani</div><div class="d">Affitto, bollette, trasporti, caffè, birra, cena, palestra — raccolti città per città da chi ci vive</div></div>
+      <div class="card c2"><div class="t">Dati ufficiali</div><div class="d">Redditi, inflazione e livello dei prezzi pubblicati dall'UE — più affidabili, ma quasi mai a livello di singola città</div></div>
+      <div class="card c3"><div class="t">Spesa alimentare</div><div class="d">Partiamo dalla media nazionale e la correggiamo in base a quanto è ricca la zona — Milano più cara di Bologna, per esempio</div></div>
+    </div>
+    <p class="foot-note">Il paniere completo — stipendio, costi fissi, tempo libero — è nella Sezione 06, confrontato direttamente con quanto resta in tasca a fine mese. <i>Fonti: Numbeo · Eurostat</i></p>
+  </section>
+
+  <section class="q" id="caffe">
+    <div class="qhead"><span class="qnum mono">02</span><span class="qline"></span></div>
+    <h2>Chi ha il caffè più caro?</h2>
+    <div class="qtext"><p>Prima dei numeri seri, i piccoli piaceri quotidiani: cappuccino, birra, cena, palestra. Spese che facciamo senza pensarci — ma che raccontano già molto.</p></div>
+    <div class="chartbox"><div id="plot-paniere" style="width:100%;height:460px;"></div></div>
+    <div class="callout"><b>L'Italia ha il cappuccino più economico ovunque</b> — Bologna, Roma e Milano occupano i tre gradini più bassi — ma <b>Milano ha la palestra più cara di tutte e dieci le città</b> (quasi 78€ al mese). <b>Copenaghen</b> è la più cara su cappuccino e birra, ma nemmeno lei lo è su tutto: sulla palestra è nella media.</div>
+  </section>
+
+  <section class="q" id="trend">
+    <div class="qhead"><span class="qnum mono">03</span><span class="qline"></span></div>
+    <h2>I prezzi corrono più veloce degli stipendi?</h2>
+    <div class="qtext"><p>Un confronto fatto oggi racconta solo un istante. Guardando come sono cambiati i prezzi negli ultimi 5 anni, il quadro si muove parecchio.</p></div>
+    <div class="chartbox"><div id="plot-trend" style="width:100%;height:440px;"></div></div>
+    <div class="callout"><b>L'Ungheria è il paese dove i prezzi sono corsi più veloce di tutti</b>: +46% in 5 anni, quasi il triplo della Francia (+16%, la più stabile). <b>Budapest, la città più economica nella spesa quotidiana, è anche quella dove il potere d'acquisto si sta erodendo più in fretta</b> — la convenienza di oggi potrebbe non durare.</div>
+    <div class="aside-box">
+      <div class="t">Un controllo di qualità</div>
+      Quanto sono d'accordo tra loro i prezzi "sentiti" da chi vive in città e i numeri ufficiali? Non moltissimo. <b>Amsterdam</b> si percepisce come la più cara del gruppo — più di quanto dica il dato ufficiale olandese, forse colpa del turismo. <b>Berlino</b> è il contrario: il dato ufficiale tedesco dice "caro", la vita reale sembra molto più abbordabile. E <b>Milano e Bologna, stesso paese, hanno lo stesso numero ufficiale — ma nella vita di tutti i giorni sono due mondi diversi.</b>
+    </div>
+  </section>
+
+  <section class="q" id="paradosso">
+    <div class="qhead"><span class="qnum mono">04</span><span class="qline"></span></div>
+    <h2>Il paradosso del potere d'acquisto</h2>
+    <div class="qtext"><p>Un prezzo senza uno stipendio a fianco non dice niente. Qui capovolgiamo la domanda: non "quanto costa", ma quanti <b>minuti di lavoro</b> servono per permetterselo.</p></div>
+    <div class="chartbox"><div id="plot-paradosso" style="width:100%;height:420px;"></div></div>
+    <div class="stat-pair">
+      <div class="chip">Cappuccino più veloce da guadagnare<b>Milano, 9,4 min</b></div>
+      <div class="chip">Cappuccino più lento<b>Budapest, 19,1 min</b></div>
+      <div class="chip">Birra più veloce<b>Praga, 12,6 min</b></div>
+      <div class="chip">Birra più lenta<b>Bologna, 30,2 min</b></div>
+    </div>
+    <div class="callout">Il quadro si ribalta rispetto ai prezzi assoluti. <b>Amsterdam ha alcuni dei prezzi più alti in euro — ma è tra le città più convenienti in tempo di lavoro</b>, grazie al secondo stipendio orario più alto del gruppo. L'opposto per <b>Budapest</b>: prezzi nella media, ma il tempo di lavoro per un cappuccino è il più lungo di tutte e dieci le città.</div>
+    <div class="qtext"><p>Prova con i tuoi numeri: scegli cosa bevi e quanto, e scopri quanto tempo di lavoro ti costa città per città.</p></div>
+    <div class="simulator-controls" style="margin-top:32px;">
+      <div class="sim-toggle" role="group">
+        <button class="sim-toggle-btn active" data-drink="caffe">☕ Cappuccino</button>
+        <button class="sim-toggle-btn" data-drink="birra">🍺 Birra</button>
+      </div>
+      <div class="sim-field">
+        <label for="sim-qty">Quanti ne prendi?</label>
+        <div class="sim-input-wrap">
+          <input type="number" id="sim-qty" value="1" min="1" max="60" step="1" style="width:70px;">
+        </div>
+      </div>
+    </div>
+    <div class="chartbox"><div id="plot-drink" style="width:100%;height:400px;"></div></div>
+    <div class="callout" id="drink-summary"></div>
+  </section>
+
+  <section class="q" id="cv">
+    <div class="qhead"><span class="qnum mono">05</span><span class="qline"></span></div>
+    <h2>Prezzi equi vs prezzi diseguali</h2>
+    <div class="qtext"><p>Alcuni prezzi restano quasi identici ovunque, altri variano tantissimo da città a città. Il Coefficiente di Variazione misura questa disuguaglianza.</p></div>
+    <div class="chartbox"><div id="plot-cv" style="width:100%;height:420px;"></div></div>
+    <div class="callout"><b>I trasporti pubblici sono la voce più diseguale</b> — riflesso di scelte politiche diverse sui sussidi. <b>La benzina è quasi un prezzo unico europeo</b>: è una materia prima scambiata sugli stessi mercati. Sorpresa: <b>il cappuccino è più diseguale dell'affitto</b> — il mercato immobiliare tende a riflettere la ricchezza media di un paese, un caffè al bar dipende da fattori molto più locali.</div>
+  </section>
+
+  <section class="q" id="conto-finale">
+    <div class="qhead"><span class="qnum mono">06</span><span class="qline"></span></div>
+    <h2>Il conto finale: quanto costa vivere qui</h2>
+    <div class="qtext"><p>Stipendio contro spese: da una parte affitto, bollette, trasporti e spesa alimentare (i costi fissi); dall'altra 30 caffè, 8 birre, 4 cene e la palestra al mese (il tempo libero). Cosa resta in tasca — e cosa cambia tra vivere in centro o fuori.</p></div>
+    <p class="foot-note">Due note veloci: la spesa alimentare è il cibo fatto in casa, la cena fuori è già nel tempo libero. E lo stipendio è lo stesso in entrambi gli scenari — non è un confronto tra chi vive in centro e chi vive fuori, ma "stessa persona, stesso stipendio, due scelte abitative diverse".</p>
+
+    <h3 class="sub-h centro">Scenario centro</h3>
+    <div class="chartbox"><div id="plot-centro" style="width:100%;height:440px;"></div></div>
+    <p class="foot-note" style="margin-top:10px;">Ogni barra è il totale di ore mensili necessarie: in basso i costi fissi, in cima il tempo libero. La riga tratteggiata segna un mese di lavoro standard (160 ore).</p>
+
+    <h3 class="sub-h periferia">Scenario periferia</h3>
+    <div class="chartbox"><div id="plot-periferia" style="width:100%;height:440px;"></div></div>
+
+    <div class="callout">In centro, <b>Milano è in deficit di 430€/mese</b> e <b>Roma di 109€/mese</b> — <b>Barcellona regge per soli 17,50€ di margine</b>, un caso limite. Fuori centro la situazione si ribalta per tutti: anche Milano torna positiva, ma con appena <b>24€ di margine mensile</b> — il più risicato del gruppo.</div>
+  </section>
+
+  <section class="q" id="simulatore">
+    <div class="qhead"><span class="qnum mono">07</span><span class="qline"></span></div>
+    <h2>Il tuo stipendio, le loro città</h2>
+    <div class="qtext"><p>Inserisci il tuo stipendio netto mensile e scopri che percentuale se ne andrebbe in costi fissi, tempo libero o entrambi — in ciascuna delle 10 città, con i dati reali di questo report.</p></div>
+
+    <div class="simulator-controls">
+      <div class="sim-field">
+        <label for="sim-salary">Il tuo stipendio netto mensile</label>
+        <div class="sim-input-wrap">
+          <span class="sim-currency">€</span>
+          <input type="number" id="sim-salary" value="1800" min="300" max="10000" step="50">
+        </div>
+      </div>
+      <div class="sim-toggle" role="group">
+        <button class="sim-toggle-btn active" data-scenario="centro">Centro</button>
+        <button class="sim-toggle-btn" data-scenario="periferia">Periferia</button>
+      </div>
+      <div class="sim-toggle" role="group">
+        <button class="sim-toggle-btn active" data-tipo="fissi">Costi fissi</button>
+        <button class="sim-toggle-btn" data-tipo="libero">Tempo libero</button>
+        <button class="sim-toggle-btn" data-tipo="tutto">Tutto insieme</button>
+      </div>
+    </div>
+
+    <div class="chartbox"><div id="plot-simulatore" style="width:100%;height:440px;"></div></div>
+    <div class="callout" id="sim-summary"></div>
+  </section>
+</div>
+
+<div class="conclusion" id="conclusione">
+  <div class="wrap">
+    <div class="qhead"><span class="qnum mono" style="color:var(--amber);">08 · Conclusione</span></div>
+    <h2>Dove il lavoro vale davvero di più</h2>
+    <div class="qtext"><p>Ore di lavoro mensili necessarie per coprire il paniere completo, scenario centro, per area geografica.</p></div>
+    <div class="chartbox"><div id="plot-mappa" style="width:100%;height:480px;"></div></div>
+    <div class="qtext" style="margin-top:22px;">
+      <p><b>Copenaghen</b> offre il miglior potere d'acquisto reale: appena <b>107 ore</b> al mese coprono l'intero paniere — meno di 4 ore al giorno. <b>Milano chiude la classifica</b>: quasi <b>196 ore</b> necessarie, l'unica città dove il solo stipendio non basta.</p>
+      <p>Ma la lezione più interessante è che nessuna singola metrica racconta la storia intera. Budapest ha i prezzi assoluti più bassi ma il tempo di lavoro più lungo per un cappuccino. Amsterdam ha prezzi alti in euro ma tra i migliori in tempo di lavoro. L'Ungheria è il paese più economico oggi, ma quello dove i prezzi corrono più veloce.</p>
+    </div>
+    <p class="final-line">Il vero costo della vita non è mai un solo numero — è la relazione tra quel numero, lo stipendio che lo deve coprire, e la direzione in cui entrambi si stanno muovendo.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">Dati: Numbeo · Eurostat · Elaborazione indipendente su 10 città europee · Milano, Roma, Bologna, Amsterdam, Berlino, Barcellona, Praga, Budapest, Copenaghen, Parigi</div>
+</footer>
+
+<script>
+const isMobile = window.innerWidth <= 600;
+const MAIN_FONT = { family:"Inter, -apple-system, sans-serif", color:"#2B2B23", size:isMobile?10:12 };
+const TITLE_FONT = { family:"Bricolage Grotesque, sans-serif", size:isMobile?14:16, color:"#15140F" };
+const WHITE_BG = "#FFFFFF";
+const LINE_COLOR = "#E1D9C6";
+const CORAL = "#D9694F";
+const MOSS = "#4C7A63";
+const AMBER = "#D9AD5C";
+const cfg = { displayModeBar:false, responsive:true };
+
+document.addEventListener('DOMContentLoaded', function(){
+
+  /* 02. PANIERE */
+  const cittaPaniere = ["Milano","Roma","Bologna","Amsterdam","Berlino","Barcellona","Praga","Budapest","Copenaghen","Parigi"];
+  Plotly.newPlot('plot-paniere', [
+    { type:"bar", orientation:"h", name:"Cappuccino", y:cittaPaniere, x:[1.90,1.93,1.98,4.03,4.08,2.75,3.32,3.01,6.13,4.38], marker:{color:"#F2B26B"} },
+    { type:"bar", orientation:"h", name:"Birra", y:cittaPaniere, x:[6.00,5.00,6.00,6.60,4.90,3.75,2.69,3.30,8.03,7.00], marker:{color:AMBER} },
+    { type:"bar", orientation:"h", name:"Cena", y:cittaPaniere, x:[20.00,15.00,20.00,22.00,15.00,16.00,9.51,12.35,20.06,16.00], marker:{color:CORAL} },
+    { type:"bar", orientation:"h", name:"Palestra", y:cittaPaniere, x:[77.89,60.00,57.36,57.89,35.59,47.45,56.93,63.15,54.82,37.37], marker:{color:MOSS} }
+  ], {
+    font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
+    margin:{l:isMobile?68:90,r:20,t:20,b:40}, height: isMobile?420:460,
+    xaxis:{gridcolor:LINE_COLOR}, yaxis:{autorange:"reversed"}, barmode:"stack",
+    legend:{orientation:"h", y:1.12, font:{size:isMobile?9:12}}
+  }, cfg);
+
+  /* 03. TREND */
+  const anni = [2021,2022,2023,2024,2025];
+  const trend = {
+    "Ungheria (Budapest)": [119.04,137.22,160.59,166.56,173.96],
+    "Rep. Ceca (Praga)": [115.1,132.1,147.9,151.9,155.4],
+    "Paesi Bassi (Amsterdam)": [109.98,122.78,127.81,131.92,135.86],
+    "Germania (Berlino)": [109.2,118.7,125.9,129.0,131.9],
+    "Italia": [105.0,114.2,120.9,122.3,124.3],
+    "Spagna (Barcellona)": [107.04,115.95,119.89,123.33,126.65],
+    "Francia (Parigi)": [107.68,114.04,120.5,123.29,124.43],
+    "Danimarca (Copenaghen)": [104.9,113.8,117.6,119.1,121.3]
+  };
+  const palette = [CORAL,"#F2924B",AMBER,"#8B8677",MOSS,"#4E8C8B","#6C7BAE","#12141A"];
+  const trendTraces = Object.keys(trend).map((k,i) => ({
+    type:"scatter", mode:"lines+markers", name:k, x:anni, y:trend[k],
+    line:{color:palette[i], width:i<2?3:1.6}, marker:{size:i<2?7:5}
+  }));
+  Plotly.newPlot('plot-trend', trendTraces, {
+    font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
+    margin:{l:45,r:20,t:20,b:isMobile?95:40}, height: isMobile?380:440,
+    xaxis:{gridcolor:LINE_COLOR, dtick:1}, yaxis:{title:{text:"Indice prezzi (2015=100)"}, gridcolor:LINE_COLOR},
+    legend: isMobile
+      ? {orientation:"h", y:-0.35, font:{size:8.5}}
+      : {font:{size:10.5}}
+  }, cfg);
+
+  /* 04. PARADOSSO */
+  const paradossoCitta = ["Milano","Amsterdam","Bologna","Roma","Barcellona","Berlino","Parigi","Copenaghen","Praga","Budapest"];
+  const minCaffe = [9.4,9.6,10.0,10.8,12.7,13.4,13.7,14.9,15.5,19.1];
+  const minBirra = [29.7,15.7,30.2,27.9,17.3,16.1,22.0,19.5,12.6,20.9];
+  Plotly.newPlot('plot-paradosso', isMobile ? [
+    { type:"bar", orientation:"h", name:"Cappuccino", y:paradossoCitta, x:minCaffe, marker:{color:CORAL}, text:minCaffe.map(v=>v.toFixed(1)+"m"), textposition:"outside" },
+    { type:"bar", orientation:"h", name:"Birra", y:paradossoCitta, x:minBirra, marker:{color:MOSS}, text:minBirra.map(v=>v.toFixed(1)+"m"), textposition:"outside" }
+  ] : [
+    { type:"bar", name:"Cappuccino", x:paradossoCitta, y:minCaffe, marker:{color:CORAL}, text:minCaffe.map(v=>v.toFixed(1)+"m"), textposition:"outside" },
+    { type:"bar", name:"Birra", x:paradossoCitta, y:minBirra, marker:{color:MOSS}, text:minBirra.map(v=>v.toFixed(1)+"m"), textposition:"outside" }
+  ], {
+    font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
+    margin: isMobile ? {l:90,r:30,t:20,b:40} : {l:40,r:20,t:20,b:40},
+    height: isMobile?440:420,
+    xaxis: isMobile ? {gridcolor:LINE_COLOR, title:{text:"Minuti"}} : {gridcolor:LINE_COLOR},
+    yaxis: isMobile ? {automargin:true} : {title:{text:"Minuti"}, gridcolor:LINE_COLOR, range:[0,36]},
+    barmode:"group", legend:{orientation:"h", y:1.12, font:{size:isMobile?9:12}}
+  }, cfg);
+
+  /* 04b. MINI-SIMULATORE QUANTITÀ CAFFÈ/BIRRA */
+  const drinkBtns = document.querySelectorAll('.sim-toggle-btn[data-drink]');
+  const drinkQtyInput = document.getElementById('sim-qty');
+  const drinkSummary = document.getElementById('drink-summary');
+  const drinkLabel = { caffe: { s: "cappuccino", p: "cappuccini" }, birra: { s: "birra", p: "birre" } };
+  const drinkEmoji = { caffe: "☕", birra: "🍺" };
+
+  function renderDrink() {
+    const bevanda = document.querySelector('.sim-toggle-btn[data-drink].active').dataset.drink;
+    const qty = parseInt(drinkQtyInput.value, 10) || 0;
+    const minutiUnitari = bevanda === 'caffe' ? minCaffe : minBirra;
+
+    const combinato = paradossoCitta
+      .map((citta, i) => ({ citta, minuti: minutiUnitari[i] * qty }))
+      .sort((a, b) => a.minuti - b.minuti);
+
+    const cittaOrd = combinato.map(d => d.citta);
+    const minOrd = combinato.map(d => d.minuti);
+    const formatta = m => m >= 60 ? (m / 60).toFixed(1) + "h" : Math.round(m) + "m";
+
+    Plotly.react('plot-drink', [{
+      type: "bar", orientation: "h",
+      y: cittaOrd, x: minOrd,
+      text: minOrd.map(formatta), textposition: "outside",
+      marker: { color: bevanda === 'caffe' ? CORAL : MOSS },
+      hovertemplate: "<b>%{y}</b><br>%{text} di lavoro<extra></extra>"
+    }], {
+      font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
+      margin: { l: isMobile ? 90 : 110, r: 40, t: 20, b: 40 }, height: isMobile?380:400,
+      xaxis: { gridcolor: LINE_COLOR, title: { text: "Minuti di lavoro necessari" } },
+      yaxis: { automargin: true }
+    }, cfg);
+
+    const piuVeloce = combinato[0];
+    const piuLenta = combinato[combinato.length - 1];
+    drinkSummary.innerHTML = qty > 0
+      ? `Per <b>${qty} ${qty > 1 ? drinkLabel[bevanda].p : drinkLabel[bevanda].s}</b> ${drinkEmoji[bevanda]}, lavori dal <b>${formatta(piuVeloce.minuti)}</b> a ${piuVeloce.citta} fino al <b>${formatta(piuLenta.minuti)}</b> a ${piuLenta.citta} — stessa spesa, tempo di lavoro anche ${(piuLenta.minuti / piuVeloce.minuti).toFixed(1)} volte diverso.`
+      : "Inserisci una quantità per vedere il confronto.";
+  }
+
+  drinkBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      drinkBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderDrink();
+    });
+  });
+  drinkQtyInput.addEventListener('input', renderDrink);
+  renderDrink();
+
+  /* 05. CV% */
+  Plotly.newPlot('plot-cv', [{
+    type:"bar", orientation:"h",
+    y:["Trasporti","Cappuccino","Birra","Affitto centro","Affitto periferia","Utenze","Cena","Spesa alimentar","Palestra","Benzina"],
+    x:[60.73,40.11,32.19,31.40,29.48,27.76,23.64,23.33,22.56,11.81],
+    marker:{ color:[60.73,40.11,32.19,31.40,29.48,27.76,23.64,23.33,22.56,11.81], colorscale:[[0.0,MOSS],[1.0,CORAL]] }
+  }], {
+    font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
+    margin:{l:isMobile?100:150,r:20,t:20,b:40}, height: isMobile?400:420,
+    xaxis:{gridcolor:LINE_COLOR, title:{text:"Coefficiente di variazione (%)"}}, yaxis:{autorange:"reversed"}
+  }, cfg);
+
+  /* 06. SEZIONE OPTIMIZED — CONFIGURAZIONE CONDIVISA */
+  const cittaOrdinamento = ["Copenaghen", "Berlino", "Parigi", "Amsterdam", "Praga", "Budapest", "Bologna", "Barcellona", "Roma", "Milano"];
+
+  // Dati Centro
+  const oreFissiCentro = [91.94, 105.47, 108.86, 114.89, 120.44, 120.38, 132.50, 141.42, 149.89, 173.79];
+  const oreLiberoCentro = [15.53, 14.05, 15.10, 12.71, 16.82, 24.18, 20.51, 17.27, 20.27, 21.69];
+  const euroCentro = [2652.48, 2187.24, 2371.20, 3208.91, 1763.68, 1370.53, 1825.48, 2058.19, 1829.24, 2369.21];
+
+  // Dati Periferia (riallineati per lo stesso ordine visivo)
+  const oreFissiPerif = [74.68, 86.60, 89.03, 90.35, 108.34, 101.72, 113.54, 115.26, 119.94, 136.36];
+  const oreLiberoPerif = [15.53, 14.05, 15.10, 12.71, 16.82, 24.18, 20.51, 17.27, 20.27, 21.69];
+  const euroPerif = [2226.15, 1841.96, 1991.84, 2591.78, 1608.31, 1193.61, 1599.31, 1718.91, 1507.31, 1915.59];
+
+  function generaColoriTesto(fissi, libero) {
+    return fissi.map((v, i) => (v + libero[i] > 160 ? CORAL : "#2B2B23"));
+  }
+
+  /* 06. CENTRO */
+  const totCentro = oreFissiCentro.map((v, i) => v + oreLiberoCentro[i]);
+  Plotly.newPlot('plot-centro', isMobile ? [
+    {
+      type: "bar", orientation: "h", name: "Costi fissi",
+      y: cittaOrdinamento, x: oreFissiCentro,
+      marker: { color: MOSS, opacity: 0.85 },
+      hovertemplate: "<b>%{y}</b><br>Costi fissi: %{x:.1f} ore<extra></extra>"
+    },
+    {
+      type: "bar", orientation: "h", name: "Tempo libero",
+      y: cittaOrdinamento, x: oreLiberoCentro,
+      marker: { color: AMBER, opacity: 0.9 },
+      text: totCentro.map((t, i) => `${Math.round(t)}h`),
+      textposition: "outside",
+      textfont: { size: 10, color: "#15140F" },
+      hovertemplate: "<b>%{y}</b><br>Tempo libero: %{x:.1f} ore<extra></extra>"
+    }
+  ] : [
+    {
+      type: "bar", name: "Costi fissi",
+      x: cittaOrdinamento, y: oreFissiCentro,
+      marker: { color: MOSS, opacity: 0.85 },
+      hovertemplate: "<b>%{x}</b><br>Costi fissi: %{y:.1f} ore<extra></extra>"
+    },
+    {
+      type: "bar", name: "Tempo libero",
+      x: cittaOrdinamento, y: oreLiberoCentro,
+      marker: { color: AMBER, opacity: 0.9 },
+      text: totCentro.map((t, i) => `<b>${Math.round(t)}h</b> (${Math.round(euroCentro[i])}€)`),
+      textposition: "outside",
+      textfont: { size: 11, color: generaColoriTesto(oreFissiCentro, oreLiberoCentro) },
+      hovertemplate: "<b>%{x}</b><br>Tempo libero: %{y:.1f} ore<extra></extra>"
+    }
+  ], {
+    font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
+    margin: isMobile ? { l: 90, r: 40, t: 20, b: 40 } : { l: 40, r: 20, t: 30, b: 50 },
+    height: isMobile?440:440,
+    barmode: "stack",
+    yaxis: isMobile ? { automargin: true } : { title: { text: "Ore di lavoro mensili" }, gridcolor: LINE_COLOR, range: [0, 220] },
+    xaxis: isMobile ? { gridcolor: LINE_COLOR, title: { text: "Ore di lavoro mensili" }, range: [0, 220] } : { gridcolor: LINE_COLOR },
+    legend: { orientation: "h", y: 1.15, x: 0 },
+    shapes: [isMobile ? {
+      type: "line", y0: -0.5, y1: 9.5, x0: 160, x1: 160,
+      line: { color: CORAL, dash: "dash", width: 2 }
+    } : {
+      type: "line", x0: -0.5, x1: 9.5, y0: 160, y1: 160,
+      line: { color: CORAL, dash: "dash", width: 2 }
+    }],
+    annotations: isMobile ? [] : [{
+      x: 0, y: 165, xanchor: "left", showarrow: false,
+      text: "⚠️ Soglia mese lavorativo standard (160h)",
+      font: { size: 11, color: CORAL, family: "JetBrains Mono" }
+    }]
+  }, cfg);
+
+  /* 06. PERIFERIA */
+  const totPerif = oreFissiPerif.map((v, i) => v + oreLiberoPerif[i]);
+  Plotly.newPlot('plot-periferia', isMobile ? [
+    {
+      type: "bar", orientation: "h", name: "Costi fissi",
+      y: cittaOrdinamento, x: oreFissiPerif,
+      marker: { color: MOSS, opacity: 0.85 },
+      hovertemplate: "<b>%{y}</b><br>Costi fissi: %{x:.1f} ore<extra></extra>"
+    },
+    {
+      type: "bar", orientation: "h", name: "Tempo libero",
+      y: cittaOrdinamento, x: oreLiberoPerif,
+      marker: { color: AMBER, opacity: 0.9 },
+      text: totPerif.map((t, i) => `${Math.round(t)}h`),
+      textposition: "outside",
+      textfont: { size: 10, color: "#15140F" },
+      hovertemplate: "<b>%{y}</b><br>Tempo libero: %{x:.1f} ore<extra></extra>"
+    }
+  ] : [
+    {
+      type: "bar", name: "Costi fissi",
+      x: cittaOrdinamento, y: oreFissiPerif,
+      marker: { color: MOSS, opacity: 0.85 },
+      hovertemplate: "<b>%{x}</b><br>Costi fissi: %{y:.1f} ore<extra></extra>"
+    },
+    {
+      type: "bar", name: "Tempo libero",
+      x: cittaOrdinamento, y: oreLiberoPerif,
+      marker: { color: AMBER, opacity: 0.9 },
+      text: totPerif.map((t, i) => `<b>${Math.round(t)}h</b> (${Math.round(euroPerif[i])}€)`),
+      textposition: "outside",
+      textfont: { size: 11, color: generaColoriTesto(oreFissiPerif, oreLiberoPerif) },
+      hovertemplate: "<b>%{x}</b><br>Tempo libero: %{y:.1f} ore<extra></extra>"
+    }
+  ], {
+    font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
+    margin: isMobile ? { l: 90, r: 40, t: 20, b: 40 } : { l: 40, r: 20, t: 30, b: 50 },
+    height: isMobile?440:440,
+    barmode: "stack",
+    yaxis: isMobile ? { automargin: true } : { title: { text: "Ore di lavoro mensili" }, gridcolor: LINE_COLOR, range: [0, 220] },
+    xaxis: isMobile ? { gridcolor: LINE_COLOR, title: { text: "Ore di lavoro mensili" }, range: [0, 220] } : { gridcolor: LINE_COLOR },
+    legend: { orientation: "h", y: 1.15, x: 0 },
+    shapes: [isMobile ? {
+      type: "line", y0: -0.5, y1: 9.5, x0: 160, x1: 160,
+      line: { color: CORAL, dash: "dash", width: 2 }
+    } : {
+      type: "line", x0: -0.5, x1: 9.5, y0: 160, y1: 160,
+      line: { color: CORAL, dash: "dash", width: 2 }
+    }],
+    annotations: isMobile ? [] : [{
+      x: 0, y: 165, xanchor: "left", showarrow: false,
+      text: "⚠️ Soglia mese lavorativo standard (160h)",
+      font: { size: 11, color: CORAL, family: "JetBrains Mono" }
+    }]
+  }, cfg);
+
+  /* 07. SIMULATORE INTERATTIVO */
+  const simSalaryInput = document.getElementById('sim-salary');
+  const simScenarioBtns = document.querySelectorAll('.sim-toggle-btn[data-scenario]');
+  const simTipoBtns = document.querySelectorAll('.sim-toggle-btn[data-tipo]');
+  const simSummary = document.getElementById('sim-summary');
+
+  const labelTipo = { fissi: "costi fissi", libero: "tempo libero", tutto: "spesa totale" };
+
+  function renderSimulatore() {
+    const salary = parseFloat(simSalaryInput.value) || 0;
+    const scenario = document.querySelector('.sim-toggle-btn[data-scenario].active').dataset.scenario;
+    const tipo = document.querySelector('.sim-toggle-btn[data-tipo].active').dataset.tipo;
+
+    const fissiEuro = scenario === 'centro' ? euroCentro : euroPerif;
+    const oreFissi = scenario === 'centro' ? oreFissiCentro : oreFissiPerif;
+    // stipendio orario implicito nei dati del report (euro / ore), usato per convertire
+    // le ore di tempo libero già presenti nel report nel loro equivalente in euro
+    const liberoEuro = fissiEuro.map((euro, i) => oreLiberoCentro[i] * (euro / oreFissi[i]));
+
+    let valori;
+    if (tipo === 'fissi') valori = fissiEuro;
+    else if (tipo === 'libero') valori = liberoEuro;
+    else valori = fissiEuro.map((euro, i) => euro + liberoEuro[i]);
+
+    const combinato = cittaOrdinamento
+      .map((citta, i) => ({ citta, pct: salary > 0 ? (valori[i] / salary) * 100 : 0 }))
+      .sort((a, b) => a.pct - b.pct);
+
+    const cittaOrd = combinato.map(d => d.citta);
+    const pctOrd = combinato.map(d => d.pct);
+    const coloriOrd = pctOrd.map(p => (p > 100 ? CORAL : MOSS));
+    const maxPct = Math.max(...pctOrd, 100);
+
+    Plotly.react('plot-simulatore', [{
+      type: "bar", orientation: "h",
+      y: cittaOrd, x: pctOrd,
+      text: pctOrd.map(p => Math.round(p) + "%"), textposition: "outside",
+      marker: { color: coloriOrd },
+      hovertemplate: "<b>%{y}</b><br>%{x:.0f}% dello stipendio<extra></extra>"
+    }], {
+      font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
+      margin: { l: isMobile ? 90 : 110, r: 40, t: 20, b: 40 }, height: isMobile?380:440,
+      xaxis: { gridcolor: LINE_COLOR, title: { text: `% dello stipendio in ${labelTipo[tipo]}` }, range: [0, maxPct + 15] },
+      yaxis: { automargin: true },
+      shapes: [{
+        type: "line", x0: 100, x1: 100, y0: -0.5, y1: 9.5,
+        line: { color: CORAL, dash: "dash", width: 2 }
+      }]
+    }, cfg);
+
+    const piuEconomica = combinato[0];
+    const piuCara = combinato[combinato.length - 1];
+    const nota = piuCara.pct > 100
+      ? ` A <b>${piuCara.citta}</b> lo stipendio non basterebbe a coprire ${labelTipo[tipo]}.`
+      : "";
+    simSummary.innerHTML = salary > 0
+      ? `Con <b>${salary.toLocaleString("it-IT")}€</b> netti al mese (${scenario}, ${labelTipo[tipo]}), la spesa ti costerebbe dal <b>${Math.round(piuEconomica.pct)}%</b> a ${piuEconomica.citta} fino al <b>${Math.round(piuCara.pct)}%</b> a ${piuCara.citta}.${nota}`
+      : "Inserisci uno stipendio per vedere il confronto.";
+  }
+
+  simSalaryInput.addEventListener('input', renderSimulatore);
+  simScenarioBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      simScenarioBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderSimulatore();
+    });
+  });
+  simTipoBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      simTipoBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderSimulatore();
+    });
+  });
+  renderSimulatore();
+
+  /* 08. MAPPA */
+  Plotly.newPlot('plot-mappa', [{
+    type:"choropleth", locationmode:"country names",
+    locations:["Czech Republic","Germany","Denmark","Spain","France","Hungary","Italy","Netherlands"],
+    z:[137.25,119.52,107.48,158.69,123.95,144.57,172.89,127.60],
+    text:["Praga","Berlino","Copenaghen","Barcellona","Parigi","Budapest","Milano, Roma, Bologna","Amsterdam"],
+    colorscale:[[0.0,MOSS],[0.5,AMBER],[1.0,CORAL]],
+    colorbar:{title:{text:"Ore / mese"}, len:0.8}
+  }], {
+    font:{...MAIN_FONT, color:"#EDE9DC"}, paper_bgcolor:"#1A1D24", plot_bgcolor:"#1A1D24",
+    margin:{l:10,r:10,t:10,b:10},
+    geo:{ scope:"europe", showframe:false, showcoastlines:false, fitbounds:"locations",
+          bgcolor:"#1A1D24", landcolor:"#2A2D35", lakecolor:"#1A1D24", subunitcolor:"#3A3D45" },
+    height:isMobile?360:480
+  }, cfg);
+
+});
+</script>
+
+</body>
 </html>
 
 
