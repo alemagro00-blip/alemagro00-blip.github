@@ -3,532 +3,211 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>La Corsa alle Rinnovabili - Report Energetico</title>
-
-<!-- Fonts: Bricolage Grotesque (Titoli), Inter (Corpo leggibile), JetBrains Mono (Dati e etichette) -->
+<title>AI Job Market 2026: trend e competenze</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-
-<!-- Plotly.js per i grafici -->
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
-
 <style>
   :root {
-    --bg-main: #FAFAF6;        /* Sfondo carta chiaro, coerente con il resto del sito */
-    --card-bg: #FFFFFF;        /* Sfondo card bianco pulito */
-    --ink-dark: #15140F;       /* Inchiostro unificato con home e altri report */
-    --ink-muted: #6B6659;      /* Testo secondario, coerente con lo "slate" degli altri report */
-    --line-color: #E4E1D6;     /* Linea divisoria, coerente con il resto del sito */
-    
-    /* Colori d'accento (firma di questo report) */
-    --accent-emerald: #059669; /* Verde smeraldo per il pulito/positivo */
-    --accent-blue: #2563EB;    /* Blu cobalto per il focus/Italia */
-    --accent-amber: #D9AD5C;   /* Ambra, coerente col tono usato nel report costo-vita */
-    --dark-section: #15140F;  /* Sfondo scuro per il blocco conclusivo, coerente con l'inchiostro */
+    --ink:#15140F; --paper:#FAFAF6; --card:#FFFFFF;
+    --violet:#7C5CFC; --violet-deep:#5D3FD9; --violet-light:#EFEBFF;
+    --amber:#D9AD5C; --line:#E4E1D6; --slate:#6B6659;
   }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:'Inter',-apple-system,sans-serif; font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3{font-family:'Bricolage Grotesque',sans-serif; margin:0; color:var(--ink);}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .wrap{max-width:900px; margin:0 auto; padding:0 28px;}
+  a{color:var(--violet);}
 
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { 
-    margin: 0; 
-    background: var(--bg-main); 
-    color: var(--ink-dark); 
-    font-family: 'Inter', -apple-system, sans-serif; 
-    font-size: 16px; 
-    line-height: 1.7; 
-    -webkit-font-smoothing: antialiased; 
-  }
-
-  h1, h2, h3, h4 { font-family: 'Bricolage Grotesque', sans-serif; margin: 0; color: var(--ink-dark); }
-  .mono { font-family: 'JetBrains Mono', monospace; }
-  .wrap { max-width: 920px; margin: 0 auto; padding: 0 28px; }
-
-  /* Hero Section */
-  .hero { position:relative; background: var(--ink-dark); color: #F8FAFC; padding: 68px 0 56px; overflow:hidden; }
-  .hero::before { content:''; position:absolute; width:480px; height:480px; border-radius:50%; filter:blur(80px); background:radial-gradient(circle, rgba(77,138,255,0.4), transparent 70%); top:-200px; right:-100px; pointer-events:none; z-index:0; }
-  .hero::after { content:''; position:absolute; width:420px; height:420px; border-radius:50%; filter:blur(80px); background:radial-gradient(circle, rgba(5,150,105,0.35), transparent 70%); bottom:-220px; left:-100px; pointer-events:none; z-index:0; }
-  .hero .wrap { position:relative; z-index:1; }
-  .back-link { display:inline-flex; align-items:center; gap:8px; margin-bottom:22px; background:rgba(255,255,255,0.1); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.16); border-radius:999px; padding:8px 16px; color:#F8FAFC; opacity:.9; text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; cursor:pointer; transition:.2s ease; }
+  .back-link { display:inline-flex; align-items:center; gap:8px; margin-bottom:26px; background:rgba(255,255,255,0.1); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.16); border-radius:999px; padding:8px 16px; color:var(--paper); opacity:.85; text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; cursor:pointer; transition:.2s ease; position:relative; z-index:1; }
   .back-link:hover { opacity:1; transform:translateX(-4px); }
-  .eyebrow { font-family: 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; font-size: 11.5px; color: #38BDF8; margin-bottom: 20px; font-weight: 700; }
-  .hero h1 { font-size: clamp(2.4rem, 5.8vw, 3.5rem); font-weight: 700; line-height: 1.1; letter-spacing: -.02em; color: #FFFFFF; }
-  .hero h1 em { font-style: italic; color: #34D399; font-weight: 500; }
-  .hero .sub { max-width: 680px; margin-top: 22px; font-size: 16.5px; line-height: 1.6; color: #94A3B8; }
-  
-  /* Ticker visivo ad alto impatto */
-  .ticker { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.14); border-radius: 18px; overflow: hidden; }
-  .ticker .cell { background: rgba(255,255,255,0.06); backdrop-filter: blur(16px) saturate(1.6); -webkit-backdrop-filter: blur(16px) saturate(1.6); padding: 24px 28px; }
-  .ticker .label { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; color: #64748B; }
-  .ticker .num { font-family: 'Bricolage Grotesque', sans-serif; font-size: 42px; font-weight: 700; margin-top: 6px; }
-  .ticker .num.good { color: #34D399; }
-  .ticker .num.warn { color: #FBBF24; }
-  .ticker .cap { font-size: 13.5px; color: #94A3B8; margin-top: 4px; line-height: 1.5; }
 
-  /* Introduzione */
-  .intro { padding: 48px 0 12px; }
-  .lede { font-size: 19px; color: #1E293B; max-width: 780px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 500; line-height: 1.55; }
-  .lede b { font-style: italic; font-weight: 600; color: var(--accent-emerald); }
+  .hero { position:relative; background:var(--ink); color:var(--paper); padding:64px 0 56px; overflow:hidden; }
+  .hero::before, .hero::after { content:''; position:absolute; border-radius:50%; filter:blur(80px); pointer-events:none; z-index:0; }
+  .hero::before { width:480px; height:480px; background:radial-gradient(circle, rgba(124,92,252,0.45), transparent 70%); top:-200px; left:-100px; }
+  .hero::after { width:420px; height:420px; background:radial-gradient(circle, rgba(77,138,255,0.3), transparent 70%); bottom:-220px; right:-80px; }
+  .hero .wrap { position:relative; z-index:1; }
+  .eyebrow { font-family:'JetBrains Mono',monospace; letter-spacing:.16em; text-transform:uppercase; font-size:11.5px; color:var(--amber); margin-bottom:22px; font-weight:700; }
+  .hero h1 { font-size:clamp(2.2rem,5.4vw,3.4rem); font-weight:700; line-height:1.08; letter-spacing:-.01em; color:#fff; }
+  .hero h1 em { font-style:italic; color:var(--violet); padding-right:.08em; }
+  .hero .sub { max-width:620px; margin-top:22px; font-size:16.5px; line-height:1.6; color:#C9C4B4; }
 
-  .method-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 32px 0 12px; }
-  .method-row .card { background: var(--card-bg); border: 1px solid var(--line-color); border-radius: 16px; padding: 22px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-  .method-row .card .t { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; font-weight: 700; margin-bottom: 8px; }
-  .method-row .card.c1 .t { color: var(--accent-emerald); } 
-  .method-row .card.c2 .t { color: var(--accent-blue); } 
-  .method-row .card.c3 .t { color: var(--accent-amber); }
-  .method-row .card .d { font-size: 13.5px; color: var(--ink-muted); line-height: 1.5; }
+  .ticker { margin-top:44px; display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.14); border-radius:18px; overflow:hidden; }
+  .ticker .cell { background:rgba(255,255,255,0.06); backdrop-filter:blur(16px) saturate(1.6); -webkit-backdrop-filter:blur(16px) saturate(1.6); padding:26px 28px; }
+  .ticker .label { font-family:'JetBrains Mono',monospace; font-size:11.5px; text-transform:uppercase; letter-spacing:.1em; font-weight:700; color:#8B8677; }
+  .ticker .num { font-family:'Bricolage Grotesque',sans-serif; font-size:36px; font-weight:700; margin-top:8px; color:var(--violet); }
+  .ticker .cap { font-size:13px; color:#9C9788; margin-top:6px; line-height:1.5; }
 
-  /* Sezioni con riga divisoria SINGOLA ed elegante */
-  section.q { padding: 44px 0 20px 0; border-top: 1px solid var(--line-color); }
-  .qhead { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-  .qnum { font-family: 'JetBrains Mono', monospace; color: var(--accent-emerald); font-size: 12.5px; font-weight: 700; background: rgba(5, 150, 105, 0.1); padding: 2px 8px; border-radius: 4px; }
-  section.q h2 { font-size: clamp(22px, 3.2vw, 30px); letter-spacing: -.01em; font-weight: 600; }
-  .qtext { max-width: 780px; color: #334155; font-size: 16px; margin-top: 12px; }
-  .qtext b { color: var(--ink-dark); }
+  .intro { padding:52px 0 0; }
+  .lede { font-size:19px; color:#2B2B23; max-width:760px; font-family:'Bricolage Grotesque',sans-serif; font-weight:500; line-height:1.5; }
+  .lede b { font-style:italic; font-weight:600; }
+  .sources { margin-top:18px; font-size:13px; color:var(--slate); }
 
-  /* Box Grafici e Callout */
-  .chartbox { margin-top: 20px; background: var(--card-bg); border: 1px solid var(--line-color); border-radius: 20px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03); overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  
-  .callout { margin-top: 20px; background: #ECFDF5; border-left: 4px solid var(--accent-emerald); border-radius: 4px 10px 10px 4px; padding: 18px 22px; font-size: 15px; color: #064E3B; }
-  .callout.amber { background: #FFFBEB; border-left-color: var(--accent-amber); color: #78350F; }
-  .callout b { color: #0F172A; }
-  
-  .aside-box { margin-top: 24px; background: var(--ink-dark); color: #F1F5F9; border-radius: 18px; padding: 24px 28px; font-size: 14.5px; line-height: 1.65; }
-  .aside-box .t { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #38BDF8; font-weight: 700; margin-bottom: 8px; }
-  .aside-box b { color: #FFFFFF; }
+  section.q { padding:40px 0; }
+  .qhead { display:flex; align-items:baseline; gap:12px; margin-bottom:10px; }
+  .qnum { font-family:'JetBrains Mono',monospace; color:var(--violet); font-size:13px; font-weight:700; }
+  .qline { flex:1; height:1px; background:var(--line); }
+  section.q h2 { font-size:clamp(24px,3.4vw,32px); letter-spacing:-.01em; font-weight:600; }
+  .qtext { max-width:740px; color:#3A392F; font-size:16px; margin-top:14px; }
+  .qtext b { color:var(--ink); }
 
-  /* Tabella Personalizzata */
-  .table-container { margin-top: 20px; overflow-x: auto; border: 1px solid var(--line-color); border-radius: 10px; background: var(--card-bg); }
-  table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14.5px; }
-  th { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; background: #F8FAFC; color: var(--ink-muted); padding: 12px 16px; border-bottom: 1px solid var(--line-color); }
-  td { padding: 14px 16px; border-bottom: 1px solid var(--line-color); color: #334155; }
-  tr:last-child td { border-bottom: none; }
-  tr.highlight { background: #EFF6FF; font-weight: 600; }
-  tr.highlight td { color: var(--accent-blue); }
+  .chartbox { margin-top:24px; background:var(--card); border:1px solid var(--line); border-radius:20px; padding:18px; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .callout { margin-top:20px; background:var(--violet-light); border-left:4px solid var(--violet); border-radius:4px 10px 10px 4px; padding:18px 24px; font-size:15px; color:#2B2B23; }
+  .callout b { color:var(--ink); }
 
-  /* Conclusione */
-  .conclusion { position:relative; background: var(--dark-section); color: #F8FAFC; padding: 60px 0 76px; margin-top: 50px; overflow:hidden; }
-  .conclusion::before { content:''; position:absolute; width:420px; height:420px; border-radius:50%; filter:blur(90px); background:radial-gradient(circle, rgba(155,107,255,0.28), transparent 70%); bottom:-200px; right:-100px; pointer-events:none; z-index:0; }
-  .conclusion .wrap { position:relative; z-index:1; }
-  .conclusion h2 { color: #FFFFFF; }
-  .conclusion .qtext { color: #94A3B8; }
-  .final-line { margin-top: 32px; padding-top: 24px; border-top: 1px solid #334155; font-family: 'Bricolage Grotesque', sans-serif; font-style: italic; font-weight: 500; font-size: 21px; color: #38BDF8; max-width: 760px; line-height: 1.4; }
+  .final-line { margin-top:32px; padding-top:26px; border-top:1px solid #2A2D35; font-family:'Bricolage Grotesque',sans-serif; font-style:italic; font-weight:500; font-size:21px; color:var(--amber); max-width:740px; line-height:1.4; }
 
-  footer { padding: 32px 0; text-align: center; color: var(--ink-muted); font-size: 12.5px; background: var(--bg-main); border-top: 1px solid var(--line-color); }
+  footer { padding:30px 0 56px; text-align:center; color:var(--slate); font-size:12px; }
 
-  @media (max-width: 840px) {
-    .wrap { padding: 0 16px; } 
-    .hero { padding: 44px 0 36px; }
-    .ticker { grid-template-columns: 1fr; } 
-    .method-row { grid-template-columns: 1fr; }
-    .chartbox { padding: 12px 8px; }
-
-    .table-container { overflow-x: visible; }
-    .table-container table, .table-container thead, .table-container tbody,
-    .table-container th, .table-container td, .table-container tr { display: block; width: 100%; }
-    .table-container thead { display: none; }
-    .table-container tr { padding: 14px 16px; border-bottom: 1px solid var(--line-color); }
-    .table-container tr:last-child { border-bottom: none; }
-    .table-container td { border: none; padding: 5px 0; }
-    .table-container td::before {
-      content: attr(data-label);
-      display: block;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px; text-transform: uppercase; letter-spacing: .05em;
-      color: var(--ink-muted); margin-bottom: 2px;
-    }
-    .hero::before, .hero::after, .conclusion::before { filter:blur(40px); }
+  @media (max-width:840px){
+    .wrap{padding:0 16px;} .hero{padding:44px 0 40px;}
+    .ticker{grid-template-columns:1fr;}
+    .chartbox{padding:12px 8px;}
+    .hero::before, .hero::after { filter:blur(40px); }
     .ticker .cell, .back-link { backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
   }
 </style>
 </head>
 <body>
 
-<!-- HERO HEADER -->
 <div class="hero">
   <div class="wrap">
     <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/" class="back-link">&larr; Torna alla Home</a>
-    <div class="eyebrow">Analisi di Settore — Transizione Energetica</div>
-    <h1>La Corsa alle <em>Rinnovabili</em></h1>
-    <p class="sub">Un confronto dettagliato su 79 Paesi: divari geografici, accelerazioni tecnologiche e il paradosso della crescita dei consumi pro capite.</p>
+    <div class="eyebrow">Data Stories — Intelligenza Artificiale &amp; Lavoro</div>
+    <h1>Cosa cercano <em>davvero</em> le aziende AI nel 2026?</h1>
+    <p class="sub">Tre fonti a confronto — un dataset di offerte di lavoro AI 2026, un dataset globale di ruoli e stipendi, e il Future of Jobs Report del World Economic Forum — per capire quali ruoli, competenze e salari stanno definendo il mercato del lavoro AI.</p>
     <div class="ticker">
       <div class="cell">
-        <div class="label">Norvegia & Islanda</div>
-        <div class="num good">~98%</div>
-        <div class="cap">Della matrice elettrica è coperta da fonti pulite storiche (idroelettrico e geotermico).</div>
+        <div class="label">Ruolo più richiesto</div>
+        <div class="num">NLP Engineer</div>
+        <div class="cap">In cima alla classifica sia nel dataset delle offerte 2026 sia in quello globale — l'unico ruolo a comparire primo in entrambi.</div>
       </div>
       <div class="cell">
-        <div class="label">Domanda Primaria Globale</div>
-        <div class="num warn">>60%</div>
-        <div class="cap">Del fabbisogno energetico totale sul pianeta rimane vincolato a petrolio, gas e carbone.</div>
+        <div class="label">Stipendio medio più alto</div>
+        <div class="num">$109.798</div>
+        <div class="cap">Research Scientist, dataset globale — il ruolo più specialistico è anche il più pagato.</div>
       </div>
     </div>
   </div>
 </div>
 
 <div class="wrap">
-  <!-- INTRODUZIONE -->
   <div class="intro">
-    <p class="lede">Valutare la transizione ecologica solo attraverso le percentuali di solare o eolico rischia di nascondere la vera realtà. <b>I dati su 79 Nazioni mostrano una profonda spaccatura</b> tra chi gode di vantaggi naturali secolari e chi deve riconvertire da zero il proprio tessuto industriale.</p>
+    <p class="lede">Prompt Engineer, NLP Engineer, Research Scientist: il mercato del lavoro AI nel 2026 non premia più solo chi <b>sa programmare</b>, ma chi si è <b>specializzato</b>. Abbiamo incrociato tre fonti — offerte di lavoro reali, panorama globale dei ruoli e le competenze indicate dal World Economic Forum — per capire cosa conta davvero.</p>
+    <p class="sources"><i>Fonti: AI Jobs Dataset 2026 (Kaggle) · Global AI Jobs (Kaggle) · WEF Future of Jobs Report 2025</i></p>
   </div>
 
-  <!-- SEZIONE 01: MACRO-CATEGORIE -->
-  <section class="q">
-
-    <h2>Le tre velocità della transizione globale</h2>
-    <div class="qtext">
-      <p>Dall'analisi dei dati internazionali emergono tre profili ben distinti di nazioni impegnate nel processo di decarbonizzazione:</p>
-    </div>
-    
-    <div class="method-row">
-      <div class="card c1">
-        <div class="t">Rendita Geografica</div>
-        <div class="d">Paesi come Norvegia, Brasile o Islanda. La loro quota record di rinnovabili sfiora il 100% grazie a bacini idrici e geotermia storicamente presenti sul territorio.</div>
-      </div>
-      <div class="card c2">
-        <div class="t">Spinta Tecnologica</div>
-        <div class="d">Nazioni come Danimarca, Portogallo e Germania che, partendo da un mix fossile, hanno installato massicciamente parco eolico e solare tramite politiche mirate.</div>
-      </div>
-      <div class="card c3">
-        <div class="t">Iper-Consumo Inerziale</div>
-        <div class="d">Grandi economie il cui ritmo di crescita industriale continua ad assorbire sia la nuova capacità verde sia enormi volumi di fonti fossili tradizionali.</div>
-      </div>
-    </div>
+  <section class="q" id="ruoli" style="border-top:none;">
+    <div class="qhead"><span class="qnum mono">01</span><span class="qline"></span></div>
+    <h2>I ruoli più richiesti</h2>
+    <div class="qtext"><p>Confrontando i 5 ruoli più frequenti in entrambi i dataset, un nome emerge in cima a tutti e due: <b>NLP Engineer</b>. Ma le distanze tra un dataset e l'altro raccontano due mercati diversi.</p></div>
+    <div class="chartbox"><div id="plot-ruoli" style="width:100%;height:440px;"></div></div>
+    <div class="callout"><b>Il dataset delle offerte 2026 è più concentrato</b> — NLP Engineer e Research Scientist dominano nettamente (oltre 10.900 occorrenze ciascuno), il resto si stacca parecchio. <b>Nel dataset globale la distribuzione è più piatta</b>: tutti e 5 i ruoli restano sopra le 11.200 occorrenze — segno di una domanda più matura e diffusa su scala internazionale.</div>
   </section>
 
-<!-- SEZIONE 02: CHI GUIDA LA TRANSAZIONE ENERGETICA -->
-<section class="q">
-  <div class="qhead">
-    <span class="qnum mono">01</span>
-  </div>
-  <h2>Chi guida la transizione energetica?</h2>
-  <div class="qtext">
-    <p>Islanda e Norvegia dominano nettamente la classifica mondiale, superando il 70% di energia da fonti rinnovabili. Ma prima di incoronarle campionesse della transizione, vale la pena guardare da dove arriva quel primato.</p>
-  </div>
+  <section class="q" id="specializzazioni">
+    <div class="qhead"><span class="qnum mono">02</span><span class="qline"></span></div>
+    <h2>Su cosa si concentra la domanda</h2>
+    <div class="qtext"><p>Guardando le specializzazioni richieste nelle offerte 2026, una sola area domina su tutte le altre.</p></div>
+    <div class="chartbox"><div id="plot-spec" style="width:100%;height:400px;"></div></div>
+    <div class="callout"><b>Machine Learning da sola vale il 37% delle offerte</b> — più del doppio della seconda area (MLOps, 15,7%). Nel dataset globale, invece, il quadro è quasi capovolto: le 8 specializzazioni principali (Computer Vision, LLM, Reinforcement Learning, Analytics, Generative AI, MLOps, Forecasting, NLP) si dividono la domanda in modo quasi identico, tutte tra il 12,3% e il 12,8%. Le offerte concrete premiano oggi le competenze operative di ML; il panorama globale è già più maturo e diversificato.</div>
+  </section>
 
-  <!-- 1. PRIMO GRAFICO (CLASSIFICA TOP 10) -->
-  <div class="chartbox">
-    <div id="a84a3db6-bbdb-41c4-beba-689f71623bcd" class="plotly-graph-div"></div>
-  </div>
+  <section class="q" id="skills">
+    <div class="qhead"><span class="qnum mono">03</span><span class="qline"></span></div>
+    <h2>Le competenze che il WEF associa al futuro del lavoro</h2>
+    <div class="qtext"><p>Dal Future of Jobs Report 2025 del World Economic Forum abbiamo estratto quanto spesso ricorrono le competenze "del futuro" legate al lavoro nell'AI.</p></div>
+    <div class="chartbox"><div id="plot-skills" style="width:100%;height:400px;"></div></div>
+    <div class="callout">Le competenze più citate non sono tecniche: <b>flessibilità, resilienza e agilità</b> guidano la classifica, davanti persino ad "AI e big data". Il messaggio del WEF è chiaro: la parte tecnica si può imparare, la capacità di adattarsi è quella che fa davvero la differenza.</div>
+  </section>
 
-  <!-- SCRIPT GRAFICO 1 (BARRE TOP 10) -->
-  <script type="text/javascript">
-  (function() {
-    var isMobileTop10 = window.innerWidth <= 600;
-    var top10Countries = ["Finland", "Portugal", "Switzerland", "Denmark", "New Zealand", "Austria", "Brazil", "Sweden", "Norway", "Iceland"];
+  <section class="q" id="salari">
+    <div class="qhead"><span class="qnum mono">04</span><span class="qline"></span></div>
+    <h2>Chi guadagna di più</h2>
+    <div class="qtext"><p>Nel dataset globale, i 5 ruoli meglio pagati mostrano differenze marcate in base al grado di specializzazione.</p></div>
+    <div class="chartbox"><div id="plot-salari" style="width:100%;height:400px;"></div></div>
+    <div class="callout"><b>Research Scientist guadagna in media $109.798</b>, oltre $12.000 più di un Data Analyst generico. Nel dataset delle offerte 2026 il quadro è opposto: gli stipendi dei 15 ruoli più pagati si concentrano quasi tutti tra $95.000 e $97.400 — una forbice di appena $2.300. <b>Le offerte pubblicate tendono ad appiattire gli stipendi</b>; il mercato reale, invece, premia chiaramente la specializzazione.</div>
+  </section>
 
-    var desktop = {
-      data: [
-        {
-          "hovertemplate": "renewables_share_energy=%{text:.1f}%<br>country=%{y}<extra></extra>",
-          "marker": { "color": "#D97706" },
-          "orientation": "h", "showlegend": false,
-          "text": [38.894, 39.741, 39.868, 41.722, 42.554, 43.347, 49.616],
-          "textposition": "outside",
-          "x": [38.894, 39.741, 39.868, 41.722, 42.554, 43.347, 49.616],
-          "y": ["Finland", "Portugal", "Switzerland", "Denmark", "New Zealand", "Austria", "Brazil"],
-          "type": "bar",
-          "textfont": { "color": "#64748b", "size": 11, "family": "JetBrains Mono, monospace" },
-          "texttemplate": "%{text:.1f}%", "width": 0.55
-        },
-        {
-          "hovertemplate": "renewables_share_energy=%{text:.1f}%<br>country=%{y}<extra></extra>",
-          "marker": { "color": "#2563EB" },
-          "orientation": "h", "showlegend": false,
-          "text": [51.318], "textposition": "outside", "x": [51.318], "y": ["Sweden"],
-          "type": "bar",
-          "textfont": { "color": "#64748b", "size": 11, "family": "JetBrains Mono, monospace" },
-          "texttemplate": "%{text:.1f}%", "width": 0.55
-        },
-        {
-          "hovertemplate": "renewables_share_energy=%{text:.1f}%<br>country=%{y}<extra></extra>",
-          "marker": { "color": "#059669" },
-          "orientation": "h", "showlegend": false,
-          "text": [71.812, 80.498], "textposition": "outside", "x": [71.812, 80.498], "y": ["Norway", "Iceland"],
-          "type": "bar",
-          "textfont": { "color": "#64748b", "size": 11, "family": "JetBrains Mono, monospace" },
-          "texttemplate": "%{text:.1f}%", "width": 0.55
-        }
-      ],
-      layout: {
-        "title": false,
-        "xaxis": {
-          "title": { "text": "Quota di energia rinnovabile (%)", "font": { "family": "Inter, sans-serif", "size": isMobileTop10 ? 10 : 12, "color": "#475569" } },
-          "showgrid": true, "gridcolor": "#e5e7eb", "linecolor": "#cbd5e1",
-          "tickfont": { "color": "#475569", "size": isMobileTop10 ? 9 : 11, "family": "Inter, sans-serif" },
-          "range": [0, 92]
-        },
-        "yaxis": {
-          "title": { "text": "" }, "showgrid": false,
-          "categoryorder": "array", "categoryarray": top10Countries,
-          "linecolor": "#cbd5e1",
-          "tickfont": { "color": "#1e293b", "size": isMobileTop10 ? 9.5 : 11.5, "family": "Inter, sans-serif" }
-        },
-        "margin": { "l": isMobileTop10 ? 78 : 100, "r": isMobileTop10 ? 34 : 60, "t": 20, "b": 40 },
-        "height": isMobileTop10 ? 360 : 380, "showlegend": false, "autosize": true,
-        "paper_bgcolor": "transparent", "plot_bgcolor": "transparent",
-        "font": { "family": "Inter, sans-serif", "color": "#1e293b" }
-      }
-    };
+  <div class="final-line">Il professionista AI del 2026 non si distingue più solo per gli strumenti che conosce, ma per la specializzazione che ha scelto — e per la capacità di restare flessibile mentre tutto intorno cambia.</div>
 
-    var el = document.getElementById("a84a3db6-bbdb-41c4-beba-689f71623bcd");
-    Plotly.newPlot(el, desktop.data, desktop.layout, {displayModeBar: false, responsive: true});
-  })();
-  </script>
-
-  <!-- NOTA INTERMEDIA TRA I DUE GRAFICI (PICCOLA, CORSIVA E GRIGIO CHIARO) -->
-  <p class="small-note" style="font-size: 0.85rem; font-style: italic; color: #64748b; margin-top: 14px; margin-bottom: 28px; line-height: 1.5;">
-    I paesi in cima alla classifica sono spesso piccoli Stati con condizioni geografiche particolarmente favorevoli (risorse idroelettriche o geotermiche abbondanti rispetto alla popolazione da servire). La quota di rinnovabili premia quindi anche la "fortuna geografica", non solo lo sforzo di transizione. Per un grande paese industrializzato, spostare la stessa percentuale richiede investimenti assoluti molto più ingenti.
-  </p>
-
-  <!-- CALLOUT FINALE IN VERDE -->
-  <div class="callout" style="margin-top: 18px; background-color: #e8f5e9; border-left: 4px solid #2e7d32; padding: 16px; border-radius: 6px; color: #1b4332;">
-    La classifica di oggi però non racconta tutta la storia: la <b>Danimarca</b>, pur non comparendo tra i primissimi, è il paese che ha guadagnato più terreno in assoluto, con un incremento di circa <b>+35 punti percentuali dal 2000</b> — seguita da Portogallo e Lituania. Quindi, chi vince davvero questa corsa? Non c'è una risposta unica: Islanda e Norvegia dominano oggi grazie a risorse naturali che pochi altri hanno, ma la vera storia della transizione la scrivono paesi come Danimarca e Portogallo, partiti da zero o cresciuti più rapidamente di chiunque altro.
-  </div>
-</section>
-    
-
-  <!-- SEZIONE 02: ITALIA VS EUROPA -->
-  <section class="q">
-    <div class="qhead"><span class="qnum mono">02</span></div>
-    <h2>Italia ed Europa: Il quadro comparativo</h2>
-    <div class="qtext">
-      <p>All'interno del panorama europeo, l'Italia registra un posizionamento intermedio. Il paese esprime eccellenze nella produzione fotovoltaica ed una solida storia idroelettrica, ma incontra rallentamenti sistemici nel percorso di riconversione completa.</p>
-    </div>
-
- <div class="table-container">
-  <table>
-    <thead>
-      <tr>
-        <th>Paese</th>
-        <th>Quota Rinnovabile Elettrica (%)</th>
-        <th>Vettore Principale</th>
-        <th>Caratteristica Strutturale</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td data-label="Paese"><b>Norvegia</b></td>
-        <td data-label="Quota rinnovabile elettrica">~98%</td>
-        <td data-label="Vettore principale">Idroelettrico</td>
-        <td data-label="Caratteristica strutturale">Saturazione della capacità idrica naturale</td>
-      </tr>
-      <tr>
-        <td data-label="Paese"><b>Danimarca</b></td>
-        <td data-label="Quota rinnovabile elettrica">~80%</td>
-        <td data-label="Vettore principale">Eolico Offshore</td>
-        <td data-label="Caratteristica strutturale">Integrazione di rete e riconversione rapida</td>
-      </tr>
-      <tr>
-        <td data-label="Paese"><b>Portogallo</b></td>
-        <td data-label="Quota rinnovabile elettrica">~65%</td>
-        <td data-label="Vettore principale">Eolico / Solare</td>
-        <td data-label="Caratteristica strutturale">Continuità di investimenti sul mix integrato</td>
-      </tr>
-      <tr>
-        <td data-label="Paese"><b>Spagna</b></td>
-        <td data-label="Quota rinnovabile elettrica">~56%</td>
-        <td data-label="Vettore principale">Eolico / Solare</td>
-        <td data-label="Caratteristica strutturale">Forte accelerazione su fotovoltaico e accumuli utility-scale</td>
-      </tr>
-      <tr>
-        <td data-label="Paese"><b>Germania</b></td>
-        <td data-label="Quota rinnovabile elettrica">~50%</td>
-        <td data-label="Vettore principale">Eolico / Solare</td>
-        <td data-label="Caratteristica strutturale">Transizione guidata da imponenti sussidi industriali</td>
-      </tr>
-      <tr class="highlight">
-        <td data-label="Paese"><b>🇮🇹 Italia</b></td>
-        <td data-label="Quota rinnovabile elettrica">~38%</td>
-        <td data-label="Vettore principale">Solare / Idro</td>
-        <td data-label="Caratteristica strutturale">Frenata da colli di bottiglia di rete e permitting</td>
-      </tr>
-      <tr>
-        <td data-label="Paese"><b>Francia</b></td>
-        <td data-label="Quota rinnovabile elettrica">~28%</td>
-        <td data-label="Vettore principale">Idroelettrico / Eolico</td>
-        <td data-label="Caratteristica strutturale">Mix elettrico dominato dal nucleare, rinnovabili come supporto</td>
-      </tr>
-    </tbody>
-  </table>
+  <footer>&copy; nuMericA 2026 · Alessia Magro — Fonti: AI Jobs Dataset 2026, Global AI Jobs (Kaggle), WEF Future of Jobs Report 2025</footer>
 </div>
 
-    <div class="callout">
-      <b>I vincoli della rete italiana:</b> Nonostante l'elevata producibilità fotovoltaica delle regioni meridionali, la capacità della rete di trasmissione verso i poli industriali del Nord rimane insufficiente, generando frequenti tagli della produzione ed un fabbisogno costante di batterie di accumulo su grande scala.
-    </div>
-  </section>
-
-  <!-- SEZIONE 03: GRAFICO PLOTLY MIX PRIMARIO -->
-  <section class="q">
-    <div class="qhead"><span class="qnum mono">03</span></div>
-    <h2>Scomposizione del Mix Energetico Primario</h2>
-    <div class="qtext">
-      <p>Confondere il consumo elettrico con il consumo energetico totale è un errore frequente. Quando si include la domanda per trasporti, riscaldamento e industria, il peso dei idrocarburi rimane dominante.</p>
-    </div>
-
-    <div class="chartbox">
-      <div id="plot-mix" style="width:100%;height:410px;"></div>
-    </div>
-
-    <div class="aside-box">
-      <div class="t">L'importanza dell'elettrificazione</div>
-      Generare elettricità da fonti pulite è solo il primo passo. Se non si accelera la transizione del parco circolante (veicoli elettrici) e della climatizzazione degli edifici (pompe di calore), oltre il <b>60% della domanda primaria</b> continuerà ad essere coperto da derivati del petrolio e gas naturale.
-    </div>
-  </section>
-
-  <!-- SEZIONE 04: PARADOSSO PIL / CONSUMI -->
-  <section class="q">
-    <div class="qhead"><span class="qnum mono">04</span></div>
-    <h2>Il paradosso del PIL e dei consumi pro capite</h2>
-    <div class="qtext">
-      <p>I dati di confronto tra 79 nazioni mettono in luce una correlazione diretta: all'aumentare della ricchezza pro capite (PIL) aumenta la quantità totale di energia consumata dal singolo cittadino[cite: 1].</p>
-    </div>
-
-    <div class="chartbox">
-      <div id="plot-pil" style="width:100%;height:430px;"></div>
-    </div>
-
-    <div class="callout amber">
-      <b>L'effetto di compensazione:</b> Nelle economie avanzate, l'ingresso di nuovi Gigawatt rinnovabili finisce spesso per coprire il naturale incremento della domanda di energia invece di sostituire in quota 1:1 le centrali a combustibile fossile operative.
-    </div>
-  </section>
-
-  <!-- SEZIONE 05: MERCATI EMERGENTI -->
-  <section class="q">
-    <div class="qhead"><span class="qnum mono">05</span></div>
-    <h2>Economie emergenti e la duplice strategia</h2>
-    <div class="qtext">
-      <p>Per i mercati in rapido sviluppo, la priorità prioritaria è garantire energia a basso costo per sostenere la crescita industriale:</p>
-      
-      <p style="margin-top:12px;">
-        • <b>Cina e India:</b> Da un lato guidano la classifica mondiale per capacità solare ed eolica installata ogni anno, ma dall'altro mantengono in funzione e continuano a costruire centrali a carbone per garantire stabilità durante i picchi di carico[cite: 1].<br>
-        • <b>Nazioni in Via di Sviluppo:</b> Faticano ad attrarre i capitali necessari per gli elevati costi di investimento iniziali (CapEx) dei parchi rinnovabili, rimanendo legate ai combustibili fossili.
-      </p>
-    </div>
-  </section>
-</div>
-
-<!-- CONCLUSIONE SCURA -->
-<div class="conclusion">
-  <div class="wrap">
-    <div class="qhead"><span class="qnum mono" style="background:rgba(56,189,248,0.15); color:#38BDF8;">06 · Sintesi Strategica</span></div>
-    <h2>Punti chiave per una de-carbonizzazione reale</h2>
-    
-    <div class="qtext">
-      <p>L'evidenza dei dati raccolti suggerisce che la transizione energetica necessita di azioni mirate per superare gli attuali limiti strutturali:</p>
-      
-		<p style="margin-top:16px;">
-		  1. <b style="color: #f8fafc; font-weight: 600;">Accumuli e Stoccaggi Industriali:</b> La priorità non è solo installare nuove pale o pannelli, ma realizzare sistemi di accumulo (batterie e pompaggi) per gestire l'intermittenza.<br>
-		  2. <b style="color: #f8fafc; font-weight: 600;">Semplificazione e Permitting:</b> Ridurre le tempistiche di autorizzazione per le infrastrutture di rete in paesi come l'Italia.<br>
-		  3. <b style="color: #f8fafc; font-weight: 600;">Disaccoppiamento (Decoupling):</b> Promuovere l'efficienza energetica per spezzare il legame diretto tra crescita economica e aumento del consumo d'energia primaria.
-		</p>
-    </div>
-
-    <p class="final-line">
-      Il valore reale della transizione si misura sulla capacità effettiva di spegnere la capacità di generazione fossile, non solo sulla quantità di energia pulita immessa nei momenti favorevoli.
-    </p>
-  </div>
-</div>
-
-<footer>
-  <div class="wrap">Report "La Corsa alle Rinnovabili" · Elaborazione Dati su 79 Nazioni · Piattaforma Energetica</div>
-</footer>
-
-<!-- SCRIPT PLOTLY (Configurazione Colori Coordinati) -->
 <script>
 const isMobile = window.innerWidth <= 600;
-const MAIN_FONT = { family: "Inter, sans-serif", color: "#334155", size: isMobile ? 10 : 12 };
+const MAIN_FONT = { family:"Inter, -apple-system, sans-serif", color:"#2B2B23", size:isMobile?10:12 };
 const WHITE_BG = "#FFFFFF";
-const LINE_COLOR = "#E2E8F0";
-
-/* Palette coordinata */
-const COLOR_EMERALD = "#059669";
-const COLOR_BLUE = "#2563EB";
-const COLOR_AMBER = "#D97706";
-const cfg = { displayModeBar: false, responsive: true };
+const LINE_COLOR = "#E1D9C6";
+const VIOLET = "#7C5CFC";
+const VIOLET_LIGHT = "#C9BBFF";
+const AMBER = "#D9AD5C";
+const cfg = { displayModeBar:false, responsive:true };
 
 document.addEventListener('DOMContentLoaded', function(){
 
-/* 03. Grafico Stacked Mix Primario */
-  const paesiMix = ["Norvegia", "Danimarca", "Portogallo", "Germania", "Italia", "Cina", "Stati Uniti"];
-  Plotly.newPlot('plot-mix', isMobile ? [
-    {
-      type: "bar", orientation: "h",
-      name: "Rinnovabili",
-      y: paesiMix,
-      x: [68, 42, 38, 22, 19, 15, 12],
-      marker: { color: COLOR_EMERALD },
-      texttemplate: "%{x:.0f}%",
-      textposition: "inside"
-    },
-    {
-      type: "bar", orientation: "h",
-      name: "Gas Naturale",
-      y: paesiMix,
-      x: [20, 18, 28, 25, 40, 9, 32],
-      marker: { color: COLOR_BLUE },
-      texttemplate: "%{x:.0f}%",
-      textposition: "inside"
-    },
-    {
-      type: "bar", orientation: "h",
-      name: "Petrolio & Carbone",
-      y: paesiMix,
-      x: [12, 40, 34, 53, 41, 76, 56],
-      marker: { color: COLOR_AMBER },
-      texttemplate: "%{x:.0f}%",
-      textposition: "inside"
-    }
+  /* 01. RUOLI PIU' RICHIESTI */
+  Plotly.newPlot('plot-ruoli', isMobile ? [
+    { type:"bar", orientation:"h", name:"Offerte 2026 (Jobs)",
+      y:["NLP Engineer","Research Scientist","Machine Learning Engineer","Software Engineer AI","Computer Vision Engineer"],
+      x:[11025,10963,8166,5486,5396], marker:{color:VIOLET} },
+    { type:"bar", orientation:"h", name:"Panorama Globale",
+      y:["NLP Engineer","Software Engineer AI","Research Scientist","Machine Learning Engineer","AI Engineer"],
+      x:[11412,11333,11309,11263,11247], marker:{color:VIOLET_LIGHT} }
   ] : [
-    { 
-      type: "bar", 
-      name: "Rinnovabili", 
-      x: paesiMix, 
-      y: [68, 42, 38, 22, 19, 15, 12], 
-      marker: { color: COLOR_EMERALD },
-      texttemplate: "%{y:.0f}%",
-      textposition: "inside"
-    },
-    { 
-      type: "bar", 
-      name: "Gas Naturale", 
-      x: paesiMix, 
-      y: [20, 18, 28, 25, 40, 9, 32], 
-      marker: { color: COLOR_BLUE },
-      texttemplate: "%{y:.0f}%",
-      textposition: "inside"
-    },
-    { 
-      type: "bar", 
-      name: "Petrolio & Carbone", 
-      x: paesiMix, 
-      y: [12, 40, 34, 53, 41, 76, 56], 
-      marker: { color: COLOR_AMBER },
-      texttemplate: "%{y:.0f}%",
-      textposition: "inside"
-    }
+    { type:"bar", name:"Offerte 2026 (Jobs)",
+      x:["NLP Engineer","Research Scientist","Machine Learning Engineer","Software Engineer AI","Computer Vision Engineer"],
+      y:[11025,10963,8166,5486,5396], marker:{color:VIOLET} },
+    { type:"bar", name:"Panorama Globale",
+      x:["NLP Engineer","Software Engineer AI","Research Scientist","Machine Learning Engineer","AI Engineer"],
+      y:[11412,11333,11309,11263,11247], marker:{color:VIOLET_LIGHT} }
   ], {
-    font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
-    margin: isMobile ? { l: 95, r: 20, t: 20, b: 40 } : { l: 40, r: 20, t: 20, b: 40 },
-    height: isMobile ? 400 : 410,
-    barmode: "stack",
-    xaxis: isMobile ? { gridcolor: LINE_COLOR, title: { text: "Quota Energia Primaria (%)" }, range: [0, 100] } : { gridcolor: LINE_COLOR },
-    yaxis: isMobile ? { automargin: true } : { title: { text: "Quota Energia Primaria (%)" }, gridcolor: LINE_COLOR, range: [0, 100] },
-    legend: { orientation: "h", y: isMobile ? 1.1 : 1.12, font: { size: isMobile ? 9 : 12 } }
+    font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
+    margin: isMobile ? {l:170,r:40,t:20,b:40} : {l:40,r:20,t:20,b:130},
+    height: isMobile?420:440,
+    xaxis: isMobile ? {gridcolor:LINE_COLOR, title:{text:"Occorrenze"}} : {gridcolor:LINE_COLOR, tickangle:-35, automargin:true},
+    yaxis: isMobile ? {automargin:true} : {title:{text:"Occorrenze"}, gridcolor:LINE_COLOR},
+    barmode:"group", legend:{orientation:"h", y:1.15, font:{size:isMobile?9:12}}
   }, cfg);
 
-  /* 04. Grafico PIL vs Consumi pro capite */
-  Plotly.newPlot('plot-pil', [{
-    type: "scatter", mode: "markers+text",
-    x: [12000, 28000, 35000, 48000, 52000, 65000, 85000],
-    y: [15, 28, 32, 45, 42, 60, 75],
-    text: ["India", "Cina", "Portogallo", "Italia", "Germania", "USA", "Norvegia"],
-    textposition: "top center",
-    marker: { size: [18, 26, 14, 16, 18, 22, 20], color: [COLOR_AMBER, COLOR_AMBER, COLOR_EMERALD, COLOR_BLUE, COLOR_EMERALD, COLOR_AMBER, COLOR_EMERALD] }
+  /* 02. SPECIALIZZAZIONI (dataset Jobs 2026) */
+  Plotly.newPlot('plot-spec', [{
+    type:"bar", orientation:"h",
+    y:["Data Science","Deep Learning","Computer Vision","NLP","Generative AI","MLOps","Machine Learning"],
+    x:[5.1,5.4,10.4,10.7,15.7,15.7,37.0],
+    text:["5,1%","5,4%","10,4%","10,7%","15,7%","15,7%","37,0%"], textposition:"outside",
+    marker:{ color:[5.1,5.4,10.4,10.7,15.7,15.7,37.0], colorscale:[[0.0,VIOLET_LIGHT],[1.0,VIOLET]] }
   }], {
-    font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
-    margin: { l: 50, r: 30, t: 30, b: 50 }, height: isMobile ? 380 : 430,
-    xaxis: { title: { text: "PIL Pro Capite (USD)" }, gridcolor: LINE_COLOR },
-    yaxis: { title: { text: "Consumo Energetico Pro Capite (MWh)" }, gridcolor: LINE_COLOR }
+    font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
+    margin:{l:isMobile?110:150,r:40,t:20,b:40}, height: isMobile?360:400,
+    xaxis:{gridcolor:LINE_COLOR, title:{text:"% delle offerte 2026"}, range:[0,42]}, yaxis:{automargin:true}
+  }, cfg);
+
+  /* 03. SKILLS WEF */
+  Plotly.newPlot('plot-skills', [{
+    type:"bar", orientation:"h",
+    y:["Analytical thinking","Cybersecurity","Leadership","Creative thinking","AI e big data","Agility","Resilience","Flexibility"],
+    x:[103,106,113,129,138,163,164,257],
+    marker:{ color:[103,106,113,129,138,163,164,257], colorscale:[[0.0,AMBER],[1.0,VIOLET]] }
+  }], {
+    font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
+    margin:{l:isMobile?115:160,r:30,t:20,b:40}, height: isMobile?380:400,
+    xaxis:{gridcolor:LINE_COLOR, title:{text:"Occorrenze nel report WEF"}}, yaxis:{automargin:true}
+  }, cfg);
+
+  /* 04. SALARI (Global, top 5) */
+  Plotly.newPlot('plot-salari', [{
+    type:"bar", orientation:"h",
+    y:["Data Analyst","Software Engineer AI","AI Engineer","NLP Engineer","Computer Vision Engineer","Machine Learning Engineer","Research Scientist"],
+    x:[69429,97376,97975,99745,101304,102122,109798],
+    text:["$69.429","$97.376","$97.975","$99.745","$101.304","$102.122","$109.798"], textposition:"outside",
+    marker:{ color:[69429,97376,97975,99745,101304,102122,109798], colorscale:[[0.0,VIOLET_LIGHT],[1.0,VIOLET]] }
+  }], {
+    font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
+    margin:{l:isMobile?130:180,r:60,t:20,b:40}, height: isMobile?360:400,
+    xaxis:{gridcolor:LINE_COLOR, title:{text:"Salario medio annuo (USD)"}}, yaxis:{automargin:true}
   }, cfg);
 
 });
