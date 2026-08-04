@@ -96,14 +96,7 @@
   @media (max-width:840px){
     .wrap{padding:0 16px;} .hero{padding:44px 0 40px;}
     .ticker{grid-template-columns:1fr;} .method-row{grid-template-columns:1fr;}
-    .chartbox{padding:14px 10px 10px;}
-    .chartbox > div{min-width:600px;}
-    .chartbox::before{
-      content:'◄ scorri per esplorare il grafico ►';
-      display:block; font-family:'JetBrains Mono',monospace; font-size:10px;
-      text-transform:uppercase; letter-spacing:.08em; color:var(--slate);
-      margin-bottom:10px; text-align:center;
-    }
+    .chartbox{padding:12px 8px;}
   }
 </style>
 </head>
@@ -246,9 +239,9 @@ document.addEventListener('DOMContentLoaded', function(){
     { type:"bar", orientation:"h", name:"Palestra", y:cittaPaniere, x:[77.89,60.00,57.36,57.89,35.59,47.45,56.93,63.15,54.82,37.37], marker:{color:MOSS} }
   ], {
     font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
-    margin:{l:90,r:30,t:20,b:40},
+    margin:{l:isMobile?68:90,r:20,t:20,b:40},
     xaxis:{gridcolor:LINE_COLOR}, yaxis:{autorange:"reversed"}, barmode:"stack",
-    legend:{orientation:"h", y:1.12}
+    legend:{orientation:"h", y:1.12, font:{size:isMobile?9:12}}
   }, cfg);
 
   /* 03. TREND */
@@ -270,9 +263,11 @@ document.addEventListener('DOMContentLoaded', function(){
   }));
   Plotly.newPlot('plot-trend', trendTraces, {
     font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
-    margin:{l:45,r:20,t:20,b:40},
+    margin:{l:45,r:20,t:20,b:isMobile?95:40},
     xaxis:{gridcolor:LINE_COLOR, dtick:1}, yaxis:{title:{text:"Indice prezzi (2015=100)"}, gridcolor:LINE_COLOR},
-    legend:{font:{size:10.5}}
+    legend: isMobile
+      ? {orientation:"h", y:-0.35, font:{size:8.5}}
+      : {font:{size:10.5}}
   }, cfg);
 
   /* 04. PARADOSSO */
@@ -282,9 +277,9 @@ document.addEventListener('DOMContentLoaded', function(){
     { type:"bar", name:"Birra", x:paradossoCitta, y:[29.7,15.7,30.2,27.9,17.3,16.1,22.0,19.5,12.6,20.9], marker:{color:MOSS}, text:["29.7m","15.7m","30.2m","27.9m","17.3m","16.1m","22.0m","19.5m","12.6m","20.9m"], textposition:"outside" }
   ], {
     font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
-    margin:{l:40,r:20,t:20,b:40},
-    xaxis:{gridcolor:LINE_COLOR}, yaxis:{title:{text:"Minuti"}, gridcolor:LINE_COLOR, range:[0,36]},
-    barmode:"group", legend:{orientation:"h", y:1.12}
+    margin:{l:40,r:20,t:20,b:isMobile?85:40},
+    xaxis:{gridcolor:LINE_COLOR, tickangle:isMobile?-45:0}, yaxis:{title:{text:"Minuti"}, gridcolor:LINE_COLOR, range:[0,36]},
+    barmode:"group", legend:{orientation:"h", y:1.12, font:{size:isMobile?9:12}}
   }, cfg);
 
   /* 05. CV% */
@@ -295,7 +290,7 @@ document.addEventListener('DOMContentLoaded', function(){
     marker:{ color:[60.73,40.11,32.19,31.40,29.48,27.76,23.64,23.33,22.56,11.81], colorscale:[[0.0,MOSS],[1.0,CORAL]] }
   }], {
     font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
-    margin:{l:150,r:30,t:20,b:40},
+    margin:{l:isMobile?100:150,r:20,t:20,b:40},
     xaxis:{gridcolor:LINE_COLOR, title:{text:"Coefficiente di variazione (%)"}}, yaxis:{autorange:"reversed"}
   }, cfg);
 
@@ -401,7 +396,7 @@ document.addEventListener('DOMContentLoaded', function(){
     margin:{l:10,r:10,t:10,b:10},
     geo:{ scope:"europe", showframe:false, showcoastlines:false, fitbounds:"locations",
           bgcolor:"#1A1D24", landcolor:"#2A2D35", lakecolor:"#1A1D24", subunitcolor:"#3A3D45" },
-    height:480
+    height:isMobile?360:480
   }, cfg);
 
 });
@@ -409,6 +404,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 </body>
 </html>
+
 
 
 
