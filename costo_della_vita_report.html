@@ -186,6 +186,21 @@
       <div class="chip">Birra più lenta<b>Bologna, 30,2 min</b></div>
     </div>
     <div class="callout">Il quadro si ribalta rispetto ai prezzi assoluti. <b>Amsterdam ha alcuni dei prezzi più alti in euro — ma è tra le città più convenienti in tempo di lavoro</b>, grazie al secondo stipendio orario più alto del gruppo. L'opposto per <b>Budapest</b>: prezzi nella media, ma il tempo di lavoro per un cappuccino è il più lungo di tutte e dieci le città.</div>
+	<div class="qtext"><p>Prova con i tuoi numeri: scegli cosa bevi e quanto, e scopri quanto tempo di lavoro ti costa città per città.</p></div>
+    <div class="simulator-controls" style="margin-top:32px;">
+      <div class="sim-toggle" role="group">
+        <button class="sim-toggle-btn active" data-drink="caffe">☕ Cappuccino</button>
+        <button class="sim-toggle-btn" data-drink="birra">🍺 Birra</button>
+      </div>
+      <div class="sim-field">
+        <label for="sim-qty">Quanti ne prendi?</label>
+        <div class="sim-input-wrap">
+          <input type="number" id="sim-qty" value="1" min="1" max="60" step="1" style="width:70px;">
+        </div>
+      </div>
+    </div>
+    <div class="chartbox"><div id="plot-drink" style="width:100%;height:400px;"></div></div>
+    <div class="callout" id="drink-summary"></div>
   </section>
 
   <section class="q" id="cv">
@@ -232,7 +247,7 @@
       <div class="sim-toggle" role="group">
         <button class="sim-toggle-btn active" data-tipo="fissi">Costi fissi</button>
         <button class="sim-toggle-btn" data-tipo="libero">Tempo libero</button>
-        <button class="sim-toggle-btn" data-tipo="tutto">Spesa totale</button>
+        <button class="sim-toggle-btn" data-tipo="tutto">Tutto insieme</button>
       </div>
     </div>
 
@@ -314,15 +329,67 @@ document.addEventListener('DOMContentLoaded', function(){
 
   /* 04. PARADOSSO */
   const paradossoCitta = ["Milano","Amsterdam","Bologna","Roma","Barcellona","Berlino","Parigi","Copenaghen","Praga","Budapest"];
+  const minCaffe = [9.4,9.6,10.0,10.8,12.7,13.4,13.7,14.9,15.5,19.1];
+  const minBirra = [29.7,15.7,30.2,27.9,17.3,16.1,22.0,19.5,12.6,20.9];
   Plotly.newPlot('plot-paradosso', [
-    { type:"bar", name:"Cappuccino", x:paradossoCitta, y:[9.4,9.6,10.0,10.8,12.7,13.4,13.7,14.9,15.5,19.1], marker:{color:CORAL}, text:["9.4m","9.6m","10.0m","10.8m","12.7m","13.4m","13.7m","14.9m","15.5m","19.1m"], textposition:"outside" },
-    { type:"bar", name:"Birra", x:paradossoCitta, y:[29.7,15.7,30.2,27.9,17.3,16.1,22.0,19.5,12.6,20.9], marker:{color:MOSS}, text:["29.7m","15.7m","30.2m","27.9m","17.3m","16.1m","22.0m","19.5m","12.6m","20.9m"], textposition:"outside" }
+    { type:"bar", name:"Cappuccino", x:paradossoCitta, y:minCaffe, marker:{color:CORAL}, text:minCaffe.map(v=>v.toFixed(1)+"m"), textposition:"outside" },
+    { type:"bar", name:"Birra", x:paradossoCitta, y:minBirra, marker:{color:MOSS}, text:minBirra.map(v=>v.toFixed(1)+"m"), textposition:"outside" }
   ], {
     font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
     margin:{l:40,r:20,t:20,b:isMobile?85:40},
     xaxis:{gridcolor:LINE_COLOR, tickangle:isMobile?-45:0}, yaxis:{title:{text:"Minuti"}, gridcolor:LINE_COLOR, range:[0,36]},
     barmode:"group", legend:{orientation:"h", y:1.12, font:{size:isMobile?9:12}}
   }, cfg);
+
+  /* 04b. MINI-SIMULATORE QUANTITÀ CAFFÈ/BIRRA */
+  const drinkBtns = document.querySelectorAll('.sim-toggle-btn[data-drink]');
+  const drinkQtyInput = document.getElementById('sim-qty');
+  const drinkSummary = document.getElementById('drink-summary');
+  const drinkLabel = { caffe: { s: "cappuccino", p: "cappuccini" }, birra: { s: "birra", p: "birre" } };
+  const drinkEmoji = { caffe: "☕", birra: "🍺" };
+
+  function renderDrink() {
+    const bevanda = document.querySelector('.sim-toggle-btn[data-drink].active').dataset.drink;
+    const qty = parseInt(drinkQtyInput.value, 10) || 0;
+    const minutiUnitari = bevanda === 'caffe' ? minCaffe : minBirra;
+
+    const combinato = paradossoCitta
+      .map((citta, i) => ({ citta, minuti: minutiUnitari[i] * qty }))
+      .sort((a, b) => a.minuti - b.minuti);
+
+    const cittaOrd = combinato.map(d => d.citta);
+    const minOrd = combinato.map(d => d.minuti);
+    const formatta = m => m >= 60 ? (m / 60).toFixed(1) + "h" : Math.round(m) + "m";
+
+    Plotly.react('plot-drink', [{
+      type: "bar", orientation: "h",
+      y: cittaOrd, x: minOrd,
+      text: minOrd.map(formatta), textposition: "outside",
+      marker: { color: bevanda === 'caffe' ? CORAL : MOSS },
+      hovertemplate: "<b>%{y}</b><br>%{text} di lavoro<extra></extra>"
+    }], {
+      font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
+      margin: { l: isMobile ? 90 : 110, r: 40, t: 20, b: 40 },
+      xaxis: { gridcolor: LINE_COLOR, title: { text: "Minuti di lavoro necessari" } },
+      yaxis: { automargin: true }
+    }, cfg);
+
+    const piuVeloce = combinato[0];
+    const piuLenta = combinato[combinato.length - 1];
+    drinkSummary.innerHTML = qty > 0
+      ? `Per <b>${qty} ${qty > 1 ? drinkLabel[bevanda].p : drinkLabel[bevanda].s}</b> ${drinkEmoji[bevanda]}, lavori dal <b>${formatta(piuVeloce.minuti)}</b> a ${piuVeloce.citta} fino al <b>${formatta(piuLenta.minuti)}</b> a ${piuLenta.citta} — stessa spesa, tempo di lavoro anche ${(piuLenta.minuti / piuVeloce.minuti).toFixed(1)} volte diverso.`
+      : "Inserisci una quantità per vedere il confronto.";
+  }
+
+  drinkBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      drinkBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderDrink();
+    });
+  });
+  drinkQtyInput.addEventListener('input', renderDrink);
+  renderDrink();
 
   /* 05. CV% */
   Plotly.newPlot('plot-cv', [{
