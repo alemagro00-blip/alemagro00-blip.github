@@ -336,7 +336,7 @@
         .stat-number { font-size: 1.4rem; }
     }
     @media (max-width: 880px) {
-        .sidebar { transform: translateX(calc(-100% - 30px)); transition: transform 0.28s ease; }
+        .sidebar { width: min(272px, 82vw); transform: translateX(calc(-100% - 30px)); transition: transform 0.28s ease; }
         .sidebar.open { transform: translateX(0); }
         .sidebar-toggle { display: block; }
         .sidebar-overlay.open { display: block; }
@@ -422,7 +422,7 @@
 
             <div class="card" data-category="economia">
                 <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1000&q=80" class="card-img" alt="Roma">
+                    <img src="https://images.unsplash.com/photo-1614521272693-73052eaefc51?auto=format&fit=crop&w=1000&q=80" class="card-img" alt="Skyline europeo al tramonto">
                     <span class="catalog-code-badge">ECO·01</span>
                 </div>
                 <div class="card-body">
@@ -438,7 +438,7 @@
 
             <div class="card" data-category="energia">
                 <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=1000&q=80" class="card-img" alt="Transizione energetica">
+                    <img src="https://images.unsplash.com/photo-1714330477134-4275bc2cff3a?auto=format&fit=crop&w=1000&q=80" class="card-img" alt="Pale eoliche al tramonto">
                     <span class="catalog-code-badge">ENE·01</span>
                 </div>
                 <div class="card-body">
@@ -482,11 +482,10 @@
     }
 
     catalogItemAll.addEventListener('click', () => setActiveFilter('all'));
-    catalogCats.forEach(btn => btn.addEventListener('click', () => setActiveFilter(btn.dataset.filter)));
-
-    document.querySelectorAll('.catalog-group').forEach(group => {
-        group.querySelector('.catalog-cat').addEventListener('dblclick', () => group.classList.toggle('open'));
-    });
+    catalogCats.forEach(btn => btn.addEventListener('click', () => {
+        setActiveFilter(btn.dataset.filter);
+        btn.closest('.catalog-group').classList.toggle('open');
+    }));
 
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebarOverlay');
@@ -524,6 +523,7 @@
 
 </body>
 </html>
+
 
 
 
