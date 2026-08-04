@@ -3,205 +3,570 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Job Market 2026: trend e competenze</title>
+<title>nuMericA | Archivio di analisi dati</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --ink:#15140F; --paper:#FAFAF6; --card:#FFFFFF;
-    --violet:#7C5CFC; --violet-deep:#5D3FD9; --violet-light:#EFEBFF;
-    --amber:#D9AD5C; --line:#E4E1D6; --slate:#6B6659;
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{ margin:0; background:var(--paper); color:var(--ink); font-family:'Inter',-apple-system,sans-serif; font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased; }
-  h1,h2,h3{font-family:'Bricolage Grotesque',sans-serif; margin:0; color:var(--ink);}
-  .mono{font-family:'JetBrains Mono',monospace;}
-  .wrap{max-width:900px; margin:0 auto; padding:0 28px;}
-  a{color:var(--violet);}
+    :root {
+        --bg: #F3F3F5;
+        --ink: #17171B;
+        --muted: #6B6A70;
+        --faint: #A0A0A6;
+        --line: rgba(23,23,27,0.08);
+        --glass: rgba(255,255,255,0.55);
+        --glass-strong: rgba(255,255,255,0.72);
+        --glass-border: rgba(255,255,255,0.85);
+        --coral: #FF6A4D;
+        --coral-deep: #E14F31;
+        --blue: #4D8AFF;
+        --purple: #9B6BFF;
+        --emerald: #059669;
+        --emerald-light: rgba(5,150,105,0.12);
+        --violet: #7C5CFC;
+        --violet-deep: #5D3FD9;
+        --violet-light: rgba(124,92,252,0.12);
+        --coral-light: rgba(255,106,77,0.14);
+        --sidebar-w: 272px;
+        --gap: 18px;
+    }
 
-  .back-link { display:inline-flex; align-items:center; gap:8px; margin-bottom:26px; background:rgba(255,255,255,0.1); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.16); border-radius:999px; padding:8px 16px; color:var(--paper); opacity:.85; text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; cursor:pointer; transition:.2s ease; position:relative; z-index:1; }
-  .back-link:hover { opacity:1; transform:translateX(-4px); }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
-  .hero { position:relative; background:var(--ink); color:var(--paper); padding:64px 0 56px; overflow:hidden; }
-  .hero::before, .hero::after { content:''; position:absolute; border-radius:50%; filter:blur(80px); pointer-events:none; z-index:0; }
-  .hero::before { width:480px; height:480px; background:radial-gradient(circle, rgba(124,92,252,0.45), transparent 70%); top:-200px; left:-100px; }
-  .hero::after { width:420px; height:420px; background:radial-gradient(circle, rgba(77,138,255,0.3), transparent 70%); bottom:-220px; right:-80px; }
-  .hero .wrap { position:relative; z-index:1; }
-  .eyebrow { font-family:'JetBrains Mono',monospace; letter-spacing:.16em; text-transform:uppercase; font-size:11.5px; color:var(--amber); margin-bottom:22px; font-weight:700; }
-  .hero h1 { font-size:clamp(2.2rem,5.4vw,3.4rem); font-weight:700; line-height:1.08; letter-spacing:-.01em; color:#fff; }
-  .hero h1 em { font-style:italic; color:var(--violet); padding-right:.08em; }
-  .hero .sub { max-width:620px; margin-top:22px; font-size:16.5px; line-height:1.6; color:#C9C4B4; }
+    body {
+        font-family: 'Inter', sans-serif;
+        background: var(--bg);
+        color: var(--ink);
+        margin: 0;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        position: relative;
+        overflow-x: hidden;
+        min-height: 100vh;
+    }
 
-  .ticker { margin-top:44px; display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.14); border-radius:18px; overflow:hidden; }
-  .ticker .cell { background:rgba(255,255,255,0.06); backdrop-filter:blur(16px) saturate(1.6); -webkit-backdrop-filter:blur(16px) saturate(1.6); padding:26px 28px; }
-  .ticker .label { font-family:'JetBrains Mono',monospace; font-size:11.5px; text-transform:uppercase; letter-spacing:.1em; font-weight:700; color:#8B8677; }
-  .ticker .num { font-family:'Bricolage Grotesque',sans-serif; font-size:36px; font-weight:700; margin-top:8px; color:var(--violet); }
-  .ticker .cap { font-size:13px; color:#9C9788; margin-top:6px; line-height:1.5; }
+    a { color: inherit; }
 
-  .intro { padding:52px 0 0; }
-  .lede { font-size:19px; color:#2B2B23; max-width:760px; font-family:'Bricolage Grotesque',sans-serif; font-weight:500; line-height:1.5; }
-  .lede b { font-style:italic; font-weight:600; }
-  .sources { margin-top:18px; font-size:13px; color:var(--slate); }
+    /* ============ AMBIENT GLASS BACKGROUND ============ */
+    .blob {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(90px);
+        z-index: 0;
+        pointer-events: none;
+        animation: drift 26s ease-in-out infinite alternate;
+    }
+    .blob-1 {
+        width: 620px; height: 620px;
+        background: radial-gradient(circle, rgba(255,106,77,0.55), transparent 70%);
+        top: -220px; left: 10%;
+    }
+    .blob-2 {
+        width: 540px; height: 540px;
+        background: radial-gradient(circle, rgba(77,138,255,0.5), transparent 70%);
+        top: 120px; right: -160px;
+        animation-delay: -9s;
+    }
+    .blob-3 {
+        width: 500px; height: 500px;
+        background: radial-gradient(circle, rgba(155,107,255,0.4), transparent 70%);
+        bottom: -180px; left: 34%;
+        animation-delay: -17s;
+    }
+    .blob-4 {
+        width: 420px; height: 420px;
+        background: radial-gradient(circle, rgba(5,150,105,0.35), transparent 70%);
+        bottom: 10%; right: 6%;
+        animation-delay: -22s;
+    }
+    @keyframes drift {
+        0%   { transform: translate(0,0) scale(1); }
+        100% { transform: translate(40px,30px) scale(1.1); }
+    }
+    @media (prefers-reduced-motion: reduce) { .blob { animation: none; } }
 
-  section.q { padding:40px 0; }
-  .qhead { display:flex; align-items:baseline; gap:12px; margin-bottom:10px; }
-  .qnum { font-family:'JetBrains Mono',monospace; color:var(--violet); font-size:13px; font-weight:700; }
-  .qline { flex:1; height:1px; background:var(--line); }
-  section.q h2 { font-size:clamp(24px,3.4vw,32px); letter-spacing:-.01em; font-weight:600; }
-  .qtext { max-width:740px; color:#3A392F; font-size:16px; margin-top:14px; }
-  .qtext b { color:var(--ink); }
+    /* ============ SIDEBAR — glass panel ============ */
+    .sidebar {
+        position: fixed;
+        top: var(--gap); left: var(--gap); bottom: var(--gap);
+        width: var(--sidebar-w);
+        background: var(--glass);
+        backdrop-filter: blur(28px) saturate(1.8);
+        -webkit-backdrop-filter: blur(28px) saturate(1.8);
+        border: 1px solid var(--glass-border);
+        border-radius: 26px;
+        overflow-y: auto;
+        padding: 26px 20px 22px;
+        z-index: 100;
+        box-shadow: 0 24px 50px -22px rgba(23,23,27,0.25), inset 0 1px 0 rgba(255,255,255,0.6);
+    }
 
-  .chartbox { margin-top:24px; background:var(--card); border:1px solid var(--line); border-radius:20px; padding:18px; overflow-x:auto; -webkit-overflow-scrolling:touch; }
-  .callout { margin-top:20px; background:var(--violet-light); border-left:4px solid var(--violet); border-radius:4px 10px 10px 4px; padding:18px 24px; font-size:15px; color:#2B2B23; }
-  .callout b { color:var(--ink); }
+    .sidebar-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 2px; }
+    .sidebar-brand img { height: 30px; width: auto; }
+    .sidebar-brand span {
+        font-family: 'Bricolage Grotesque', sans-serif;
+        font-weight: 700;
+        font-size: 1.22rem;
+        letter-spacing: -0.4px;
+    }
 
-  .final-line { margin-top:32px; padding-top:26px; border-top:1px solid #2A2D35; font-family:'Bricolage Grotesque',sans-serif; font-style:italic; font-weight:500; font-size:21px; color:var(--amber); max-width:740px; line-height:1.4; }
+    .sidebar-tagline {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.63rem;
+        text-transform: uppercase;
+        letter-spacing: 1.3px;
+        color: var(--muted);
+        margin: 6px 0 26px 2px;
+    }
 
-  footer { padding:30px 0 56px; text-align:center; color:var(--slate); font-size:12px; }
+    .catalog-label {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.63rem;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        color: var(--faint);
+        margin-bottom: 10px;
+        padding-left: 4px;
+    }
 
-  @media (max-width:840px){
-    .wrap{padding:0 16px;} .hero{padding:44px 0 40px;}
-    .ticker{grid-template-columns:1fr;}
-    .chartbox{padding:12px 8px;}
-    .hero::before, .hero::after { filter:blur(40px); }
-    .ticker .cell, .back-link { backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
-  }
+    .catalog-item-all {
+        width: 100%; text-align: left;
+        background: none; border: none;
+        font-family: 'Inter', sans-serif;
+        font-weight: 600; font-size: 0.9rem;
+        color: var(--ink);
+        padding: 10px 12px;
+        border-radius: 14px;
+        cursor: pointer;
+        display: flex; justify-content: space-between; align-items: center;
+        margin-bottom: 8px;
+        transition: background-color 0.18s ease;
+    }
+    .catalog-item-all:hover { background-color: rgba(23,23,27,0.06); }
+    .catalog-item-all.active {
+        background: linear-gradient(120deg, var(--coral), var(--purple));
+        color: #fff;
+        box-shadow: 0 8px 18px -6px rgba(155,107,255,0.5);
+    }
+    .catalog-item-all.active .count { color: #fff; opacity: 0.85; }
+
+    .catalog-group { padding-top: 4px; margin-top: 6px; border-top: 1px solid var(--line); }
+    .catalog-cat-row { display: flex; align-items: center; gap: 2px; }
+
+    .catalog-cat {
+        flex: 1; min-width: 0;
+        text-align: left;
+        background: none; border: none;
+        font-family: 'Inter', sans-serif;
+        font-weight: 600; font-size: 0.87rem;
+        color: var(--ink);
+        padding: 12px 8px 12px 12px;
+        cursor: pointer;
+        border-radius: 14px;
+        display: flex; justify-content: space-between; align-items: center;
+        gap: 8px;
+        transition: background-color 0.18s ease;
+    }
+    .catalog-cat:hover { background-color: rgba(23,23,27,0.06); }
+    .catalog-cat.active { color: var(--coral-deep); }
+    .catalog-cat .label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    .catalog-cat .count { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--faint); flex-shrink: 0; }
+
+    .catalog-toggle {
+        flex-shrink: 0;
+        width: 34px; height: 34px;
+        background: none; border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        color: var(--faint);
+        font-size: 0.8rem;
+        transition: background-color 0.18s ease, transform 0.25s ease;
+    }
+    .catalog-toggle:hover { background-color: rgba(23,23,27,0.06); }
+    .catalog-group.open .catalog-toggle { transform: rotate(90deg); }
+
+    .catalog-articles { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; padding-left: 10px; }
+    .catalog-group.open .catalog-articles { max-height: 200px; }
+
+    .catalog-article {
+        display: flex; align-items: baseline; gap: 8px;
+        text-decoration: none; font-size: 0.8rem; color: var(--muted);
+        padding: 8px 10px; border-radius: 10px;
+        transition: background-color 0.15s ease, color 0.15s ease;
+    }
+    .catalog-article:hover { background-color: rgba(23,23,27,0.06); color: var(--coral-deep); }
+    .catalog-article .code { font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; color: var(--coral-deep); flex-shrink: 0; }
+
+    .sidebar-footer {
+        margin-top: 34px; padding-top: 16px; border-top: 1px solid var(--line);
+        font-family: 'JetBrains Mono', monospace; font-size: 0.64rem; color: var(--faint);
+    }
+
+    .sidebar-toggle {
+        display: none;
+        position: fixed; top: 16px; left: 16px; z-index: 200;
+        background: var(--glass-strong);
+        backdrop-filter: blur(20px) saturate(1.8);
+        border: 1px solid var(--glass-border);
+        color: var(--ink);
+        border-radius: 999px;
+        padding: 10px 18px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.72rem;
+        cursor: pointer;
+        box-shadow: 0 10px 24px -8px rgba(23,23,27,0.25);
+    }
+    .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(23,23,27,0.35); backdrop-filter: blur(2px); z-index: 99; }
+
+    /* ============ MAIN ============ */
+    .main { margin-left: calc(var(--sidebar-w) + var(--gap) * 2); min-height: 100vh; position: relative; z-index: 1; }
+
+    header { padding: 66px 44px 44px; }
+
+    .hero-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 36px; align-items: center; max-width: 1080px; margin: 0 auto; }
+
+    .eyebrow-logo { height: 56px; width: auto; display: block; margin-bottom: 26px; }
+
+    header h1 {
+        font-family: 'Bricolage Grotesque', sans-serif;
+        font-weight: 800;
+        font-size: clamp(2.4rem, 4.4vw, 3.6rem);
+        letter-spacing: -1.6px;
+        line-height: 1.06;
+        margin: 0;
+        color: var(--ink);
+    }
+    header h1 .grad {
+        background: linear-gradient(100deg, var(--coral), var(--purple) 70%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    header p { color: var(--muted); font-size: 1.1rem; max-width: 470px; margin: 20px 0 0; }
+
+    /* Feature glass card */
+    .stats-card {
+        background: var(--glass);
+        backdrop-filter: blur(28px) saturate(1.8);
+        -webkit-backdrop-filter: blur(28px) saturate(1.8);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        padding: 28px 30px;
+        box-shadow: 0 24px 50px -22px rgba(23,23,27,0.22), inset 0 1px 0 rgba(255,255,255,0.6);
+    }
+    .stat-row { display: flex; align-items: baseline; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid var(--line); }
+    .stat-row:last-child { border-bottom: none; }
+    .stat-number { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 2rem; letter-spacing: -1px; }
+    .stat-label { font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); text-align: right; max-width: 130px; }
+
+    .container { max-width: 1080px; margin: 0 auto; padding: 26px 44px 50px; }
+
+    .results-bar { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; color: var(--muted); }
+    #results-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--ink); }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 26px; }
+
+    /* ============ CARD — glass surface ============ */
+    .card {
+        background: rgba(255,255,255,0.7);
+        backdrop-filter: blur(20px) saturate(1.6);
+        -webkit-backdrop-filter: blur(20px) saturate(1.6);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        overflow: hidden;
+        display: flex; flex-direction: column;
+        box-shadow: 0 14px 30px -16px rgba(23,23,27,0.14);
+        opacity: 0; transform: translateY(18px);
+        transition: transform 0.35s cubic-bezier(.4,0,.2,1), box-shadow 0.35s ease;
+    }
+    .card.in-view { opacity: 1; transform: translateY(0); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .card:hover { transform: translateY(-6px); }
+    .card[data-category="economia"]:hover { box-shadow: 0 26px 46px -16px rgba(255,106,77,0.4); }
+    .card[data-category="energia"]:hover { box-shadow: 0 26px 46px -16px rgba(5,150,105,0.35); }
+    .card[data-category="lavoro"]:hover { box-shadow: 0 26px 46px -16px rgba(124,92,252,0.35); }
+
+    .card-img-wrapper { position: relative; height: 200px; overflow: hidden; background: #e2e8f0; }
+    .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+    .card:hover .card-img { transform: scale(1.05); }
+
+    .catalog-code-badge {
+        position: absolute; top: 12px; left: 12px;
+        background: rgba(255,255,255,0.7);
+        backdrop-filter: blur(10px);
+        color: var(--ink);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.65rem;
+        padding: 4px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.8);
+    }
+
+    .card-body { padding: 24px; flex-grow: 1; display: flex; flex-direction: column; }
+    .card-header-info { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+
+    .card-tag { font-size: 0.7rem; text-transform: uppercase; font-weight: 700; padding: 4px 11px; border-radius: 999px; letter-spacing: 0.4px; }
+    .card-tag.economia { background: var(--coral-light); color: var(--coral-deep); }
+    .card-tag.energia { background: var(--emerald-light); color: var(--emerald); }
+    .card-tag.lavoro { background: var(--violet-light); color: var(--violet-deep); }
+
+    .card-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--faint); }
+
+    .card-title { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 1.4rem; letter-spacing: -0.4px; margin: 0 0 12px; color: var(--ink); line-height: 1.28; }
+    .card-excerpt { color: var(--muted); font-size: 0.92rem; margin-bottom: 22px; flex-grow: 1; line-height: 1.6; }
+
+    .card-link {
+        text-decoration: none;
+        background: var(--ink);
+        color: #fff;
+        font-weight: 600;
+        font-size: 0.88rem;
+        padding: 11px 20px;
+        border-radius: 999px;
+        display: inline-flex; align-items: center; gap: 6px;
+        transition: background 0.2s ease, gap 0.2s ease;
+        align-self: flex-start;
+    }
+    .card[data-category="economia"] .card-link:hover { background: linear-gradient(100deg, var(--coral), var(--coral-deep)); gap: 10px; }
+    .card[data-category="energia"] .card-link:hover { background: var(--emerald); gap: 10px; }
+    .card[data-category="lavoro"] .card-link:hover { background: var(--violet); gap: 10px; }
+
+    .card.hidden { display: none; }
+
+    footer { text-align: center; padding: 34px; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--faint); }
+
+    @media (max-width: 980px) {
+        .hero-grid { grid-template-columns: 1fr; }
+        .stats-card { max-width: 420px; }
+        .stat-number { font-size: 1.4rem; }
+    }
+    @media (max-width: 880px) {
+        .sidebar { width: min(272px, 82vw); transform: translateX(calc(-100% - 30px)); transition: transform 0.28s ease; }
+        .sidebar.open { transform: translateX(0); }
+        .sidebar-toggle { display: block; }
+        .sidebar-overlay.open { display: block; }
+        .main { margin-left: 0; }
+        header { padding: 96px 22px 32px; }
+        .container { padding: 24px 22px 40px; }
+
+        .blob { animation: none; filter: blur(45px); opacity: 0.7; }
+        .sidebar, .stats-card, .card { backdrop-filter: blur(12px) saturate(1.4); -webkit-backdrop-filter: blur(12px) saturate(1.4); }
+        .sidebar-overlay { backdrop-filter: none; }
+    }
 </style>
 </head>
 <body>
 
-<div class="hero">
-  <div class="wrap">
-    <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/" class="back-link">&larr; Torna alla Home</a>
-    <div class="eyebrow">Data Stories — Intelligenza Artificiale &amp; Lavoro</div>
-    <h1>Cosa cercano <em>davvero</em> le aziende AI nel 2026?</h1>
-    <p class="sub">Tre fonti a confronto — un dataset di offerte di lavoro AI 2026, un dataset globale di ruoli e stipendi, e il Future of Jobs Report del World Economic Forum — per capire quali ruoli, competenze e salari stanno definendo il mercato del lavoro AI.</p>
-    <div class="ticker">
-      <div class="cell">
-        <div class="label">Ruolo più richiesto</div>
-        <div class="num">NLP Engineer</div>
-        <div class="cap">In cima alla classifica sia nel dataset delle offerte 2026 sia in quello globale — l'unico ruolo a comparire primo in entrambi.</div>
-      </div>
-      <div class="cell">
-        <div class="label">Stipendio medio più alto</div>
-        <div class="num">$109.798</div>
-        <div class="cap">Research Scientist, dataset globale — il ruolo più specialistico è anche il più pagato.</div>
-      </div>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+<div class="blob blob-4"></div>
+
+<button class="sidebar-toggle" id="sidebarToggle">☰ Indice</button>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-tagline" style="margin-top: 26px;">Archivio di analisi dati</div>
+
+    <div class="catalog-label">Indice</div>
+
+    <button class="catalog-item-all active" data-filter="all">Tutti gli articoli <span class="count">3</span></button>
+
+    <div class="catalog-group" data-group="economia">
+        <div class="catalog-cat-row">
+            <button class="catalog-cat" data-filter="economia">
+                <span class="label">💰 Economia &amp; Società</span> <span class="count">1</span>
+            </button>
+            <button class="catalog-toggle" aria-label="Apri/chiudi categoria">›</button>
+        </div>
+        <div class="catalog-articles">
+            <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/costo_della_vita_report.html" class="catalog-article">
+                <span class="code">ECO·01</span> Il costo nascosto della vita
+            </a>
+        </div>
     </div>
-  </div>
-</div>
 
-<div class="wrap">
-  <div class="intro">
-    <p class="lede">Prompt Engineer, NLP Engineer, Research Scientist: il mercato del lavoro AI nel 2026 non premia più solo chi <b>sa programmare</b>, ma chi si è <b>specializzato</b>. Abbiamo incrociato tre fonti — offerte di lavoro reali, panorama globale dei ruoli e le competenze indicate dal World Economic Forum — per capire cosa conta davvero.</p>
-    <p class="sources"><i>Fonti: AI Jobs Dataset 2026 (Kaggle) · Global AI Jobs (Kaggle) · WEF Future of Jobs Report 2025</i></p>
-  </div>
+    <div class="catalog-group" data-group="energia">
+        <div class="catalog-cat-row">
+            <button class="catalog-cat" data-filter="energia">
+                <span class="label">🌱 Energia &amp; Ambiente</span> <span class="count">1</span>
+            </button>
+            <button class="catalog-toggle" aria-label="Apri/chiudi categoria">›</button>
+        </div>
+        <div class="catalog-articles">
+            <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/corsa-alle-rinnovabili.html?theme=light" class="catalog-article">
+                <span class="code">ENE·01</span> La Corsa alle Rinnovabili
+            </a>
+        </div>
+    </div>
 
-  <section class="q" id="ruoli" style="border-top:none;">
-    <div class="qhead"><span class="qnum mono">01</span><span class="qline"></span></div>
-    <h2>I ruoli più richiesti</h2>
-    <div class="qtext"><p>Confrontando i 5 ruoli più frequenti in entrambi i dataset, un nome emerge in cima a tutti e due: <b>NLP Engineer</b>. Ma le distanze tra un dataset e l'altro raccontano due mercati diversi.</p></div>
-    <div class="chartbox"><div id="plot-ruoli" style="width:100%;height:440px;"></div></div>
-    <div class="callout"><b>Il dataset delle offerte 2026 è più concentrato</b> — NLP Engineer e Research Scientist dominano nettamente (oltre 10.900 occorrenze ciascuno), il resto si stacca parecchio. <b>Nel dataset globale la distribuzione è più piatta</b>: tutti e 5 i ruoli restano sopra le 11.200 occorrenze — segno di una domanda più matura e diffusa su scala internazionale.</div>
-  </section>
+    <div class="catalog-group" data-group="lavoro">
+        <div class="catalog-cat-row">
+            <button class="catalog-cat" data-filter="lavoro">
+                <span class="label">💼 Lavoro</span> <span class="count">1</span>
+            </button>
+            <button class="catalog-toggle" aria-label="Apri/chiudi categoria">›</button>
+        </div>
+        <div class="catalog-articles">
+            <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/ai-job-market.html" class="catalog-article">
+                <span class="code">LAV·01</span> AI Job Market 2026
+            </a>
+        </div>
+    </div>
 
-  <section class="q" id="specializzazioni">
-    <div class="qhead"><span class="qnum mono">02</span><span class="qline"></span></div>
-    <h2>Su cosa si concentra la domanda</h2>
-    <div class="qtext"><p>Guardando le specializzazioni richieste nelle offerte 2026, una sola area domina su tutte le altre.</p></div>
-    <div class="chartbox"><div id="plot-spec" style="width:100%;height:400px;"></div></div>
-    <div class="callout"><b>Machine Learning da sola vale il 37% delle offerte</b> — più del doppio della seconda area (MLOps, 15,7%). Nel dataset globale, invece, il quadro è quasi capovolto: le 8 specializzazioni principali (Computer Vision, LLM, Reinforcement Learning, Analytics, Generative AI, MLOps, Forecasting, NLP) si dividono la domanda in modo quasi identico, tutte tra il 12,3% e il 12,8%. Le offerte concrete premiano oggi le competenze operative di ML; il panorama globale è già più maturo e diversificato.</div>
-  </section>
+    <div class="sidebar-footer">© nuMericA 2026<br>Alessia Magro</div>
+</aside>
 
-  <section class="q" id="skills">
-    <div class="qhead"><span class="qnum mono">03</span><span class="qline"></span></div>
-    <h2>Le competenze che il WEF associa al futuro del lavoro</h2>
-    <div class="qtext"><p>Dal Future of Jobs Report 2025 del World Economic Forum abbiamo estratto quanto spesso ricorrono le competenze "del futuro" legate al lavoro nell'AI.</p></div>
-    <div class="chartbox"><div id="plot-skills" style="width:100%;height:400px;"></div></div>
-    <div class="callout">Le competenze più citate non sono tecniche: <b>flessibilità, resilienza e agilità</b> guidano la classifica, davanti persino ad "AI e big data". Il messaggio del WEF è chiaro: la parte tecnica si può imparare, la capacità di adattarsi è quella che fa davvero la differenza.</div>
-  </section>
+<div class="main">
+    <header>
+        <div class="hero-grid">
+            <div>
+                <img src="logo_numerica_mono.png" alt="Logo nuMericA" class="eyebrow-logo">
+                <h1>Comprendere il mondo <span class="grad">attraverso i dati</span></h1>
+                <p>Analisi visive, mappe interattive e storie spiegate con i numeri.</p>
+            </div>
+            <div class="stats-card">
+                <div class="stat-row">
+                    <span class="stat-number" id="stat-articles" data-target="0">0</span>
+                    <span class="stat-label">Analisi pubblicate</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-number" id="stat-categories" data-target="0">0</span>
+                    <span class="stat-label">Aree tematiche esplorate</span>
+                </div>
+            </div>
+        </div>
+    </header>
 
-  <section class="q" id="salari">
-    <div class="qhead"><span class="qnum mono">04</span><span class="qline"></span></div>
-    <h2>Chi guadagna di più</h2>
-    <div class="qtext"><p>Nel dataset globale, i 5 ruoli meglio pagati mostrano differenze marcate in base al grado di specializzazione.</p></div>
-    <div class="chartbox"><div id="plot-salari" style="width:100%;height:400px;"></div></div>
-    <div class="callout"><b>Research Scientist guadagna in media $109.798</b>, oltre $12.000 più di un Data Analyst generico. Nel dataset delle offerte 2026 il quadro è opposto: gli stipendi dei 15 ruoli più pagati si concentrano quasi tutti tra $95.000 e $97.400 — una forbice di appena $2.300. <b>Le offerte pubblicate tendono ad appiattire gli stipendi</b>; il mercato reale, invece, premia chiaramente la specializzazione.</div>
-  </section>
+    <div class="container">
+        <div class="results-bar">
+            <span id="results-title">Tutti gli articoli</span>
+            <span id="results-count">3 report</span>
+        </div>
 
-  <div class="final-line">Il professionista AI del 2026 non si distingue più solo per gli strumenti che conosce, ma per la specializzazione che ha scelto — e per la capacità di restare flessibile mentre tutto intorno cambia.</div>
+        <div class="grid" id="grid">
 
-  <footer>&copy; nuMericA 2026 · Alessia Magro — Fonti: AI Jobs Dataset 2026, Global AI Jobs (Kaggle), WEF Future of Jobs Report 2025</footer>
+            <div class="card" data-category="economia">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1614521272693-73052eaefc51?auto=format&fit=crop&w=1000&q=80" class="card-img" alt="Skyline europeo al tramonto">
+                    <span class="catalog-code-badge">ECO·01</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-header-info">
+                        <span class="card-tag economia">Economia &amp; Società</span>
+                        <span class="card-meta">5 MIN</span>
+                    </div>
+                    <h2 class="card-title">Il costo nascosto della vita</h2>
+                    <p class="card-excerpt">Dieci città europee a confronto attraverso la metrica che conta davvero: non gli euro, ma le ore di vita necessarie per sostenere il costo della vita.</p>
+                    <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/costo_della_vita_report.html" class="card-link">Esplora i Dati &rarr;</a>
+                </div>
+            </div>
+
+            <div class="card" data-category="energia">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=1000&q=80" class="card-img" alt="Vista aerea di pannelli solari">
+                    <span class="catalog-code-badge">ENE·01</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-header-info">
+                        <span class="card-tag energia">Energia &amp; Ambiente</span>
+                        <span class="card-meta">6 MIN</span>
+                    </div>
+                    <h2 class="card-title">La Corsa alle Rinnovabili</h2>
+                    <p class="card-excerpt">Un'analisi globale su 79 paesi: chi guida davvero la transizione energetica, da cosa dipendiamo ancora e quanto conta essere ricchi quando si parla di energia.</p>
+                    <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/corsa-alle-rinnovabili.html?theme=light" class="card-link">Esplora i Dati &rarr;</a>
+                </div>
+            </div>
+
+            <div class="card" data-category="lavoro">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1751200065697-4461cc2b43cb?auto=format&fit=crop&w=1000&q=80" class="card-img" alt="Postazione di lavoro in penombra">
+                    <span class="catalog-code-badge">LAV·01</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-header-info">
+                        <span class="card-tag lavoro">Lavoro</span>
+                        <span class="card-meta">4 MIN</span>
+                    </div>
+                    <h2 class="card-title">AI Job Market 2026</h2>
+                    <p class="card-excerpt">Tre fonti a confronto per capire quali ruoli, competenze e stipendi stanno definendo davvero il mercato del lavoro nell'intelligenza artificiale.</p>
+                    <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/ai-job-market.html" class="card-link">Esplora i Dati &rarr;</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>© nuMericA 2026 · Alessia Magro</footer>
 </div>
 
 <script>
-const isMobile = window.innerWidth <= 600;
-const MAIN_FONT = { family:"Inter, -apple-system, sans-serif", color:"#2B2B23", size:isMobile?10:12 };
-const WHITE_BG = "#FFFFFF";
-const LINE_COLOR = "#E1D9C6";
-const VIOLET = "#7C5CFC";
-const VIOLET_LIGHT = "#C9BBFF";
-const AMBER = "#D9AD5C";
-const cfg = { displayModeBar:false, responsive:true };
+    const catalogItemAll = document.querySelector('.catalog-item-all');
+    const catalogCats = document.querySelectorAll('.catalog-cat');
+    const cards = document.querySelectorAll('.card');
+    const resultsTitle = document.getElementById('results-title');
+    const resultsCount = document.getElementById('results-count');
 
-document.addEventListener('DOMContentLoaded', function(){
+    const categoryNames = { all: 'Tutti gli articoli', economia: 'Economia & Società', energia: 'Energia & Ambiente', lavoro: 'Lavoro' };
 
-  /* 01. RUOLI PIU' RICHIESTI */
-  Plotly.newPlot('plot-ruoli', [
-    { type:"bar", name:"Offerte 2026 (Jobs)",
-      x:["NLP Engineer","Research Scientist","Machine Learning Engineer","Software Engineer AI","Computer Vision Engineer"],
-      y:[11025,10963,8166,5486,5396], marker:{color:VIOLET} },
-    { type:"bar", name:"Panorama Globale",
-      x:["NLP Engineer","Software Engineer AI","Research Scientist","Machine Learning Engineer","AI Engineer"],
-      y:[11412,11333,11309,11263,11247], marker:{color:VIOLET_LIGHT} }
-  ], {
-    font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
-    margin:{l:40,r:20,t:20,b:isMobile?110:130},
-    xaxis:{gridcolor:LINE_COLOR, tickangle:-35, automargin:true}, yaxis:{title:{text:"Occorrenze"}, gridcolor:LINE_COLOR},
-    barmode:"group", legend:{orientation:"h", y:1.15, font:{size:isMobile?9:12}}
-  }, cfg);
+    function setActiveFilter(filter) {
+        catalogItemAll.classList.toggle('active', filter === 'all');
+        catalogCats.forEach(btn => btn.classList.toggle('active', btn.dataset.filter === filter));
+        let visible = 0;
+        cards.forEach(card => {
+            const match = filter === 'all' || card.dataset.category === filter;
+            card.classList.toggle('hidden', !match);
+            if (match) visible++;
+        });
+        resultsTitle.textContent = categoryNames[filter] || filter;
+        resultsCount.textContent = visible + ' report';
+        if (window.innerWidth <= 880) closeSidebar();
+    }
 
-  /* 02. SPECIALIZZAZIONI (dataset Jobs 2026) */
-  Plotly.newPlot('plot-spec', [{
-    type:"bar", orientation:"h",
-    y:["Data Science","Deep Learning","Computer Vision","NLP","Generative AI","MLOps","Machine Learning"],
-    x:[5.1,5.4,10.4,10.7,15.7,15.7,37.0],
-    text:["5,1%","5,4%","10,4%","10,7%","15,7%","15,7%","37,0%"], textposition:"outside",
-    marker:{ color:[5.1,5.4,10.4,10.7,15.7,15.7,37.0], colorscale:[[0.0,VIOLET_LIGHT],[1.0,VIOLET]] }
-  }], {
-    font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
-    margin:{l:isMobile?110:150,r:40,t:20,b:40},
-    xaxis:{gridcolor:LINE_COLOR, title:{text:"% delle offerte 2026"}, range:[0,42]}, yaxis:{automargin:true}
-  }, cfg);
+    catalogItemAll.addEventListener('click', () => setActiveFilter('all'));
+    catalogCats.forEach(btn => btn.addEventListener('click', () => setActiveFilter(btn.dataset.filter)));
 
-  /* 03. SKILLS WEF */
-  Plotly.newPlot('plot-skills', [{
-    type:"bar", orientation:"h",
-    y:["Analytical thinking","Cybersecurity","Leadership","Creative thinking","AI e big data","Agility","Resilience","Flexibility"],
-    x:[103,106,113,129,138,163,164,257],
-    marker:{ color:[103,106,113,129,138,163,164,257], colorscale:[[0.0,AMBER],[1.0,VIOLET]] }
-  }], {
-    font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
-    margin:{l:isMobile?115:160,r:30,t:20,b:40},
-    xaxis:{gridcolor:LINE_COLOR, title:{text:"Occorrenze nel report WEF"}}, yaxis:{automargin:true}
-  }, cfg);
+    document.querySelectorAll('.catalog-toggle').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            btn.closest('.catalog-group').classList.toggle('open');
+        });
+    });
 
-  /* 04. SALARI (Global, top 5) */
-  Plotly.newPlot('plot-salari', [{
-    type:"bar", orientation:"h",
-    y:["Data Analyst","Software Engineer AI","AI Engineer","NLP Engineer","Computer Vision Engineer","Machine Learning Engineer","Research Scientist"],
-    x:[69429,97376,97975,99745,101304,102122,109798],
-    text:["$69.429","$97.376","$97.975","$99.745","$101.304","$102.122","$109.798"], textposition:"outside",
-    marker:{ color:[69429,97376,97975,99745,101304,102122,109798], colorscale:[[0.0,VIOLET_LIGHT],[1.0,VIOLET]] }
-  }], {
-    font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
-    margin:{l:isMobile?130:180,r:60,t:20,b:40},
-    xaxis:{gridcolor:LINE_COLOR, title:{text:"Salario medio annuo (USD)"}}, yaxis:{automargin:true}
-  }, cfg);
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const toggleBtn = document.getElementById('sidebarToggle');
+    function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('open'); }
+    function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('open'); }
+    toggleBtn.addEventListener('click', () => sidebar.classList.contains('open') ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
 
-});
+    document.getElementById('stat-articles').dataset.target = cards.length;
+    document.getElementById('stat-categories').dataset.target = document.querySelectorAll('.catalog-group').length;
+
+    function animateCount(el) {
+        const target = parseInt(el.dataset.target, 10);
+        const duration = 1100;
+        const start = performance.now();
+        function tick(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.round(eased * target);
+            if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+    }
+    const statObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => { if (entry.isIntersecting) { animateCount(entry.target); statObserver.unobserve(entry.target); } });
+    }, { threshold: 0.4 });
+    document.querySelectorAll('.stat-number').forEach(el => statObserver.observe(el));
+
+    const cardObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('in-view'); cardObserver.unobserve(entry.target); } });
+    }, { threshold: 0.15 });
+    cards.forEach(card => cardObserver.observe(card));
 </script>
 
 </body>
