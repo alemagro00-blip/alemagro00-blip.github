@@ -5,26 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>La Corsa alle Rinnovabili - Report Energetico</title>
 
-<!-- Fonts: Fraunces (Titoli eleganti), Plus Jakarta Sans (Corpo leggibile), Space Mono (Dati e etichette) -->
+<!-- Fonts: Bricolage Grotesque (Titoli), Inter (Corpo leggibile), JetBrains Mono (Dati e etichette) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 
 <!-- Plotly.js per i grafici -->
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 
 <style>
   :root {
-    --bg-main: #F2F4F3;        /* Sfondo Slate/Sandstone chiaro */
+    --bg-main: #FAFAF6;        /* Sfondo carta chiaro, coerente con il resto del sito */
     --card-bg: #FFFFFF;        /* Sfondo card bianco pulito */
-    --ink-dark: #0F172A;       /* Inchiostro carbone profondo */
-    --ink-muted: #475569;      /* Testo secondario */
-    --line-color: #E2E8F0;     /* Linea divisoria singola e leggera */
+    --ink-dark: #15140F;       /* Inchiostro unificato con home e altri report */
+    --ink-muted: #6B6659;      /* Testo secondario, coerente con lo "slate" degli altri report */
+    --line-color: #E4E1D6;     /* Linea divisoria, coerente con il resto del sito */
     
-    /* Colori d'accento */
+    /* Colori d'accento (firma di questo report) */
     --accent-emerald: #059669; /* Verde smeraldo per il pulito/positivo */
     --accent-blue: #2563EB;    /* Blu cobalto per il focus/Italia */
-    --accent-amber: #D97706;   /* Rame per gli avvisi/fossili */
-    --dark-section: #1E293B;  /* Sfondo scuro per il blocco conclusivo */
+    --accent-amber: #D9AD5C;   /* Ambra, coerente col tono usato nel report costo-vita */
+    --dark-section: #15140F;  /* Sfondo scuro per il blocco conclusivo, coerente con l'inchiostro */
   }
 
   * { box-sizing: border-box; }
@@ -33,42 +33,45 @@
     margin: 0; 
     background: var(--bg-main); 
     color: var(--ink-dark); 
-    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; 
+    font-family: 'Inter', -apple-system, sans-serif; 
     font-size: 16px; 
     line-height: 1.7; 
     -webkit-font-smoothing: antialiased; 
   }
 
-  h1, h2, h3, h4 { font-family: 'Fraunces', serif; margin: 0; color: var(--ink-dark); }
-  .mono { font-family: 'Space Mono', monospace; }
+  h1, h2, h3, h4 { font-family: 'Bricolage Grotesque', sans-serif; margin: 0; color: var(--ink-dark); }
+  .mono { font-family: 'JetBrains Mono', monospace; }
   .wrap { max-width: 920px; margin: 0 auto; padding: 0 28px; }
 
   /* Hero Section */
-  .hero { background: var(--ink-dark); color: #F8FAFC; padding: 68px 0 56px; }
-  .back-link { display:inline-flex; align-items:center; gap:8px; margin-bottom:22px; background:transparent; border:none; color:#F8FAFC; opacity:.6; text-decoration:none; font-family:'Space Mono',monospace; font-size:13px; font-weight:600; cursor:pointer; transition:.2s ease; }
+  .hero { position:relative; background: var(--ink-dark); color: #F8FAFC; padding: 68px 0 56px; overflow:hidden; }
+  .hero::before { content:''; position:absolute; width:480px; height:480px; border-radius:50%; filter:blur(80px); background:radial-gradient(circle, rgba(77,138,255,0.4), transparent 70%); top:-200px; right:-100px; pointer-events:none; z-index:0; }
+  .hero::after { content:''; position:absolute; width:420px; height:420px; border-radius:50%; filter:blur(80px); background:radial-gradient(circle, rgba(5,150,105,0.35), transparent 70%); bottom:-220px; left:-100px; pointer-events:none; z-index:0; }
+  .hero .wrap { position:relative; z-index:1; }
+  .back-link { display:inline-flex; align-items:center; gap:8px; margin-bottom:22px; background:rgba(255,255,255,0.1); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.16); border-radius:999px; padding:8px 16px; color:#F8FAFC; opacity:.9; text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; cursor:pointer; transition:.2s ease; }
   .back-link:hover { opacity:1; transform:translateX(-4px); }
-  .eyebrow { font-family: 'Space Mono', monospace; letter-spacing: .14em; text-transform: uppercase; font-size: 11.5px; color: #38BDF8; margin-bottom: 20px; font-weight: 700; }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; font-size: 11.5px; color: #38BDF8; margin-bottom: 20px; font-weight: 700; }
   .hero h1 { font-size: clamp(2.4rem, 5.8vw, 3.5rem); font-weight: 700; line-height: 1.1; letter-spacing: -.02em; color: #FFFFFF; }
   .hero h1 em { font-style: italic; color: #34D399; font-weight: 500; }
   .hero .sub { max-width: 680px; margin-top: 22px; font-size: 16.5px; line-height: 1.6; color: #94A3B8; }
   
   /* Ticker visivo ad alto impatto */
-  .ticker { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #334155; border-radius: 12px; overflow: hidden; }
-  .ticker .cell { background: var(--ink-dark); padding: 24px 28px; }
-  .ticker .label { font-family: 'Space Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; color: #64748B; }
-  .ticker .num { font-family: 'Fraunces', serif; font-size: 42px; font-weight: 700; margin-top: 6px; }
+  .ticker { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.14); border-radius: 18px; overflow: hidden; }
+  .ticker .cell { background: rgba(255,255,255,0.06); backdrop-filter: blur(16px) saturate(1.6); -webkit-backdrop-filter: blur(16px) saturate(1.6); padding: 24px 28px; }
+  .ticker .label { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; color: #64748B; }
+  .ticker .num { font-family: 'Bricolage Grotesque', sans-serif; font-size: 42px; font-weight: 700; margin-top: 6px; }
   .ticker .num.good { color: #34D399; }
   .ticker .num.warn { color: #FBBF24; }
   .ticker .cap { font-size: 13.5px; color: #94A3B8; margin-top: 4px; line-height: 1.5; }
 
   /* Introduzione */
   .intro { padding: 48px 0 12px; }
-  .lede { font-size: 19px; color: #1E293B; max-width: 780px; font-family: 'Fraunces', serif; font-weight: 500; line-height: 1.55; }
+  .lede { font-size: 19px; color: #1E293B; max-width: 780px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 500; line-height: 1.55; }
   .lede b { font-style: italic; font-weight: 600; color: var(--accent-emerald); }
 
   .method-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 32px 0 12px; }
-  .method-row .card { background: var(--card-bg); border: 1px solid var(--line-color); border-radius: 12px; padding: 22px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-  .method-row .card .t { font-family: 'Space Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; font-weight: 700; margin-bottom: 8px; }
+  .method-row .card { background: var(--card-bg); border: 1px solid var(--line-color); border-radius: 16px; padding: 22px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+  .method-row .card .t { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; font-weight: 700; margin-bottom: 8px; }
   .method-row .card.c1 .t { color: var(--accent-emerald); } 
   .method-row .card.c2 .t { color: var(--accent-blue); } 
   .method-row .card.c3 .t { color: var(--accent-amber); }
@@ -77,36 +80,38 @@
   /* Sezioni con riga divisoria SINGOLA ed elegante */
   section.q { padding: 44px 0 20px 0; border-top: 1px solid var(--line-color); }
   .qhead { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-  .qnum { font-family: 'Space Mono', monospace; color: var(--accent-emerald); font-size: 12.5px; font-weight: 700; background: rgba(5, 150, 105, 0.1); padding: 2px 8px; border-radius: 4px; }
+  .qnum { font-family: 'JetBrains Mono', monospace; color: var(--accent-emerald); font-size: 12.5px; font-weight: 700; background: rgba(5, 150, 105, 0.1); padding: 2px 8px; border-radius: 4px; }
   section.q h2 { font-size: clamp(22px, 3.2vw, 30px); letter-spacing: -.01em; font-weight: 600; }
   .qtext { max-width: 780px; color: #334155; font-size: 16px; margin-top: 12px; }
   .qtext b { color: var(--ink-dark); }
 
   /* Box Grafici e Callout */
-  .chartbox { margin-top: 20px; background: var(--card-bg); border: 1px solid var(--line-color); border-radius: 14px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03); }
+  .chartbox { margin-top: 20px; background: var(--card-bg); border: 1px solid var(--line-color); border-radius: 20px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03); overflow-x: auto; -webkit-overflow-scrolling: touch; }
   
   .callout { margin-top: 20px; background: #ECFDF5; border-left: 4px solid var(--accent-emerald); border-radius: 4px 10px 10px 4px; padding: 18px 22px; font-size: 15px; color: #064E3B; }
   .callout.amber { background: #FFFBEB; border-left-color: var(--accent-amber); color: #78350F; }
   .callout b { color: #0F172A; }
   
-  .aside-box { margin-top: 24px; background: var(--ink-dark); color: #F1F5F9; border-radius: 12px; padding: 24px 28px; font-size: 14.5px; line-height: 1.65; }
-  .aside-box .t { font-family: 'Space Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #38BDF8; font-weight: 700; margin-bottom: 8px; }
+  .aside-box { margin-top: 24px; background: var(--ink-dark); color: #F1F5F9; border-radius: 18px; padding: 24px 28px; font-size: 14.5px; line-height: 1.65; }
+  .aside-box .t { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #38BDF8; font-weight: 700; margin-bottom: 8px; }
   .aside-box b { color: #FFFFFF; }
 
   /* Tabella Personalizzata */
   .table-container { margin-top: 20px; overflow-x: auto; border: 1px solid var(--line-color); border-radius: 10px; background: var(--card-bg); }
   table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14.5px; }
-  th { font-family: 'Space Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; background: #F8FAFC; color: var(--ink-muted); padding: 12px 16px; border-bottom: 1px solid var(--line-color); }
+  th { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; background: #F8FAFC; color: var(--ink-muted); padding: 12px 16px; border-bottom: 1px solid var(--line-color); }
   td { padding: 14px 16px; border-bottom: 1px solid var(--line-color); color: #334155; }
   tr:last-child td { border-bottom: none; }
   tr.highlight { background: #EFF6FF; font-weight: 600; }
   tr.highlight td { color: var(--accent-blue); }
 
   /* Conclusione */
-  .conclusion { background: var(--dark-section); color: #F8FAFC; padding: 60px 0 76px; margin-top: 50px; }
+  .conclusion { position:relative; background: var(--dark-section); color: #F8FAFC; padding: 60px 0 76px; margin-top: 50px; overflow:hidden; }
+  .conclusion::before { content:''; position:absolute; width:420px; height:420px; border-radius:50%; filter:blur(90px); background:radial-gradient(circle, rgba(155,107,255,0.28), transparent 70%); bottom:-200px; right:-100px; pointer-events:none; z-index:0; }
+  .conclusion .wrap { position:relative; z-index:1; }
   .conclusion h2 { color: #FFFFFF; }
   .conclusion .qtext { color: #94A3B8; }
-  .final-line { margin-top: 32px; padding-top: 24px; border-top: 1px solid #334155; font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 21px; color: #38BDF8; max-width: 760px; line-height: 1.4; }
+  .final-line { margin-top: 32px; padding-top: 24px; border-top: 1px solid #334155; font-family: 'Bricolage Grotesque', sans-serif; font-style: italic; font-weight: 500; font-size: 21px; color: #38BDF8; max-width: 760px; line-height: 1.4; }
 
   footer { padding: 32px 0; text-align: center; color: var(--ink-muted); font-size: 12.5px; background: var(--bg-main); border-top: 1px solid var(--line-color); }
 
@@ -115,7 +120,14 @@
     .hero { padding: 44px 0 36px; }
     .ticker { grid-template-columns: 1fr; } 
     .method-row { grid-template-columns: 1fr; }
-    .chartbox { padding: 10px 6px; }
+    .chartbox { padding: 14px 10px 10px; }
+    .chartbox > div { min-width: 600px; }
+    .chartbox::before {
+      content: '◄ scorri per esplorare il grafico ►';
+      display: block; font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      text-transform: uppercase; letter-spacing: .08em; color: var(--ink-muted);
+      margin-bottom: 10px; text-align: center;
+    }
   }
 </style>
 </head>
@@ -124,7 +136,7 @@
 <!-- HERO HEADER -->
 <div class="hero">
   <div class="wrap">
-    <a href="index.html" class="back-link">&larr; Torna alla Home</a>
+    <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/" class="back-link">&larr; Torna alla Home</a>
     <div class="eyebrow">Analisi di Settore — Transizione Energetica</div>
     <h1>La Corsa alle <em>Rinnovabili</em></h1>
     <p class="sub">Un confronto dettagliato su 79 Paesi: divari geografici, accelerazioni tecnologiche e il paradosso della crescita dei consumi pro capite.</p>
@@ -413,7 +425,7 @@
 <!-- SCRIPT PLOTLY (Configurazione Colori Coordinati) -->
 <script>
 const isMobile = window.innerWidth <= 600;
-const MAIN_FONT = { family: "Plus Jakarta Sans, sans-serif", color: "#334155", size: isMobile ? 10 : 12 };
+const MAIN_FONT = { family: "Inter, sans-serif", color: "#334155", size: isMobile ? 10 : 12 };
 const WHITE_BG = "#FFFFFF";
 const LINE_COLOR = "#E2E8F0";
 
@@ -484,6 +496,9 @@ document.addEventListener('DOMContentLoaded', function(){
 
 </body>
 </html>
+
+
+
 
 
 
