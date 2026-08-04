@@ -111,7 +111,6 @@
     .ticker .cell, .conclusion .chartbox, .back-link { backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
     .simulator-controls { flex-direction:column; align-items:stretch; }
     .sim-input-wrap input { width:100%; }
-    .chartbox > div[id^="plot-"] { height:300px !important; }
     #plot-mappa { height:340px !important; }
   }
 </style>
@@ -298,7 +297,7 @@ document.addEventListener('DOMContentLoaded', function(){
     { type:"bar", orientation:"h", name:"Palestra", y:cittaPaniere, x:[77.89,60.00,57.36,57.89,35.59,47.45,56.93,63.15,54.82,37.37], marker:{color:MOSS} }
   ], {
     font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
-    margin:{l:isMobile?68:90,r:20,t:20,b:40},
+    margin:{l:isMobile?68:90,r:20,t:20,b:40}, height: isMobile?420:460,
     xaxis:{gridcolor:LINE_COLOR}, yaxis:{autorange:"reversed"}, barmode:"stack",
     legend:{orientation:"h", y:1.12, font:{size:isMobile?9:12}}
   }, cfg);
@@ -322,7 +321,7 @@ document.addEventListener('DOMContentLoaded', function(){
   }));
   Plotly.newPlot('plot-trend', trendTraces, {
     font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
-    margin:{l:45,r:20,t:20,b:isMobile?95:40},
+    margin:{l:45,r:20,t:20,b:isMobile?95:40}, height: isMobile?380:440,
     xaxis:{gridcolor:LINE_COLOR, dtick:1}, yaxis:{title:{text:"Indice prezzi (2015=100)"}, gridcolor:LINE_COLOR},
     legend: isMobile
       ? {orientation:"h", y:-0.35, font:{size:8.5}}
@@ -338,7 +337,7 @@ document.addEventListener('DOMContentLoaded', function(){
     { type:"bar", name:"Birra", x:paradossoCitta, y:minBirra, marker:{color:MOSS}, text:minBirra.map(v=>v.toFixed(1)+"m"), textposition:"outside" }
   ], {
     font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
-    margin:{l:40,r:20,t:20,b:isMobile?85:40},
+    margin:{l:40,r:20,t:20,b:isMobile?85:40}, height: isMobile?380:420,
     xaxis:{gridcolor:LINE_COLOR, tickangle:isMobile?-45:0}, yaxis:{title:{text:"Minuti"}, gridcolor:LINE_COLOR, range:[0,36]},
     barmode:"group", legend:{orientation:"h", y:1.12, font:{size:isMobile?9:12}}
   }, cfg);
@@ -371,7 +370,7 @@ document.addEventListener('DOMContentLoaded', function(){
       hovertemplate: "<b>%{y}</b><br>%{text} di lavoro<extra></extra>"
     }], {
       font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
-      margin: { l: isMobile ? 90 : 110, r: 40, t: 20, b: 40 },
+      margin: { l: isMobile ? 90 : 110, r: 40, t: 20, b: 40 }, height: isMobile?380:400,
       xaxis: { gridcolor: LINE_COLOR, title: { text: "Minuti di lavoro necessari" } },
       yaxis: { automargin: true }
     }, cfg);
@@ -401,7 +400,7 @@ document.addEventListener('DOMContentLoaded', function(){
     marker:{ color:[60.73,40.11,32.19,31.40,29.48,27.76,23.64,23.33,22.56,11.81], colorscale:[[0.0,MOSS],[1.0,CORAL]] }
   }], {
     font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
-    margin:{l:isMobile?100:150,r:20,t:20,b:40},
+    margin:{l:isMobile?100:150,r:20,t:20,b:40}, height: isMobile?400:420,
     xaxis:{gridcolor:LINE_COLOR, title:{text:"Coefficiente di variazione (%)"}}, yaxis:{autorange:"reversed"}
   }, cfg);
 
@@ -442,7 +441,7 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   ], {
     font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
-    margin: { l: 40, r: 20, t: 30, b: isMobile ? 70 : 50 },
+    margin: { l: 40, r: 20, t: 30, b: isMobile ? 70 : 50 }, height: isMobile?380:440,
     barmode: "stack",
     yaxis: { title: { text: "Ore di lavoro mensili" }, gridcolor: LINE_COLOR, range: [0, 220] },
     xaxis: { gridcolor: LINE_COLOR, tickangle: isMobile ? -45 : 0 },
@@ -478,7 +477,7 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   ], {
     font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
-    margin: { l: 40, r: 20, t: 30, b: isMobile ? 70 : 50 },
+    margin: { l: 40, r: 20, t: 30, b: isMobile ? 70 : 50 }, height: isMobile?380:440,
     barmode: "stack",
     yaxis: { title: { text: "Ore di lavoro mensili" }, gridcolor: LINE_COLOR, range: [0, 220] },
     xaxis: { gridcolor: LINE_COLOR, tickangle: isMobile ? -45 : 0 },
@@ -535,7 +534,7 @@ document.addEventListener('DOMContentLoaded', function(){
       hovertemplate: "<b>%{y}</b><br>%{x:.0f}% dello stipendio<extra></extra>"
     }], {
       font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
-      margin: { l: isMobile ? 90 : 110, r: 40, t: 20, b: 40 },
+      margin: { l: isMobile ? 90 : 110, r: 40, t: 20, b: 40 }, height: isMobile?380:440,
       xaxis: { gridcolor: LINE_COLOR, title: { text: `% dello stipendio in ${labelTipo[tipo]}` }, range: [0, maxPct + 15] },
       yaxis: { automargin: true },
       shapes: [{
