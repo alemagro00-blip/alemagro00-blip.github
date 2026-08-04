@@ -97,6 +97,8 @@
     .wrap{padding:0 16px;} .hero{padding:44px 0 40px;}
     .ticker{grid-template-columns:1fr;} .method-row{grid-template-columns:1fr;}
     .chartbox{padding:12px 8px;}
+    .hero::before, .hero::after, .conclusion::before { filter:blur(40px); }
+    .ticker .cell, .conclusion .chartbox, .back-link { backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
   }
 </style>
 </head>
@@ -404,7 +406,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
 </body>
 </html>
-
 
 
 
