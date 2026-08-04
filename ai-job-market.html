@@ -149,7 +149,14 @@ const cfg = { displayModeBar:false, responsive:true };
 document.addEventListener('DOMContentLoaded', function(){
 
   /* 01. RUOLI PIU' RICHIESTI */
-  Plotly.newPlot('plot-ruoli', [
+  Plotly.newPlot('plot-ruoli', isMobile ? [
+    { type:"bar", orientation:"h", name:"Offerte 2026 (Jobs)",
+      y:["NLP Engineer","Research Scientist","Machine Learning Engineer","Software Engineer AI","Computer Vision Engineer"],
+      x:[11025,10963,8166,5486,5396], marker:{color:VIOLET} },
+    { type:"bar", orientation:"h", name:"Panorama Globale",
+      y:["NLP Engineer","Software Engineer AI","Research Scientist","Machine Learning Engineer","AI Engineer"],
+      x:[11412,11333,11309,11263,11247], marker:{color:VIOLET_LIGHT} }
+  ] : [
     { type:"bar", name:"Offerte 2026 (Jobs)",
       x:["NLP Engineer","Research Scientist","Machine Learning Engineer","Software Engineer AI","Computer Vision Engineer"],
       y:[11025,10963,8166,5486,5396], marker:{color:VIOLET} },
@@ -158,8 +165,10 @@ document.addEventListener('DOMContentLoaded', function(){
       y:[11412,11333,11309,11263,11247], marker:{color:VIOLET_LIGHT} }
   ], {
     font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
-    margin:{l:40,r:20,t:20,b:isMobile?110:130}, height: isMobile?420:440,
-    xaxis:{gridcolor:LINE_COLOR, tickangle:-35, automargin:true}, yaxis:{title:{text:"Occorrenze"}, gridcolor:LINE_COLOR},
+    margin: isMobile ? {l:170,r:40,t:20,b:40} : {l:40,r:20,t:20,b:130},
+    height: isMobile?420:440,
+    xaxis: isMobile ? {gridcolor:LINE_COLOR, title:{text:"Occorrenze"}} : {gridcolor:LINE_COLOR, tickangle:-35, automargin:true},
+    yaxis: isMobile ? {automargin:true} : {title:{text:"Occorrenze"}, gridcolor:LINE_COLOR},
     barmode:"group", legend:{orientation:"h", y:1.15, font:{size:isMobile?9:12}}
   }, cfg);
 
