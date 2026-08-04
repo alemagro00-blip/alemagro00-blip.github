@@ -158,8 +158,8 @@ document.addEventListener('DOMContentLoaded', function(){
       y:[11412,11333,11309,11263,11247], marker:{color:VIOLET_LIGHT} }
   ], {
     font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
-    margin:{l:40,r:20,t:20,b:isMobile?95:60},
-    xaxis:{gridcolor:LINE_COLOR, tickangle:-30}, yaxis:{title:{text:"Occorrenze"}, gridcolor:LINE_COLOR},
+    margin:{l:40,r:20,t:20,b:isMobile?110:130},
+    xaxis:{gridcolor:LINE_COLOR, tickangle:-35, automargin:true}, yaxis:{title:{text:"Occorrenze"}, gridcolor:LINE_COLOR},
     barmode:"group", legend:{orientation:"h", y:1.15, font:{size:isMobile?9:12}}
   }, cfg);
 
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function(){
   }], {
     font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
     margin:{l:isMobile?110:150,r:40,t:20,b:40},
-    xaxis:{gridcolor:LINE_COLOR, title:{text:"% delle offerte 2026"}, range:[0,42]}
+    xaxis:{gridcolor:LINE_COLOR, title:{text:"% delle offerte 2026"}, range:[0,42]}, yaxis:{automargin:true}
   }, cfg);
 
   /* 03. SKILLS WEF */
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function(){
   }], {
     font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
     margin:{l:isMobile?115:160,r:30,t:20,b:40},
-    xaxis:{gridcolor:LINE_COLOR, title:{text:"Occorrenze nel report WEF"}}
+    xaxis:{gridcolor:LINE_COLOR, title:{text:"Occorrenze nel report WEF"}}, yaxis:{automargin:true}
   }, cfg);
 
   /* 04. SALARI (Global, top 5) */
@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function(){
   }], {
     font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
     margin:{l:isMobile?130:180,r:60,t:20,b:40},
-    xaxis:{gridcolor:LINE_COLOR, title:{text:"Salario medio annuo (USD)"}}
+    xaxis:{gridcolor:LINE_COLOR, title:{text:"Salario medio annuo (USD)"}}, yaxis:{automargin:true}
   }, cfg);
 
 });
