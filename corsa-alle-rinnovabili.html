@@ -121,7 +121,6 @@
     .ticker { grid-template-columns: 1fr; } 
     .method-row { grid-template-columns: 1fr; }
     .chartbox { padding: 12px 8px; }
-    .chartbox > div[id^="plot-"], .chartbox > div.plotly-graph-div { height:300px !important; }
 
     .table-container { overflow-x: visible; }
     .table-container table, .table-container thead, .table-container tbody,
@@ -265,7 +264,7 @@
           "tickfont": { "color": "#1e293b", "size": isMobileTop10 ? 9.5 : 11.5, "family": "Inter, sans-serif" }
         },
         "margin": { "l": isMobileTop10 ? 78 : 100, "r": isMobileTop10 ? 34 : 60, "t": 20, "b": 40 },
-        "height": isMobileTop10 ? 300 : 380, "showlegend": false, "autosize": true,
+        "height": isMobileTop10 ? 360 : 380, "showlegend": false, "autosize": true,
         "paper_bgcolor": "transparent", "plot_bgcolor": "transparent",
         "font": { "family": "Inter, sans-serif", "color": "#1e293b" }
       }
@@ -481,7 +480,7 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   ], {
     font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
-    margin: { l: 40, r: 20, t: isMobile ? 60 : 20, b: isMobile ? 80 : 40 },
+    margin: { l: 40, r: 20, t: isMobile ? 60 : 20, b: isMobile ? 80 : 40 }, height: isMobile ? 400 : 410,
     barmode: "stack",
     xaxis: { gridcolor: LINE_COLOR, tickangle: isMobile ? -45 : 0 },
     yaxis: { title: { text: "Quota Energia Primaria (%)" }, gridcolor: LINE_COLOR, range: [0, 100] },
@@ -498,7 +497,7 @@ document.addEventListener('DOMContentLoaded', function(){
     marker: { size: [18, 26, 14, 16, 18, 22, 20], color: [COLOR_AMBER, COLOR_AMBER, COLOR_EMERALD, COLOR_BLUE, COLOR_EMERALD, COLOR_AMBER, COLOR_EMERALD] }
   }], {
     font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
-    margin: { l: 50, r: 30, t: 30, b: 50 },
+    margin: { l: 50, r: 30, t: 30, b: 50 }, height: isMobile ? 380 : 430,
     xaxis: { title: { text: "PIL Pro Capite (USD)" }, gridcolor: LINE_COLOR },
     yaxis: { title: { text: "Consumo Energetico Pro Capite (MWh)" }, gridcolor: LINE_COLOR }
   }, cfg);
