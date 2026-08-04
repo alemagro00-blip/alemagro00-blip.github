@@ -121,6 +121,7 @@
     .ticker { grid-template-columns: 1fr; } 
     .method-row { grid-template-columns: 1fr; }
     .chartbox { padding: 12px 8px; }
+    .chartbox > div[id^="plot-"], .chartbox > div.plotly-graph-div { height:300px !important; }
 
     .table-container { overflow-x: visible; }
     .table-container table, .table-container thead, .table-container tbody,
@@ -264,7 +265,7 @@
           "tickfont": { "color": "#1e293b", "size": isMobileTop10 ? 9.5 : 11.5, "family": "Inter, sans-serif" }
         },
         "margin": { "l": isMobileTop10 ? 78 : 100, "r": isMobileTop10 ? 34 : 60, "t": 20, "b": 40 },
-        "height": 380, "showlegend": false, "autosize": true,
+        "height": isMobileTop10 ? 300 : 380, "showlegend": false, "autosize": true,
         "paper_bgcolor": "transparent", "plot_bgcolor": "transparent",
         "font": { "family": "Inter, sans-serif", "color": "#1e293b" }
       }
