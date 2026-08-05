@@ -69,7 +69,47 @@
   .qtext b { color:var(--ink); }
   .conclusion .qtext b { color:#fff; }
 
-  .chartbox { margin-top:24px; background:var(--card); border:1px solid var(--line); border-radius:20px; padding:18px; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .chartbox { margin-top:24px; background:var(--card); border:1px solid var(--line); border-radius:20px; padding:20px; }
+
+  /* Classifiche a barre HTML/CSS, sempre leggibili da mobile */
+  .barlist { display:flex; flex-direction:column; gap:13px; }
+  .barlist .row { display:grid; grid-template-columns:98px 1fr 60px; align-items:center; gap:10px; }
+  .barlist .row .name { font-size:13px; font-weight:600; color:var(--ink); line-height:1.25; }
+  .barlist .row .track { background:#F1EEE2; border-radius:7px; height:15px; overflow:hidden; }
+  .barlist .row .fill { height:100%; border-radius:7px; transition:width .25s ease; }
+  .barlist .row .val { font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; text-align:right; }
+  .barlist-head { font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--slate); margin-bottom:12px; display:flex; align-items:center; gap:6px; }
+  .tworank { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+
+  /* Griglia min/max per categoria (paniere quotidiano) */
+  .itemgrid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .itemgrid .item-h { font-family:'JetBrains Mono',monospace; font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; font-weight:700; color:var(--slate); margin-bottom:8px; }
+  .itemgrid .pair { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .itemgrid .card { background:var(--ink); border-radius:14px; padding:14px 12px; text-align:center; }
+  .itemgrid .card .c-lbl { font-family:'JetBrains Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.05em; color:#9C9788; }
+  .itemgrid .card .c-num { font-family:'Bricolage Grotesque',sans-serif; font-size:20px; font-weight:800; margin-top:5px; }
+  .itemgrid .card .c-city { font-size:11.5px; color:#C9C4B4; margin-top:2px; }
+  .itemgrid .card.min .c-num { color:#6FBF8F; }
+  .itemgrid .card.max .c-num { color:var(--coral); }
+
+  /* Barre con soglia (ore mensili, costi fissi + tempo libero impilati) */
+  .hoursrow { position:relative; padding-top:6px; }
+  .hoursrow .row { display:grid; grid-template-columns:88px 1fr 96px; align-items:center; gap:10px; margin-bottom:11px; position:relative; z-index:1; }
+  .hoursrow .row .name { font-size:12.5px; font-weight:600; color:var(--ink); }
+  .hoursrow .row .track { display:flex; background:#F1EEE2; border-radius:7px; height:16px; overflow:hidden; }
+  .hoursrow .row .seg-fissi { background:var(--moss); height:100%; }
+  .hoursrow .row .seg-libero { background:var(--amber); height:100%; }
+  .hoursrow .row .val { font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:700; text-align:right; }
+  .hoursrow .row .val.over { color:var(--coral); }
+  .hours-legend { display:flex; gap:16px; flex-wrap:wrap; margin-top:14px; font-size:12px; color:var(--slate); font-family:'JetBrains Mono',monospace; }
+  .hours-legend span { display:inline-flex; align-items:center; gap:6px; }
+  .hours-legend i { width:9px; height:9px; border-radius:50%; display:inline-block; }
+
+  @media (max-width:600px){
+    .tworank, .itemgrid { grid-template-columns:1fr; gap:22px; }
+    .barlist .row { grid-template-columns:78px 1fr 52px; }
+    .hoursrow .row { grid-template-columns:66px 1fr 78px; }
+  }
   .callout { margin-top:20px; background:#FBEBDA; border-left:4px solid var(--coral); border-radius:4px 10px 10px 4px; padding:18px 24px; font-size:15px; color:#2B2B23; }
   .callout b { color:var(--ink); }
   .aside-box { margin-top:20px; background:var(--ink); color:#EDE9DC; border-radius:18px; padding:22px 26px; font-size:14.5px; line-height:1.6; }
@@ -158,7 +198,38 @@
     <div class="qhead"><span class="qnum mono">02</span><span class="qline"></span></div>
     <h2>Chi ha il caffè più caro?</h2>
     <div class="qtext"><p>Prima dei numeri seri, i piccoli piaceri quotidiani: cappuccino, birra, cena, palestra. Spese che facciamo senza pensarci — ma che raccontano già molto.</p></div>
-    <div class="chartbox"><div id="plot-paniere" style="width:100%;height:460px;"></div></div>
+    <div class="chartbox">
+      <div class="itemgrid">
+        <div>
+          <div class="item-h">☕ Cappuccino</div>
+          <div class="pair">
+            <div class="card min"><div class="c-lbl">Più economico</div><div class="c-num">1,90€</div><div class="c-city">Milano</div></div>
+            <div class="card max"><div class="c-lbl">Più caro</div><div class="c-num">6,13€</div><div class="c-city">Copenaghen</div></div>
+          </div>
+        </div>
+        <div>
+          <div class="item-h">🍺 Birra</div>
+          <div class="pair">
+            <div class="card min"><div class="c-lbl">Più economica</div><div class="c-num">2,69€</div><div class="c-city">Praga</div></div>
+            <div class="card max"><div class="c-lbl">Più cara</div><div class="c-num">8,03€</div><div class="c-city">Copenaghen</div></div>
+          </div>
+        </div>
+        <div>
+          <div class="item-h">🍽️ Cena al ristorante</div>
+          <div class="pair">
+            <div class="card min"><div class="c-lbl">Più economica</div><div class="c-num">9,51€</div><div class="c-city">Praga</div></div>
+            <div class="card max"><div class="c-lbl">Più cara</div><div class="c-num">22,00€</div><div class="c-city">Amsterdam</div></div>
+          </div>
+        </div>
+        <div>
+          <div class="item-h">🏋️ Palestra (mensile)</div>
+          <div class="pair">
+            <div class="card min"><div class="c-lbl">Più economica</div><div class="c-num">35,59€</div><div class="c-city">Berlino</div></div>
+            <div class="card max"><div class="c-lbl">Più cara</div><div class="c-num">77,89€</div><div class="c-city">Milano</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="callout"><b>L'Italia ha il cappuccino più economico ovunque</b> — Bologna, Roma e Milano occupano i tre gradini più bassi — ma <b>Milano ha la palestra più cara di tutte e dieci le città</b> (quasi 78€ al mese). <b>Copenaghen</b> è la più cara su cappuccino e birra, ma nemmeno lei lo è su tutto: sulla palestra è nella media.</div>
   </section>
 
@@ -166,7 +237,19 @@
     <div class="qhead"><span class="qnum mono">03</span><span class="qline"></span></div>
     <h2>I prezzi corrono più veloce degli stipendi?</h2>
     <div class="qtext"><p>Un confronto fatto oggi racconta solo un istante. Guardando come sono cambiati i prezzi negli ultimi 5 anni, il quadro si muove parecchio.</p></div>
-    <div class="chartbox"><div id="plot-trend" style="width:100%;height:440px;"></div></div>
+    <div class="chartbox">
+      <div class="barlist-head">Variazione dei prezzi, 2021 → 2025</div>
+      <div class="barlist">
+        <div class="row"><div class="name">Ungheria</div><div class="track"><div class="fill" style="width:100%;background:var(--coral)"></div></div><div class="val mono">+46%</div></div>
+        <div class="row"><div class="name">Rep. Ceca</div><div class="track"><div class="fill" style="width:76%;background:#F2924B"></div></div><div class="val mono">+35%</div></div>
+        <div class="row"><div class="name">Paesi Bassi</div><div class="track"><div class="fill" style="width:51%;background:var(--amber)"></div></div><div class="val mono">+24%</div></div>
+        <div class="row"><div class="name">Germania</div><div class="track"><div class="fill" style="width:45%;background:var(--amber)"></div></div><div class="val mono">+21%</div></div>
+        <div class="row"><div class="name">Italia</div><div class="track"><div class="fill" style="width:40%;background:var(--amber)"></div></div><div class="val mono">+18%</div></div>
+        <div class="row"><div class="name">Spagna</div><div class="track"><div class="fill" style="width:40%;background:var(--amber)"></div></div><div class="val mono">+18%</div></div>
+        <div class="row"><div class="name">Francia</div><div class="track"><div class="fill" style="width:35%;background:var(--moss)"></div></div><div class="val mono">+16%</div></div>
+        <div class="row"><div class="name">Danimarca</div><div class="track"><div class="fill" style="width:34%;background:var(--moss)"></div></div><div class="val mono">+16%</div></div>
+      </div>
+    </div>
     <div class="callout"><b>L'Ungheria è il paese dove i prezzi sono corsi più veloce di tutti</b>: +46% in 5 anni, quasi il triplo della Francia (+16%, la più stabile). <b>Budapest, la città più economica nella spesa quotidiana, è anche quella dove il potere d'acquisto si sta erodendo più in fretta</b> — la convenienza di oggi potrebbe non durare.</div>
     <div class="aside-box">
       <div class="t">Un controllo di qualità</div>
@@ -178,7 +261,40 @@
     <div class="qhead"><span class="qnum mono">04</span><span class="qline"></span></div>
     <h2>Il paradosso del potere d'acquisto</h2>
     <div class="qtext"><p>Un prezzo senza uno stipendio a fianco non dice niente. Qui capovolgiamo la domanda: non "quanto costa", ma quanti <b>minuti di lavoro</b> servono per permetterselo.</p></div>
-    <div class="chartbox"><div id="plot-paradosso" style="width:100%;height:420px;"></div></div>
+    <div class="chartbox">
+      <div class="tworank">
+        <div class="col">
+          <div class="barlist-head" style="color:var(--coral);">☕ Minuti di lavoro — Cappuccino</div>
+          <div class="barlist">
+            <div class="row"><div class="name">Milano</div><div class="track"><div class="fill" style="width:49%;background:var(--coral)"></div></div><div class="val mono">9,4m</div></div>
+            <div class="row"><div class="name">Amsterdam</div><div class="track"><div class="fill" style="width:50%;background:var(--coral)"></div></div><div class="val mono">9,6m</div></div>
+            <div class="row"><div class="name">Bologna</div><div class="track"><div class="fill" style="width:52%;background:var(--coral)"></div></div><div class="val mono">10,0m</div></div>
+            <div class="row"><div class="name">Roma</div><div class="track"><div class="fill" style="width:57%;background:var(--coral)"></div></div><div class="val mono">10,8m</div></div>
+            <div class="row"><div class="name">Barcellona</div><div class="track"><div class="fill" style="width:66%;background:var(--coral)"></div></div><div class="val mono">12,7m</div></div>
+            <div class="row"><div class="name">Berlino</div><div class="track"><div class="fill" style="width:70%;background:var(--coral)"></div></div><div class="val mono">13,4m</div></div>
+            <div class="row"><div class="name">Parigi</div><div class="track"><div class="fill" style="width:72%;background:var(--coral)"></div></div><div class="val mono">13,7m</div></div>
+            <div class="row"><div class="name">Copenaghen</div><div class="track"><div class="fill" style="width:78%;background:var(--coral)"></div></div><div class="val mono">14,9m</div></div>
+            <div class="row"><div class="name">Praga</div><div class="track"><div class="fill" style="width:81%;background:var(--coral)"></div></div><div class="val mono">15,5m</div></div>
+            <div class="row"><div class="name">Budapest</div><div class="track"><div class="fill" style="width:100%;background:var(--coral)"></div></div><div class="val mono">19,1m</div></div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="barlist-head" style="color:var(--moss);">🍺 Minuti di lavoro — Birra</div>
+          <div class="barlist">
+            <div class="row"><div class="name">Praga</div><div class="track"><div class="fill" style="width:42%;background:var(--moss)"></div></div><div class="val mono">12,6m</div></div>
+            <div class="row"><div class="name">Berlino</div><div class="track"><div class="fill" style="width:53%;background:var(--moss)"></div></div><div class="val mono">16,1m</div></div>
+            <div class="row"><div class="name">Amsterdam</div><div class="track"><div class="fill" style="width:52%;background:var(--moss)"></div></div><div class="val mono">15,7m</div></div>
+            <div class="row"><div class="name">Barcellona</div><div class="track"><div class="fill" style="width:57%;background:var(--moss)"></div></div><div class="val mono">17,3m</div></div>
+            <div class="row"><div class="name">Copenaghen</div><div class="track"><div class="fill" style="width:65%;background:var(--moss)"></div></div><div class="val mono">19,5m</div></div>
+            <div class="row"><div class="name">Budapest</div><div class="track"><div class="fill" style="width:69%;background:var(--moss)"></div></div><div class="val mono">20,9m</div></div>
+            <div class="row"><div class="name">Parigi</div><div class="track"><div class="fill" style="width:73%;background:var(--moss)"></div></div><div class="val mono">22,0m</div></div>
+            <div class="row"><div class="name">Roma</div><div class="track"><div class="fill" style="width:92%;background:var(--moss)"></div></div><div class="val mono">27,9m</div></div>
+            <div class="row"><div class="name">Milano</div><div class="track"><div class="fill" style="width:98%;background:var(--moss)"></div></div><div class="val mono">29,7m</div></div>
+            <div class="row"><div class="name">Bologna</div><div class="track"><div class="fill" style="width:100%;background:var(--moss)"></div></div><div class="val mono">30,2m</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="stat-pair">
       <div class="chip">Cappuccino più veloce da guadagnare<b>Milano, 9,4 min</b></div>
       <div class="chip">Cappuccino più lento<b>Budapest, 19,1 min</b></div>
@@ -199,7 +315,7 @@
         </div>
       </div>
     </div>
-    <div class="chartbox"><div id="plot-drink" style="width:100%;height:400px;"></div></div>
+    <div class="chartbox"><div id="plot-drink" class="barlist"></div></div>
     <div class="callout" id="drink-summary"></div>
   </section>
 
@@ -207,7 +323,21 @@
     <div class="qhead"><span class="qnum mono">05</span><span class="qline"></span></div>
     <h2>Prezzi equi vs prezzi diseguali</h2>
     <div class="qtext"><p>Alcuni prezzi restano quasi identici ovunque, altri variano tantissimo da città a città. Il Coefficiente di Variazione misura questa disuguaglianza.</p></div>
-    <div class="chartbox"><div id="plot-cv" style="width:100%;height:420px;"></div></div>
+    <div class="chartbox">
+      <div class="barlist">
+        <div class="row"><div class="name">Trasporti</div><div class="track"><div class="fill" style="width:100%;background:var(--coral)"></div></div><div class="val mono">60,7%</div></div>
+        <div class="row"><div class="name">Cappuccino</div><div class="track"><div class="fill" style="width:66%;background:#E4835F"></div></div><div class="val mono">40,1%</div></div>
+        <div class="row"><div class="name">Birra</div><div class="track"><div class="fill" style="width:53%;background:var(--amber)"></div></div><div class="val mono">32,2%</div></div>
+        <div class="row"><div class="name">Affitto centro</div><div class="track"><div class="fill" style="width:52%;background:var(--amber)"></div></div><div class="val mono">31,4%</div></div>
+        <div class="row"><div class="name">Affitto periferia</div><div class="track"><div class="fill" style="width:49%;background:var(--amber)"></div></div><div class="val mono">29,5%</div></div>
+        <div class="row"><div class="name">Utenze</div><div class="track"><div class="fill" style="width:46%;background:var(--amber)"></div></div><div class="val mono">27,8%</div></div>
+        <div class="row"><div class="name">Cena</div><div class="track"><div class="fill" style="width:39%;background:#7A9B8A"></div></div><div class="val mono">23,6%</div></div>
+        <div class="row"><div class="name">Spesa alimentare</div><div class="track"><div class="fill" style="width:38%;background:#7A9B8A"></div></div><div class="val mono">23,3%</div></div>
+        <div class="row"><div class="name">Palestra</div><div class="track"><div class="fill" style="width:37%;background:#7A9B8A"></div></div><div class="val mono">22,6%</div></div>
+        <div class="row"><div class="name">Benzina</div><div class="track"><div class="fill" style="width:19%;background:var(--moss)"></div></div><div class="val mono">11,8%</div></div>
+      </div>
+      <p style="font-size:12px; color:var(--slate); margin:16px 0 0;">Coefficiente di variazione tra le 10 città (%) — più alto, più il prezzo cambia da città a città</p>
+    </div>
     <div class="callout"><b>I trasporti pubblici sono la voce più diseguale</b> — riflesso di scelte politiche diverse sui sussidi. <b>La benzina è quasi un prezzo unico europeo</b>: è una materia prima scambiata sugli stessi mercati. Sorpresa: <b>il cappuccino è più diseguale dell'affitto</b> — il mercato immobiliare tende a riflettere la ricchezza media di un paese, un caffè al bar dipende da fattori molto più locali.</div>
   </section>
 
@@ -218,11 +348,45 @@
     <p class="foot-note">Due note veloci: la spesa alimentare è il cibo fatto in casa, la cena fuori è già nel tempo libero. E lo stipendio è lo stesso in entrambi gli scenari — non è un confronto tra chi vive in centro e chi vive fuori, ma "stessa persona, stesso stipendio, due scelte abitative diverse".</p>
 
     <h3 class="sub-h centro">Scenario centro</h3>
-    <div class="chartbox"><div id="plot-centro" style="width:100%;height:440px;"></div></div>
-    <p class="foot-note" style="margin-top:10px;">Ogni barra è il totale di ore mensili necessarie: in basso i costi fissi, in cima il tempo libero. La riga tratteggiata segna un mese di lavoro standard (160 ore).</p>
+    <div class="chartbox">
+      <div class="hoursrow">
+        <div class="row"><div class="name">Copenaghen</div><div class="track"><div class="seg-fissi" style="width:41.8%"></div><div class="seg-libero" style="width:7.1%"></div></div><div class="val mono">107h</div></div>
+        <div class="row"><div class="name">Berlino</div><div class="track"><div class="seg-fissi" style="width:47.9%"></div><div class="seg-libero" style="width:6.4%"></div></div><div class="val mono">120h</div></div>
+        <div class="row"><div class="name">Parigi</div><div class="track"><div class="seg-fissi" style="width:49.5%"></div><div class="seg-libero" style="width:6.9%"></div></div><div class="val mono">124h</div></div>
+        <div class="row"><div class="name">Amsterdam</div><div class="track"><div class="seg-fissi" style="width:52.2%"></div><div class="seg-libero" style="width:5.8%"></div></div><div class="val mono">128h</div></div>
+        <div class="row"><div class="name">Praga</div><div class="track"><div class="seg-fissi" style="width:54.8%"></div><div class="seg-libero" style="width:7.6%"></div></div><div class="val mono">137h</div></div>
+        <div class="row"><div class="name">Budapest</div><div class="track"><div class="seg-fissi" style="width:54.7%"></div><div class="seg-libero" style="width:11.0%"></div></div><div class="val mono">145h</div></div>
+        <div class="row"><div class="name">Bologna</div><div class="track"><div class="seg-fissi" style="width:60.2%"></div><div class="seg-libero" style="width:9.3%"></div></div><div class="val mono">153h</div></div>
+        <div class="row"><div class="name">Barcellona</div><div class="track"><div class="seg-fissi" style="width:64.3%"></div><div class="seg-libero" style="width:7.9%"></div></div><div class="val mono">159h</div></div>
+        <div class="row"><div class="name">Roma</div><div class="track"><div class="seg-fissi" style="width:68.1%"></div><div class="seg-libero" style="width:9.2%"></div></div><div class="val mono over">170h</div></div>
+        <div class="row"><div class="name">Milano</div><div class="track"><div class="seg-fissi" style="width:79.0%"></div><div class="seg-libero" style="width:9.9%"></div></div><div class="val mono over">195h</div></div>
+      </div>
+      <div class="hours-legend">
+        <span><i style="background:var(--moss)"></i>Costi fissi</span>
+        <span><i style="background:var(--amber)"></i>Tempo libero</span>
+        <span style="color:var(--coral);">In rosso: oltre le 160 ore, un mese di lavoro standard</span>
+      </div>
+    </div>
 
     <h3 class="sub-h periferia">Scenario periferia</h3>
-    <div class="chartbox"><div id="plot-periferia" style="width:100%;height:440px;"></div></div>
+    <div class="chartbox">
+      <div class="hoursrow">
+        <div class="row"><div class="name">Copenaghen</div><div class="track"><div class="seg-fissi" style="width:33.9%"></div><div class="seg-libero" style="width:7.1%"></div></div><div class="val mono">90h</div></div>
+        <div class="row"><div class="name">Berlino</div><div class="track"><div class="seg-fissi" style="width:39.4%"></div><div class="seg-libero" style="width:6.4%"></div></div><div class="val mono">101h</div></div>
+        <div class="row"><div class="name">Amsterdam</div><div class="track"><div class="seg-fissi" style="width:41.1%"></div><div class="seg-libero" style="width:5.8%"></div></div><div class="val mono">103h</div></div>
+        <div class="row"><div class="name">Parigi</div><div class="track"><div class="seg-fissi" style="width:40.5%"></div><div class="seg-libero" style="width:6.9%"></div></div><div class="val mono">104h</div></div>
+        <div class="row"><div class="name">Praga</div><div class="track"><div class="seg-fissi" style="width:49.3%"></div><div class="seg-libero" style="width:7.6%"></div></div><div class="val mono">125h</div></div>
+        <div class="row"><div class="name">Budapest</div><div class="track"><div class="seg-fissi" style="width:46.2%"></div><div class="seg-libero" style="width:11.0%"></div></div><div class="val mono">126h</div></div>
+        <div class="row"><div class="name">Barcellona</div><div class="track"><div class="seg-fissi" style="width:52.4%"></div><div class="seg-libero" style="width:7.9%"></div></div><div class="val mono">133h</div></div>
+        <div class="row"><div class="name">Bologna</div><div class="track"><div class="seg-fissi" style="width:51.6%"></div><div class="seg-libero" style="width:9.3%"></div></div><div class="val mono">134h</div></div>
+        <div class="row"><div class="name">Roma</div><div class="track"><div class="seg-fissi" style="width:54.5%"></div><div class="seg-libero" style="width:9.2%"></div></div><div class="val mono">140h</div></div>
+        <div class="row"><div class="name">Milano</div><div class="track"><div class="seg-fissi" style="width:62.0%"></div><div class="seg-libero" style="width:9.9%"></div></div><div class="val mono">158h</div></div>
+      </div>
+      <div class="hours-legend">
+        <span><i style="background:var(--moss)"></i>Costi fissi</span>
+        <span><i style="background:var(--amber)"></i>Tempo libero</span>
+      </div>
+    </div>
 
     <div class="callout">In centro, <b>Milano è in deficit di 430€/mese</b> e <b>Roma di 109€/mese</b> — <b>Barcellona regge per soli 17,50€ di margine</b>, un caso limite. Fuori centro la situazione si ribalta per tutti: anche Milano torna positiva, ma con appena <b>24€ di margine mensile</b> — il più risicato del gruppo.</div>
   </section>
@@ -251,7 +415,7 @@
       </div>
     </div>
 
-    <div class="chartbox"><div id="plot-simulatore" style="width:100%;height:440px;"></div></div>
+    <div class="chartbox"><div id="plot-simulatore" class="barlist"></div></div>
     <div class="callout" id="sim-summary"></div>
   </section>
 </div>
@@ -275,76 +439,33 @@
 </footer>
 
 <script>
-const isMobile = window.innerWidth <= 600;
-const MAIN_FONT = { family:"Inter, -apple-system, sans-serif", color:"#2B2B23", size:isMobile?10:12 };
-const TITLE_FONT = { family:"Bricolage Grotesque, sans-serif", size:isMobile?14:16, color:"#15140F" };
-const WHITE_BG = "#FFFFFF";
-const LINE_COLOR = "#E1D9C6";
 const CORAL = "#D9694F";
 const MOSS = "#4C7A63";
 const AMBER = "#D9AD5C";
-const cfg = { displayModeBar:false, responsive:true };
+
+function formattaMinuti(m) {
+  return m >= 60 ? (m / 60).toFixed(1) + "h" : Math.round(m) + "m";
+}
+
+function creaRigaBarra(nome, valore, maxValore, colore, testoVal) {
+  const pct = Math.max(4, Math.min(100, (valore / maxValore) * 100));
+  const row = document.createElement('div');
+  row.className = 'row';
+  row.innerHTML = `<div class="name">${nome}</div><div class="track"><div class="fill" style="width:${pct}%;background:${colore}"></div></div><div class="val mono">${testoVal}</div>`;
+  return row;
+}
 
 document.addEventListener('DOMContentLoaded', function(){
 
-  /* 02. PANIERE */
-  const cittaPaniere = ["Milano","Roma","Bologna","Amsterdam","Berlino","Barcellona","Praga","Budapest","Copenaghen","Parigi"];
-  Plotly.newPlot('plot-paniere', [
-    { type:"bar", orientation:"h", name:"Cappuccino", y:cittaPaniere, x:[1.90,1.93,1.98,4.03,4.08,2.75,3.32,3.01,6.13,4.38], marker:{color:"#F2B26B"} },
-    { type:"bar", orientation:"h", name:"Birra", y:cittaPaniere, x:[6.00,5.00,6.00,6.60,4.90,3.75,2.69,3.30,8.03,7.00], marker:{color:AMBER} },
-    { type:"bar", orientation:"h", name:"Cena", y:cittaPaniere, x:[20.00,15.00,20.00,22.00,15.00,16.00,9.51,12.35,20.06,16.00], marker:{color:CORAL} },
-    { type:"bar", orientation:"h", name:"Palestra", y:cittaPaniere, x:[77.89,60.00,57.36,57.89,35.59,47.45,56.93,63.15,54.82,37.37], marker:{color:MOSS} }
-  ], {
-    font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
-    margin:{l:isMobile?68:90,r:20,t:20,b:40},
-    xaxis:{gridcolor:LINE_COLOR}, yaxis:{autorange:"reversed"}, barmode:"stack",
-    legend:{orientation:"h", y:1.12, font:{size:isMobile?9:12}}
-  }, cfg);
-
-  /* 03. TREND */
-  const anni = [2021,2022,2023,2024,2025];
-  const trend = {
-    "Ungheria (Budapest)": [119.04,137.22,160.59,166.56,173.96],
-    "Rep. Ceca (Praga)": [115.1,132.1,147.9,151.9,155.4],
-    "Paesi Bassi (Amsterdam)": [109.98,122.78,127.81,131.92,135.86],
-    "Germania (Berlino)": [109.2,118.7,125.9,129.0,131.9],
-    "Italia": [105.0,114.2,120.9,122.3,124.3],
-    "Spagna (Barcellona)": [107.04,115.95,119.89,123.33,126.65],
-    "Francia (Parigi)": [107.68,114.04,120.5,123.29,124.43],
-    "Danimarca (Copenaghen)": [104.9,113.8,117.6,119.1,121.3]
-  };
-  const palette = [CORAL,"#F2924B",AMBER,"#8B8677",MOSS,"#4E8C8B","#6C7BAE","#12141A"];
-  const trendTraces = Object.keys(trend).map((k,i) => ({
-    type:"scatter", mode:"lines+markers", name:k, x:anni, y:trend[k],
-    line:{color:palette[i], width:i<2?3:1.6}, marker:{size:i<2?7:5}
-  }));
-  Plotly.newPlot('plot-trend', trendTraces, {
-    font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
-    margin:{l:45,r:20,t:20,b:isMobile?95:40},
-    xaxis:{gridcolor:LINE_COLOR, dtick:1}, yaxis:{title:{text:"Indice prezzi (2015=100)"}, gridcolor:LINE_COLOR},
-    legend: isMobile
-      ? {orientation:"h", y:-0.35, font:{size:8.5}}
-      : {font:{size:10.5}}
-  }, cfg);
-
-  /* 04. PARADOSSO */
+  /* MINI-SIMULATORE QUANTITA CAFFE/BIRRA */
   const paradossoCitta = ["Milano","Amsterdam","Bologna","Roma","Barcellona","Berlino","Parigi","Copenaghen","Praga","Budapest"];
   const minCaffe = [9.4,9.6,10.0,10.8,12.7,13.4,13.7,14.9,15.5,19.1];
   const minBirra = [29.7,15.7,30.2,27.9,17.3,16.1,22.0,19.5,12.6,20.9];
-  Plotly.newPlot('plot-paradosso', [
-    { type:"bar", name:"Cappuccino", x:paradossoCitta, y:minCaffe, marker:{color:CORAL}, text:minCaffe.map(v=>v.toFixed(1)+"m"), textposition:"outside" },
-    { type:"bar", name:"Birra", x:paradossoCitta, y:minBirra, marker:{color:MOSS}, text:minBirra.map(v=>v.toFixed(1)+"m"), textposition:"outside" }
-  ], {
-    font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
-    margin:{l:40,r:20,t:20,b:isMobile?85:40},
-    xaxis:{gridcolor:LINE_COLOR, tickangle:isMobile?-45:0}, yaxis:{title:{text:"Minuti"}, gridcolor:LINE_COLOR, range:[0,36]},
-    barmode:"group", legend:{orientation:"h", y:1.12, font:{size:isMobile?9:12}}
-  }, cfg);
 
-  /* 04b. MINI-SIMULATORE QUANTITÀ CAFFÈ/BIRRA */
   const drinkBtns = document.querySelectorAll('.sim-toggle-btn[data-drink]');
   const drinkQtyInput = document.getElementById('sim-qty');
   const drinkSummary = document.getElementById('drink-summary');
+  const drinkTarget = document.getElementById('plot-drink');
   const drinkLabel = { caffe: { s: "cappuccino", p: "cappuccini" }, birra: { s: "birra", p: "birre" } };
   const drinkEmoji = { caffe: "☕", birra: "🍺" };
 
@@ -357,27 +478,16 @@ document.addEventListener('DOMContentLoaded', function(){
       .map((citta, i) => ({ citta, minuti: minutiUnitari[i] * qty }))
       .sort((a, b) => a.minuti - b.minuti);
 
-    const cittaOrd = combinato.map(d => d.citta);
-    const minOrd = combinato.map(d => d.minuti);
-    const formatta = m => m >= 60 ? (m / 60).toFixed(1) + "h" : Math.round(m) + "m";
-
-    Plotly.react('plot-drink', [{
-      type: "bar", orientation: "h",
-      y: cittaOrd, x: minOrd,
-      text: minOrd.map(formatta), textposition: "outside",
-      marker: { color: bevanda === 'caffe' ? CORAL : MOSS },
-      hovertemplate: "<b>%{y}</b><br>%{text} di lavoro<extra></extra>"
-    }], {
-      font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
-      margin: { l: isMobile ? 90 : 110, r: 40, t: 20, b: 40 },
-      xaxis: { gridcolor: LINE_COLOR, title: { text: "Minuti di lavoro necessari" } },
-      yaxis: { automargin: true }
-    }, cfg);
+    const maxMin = Math.max(...combinato.map(d => d.minuti), 1);
+    drinkTarget.innerHTML = '';
+    combinato.forEach(d => {
+      drinkTarget.appendChild(creaRigaBarra(d.citta, d.minuti, maxMin, bevanda === 'caffe' ? CORAL : MOSS, formattaMinuti(d.minuti)));
+    });
 
     const piuVeloce = combinato[0];
     const piuLenta = combinato[combinato.length - 1];
     drinkSummary.innerHTML = qty > 0
-      ? `Per <b>${qty} ${qty > 1 ? drinkLabel[bevanda].p : drinkLabel[bevanda].s}</b> ${drinkEmoji[bevanda]}, lavori dal <b>${formatta(piuVeloce.minuti)}</b> a ${piuVeloce.citta} fino al <b>${formatta(piuLenta.minuti)}</b> a ${piuLenta.citta} — stessa spesa, tempo di lavoro anche ${(piuLenta.minuti / piuVeloce.minuti).toFixed(1)} volte diverso.`
+      ? `Per <b>${qty} ${qty > 1 ? drinkLabel[bevanda].p : drinkLabel[bevanda].s}</b> ${drinkEmoji[bevanda]}, lavori dal <b>${formattaMinuti(piuVeloce.minuti)}</b> a ${piuVeloce.citta} fino al <b>${formattaMinuti(piuLenta.minuti)}</b> a ${piuLenta.citta} — stessa spesa, tempo di lavoro anche ${(piuLenta.minuti / piuVeloce.minuti).toFixed(1)} volte diverso.`
       : "Inserisci una quantità per vedere il confronto.";
   }
 
@@ -391,112 +501,19 @@ document.addEventListener('DOMContentLoaded', function(){
   drinkQtyInput.addEventListener('input', renderDrink);
   renderDrink();
 
-  /* 05. CV% */
-  Plotly.newPlot('plot-cv', [{
-    type:"bar", orientation:"h",
-    y:["Trasporti","Cappuccino","Birra","Affitto centro","Affitto periferia","Utenze","Cena","Spesa alimentar","Palestra","Benzina"],
-    x:[60.73,40.11,32.19,31.40,29.48,27.76,23.64,23.33,22.56,11.81],
-    marker:{ color:[60.73,40.11,32.19,31.40,29.48,27.76,23.64,23.33,22.56,11.81], colorscale:[[0.0,MOSS],[1.0,CORAL]] }
-  }], {
-    font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
-    margin:{l:isMobile?100:150,r:20,t:20,b:40},
-    xaxis:{gridcolor:LINE_COLOR, title:{text:"Coefficiente di variazione (%)"}}, yaxis:{autorange:"reversed"}
-  }, cfg);
-
-  /* 06. SEZIONE OPTIMIZED — CONFIGURAZIONE CONDIVISA */
+  /* SIMULATORE STIPENDIO */
   const cittaOrdinamento = ["Copenaghen", "Berlino", "Parigi", "Amsterdam", "Praga", "Budapest", "Bologna", "Barcellona", "Roma", "Milano"];
-
-  // Dati Centro
   const oreFissiCentro = [91.94, 105.47, 108.86, 114.89, 120.44, 120.38, 132.50, 141.42, 149.89, 173.79];
   const oreLiberoCentro = [15.53, 14.05, 15.10, 12.71, 16.82, 24.18, 20.51, 17.27, 20.27, 21.69];
   const euroCentro = [2652.48, 2187.24, 2371.20, 3208.91, 1763.68, 1370.53, 1825.48, 2058.19, 1829.24, 2369.21];
-
-  // Dati Periferia (riallineati per lo stesso ordine visivo)
   const oreFissiPerif = [74.68, 86.60, 89.03, 90.35, 108.34, 101.72, 113.54, 115.26, 119.94, 136.36];
-  const oreLiberoPerif = [15.53, 14.05, 15.10, 12.71, 16.82, 24.18, 20.51, 17.27, 20.27, 21.69];
   const euroPerif = [2226.15, 1841.96, 1991.84, 2591.78, 1608.31, 1193.61, 1599.31, 1718.91, 1507.31, 1915.59];
 
-  function generaColoriTesto(fissi, libero) {
-    return fissi.map((v, i) => (v + libero[i] > 160 ? CORAL : "#2B2B23"));
-  }
-
-  /* 06. CENTRO */
-  const totCentro = oreFissiCentro.map((v, i) => v + oreLiberoCentro[i]);
-  Plotly.newPlot('plot-centro', [
-    {
-      type: "bar", name: "Costi fissi",
-      x: cittaOrdinamento, y: oreFissiCentro,
-      marker: { color: MOSS, opacity: 0.85 },
-      hovertemplate: "<b>%{x}</b><br>Costi fissi: %{y:.1f} ore<extra></extra>"
-    },
-    {
-      type: "bar", name: "Tempo libero",
-      x: cittaOrdinamento, y: oreLiberoCentro,
-      marker: { color: AMBER, opacity: 0.9 },
-      text: totCentro.map((t, i) => `<b>${Math.round(t)}h</b> (${Math.round(euroCentro[i])}€)`),
-      textposition: "outside",
-      textfont: { size: isMobile ? 9 : 11, color: generaColoriTesto(oreFissiCentro, oreLiberoCentro) },
-      hovertemplate: "<b>%{x}</b><br>Tempo libero: %{y:.1f} ore<extra></extra>"
-    }
-  ], {
-    font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
-    margin: { l: 40, r: 20, t: 30, b: isMobile ? 70 : 50 },
-    barmode: "stack",
-    yaxis: { title: { text: "Ore di lavoro mensili" }, gridcolor: LINE_COLOR, range: [0, 220] },
-    xaxis: { gridcolor: LINE_COLOR, tickangle: isMobile ? -45 : 0 },
-    legend: { orientation: "h", y: 1.15, x: 0 },
-    shapes: [{
-      type: "line", x0: -0.5, x1: 9.5, y0: 160, y1: 160,
-      line: { color: CORAL, dash: "dash", width: 2 }
-    }],
-    annotations: [{
-      x: 0, y: 165, xanchor: "left", showarrow: false,
-      text: "⚠️ Soglia mese lavorativo standard (160h)",
-      font: { size: 11, color: CORAL, family: "JetBrains Mono" }
-    }]
-  }, cfg);
-
-  /* 06. PERIFERIA */
-  const totPerif = oreFissiPerif.map((v, i) => v + oreLiberoPerif[i]);
-  Plotly.newPlot('plot-periferia', [
-    {
-      type: "bar", name: "Costi fissi",
-      x: cittaOrdinamento, y: oreFissiPerif,
-      marker: { color: MOSS, opacity: 0.85 },
-      hovertemplate: "<b>%{x}</b><br>Costi fissi: %{y:.1f} ore<extra></extra>"
-    },
-    {
-      type: "bar", name: "Tempo libero",
-      x: cittaOrdinamento, y: oreLiberoPerif,
-      marker: { color: AMBER, opacity: 0.9 },
-      text: totPerif.map((t, i) => `<b>${Math.round(t)}h</b> (${Math.round(euroPerif[i])}€)`),
-      textposition: "outside",
-      textfont: { size: isMobile ? 9 : 11, color: generaColoriTesto(oreFissiPerif, oreLiberoPerif) },
-      hovertemplate: "<b>%{x}</b><br>Tempo libero: %{y:.1f} ore<extra></extra>"
-    }
-  ], {
-    font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
-    margin: { l: 40, r: 20, t: 30, b: isMobile ? 70 : 50 },
-    barmode: "stack",
-    yaxis: { title: { text: "Ore di lavoro mensili" }, gridcolor: LINE_COLOR, range: [0, 220] },
-    xaxis: { gridcolor: LINE_COLOR, tickangle: isMobile ? -45 : 0 },
-    legend: { orientation: "h", y: 1.15, x: 0 },
-    shapes: [{
-      type: "line", x0: -0.5, x1: 9.5, y0: 160, y1: 160,
-      line: { color: CORAL, dash: "dash", width: 2 }
-    }],
-    annotations: [{
-      x: 0, y: 165, xanchor: "left", showarrow: false,
-      text: "⚠️ Soglia mese lavorativo standard (160h)",
-      font: { size: 11, color: CORAL, family: "JetBrains Mono" }
-    }]
-  }, cfg);
-
-  /* 07. SIMULATORE INTERATTIVO */
   const simSalaryInput = document.getElementById('sim-salary');
   const simScenarioBtns = document.querySelectorAll('.sim-toggle-btn[data-scenario]');
   const simTipoBtns = document.querySelectorAll('.sim-toggle-btn[data-tipo]');
   const simSummary = document.getElementById('sim-summary');
+  const simTarget = document.getElementById('plot-simulatore');
 
   const labelTipo = { fissi: "costi fissi", libero: "tempo libero", tutto: "spesa totale" };
 
@@ -507,8 +524,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
     const fissiEuro = scenario === 'centro' ? euroCentro : euroPerif;
     const oreFissi = scenario === 'centro' ? oreFissiCentro : oreFissiPerif;
-    // stipendio orario implicito nei dati del report (euro / ore), usato per convertire
-    // le ore di tempo libero già presenti nel report nel loro equivalente in euro
     const liberoEuro = fissiEuro.map((euro, i) => oreLiberoCentro[i] * (euro / oreFissi[i]));
 
     let valori;
@@ -520,27 +535,11 @@ document.addEventListener('DOMContentLoaded', function(){
       .map((citta, i) => ({ citta, pct: salary > 0 ? (valori[i] / salary) * 100 : 0 }))
       .sort((a, b) => a.pct - b.pct);
 
-    const cittaOrd = combinato.map(d => d.citta);
-    const pctOrd = combinato.map(d => d.pct);
-    const coloriOrd = pctOrd.map(p => (p > 100 ? CORAL : MOSS));
-    const maxPct = Math.max(...pctOrd, 100);
-
-    Plotly.react('plot-simulatore', [{
-      type: "bar", orientation: "h",
-      y: cittaOrd, x: pctOrd,
-      text: pctOrd.map(p => Math.round(p) + "%"), textposition: "outside",
-      marker: { color: coloriOrd },
-      hovertemplate: "<b>%{y}</b><br>%{x:.0f}% dello stipendio<extra></extra>"
-    }], {
-      font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
-      margin: { l: isMobile ? 90 : 110, r: 40, t: 20, b: 40 },
-      xaxis: { gridcolor: LINE_COLOR, title: { text: `% dello stipendio in ${labelTipo[tipo]}` }, range: [0, maxPct + 15] },
-      yaxis: { automargin: true },
-      shapes: [{
-        type: "line", x0: 100, x1: 100, y0: -0.5, y1: 9.5,
-        line: { color: CORAL, dash: "dash", width: 2 }
-      }]
-    }, cfg);
+    const maxPct = Math.max(...combinato.map(d => d.pct), 100);
+    simTarget.innerHTML = '';
+    combinato.forEach(d => {
+      simTarget.appendChild(creaRigaBarra(d.citta, d.pct, maxPct, d.pct > 100 ? CORAL : MOSS, Math.round(d.pct) + '%'));
+    });
 
     const piuEconomica = combinato[0];
     const piuCara = combinato[combinato.length - 1];
@@ -569,27 +568,33 @@ document.addEventListener('DOMContentLoaded', function(){
   });
   renderSimulatore();
 
-  /* 08. MAPPA */
+  /* MAPPA CONCLUSIVA (unico grafico rimasto su Plotly: una scelta cartografica non replicabile in CSS) */
+  const isMobileMap = window.innerWidth <= 600;
   Plotly.newPlot('plot-mappa', [{
     type:"choropleth", locationmode:"country names",
     locations:["Czech Republic","Germany","Denmark","Spain","France","Hungary","Italy","Netherlands"],
     z:[137.25,119.52,107.48,158.69,123.95,144.57,172.89,127.60],
     text:["Praga","Berlino","Copenaghen","Barcellona","Parigi","Budapest","Milano, Roma, Bologna","Amsterdam"],
+    hovertemplate: "<b>%{text}</b><br>%{z:.0f} ore/mese<extra></extra>",
     colorscale:[[0.0,MOSS],[0.5,AMBER],[1.0,CORAL]],
-    colorbar:{title:{text:"Ore / mese"}, len:0.8}
+    colorbar: isMobileMap ? { thickness:10, len:0.7, tickfont:{size:9} } : { title:{text:"Ore / mese"}, len:0.8 }
   }], {
-    font:{...MAIN_FONT, color:"#EDE9DC"}, paper_bgcolor:"#1A1D24", plot_bgcolor:"#1A1D24",
+    font:{ family:"Inter, -apple-system, sans-serif", color:"#EDE9DC", size:isMobileMap?10:12 },
+    paper_bgcolor:"#1A1D24", plot_bgcolor:"#1A1D24",
     margin:{l:10,r:10,t:10,b:10},
     geo:{ scope:"europe", showframe:false, showcoastlines:false, fitbounds:"locations",
           bgcolor:"#1A1D24", landcolor:"#2A2D35", lakecolor:"#1A1D24", subunitcolor:"#3A3D45" },
-    height:isMobile?360:480
-  }, cfg);
+    height:isMobileMap?340:480
+  }, { displayModeBar:false, responsive:true });
 
 });
 </script>
 
 </body>
 </html>
+
+
+
 
 
 
