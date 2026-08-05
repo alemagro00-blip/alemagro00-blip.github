@@ -9,9 +9,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 
-<!-- Plotly.js per i grafici -->
-<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
-
 <style>
   :root {
     --bg-main: #FAFAF6;        /* Sfondo carta chiaro, coerente con il resto del sito */
@@ -96,6 +93,33 @@
   .aside-box .t { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #38BDF8; font-weight: 700; margin-bottom: 8px; }
   .aside-box b { color: #FFFFFF; }
 
+  /* Classifica a barre HTML/CSS, sempre leggibile da mobile */
+  .barlist { display: flex; flex-direction: column; gap: 15px; }
+  .barlist .row { display: grid; grid-template-columns: 96px 1fr 58px; align-items: center; gap: 10px; }
+  .barlist .row .name { font-size: 13.5px; font-weight: 600; color: var(--ink-dark); line-height:1.25; }
+  .barlist .row .track { background: #F1EFE5; border-radius: 7px; height: 16px; overflow: hidden; }
+  .barlist .row .fill { height: 100%; border-radius: 7px; }
+  .barlist .row .val { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; text-align: right; }
+  .barlist .row.top .name, .barlist .row.top .val { color: var(--accent-emerald); }
+  .barlist-legend { display:flex; gap:16px; flex-wrap:wrap; margin-top:16px; font-size:12px; color:var(--ink-muted); font-family:'JetBrains Mono',monospace; }
+  .barlist-legend span { display:inline-flex; align-items:center; gap:6px; }
+  .barlist-legend i { width:9px; height:9px; border-radius:50%; display:inline-block; }
+
+  /* Barre impilate a righe (mix energetico per paese) */
+  .stackrow { margin-bottom: 18px; }
+  .stackrow:last-child { margin-bottom: 0; }
+  .stackrow .head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 7px; }
+  .stackrow .head .name { font-weight: 700; font-size: 14.5px; color: var(--ink-dark); }
+  .stackrow .track { display: flex; height: 24px; border-radius: 8px; overflow: hidden; background: #F1EFE5; }
+  .stackrow .seg { display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; }
+
+  /* Coppia di statistiche in grande (ispirate al carosello Instagram) */
+  .statpair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 20px; }
+  .statpair .card { background: var(--ink-dark); border-radius: 18px; padding: 22px 20px; text-align: center; }
+  .statpair .card .lbl { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: #94A3B8; margin-bottom: 10px; }
+  .statpair .card .big { font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(28px, 6vw, 38px); font-weight: 800; }
+  .statpair .card .cap { font-size: 12px; color: #94A3B8; margin-top: 6px; }
+
   /* Tabella Personalizzata */
   .table-container { margin-top: 20px; overflow-x: auto; border: 1px solid var(--line-color); border-radius: 10px; background: var(--card-bg); }
   table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14.5px; }
@@ -121,6 +145,11 @@
     .ticker { grid-template-columns: 1fr; } 
     .method-row { grid-template-columns: 1fr; }
     .chartbox { padding: 12px 8px; }
+
+    .barlist .row { grid-template-columns: 78px 1fr 50px; }
+    .statpair { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .statpair .card { padding: 18px 14px; }
+    .stackrow .seg { font-size: 9px; }
 
     .table-container { overflow-x: visible; }
     .table-container table, .table-container thead, .table-container tbody,
@@ -205,75 +234,26 @@
     <p>Islanda e Norvegia dominano nettamente la classifica mondiale, superando il 70% di energia da fonti rinnovabili. Ma prima di incoronarle campionesse della transizione, vale la pena guardare da dove arriva quel primato.</p>
   </div>
 
-  <!-- 1. PRIMO GRAFICO (CLASSIFICA TOP 10) -->
+  <!-- 1. CLASSIFICA TOP 10 (barre HTML/CSS, fluide su ogni schermo) -->
   <div class="chartbox">
-    <div id="a84a3db6-bbdb-41c4-beba-689f71623bcd" class="plotly-graph-div"></div>
+    <div class="barlist">
+      <div class="row top"><div class="name">Islanda</div><div class="track"><div class="fill" style="width:95%;background:var(--accent-emerald)"></div></div><div class="val mono">80,5%</div></div>
+      <div class="row top"><div class="name">Norvegia</div><div class="track"><div class="fill" style="width:84%;background:var(--accent-emerald)"></div></div><div class="val mono">71,8%</div></div>
+      <div class="row"><div class="name">Svezia</div><div class="track"><div class="fill" style="width:60%;background:var(--accent-blue)"></div></div><div class="val mono">51,3%</div></div>
+      <div class="row"><div class="name">Brasile</div><div class="track"><div class="fill" style="width:58%;background:#D97706"></div></div><div class="val mono">49,6%</div></div>
+      <div class="row"><div class="name">Austria</div><div class="track"><div class="fill" style="width:51%;background:#D97706"></div></div><div class="val mono">43,3%</div></div>
+      <div class="row"><div class="name">Nuova Zelanda</div><div class="track"><div class="fill" style="width:50%;background:#D97706"></div></div><div class="val mono">42,6%</div></div>
+      <div class="row"><div class="name">Danimarca</div><div class="track"><div class="fill" style="width:49%;background:#D97706"></div></div><div class="val mono">41,7%</div></div>
+      <div class="row"><div class="name">Svizzera</div><div class="track"><div class="fill" style="width:47%;background:#D97706"></div></div><div class="val mono">39,9%</div></div>
+      <div class="row"><div class="name">Portogallo</div><div class="track"><div class="fill" style="width:47%;background:#D97706"></div></div><div class="val mono">39,7%</div></div>
+      <div class="row"><div class="name">Finlandia</div><div class="track"><div class="fill" style="width:46%;background:#D97706"></div></div><div class="val mono">38,9%</div></div>
+    </div>
+    <div class="barlist-legend">
+      <span><i style="background:var(--accent-emerald)"></i>Oltre il 70% (rendita geografica)</span>
+      <span><i style="background:var(--accent-blue)"></i>Oltre il 50%</span>
+      <span><i style="background:#D97706"></i>Sotto il 50%</span>
+    </div>
   </div>
-
-  <!-- SCRIPT GRAFICO 1 (BARRE TOP 10) -->
-  <script type="text/javascript">
-  (function() {
-    var isMobileTop10 = window.innerWidth <= 600;
-    var top10Countries = ["Finland", "Portugal", "Switzerland", "Denmark", "New Zealand", "Austria", "Brazil", "Sweden", "Norway", "Iceland"];
-
-    var desktop = {
-      data: [
-        {
-          "hovertemplate": "renewables_share_energy=%{text:.1f}%<br>country=%{y}<extra></extra>",
-          "marker": { "color": "#D97706" },
-          "orientation": "h", "showlegend": false,
-          "text": [38.894, 39.741, 39.868, 41.722, 42.554, 43.347, 49.616],
-          "textposition": "outside",
-          "x": [38.894, 39.741, 39.868, 41.722, 42.554, 43.347, 49.616],
-          "y": ["Finland", "Portugal", "Switzerland", "Denmark", "New Zealand", "Austria", "Brazil"],
-          "type": "bar",
-          "textfont": { "color": "#64748b", "size": 11, "family": "JetBrains Mono, monospace" },
-          "texttemplate": "%{text:.1f}%", "width": 0.55
-        },
-        {
-          "hovertemplate": "renewables_share_energy=%{text:.1f}%<br>country=%{y}<extra></extra>",
-          "marker": { "color": "#2563EB" },
-          "orientation": "h", "showlegend": false,
-          "text": [51.318], "textposition": "outside", "x": [51.318], "y": ["Sweden"],
-          "type": "bar",
-          "textfont": { "color": "#64748b", "size": 11, "family": "JetBrains Mono, monospace" },
-          "texttemplate": "%{text:.1f}%", "width": 0.55
-        },
-        {
-          "hovertemplate": "renewables_share_energy=%{text:.1f}%<br>country=%{y}<extra></extra>",
-          "marker": { "color": "#059669" },
-          "orientation": "h", "showlegend": false,
-          "text": [71.812, 80.498], "textposition": "outside", "x": [71.812, 80.498], "y": ["Norway", "Iceland"],
-          "type": "bar",
-          "textfont": { "color": "#64748b", "size": 11, "family": "JetBrains Mono, monospace" },
-          "texttemplate": "%{text:.1f}%", "width": 0.55
-        }
-      ],
-      layout: {
-        "title": false,
-        "xaxis": {
-          "title": { "text": "Quota di energia rinnovabile (%)", "font": { "family": "Inter, sans-serif", "size": isMobileTop10 ? 10 : 12, "color": "#475569" } },
-          "showgrid": true, "gridcolor": "#e5e7eb", "linecolor": "#cbd5e1",
-          "tickfont": { "color": "#475569", "size": isMobileTop10 ? 9 : 11, "family": "Inter, sans-serif" },
-          "range": [0, 92]
-        },
-        "yaxis": {
-          "title": { "text": "" }, "showgrid": false,
-          "categoryorder": "array", "categoryarray": top10Countries,
-          "linecolor": "#cbd5e1",
-          "tickfont": { "color": "#1e293b", "size": isMobileTop10 ? 9.5 : 11.5, "family": "Inter, sans-serif" }
-        },
-        "margin": { "l": isMobileTop10 ? 78 : 100, "r": isMobileTop10 ? 34 : 60, "t": 20, "b": 40 },
-        "height": isMobileTop10 ? 360 : 380, "showlegend": false, "autosize": true,
-        "paper_bgcolor": "transparent", "plot_bgcolor": "transparent",
-        "font": { "family": "Inter, sans-serif", "color": "#1e293b" }
-      }
-    };
-
-    var el = document.getElementById("a84a3db6-bbdb-41c4-beba-689f71623bcd");
-    Plotly.newPlot(el, desktop.data, desktop.layout, {displayModeBar: false, responsive: true});
-  })();
-  </script>
 
   <!-- NOTA INTERMEDIA TRA I DUE GRAFICI (PICCOLA, CORSIVA E GRIGIO CHIARO) -->
   <p class="small-note" style="font-size: 0.85rem; font-style: italic; color: #64748b; margin-top: 14px; margin-bottom: 28px; line-height: 1.5;">
@@ -357,7 +337,7 @@
     </div>
   </section>
 
-  <!-- SEZIONE 03: GRAFICO PLOTLY MIX PRIMARIO -->
+  <!-- SEZIONE 03: MIX ENERGETICO PRIMARIO -->
   <section class="q">
     <div class="qhead"><span class="qnum mono">03</span></div>
     <h2>Scomposizione del Mix Energetico Primario</h2>
@@ -366,7 +346,67 @@
     </div>
 
     <div class="chartbox">
-      <div id="plot-mix" style="width:100%;height:410px;"></div>
+      <div class="stackrow">
+        <div class="head"><span class="name">Norvegia</span></div>
+        <div class="track">
+          <div class="seg" style="width:68%;background:var(--accent-emerald)">68%</div>
+          <div class="seg" style="width:20%;background:var(--accent-blue)">20%</div>
+          <div class="seg" style="width:12%;background:#D97706">12%</div>
+        </div>
+      </div>
+      <div class="stackrow">
+        <div class="head"><span class="name">Danimarca</span></div>
+        <div class="track">
+          <div class="seg" style="width:42%;background:var(--accent-emerald)">42%</div>
+          <div class="seg" style="width:18%;background:var(--accent-blue)">18%</div>
+          <div class="seg" style="width:40%;background:#D97706">40%</div>
+        </div>
+      </div>
+      <div class="stackrow">
+        <div class="head"><span class="name">Portogallo</span></div>
+        <div class="track">
+          <div class="seg" style="width:38%;background:var(--accent-emerald)">38%</div>
+          <div class="seg" style="width:28%;background:var(--accent-blue)">28%</div>
+          <div class="seg" style="width:34%;background:#D97706">34%</div>
+        </div>
+      </div>
+      <div class="stackrow">
+        <div class="head"><span class="name">Germania</span></div>
+        <div class="track">
+          <div class="seg" style="width:22%;background:var(--accent-emerald)">22%</div>
+          <div class="seg" style="width:25%;background:var(--accent-blue)">25%</div>
+          <div class="seg" style="width:53%;background:#D97706">53%</div>
+        </div>
+      </div>
+      <div class="stackrow">
+        <div class="head"><span class="name">🇮🇹 Italia</span></div>
+        <div class="track">
+          <div class="seg" style="width:19%;background:var(--accent-emerald)">19%</div>
+          <div class="seg" style="width:40%;background:var(--accent-blue)">40%</div>
+          <div class="seg" style="width:41%;background:#D97706">41%</div>
+        </div>
+      </div>
+      <div class="stackrow">
+        <div class="head"><span class="name">Cina</span></div>
+        <div class="track">
+          <div class="seg" style="width:15%;background:var(--accent-emerald)">15%</div>
+          <div class="seg" style="width:9%;background:var(--accent-blue)">9%</div>
+          <div class="seg" style="width:76%;background:#D97706">76%</div>
+        </div>
+      </div>
+      <div class="stackrow">
+        <div class="head"><span class="name">Stati Uniti</span></div>
+        <div class="track">
+          <div class="seg" style="width:12%;background:var(--accent-emerald)">12%</div>
+          <div class="seg" style="width:32%;background:var(--accent-blue)">32%</div>
+          <div class="seg" style="width:56%;background:#D97706">56%</div>
+        </div>
+      </div>
+      <div class="barlist-legend">
+        <span><i style="background:var(--accent-emerald)"></i>Rinnovabili</span>
+        <span><i style="background:var(--accent-blue)"></i>Gas naturale</span>
+        <span><i style="background:#D97706"></i>Petrolio &amp; carbone</span>
+      </div>
     </div>
 
     <div class="aside-box">
@@ -384,7 +424,32 @@
     </div>
 
     <div class="chartbox">
-      <div id="plot-pil" style="width:100%;height:430px;"></div>
+      <div class="statpair">
+        <div class="card">
+          <div class="lbl">Norvegia</div>
+          <div class="big" style="color:var(--accent-emerald)">75 MWh</div>
+          <div class="cap">consumo energetico pro capite/anno</div>
+        </div>
+        <div class="card">
+          <div class="lbl">India</div>
+          <div class="big" style="color:#FBBF24">15 MWh</div>
+          <div class="cap">consumo energetico pro capite/anno</div>
+        </div>
+      </div>
+      <p style="text-align:center; font-size:13.5px; color:var(--ink-muted); margin:14px 0 26px;">Un norvegese medio consuma <b style="color:var(--ink-dark)">5 volte</b> l'energia di un indiano medio, a fronte di un PIL pro capite circa 7 volte superiore.</p>
+
+      <div class="barlist">
+        <div class="row"><div class="name">Norvegia</div><div class="track"><div class="fill" style="width:94%;background:var(--accent-emerald)"></div></div><div class="val mono">75</div></div>
+        <div class="row"><div class="name">Stati Uniti</div><div class="track"><div class="fill" style="width:75%;background:var(--accent-emerald)"></div></div><div class="val mono">60</div></div>
+        <div class="row"><div class="name">Italia</div><div class="track"><div class="fill" style="width:56%;background:var(--accent-blue)"></div></div><div class="val mono">45</div></div>
+        <div class="row"><div class="name">Germania</div><div class="track"><div class="fill" style="width:52%;background:var(--accent-blue)"></div></div><div class="val mono">42</div></div>
+        <div class="row"><div class="name">Portogallo</div><div class="track"><div class="fill" style="width:40%;background:var(--accent-blue)"></div></div><div class="val mono">32</div></div>
+        <div class="row"><div class="name">Cina</div><div class="track"><div class="fill" style="width:35%;background:#D97706"></div></div><div class="val mono">28</div></div>
+        <div class="row"><div class="name">India</div><div class="track"><div class="fill" style="width:19%;background:#D97706"></div></div><div class="val mono">15</div></div>
+      </div>
+      <div class="barlist-legend">
+        <span>Consumo energetico pro capite, in MWh/anno</span>
+      </div>
     </div>
 
     <div class="callout amber">
@@ -433,77 +498,6 @@
   <div class="wrap">Report "La Corsa alle Rinnovabili" · Elaborazione Dati su 79 Nazioni · Piattaforma Energetica</div>
 </footer>
 
-<!-- SCRIPT PLOTLY (Configurazione Colori Coordinati) -->
-<script>
-const isMobile = window.innerWidth <= 600;
-const MAIN_FONT = { family: "Inter, sans-serif", color: "#334155", size: isMobile ? 10 : 12 };
-const WHITE_BG = "#FFFFFF";
-const LINE_COLOR = "#E2E8F0";
-
-/* Palette coordinata */
-const COLOR_EMERALD = "#059669";
-const COLOR_BLUE = "#2563EB";
-const COLOR_AMBER = "#D97706";
-const cfg = { displayModeBar: false, responsive: true };
-
-document.addEventListener('DOMContentLoaded', function(){
-
-/* 03. Grafico Stacked Mix Primario */
-  const paesiMix = ["Norvegia", "Danimarca", "Portogallo", "Germania", "Italia", "Cina", "Stati Uniti"];
-  Plotly.newPlot('plot-mix', [
-    { 
-      type: "bar", 
-      name: "Rinnovabili", 
-      x: paesiMix, 
-      y: [68, 42, 38, 22, 19, 15, 12], 
-      marker: { color: COLOR_EMERALD },
-      texttemplate: "%{y:.0f}%",
-      textposition: "inside"
-    },
-    { 
-      type: "bar", 
-      name: "Gas Naturale", 
-      x: paesiMix, 
-      y: [20, 18, 28, 25, 40, 9, 32], 
-      marker: { color: COLOR_BLUE },
-      texttemplate: "%{y:.0f}%",
-      textposition: "inside"
-    },
-    { 
-      type: "bar", 
-      name: "Petrolio & Carbone", 
-      x: paesiMix, 
-      y: [12, 40, 34, 53, 41, 76, 56], 
-      marker: { color: COLOR_AMBER },
-      texttemplate: "%{y:.0f}%",
-      textposition: "inside"
-    }
-  ], {
-    font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
-    margin: { l: 40, r: 20, t: isMobile ? 60 : 20, b: isMobile ? 80 : 40 }, height: isMobile ? 400 : 410,
-    barmode: "stack",
-    xaxis: { gridcolor: LINE_COLOR, tickangle: isMobile ? -45 : 0 },
-    yaxis: { title: { text: "Quota Energia Primaria (%)" }, gridcolor: LINE_COLOR, range: [0, 100] },
-    legend: { orientation: "h", y: isMobile ? 1.28 : 1.12, font: { size: isMobile ? 9 : 12 } }
-  }, cfg);
-
-  /* 04. Grafico PIL vs Consumi pro capite */
-  Plotly.newPlot('plot-pil', [{
-    type: "scatter", mode: "markers+text",
-    x: [12000, 28000, 35000, 48000, 52000, 65000, 85000],
-    y: [15, 28, 32, 45, 42, 60, 75],
-    text: ["India", "Cina", "Portogallo", "Italia", "Germania", "USA", "Norvegia"],
-    textposition: "top center",
-    marker: { size: [18, 26, 14, 16, 18, 22, 20], color: [COLOR_AMBER, COLOR_AMBER, COLOR_EMERALD, COLOR_BLUE, COLOR_EMERALD, COLOR_AMBER, COLOR_EMERALD] }
-  }], {
-    font: MAIN_FONT, paper_bgcolor: WHITE_BG, plot_bgcolor: WHITE_BG,
-    margin: { l: 50, r: 30, t: 30, b: 50 }, height: isMobile ? 380 : 430,
-    xaxis: { title: { text: "PIL Pro Capite (USD)" }, gridcolor: LINE_COLOR },
-    yaxis: { title: { text: "Consumo Energetico Pro Capite (MWh)" }, gridcolor: LINE_COLOR }
-  }, cfg);
-
-});
-</script>
-
 </body>
 </html>
+
