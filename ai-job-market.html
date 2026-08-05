@@ -6,7 +6,6 @@
 <title>AI Job Market 2026: trend e competenze</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 <style>
   :root {
     --ink:#15140F; --paper:#FAFAF6; --card:#FFFFFF;
@@ -53,7 +52,55 @@
   .qtext { max-width:740px; color:#3A392F; font-size:16px; margin-top:14px; }
   .qtext b { color:var(--ink); }
 
-  .chartbox { margin-top:24px; background:var(--card); border:1px solid var(--line); border-radius:20px; padding:18px; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .chartbox { margin-top:24px; background:var(--card); border:1px solid var(--line); border-radius:20px; padding:20px; }
+
+  /* Classifiche a barre HTML/CSS, sempre leggibili da mobile */
+  .barlist { display:flex; flex-direction:column; gap:14px; }
+  .barlist .row { display:grid; grid-template-columns:120px 1fr 64px; align-items:center; gap:10px; }
+  .barlist .row .name { font-size:13.5px; font-weight:600; color:var(--ink); line-height:1.25; }
+  .barlist .row .track { background:#F1EEE2; border-radius:7px; height:16px; overflow:hidden; }
+  .barlist .row .fill { height:100%; border-radius:7px; }
+  .barlist .row .val { font-family:'JetBrains Mono',monospace; font-size:12.5px; font-weight:700; text-align:right; }
+  .barlist-head { font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--slate); margin-bottom:12px; }
+  .tworank { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+  .tworank .col:first-child .barlist-head { color:var(--violet-deep); }
+  .tworank .col:last-child .barlist-head { color:#9C8FD9; }
+
+  /* Barra unica proporzionale con legenda (specializzazioni) */
+  .segbar-track { display:flex; height:34px; border-radius:10px; overflow:hidden; }
+  .segbar-track .seg { height:100%; }
+  .segbar-legend { display:flex; flex-direction:column; gap:9px; margin-top:18px; }
+  .segbar-legend .item { display:grid; grid-template-columns:14px 1fr auto; align-items:center; gap:10px; font-size:13px; }
+  .segbar-legend .item i { width:11px; height:11px; border-radius:3px; display:inline-block; }
+  .segbar-legend .item .n { color:var(--ink); font-weight:600; }
+  .segbar-legend .item .v { font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--slate); font-size:12.5px; }
+
+  /* Classifica a podio (skills WEF) */
+  .podium { display:flex; flex-direction:column; gap:10px; }
+  .podium .prow { display:grid; grid-template-columns:38px 1fr auto; align-items:center; gap:12px; }
+  .podium .prow .rank { width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:15px; color:#fff; background:#D8D2FF; }
+  .podium .prow.top .rank { background:var(--violet); font-size:17px; }
+  .podium .prow .n { font-size:14px; font-weight:600; color:var(--ink); }
+  .podium .prow.top .n { font-size:16px; font-weight:700; }
+  .podium .prow .v { font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--slate); font-size:12.5px; }
+  .podium .prow.top .v { color:var(--violet-deep); font-size:14px; }
+
+  /* Coppia statistiche + lista piatta (salari) */
+  .statpair { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .statpair .card { background:var(--ink); border-radius:18px; padding:20px 18px; text-align:center; }
+  .statpair .card .lbl { font-family:'JetBrains Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:#9C9788; margin-bottom:8px; }
+  .statpair .card .big { font-family:'Bricolage Grotesque',sans-serif; font-size:clamp(22px,5vw,28px); font-weight:800; color:var(--amber); }
+  .statpair .card .cap { font-size:11.5px; color:#9C9788; margin-top:6px; }
+  .plainlist { margin-top:18px; display:flex; flex-direction:column; }
+  .plainlist .prow { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--line); font-size:13.5px; }
+  .plainlist .prow:last-child { border-bottom:none; }
+  .plainlist .prow .n { color:var(--ink); font-weight:600; }
+  .plainlist .prow .v { font-family:'JetBrains Mono',monospace; color:var(--violet-deep); font-weight:700; }
+
+  @media (max-width:600px){
+    .tworank { grid-template-columns:1fr; gap:26px; }
+    .barlist .row { grid-template-columns:88px 1fr 54px; }
+  }
   .callout { margin-top:20px; background:var(--violet-light); border-left:4px solid var(--violet); border-radius:4px 10px 10px 4px; padding:18px 24px; font-size:15px; color:#2B2B23; }
   .callout b { color:var(--ink); }
 
@@ -103,7 +150,31 @@
     <div class="qhead"><span class="qnum mono">01</span><span class="qline"></span></div>
     <h2>I ruoli più richiesti</h2>
     <div class="qtext"><p>Confrontando i 5 ruoli più frequenti in entrambi i dataset, un nome emerge in cima a tutti e due: <b>NLP Engineer</b>. Ma le distanze tra un dataset e l'altro raccontano due mercati diversi.</p></div>
-    <div class="chartbox"><div id="plot-ruoli" style="width:100%;height:440px;"></div></div>
+    <div class="chartbox">
+      <div class="tworank">
+        <div class="col">
+          <div class="barlist-head">Offerte 2026</div>
+          <div class="barlist">
+            <div class="row"><div class="name">NLP Engineer</div><div class="track"><div class="fill" style="width:97%;background:var(--violet)"></div></div><div class="val mono">11.025</div></div>
+            <div class="row"><div class="name">Research Scientist</div><div class="track"><div class="fill" style="width:96%;background:var(--violet)"></div></div><div class="val mono">10.963</div></div>
+            <div class="row"><div class="name">ML Engineer</div><div class="track"><div class="fill" style="width:72%;background:var(--violet)"></div></div><div class="val mono">8.166</div></div>
+            <div class="row"><div class="name">Software Eng. AI</div><div class="track"><div class="fill" style="width:48%;background:var(--violet)"></div></div><div class="val mono">5.486</div></div>
+            <div class="row"><div class="name">Computer Vision Eng.</div><div class="track"><div class="fill" style="width:47%;background:var(--violet)"></div></div><div class="val mono">5.396</div></div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="barlist-head">Panorama globale</div>
+          <div class="barlist">
+            <div class="row"><div class="name">NLP Engineer</div><div class="track"><div class="fill" style="width:100%;background:#C9BBFF"></div></div><div class="val mono">11.412</div></div>
+            <div class="row"><div class="name">Software Eng. AI</div><div class="track"><div class="fill" style="width:99%;background:#C9BBFF"></div></div><div class="val mono">11.333</div></div>
+            <div class="row"><div class="name">Research Scientist</div><div class="track"><div class="fill" style="width:99%;background:#C9BBFF"></div></div><div class="val mono">11.309</div></div>
+            <div class="row"><div class="name">ML Engineer</div><div class="track"><div class="fill" style="width:99%;background:#C9BBFF"></div></div><div class="val mono">11.263</div></div>
+            <div class="row"><div class="name">AI Engineer</div><div class="track"><div class="fill" style="width:99%;background:#C9BBFF"></div></div><div class="val mono">11.247</div></div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:12px; color:var(--slate); margin:16px 0 0;">Occorrenze nel dataset · stessa scala per i due gruppi, per confrontare a colpo d'occhio quanto siano concentrate le offerte 2026 rispetto alla distribuzione più piatta del panorama globale.</p>
+    </div>
     <div class="callout"><b>Il dataset delle offerte 2026 è più concentrato</b> — NLP Engineer e Research Scientist dominano nettamente (oltre 10.900 occorrenze ciascuno), il resto si stacca parecchio. <b>Nel dataset globale la distribuzione è più piatta</b>: tutti e 5 i ruoli restano sopra le 11.200 occorrenze — segno di una domanda più matura e diffusa su scala internazionale.</div>
   </section>
 
@@ -111,7 +182,27 @@
     <div class="qhead"><span class="qnum mono">02</span><span class="qline"></span></div>
     <h2>Su cosa si concentra la domanda</h2>
     <div class="qtext"><p>Guardando le specializzazioni richieste nelle offerte 2026, una sola area domina su tutte le altre.</p></div>
-    <div class="chartbox"><div id="plot-spec" style="width:100%;height:400px;"></div></div>
+    <div class="chartbox">
+      <div class="segbar-track">
+        <div class="seg" style="width:37.0%;background:var(--violet-deep)"></div>
+        <div class="seg" style="width:15.7%;background:var(--violet)"></div>
+        <div class="seg" style="width:15.7%;background:#9C8FD9"></div>
+        <div class="seg" style="width:10.7%;background:#C9BBFF"></div>
+        <div class="seg" style="width:10.4%;background:#DCD2FF"></div>
+        <div class="seg" style="width:5.4%;background:var(--amber)"></div>
+        <div class="seg" style="width:5.1%;background:#E8D3A0"></div>
+      </div>
+      <div class="segbar-legend">
+        <div class="item"><i style="background:var(--violet-deep)"></i><span class="n">Machine Learning</span><span class="v">37,0%</span></div>
+        <div class="item"><i style="background:var(--violet)"></i><span class="n">Generative AI</span><span class="v">15,7%</span></div>
+        <div class="item"><i style="background:#9C8FD9"></i><span class="n">MLOps</span><span class="v">15,7%</span></div>
+        <div class="item"><i style="background:#C9BBFF"></i><span class="n">NLP</span><span class="v">10,7%</span></div>
+        <div class="item"><i style="background:#DCD2FF"></i><span class="n">Computer Vision</span><span class="v">10,4%</span></div>
+        <div class="item"><i style="background:var(--amber)"></i><span class="n">Deep Learning</span><span class="v">5,4%</span></div>
+        <div class="item"><i style="background:#E8D3A0"></i><span class="n">Data Science</span><span class="v">5,1%</span></div>
+      </div>
+      <p style="font-size:12px; color:var(--slate); margin:16px 0 0;">% delle offerte 2026 · nel dataset globale le 8 aree principali si dividono la domanda quasi alla pari, tutte tra il 12,3% e il 12,8%.</p>
+    </div>
     <div class="callout"><b>Machine Learning da sola vale il 37% delle offerte</b> — più del doppio della seconda area (MLOps, 15,7%). Nel dataset globale, invece, il quadro è quasi capovolto: le 8 specializzazioni principali (Computer Vision, LLM, Reinforcement Learning, Analytics, Generative AI, MLOps, Forecasting, NLP) si dividono la domanda in modo quasi identico, tutte tra il 12,3% e il 12,8%. Le offerte concrete premiano oggi le competenze operative di ML; il panorama globale è già più maturo e diversificato.</div>
   </section>
 
@@ -119,7 +210,19 @@
     <div class="qhead"><span class="qnum mono">03</span><span class="qline"></span></div>
     <h2>Le competenze che il WEF associa al futuro del lavoro</h2>
     <div class="qtext"><p>Dal Future of Jobs Report 2025 del World Economic Forum abbiamo estratto quanto spesso ricorrono le competenze "del futuro" legate al lavoro nell'AI.</p></div>
-    <div class="chartbox"><div id="plot-skills" style="width:100%;height:400px;"></div></div>
+    <div class="chartbox">
+      <div class="podium">
+        <div class="prow top"><div class="rank">01</div><div class="n">Flexibility</div><div class="v">257</div></div>
+        <div class="prow top"><div class="rank">02</div><div class="n">Resilience</div><div class="v">164</div></div>
+        <div class="prow top"><div class="rank">03</div><div class="n">Agility</div><div class="v">163</div></div>
+        <div class="prow"><div class="rank">04</div><div class="n">AI e big data</div><div class="v">138</div></div>
+        <div class="prow"><div class="rank">05</div><div class="n">Creative thinking</div><div class="v">129</div></div>
+        <div class="prow"><div class="rank">06</div><div class="n">Leadership</div><div class="v">113</div></div>
+        <div class="prow"><div class="rank">07</div><div class="n">Cybersecurity</div><div class="v">106</div></div>
+        <div class="prow"><div class="rank">08</div><div class="n">Analytical thinking</div><div class="v">103</div></div>
+      </div>
+      <p style="font-size:12px; color:var(--slate); margin:16px 0 0;">Occorrenze nel report WEF Future of Jobs 2025</p>
+    </div>
     <div class="callout">Le competenze più citate non sono tecniche: <b>flessibilità, resilienza e agilità</b> guidano la classifica, davanti persino ad "AI e big data". Il messaggio del WEF è chiaro: la parte tecnica si può imparare, la capacità di adattarsi è quella che fa davvero la differenza.</div>
   </section>
 
@@ -127,7 +230,22 @@
     <div class="qhead"><span class="qnum mono">04</span><span class="qline"></span></div>
     <h2>Chi guadagna di più</h2>
     <div class="qtext"><p>Nel dataset globale, i 5 ruoli meglio pagati mostrano differenze marcate in base al grado di specializzazione.</p></div>
-    <div class="chartbox"><div id="plot-salari" style="width:100%;height:400px;"></div></div>
+    <div class="chartbox">
+      <div class="statpair">
+        <div class="card"><div class="lbl">Il più pagato</div><div class="big">$109.798</div><div class="cap">Research Scientist</div></div>
+        <div class="card"><div class="lbl">Il meno pagato</div><div class="big">$69.429</div><div class="cap">Data Analyst</div></div>
+      </div>
+      <div class="plainlist">
+        <div class="prow"><span class="n">Research Scientist</span><span class="v">$109.798</span></div>
+        <div class="prow"><span class="n">ML Engineer</span><span class="v">$102.122</span></div>
+        <div class="prow"><span class="n">Computer Vision Eng.</span><span class="v">$101.304</span></div>
+        <div class="prow"><span class="n">NLP Engineer</span><span class="v">$99.745</span></div>
+        <div class="prow"><span class="n">AI Engineer</span><span class="v">$97.975</span></div>
+        <div class="prow"><span class="n">Software Eng. AI</span><span class="v">$97.376</span></div>
+        <div class="prow"><span class="n">Data Analyst</span><span class="v">$69.429</span></div>
+      </div>
+      <p style="font-size:12px; color:var(--slate); margin:16px 0 0;">Salario medio annuo (USD), dataset globale</p>
+    </div>
     <div class="callout"><b>Research Scientist guadagna in media $109.798</b>, oltre $12.000 più di un Data Analyst generico. Nel dataset delle offerte 2026 il quadro è opposto: gli stipendi dei 15 ruoli più pagati si concentrano quasi tutti tra $95.000 e $97.400 — una forbice di appena $2.300. <b>Le offerte pubblicate tendono ad appiattire gli stipendi</b>; il mercato reale, invece, premia chiaramente la specializzazione.</div>
   </section>
 
@@ -136,73 +254,6 @@
   <footer>&copy; nuMericA 2026 · Alessia Magro — Fonti: AI Jobs Dataset 2026, Global AI Jobs (Kaggle), WEF Future of Jobs Report 2025</footer>
 </div>
 
-<script>
-const isMobile = window.innerWidth <= 600;
-const MAIN_FONT = { family:"Inter, -apple-system, sans-serif", color:"#2B2B23", size:isMobile?10:12 };
-const WHITE_BG = "#FFFFFF";
-const LINE_COLOR = "#E1D9C6";
-const VIOLET = "#7C5CFC";
-const VIOLET_LIGHT = "#C9BBFF";
-const AMBER = "#D9AD5C";
-const cfg = { displayModeBar:false, responsive:true };
-
-document.addEventListener('DOMContentLoaded', function(){
-
-  /* 01. RUOLI PIU' RICHIESTI */
-  Plotly.newPlot('plot-ruoli', [
-    { type:"bar", name:"Offerte 2026 (Jobs)",
-      x:["NLP Engineer","Research Scientist","Machine Learning Engineer","Software Engineer AI","Computer Vision Engineer"],
-      y:[11025,10963,8166,5486,5396], marker:{color:VIOLET} },
-    { type:"bar", name:"Panorama Globale",
-      x:["NLP Engineer","Software Engineer AI","Research Scientist","Machine Learning Engineer","AI Engineer"],
-      y:[11412,11333,11309,11263,11247], marker:{color:VIOLET_LIGHT} }
-  ], {
-    font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
-    margin:{l:40,r:20,t:20,b:isMobile?110:130},
-    xaxis:{gridcolor:LINE_COLOR, tickangle:-35, automargin:true}, yaxis:{title:{text:"Occorrenze"}, gridcolor:LINE_COLOR},
-    barmode:"group", legend:{orientation:"h", y:1.15, font:{size:isMobile?9:12}}
-  }, cfg);
-
-  /* 02. SPECIALIZZAZIONI (dataset Jobs 2026) */
-  Plotly.newPlot('plot-spec', [{
-    type:"bar", orientation:"h",
-    y:["Data Science","Deep Learning","Computer Vision","NLP","Generative AI","MLOps","Machine Learning"],
-    x:[5.1,5.4,10.4,10.7,15.7,15.7,37.0],
-    text:["5,1%","5,4%","10,4%","10,7%","15,7%","15,7%","37,0%"], textposition:"outside",
-    marker:{ color:[5.1,5.4,10.4,10.7,15.7,15.7,37.0], colorscale:[[0.0,VIOLET_LIGHT],[1.0,VIOLET]] }
-  }], {
-    font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
-    margin:{l:isMobile?110:150,r:40,t:20,b:40},
-    xaxis:{gridcolor:LINE_COLOR, title:{text:"% delle offerte 2026"}, range:[0,42]}, yaxis:{automargin:true}
-  }, cfg);
-
-  /* 03. SKILLS WEF */
-  Plotly.newPlot('plot-skills', [{
-    type:"bar", orientation:"h",
-    y:["Analytical thinking","Cybersecurity","Leadership","Creative thinking","AI e big data","Agility","Resilience","Flexibility"],
-    x:[103,106,113,129,138,163,164,257],
-    marker:{ color:[103,106,113,129,138,163,164,257], colorscale:[[0.0,AMBER],[1.0,VIOLET]] }
-  }], {
-    font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
-    margin:{l:isMobile?115:160,r:30,t:20,b:40},
-    xaxis:{gridcolor:LINE_COLOR, title:{text:"Occorrenze nel report WEF"}}, yaxis:{automargin:true}
-  }, cfg);
-
-  /* 04. SALARI (Global, top 5) */
-  Plotly.newPlot('plot-salari', [{
-    type:"bar", orientation:"h",
-    y:["Data Analyst","Software Engineer AI","AI Engineer","NLP Engineer","Computer Vision Engineer","Machine Learning Engineer","Research Scientist"],
-    x:[69429,97376,97975,99745,101304,102122,109798],
-    text:["$69.429","$97.376","$97.975","$99.745","$101.304","$102.122","$109.798"], textposition:"outside",
-    marker:{ color:[69429,97376,97975,99745,101304,102122,109798], colorscale:[[0.0,VIOLET_LIGHT],[1.0,VIOLET]] }
-  }], {
-    font:MAIN_FONT, paper_bgcolor:WHITE_BG, plot_bgcolor:WHITE_BG,
-    margin:{l:isMobile?130:180,r:60,t:20,b:40},
-    xaxis:{gridcolor:LINE_COLOR, title:{text:"Salario medio annuo (USD)"}}, yaxis:{automargin:true}
-  }, cfg);
-
-});
-</script>
-
 </body>
 </html>
+
