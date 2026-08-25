@@ -380,10 +380,24 @@
 
     <button class="catalog-item-all active" data-filter="all">Tutti gli articoli <span class="count">4</span></button>
 
+    <div class="catalog-group" data-group="sport">
+        <div class="catalog-cat-row">
+            <button class="catalog-cat" data-filter="sport">
+                <span class="label">🎾 Sport</span> <span class="count">1</span>
+            </button>
+            <button class="catalog-toggle" aria-label="Apri/chiudi categoria">›</button>
+        </div>
+        <div class="catalog-articles">
+            <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/effetto_campione_o_moda.html" class="catalog-article">
+                <span class="code">SPO·01</span> Si vince per talento o si segue una moda?
+            </a>
+        </div>
+    </div>
+
     <div class="catalog-group" data-group="economia">
         <div class="catalog-cat-row">
             <button class="catalog-cat" data-filter="economia">
-                <span class="label">💰 Economia &amp; Società</span> <span class="count">1</span>
+                <span class="label">💰 Economia</span> <span class="count">1</span>
             </button>
             <button class="catalog-toggle" aria-label="Apri/chiudi categoria">›</button>
         </div>
@@ -422,20 +436,6 @@
         </div>
     </div>
 
-    <div class="catalog-group" data-group="sport">
-        <div class="catalog-cat-row">
-            <button class="catalog-cat" data-filter="sport">
-                <span class="label">🎾 Sport &amp; Società</span> <span class="count">1</span>
-            </button>
-            <button class="catalog-toggle" aria-label="Apri/chiudi categoria">›</button>
-        </div>
-        <div class="catalog-articles">
-            <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/effetto_campione_o_moda.html" class="catalog-article">
-                <span class="code">SPO·01</span> Si vince per talento o si segue una moda?
-            </a>
-        </div>
-    </div>
-
     <div class="sidebar-footer">© nuMericA 2026<br>Alessia Magro</div>
 </aside>
 
@@ -468,6 +468,22 @@
 
         <div class="grid" id="grid">
 
+            <div class="card" data-category="sport">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1694234487030-1e8c988be7b0?auto=format&fit=crop&w=1000&q=80" class="card-img" alt="Palla da tennis a fuoco su un campo colorato">
+                    <span class="catalog-code-badge">SPO·01</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-header-info">
+                        <span class="card-tag sport">Sport</span>
+                        <span class="card-meta">6 MIN</span>
+                    </div>
+                    <h2 class="card-title">Si vince per talento, o si segue una moda?</h2>
+                    <p class="card-excerpt">Sinner, il padel e la corsa a confronto: quando un campione converte davvero i suoi tifosi in praticanti, e quando invece è solo una moda a spingere la crescita.</p>
+                    <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/effetto_campione_o_moda.html" class="card-link">Esplora i Dati &rarr;</a>
+                </div>
+            </div>
+
             <div class="card" data-category="economia">
                 <div class="card-img-wrapper">
                     <img src="https://images.unsplash.com/photo-1614521272693-73052eaefc51?auto=format&fit=crop&w=1000&q=80" class="card-img" alt="Skyline europeo al tramonto">
@@ -475,7 +491,7 @@
                 </div>
                 <div class="card-body">
                     <div class="card-header-info">
-                        <span class="card-tag economia">Economia &amp; Società</span>
+                        <span class="card-tag economia">Economia</span>
                         <span class="card-meta">5 MIN</span>
                     </div>
                     <h2 class="card-title">Il costo nascosto della vita</h2>
@@ -516,22 +532,6 @@
                 </div>
             </div>
 
-            <div class="card" data-category="sport">
-                <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1678734491865-d4dc8a5f5399?auto=format&fit=crop&w=1000&q=80" class="card-img" alt="Vista aerea di campi da tennis">
-                    <span class="catalog-code-badge">SPO·01</span>
-                </div>
-                <div class="card-body">
-                    <div class="card-header-info">
-                        <span class="card-tag sport">Sport &amp; Società</span>
-                        <span class="card-meta">6 MIN</span>
-                    </div>
-                    <h2 class="card-title">Si vince per talento, o si segue una moda?</h2>
-                    <p class="card-excerpt">Sinner, il padel e la corsa a confronto: quando un campione converte davvero i suoi tifosi in praticanti, e quando invece è solo una moda a spingere la crescita.</p>
-                    <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/effetto-campione-o-moda.html" class="card-link">Esplora i Dati &rarr;</a>
-                </div>
-            </div>
-
         </div>
     </div>
 
@@ -545,7 +545,7 @@
     const resultsTitle = document.getElementById('results-title');
     const resultsCount = document.getElementById('results-count');
 
-    const categoryNames = { all: 'Tutti gli articoli', economia: 'Economia & Società', energia: 'Energia & Ambiente', lavoro: 'Lavoro', sport: 'Sport & Società' };
+    const categoryNames = { all: 'Tutti gli articoli', economia: 'Economia', energia: 'Energia & Ambiente', lavoro: 'Lavoro', sport: 'Sport' };
 
     function setActiveFilter(filter) {
         catalogItemAll.classList.toggle('active', filter === 'all');
@@ -607,4 +607,6 @@
 
 </body>
 </html>
+
+
 
