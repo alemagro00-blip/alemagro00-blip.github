@@ -26,6 +26,9 @@
         --violet-deep: #5D3FD9;
         --violet-light: rgba(124,92,252,0.12);
         --coral-light: rgba(255,106,77,0.14);
+        --rosa: #D6338A;
+        --rosa-deep: #A81F6B;
+        --rosa-light: rgba(214,51,138,0.14);
         --sidebar-w: 272px;
         --gap: 18px;
     }
@@ -292,6 +295,7 @@
     .card[data-category="economia"]:hover { box-shadow: 0 26px 46px -16px rgba(255,106,77,0.4); }
     .card[data-category="energia"]:hover { box-shadow: 0 26px 46px -16px rgba(5,150,105,0.35); }
     .card[data-category="lavoro"]:hover { box-shadow: 0 26px 46px -16px rgba(124,92,252,0.35); }
+    .card[data-category="sport"]:hover { box-shadow: 0 26px 46px -16px rgba(214,51,138,0.35); }
 
     .card-img-wrapper { position: relative; height: 200px; overflow: hidden; background: #e2e8f0; }
     .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
@@ -316,6 +320,7 @@
     .card-tag.economia { background: var(--coral-light); color: var(--coral-deep); }
     .card-tag.energia { background: var(--emerald-light); color: var(--emerald); }
     .card-tag.lavoro { background: var(--violet-light); color: var(--violet-deep); }
+    .card-tag.sport { background: var(--rosa-light); color: var(--rosa-deep); }
 
     .card-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--faint); }
 
@@ -337,6 +342,7 @@
     .card[data-category="economia"] .card-link:hover { background: linear-gradient(100deg, var(--coral), var(--coral-deep)); gap: 10px; }
     .card[data-category="energia"] .card-link:hover { background: var(--emerald); gap: 10px; }
     .card[data-category="lavoro"] .card-link:hover { background: var(--violet); gap: 10px; }
+    .card[data-category="sport"] .card-link:hover { background: linear-gradient(100deg, var(--rosa), var(--rosa-deep)); gap: 10px; }
 
     .card.hidden { display: none; }
 
@@ -372,7 +378,7 @@
 
     <div class="catalog-label">Indice</div>
 
-    <button class="catalog-item-all active" data-filter="all">Tutti gli articoli <span class="count">3</span></button>
+    <button class="catalog-item-all active" data-filter="all">Tutti gli articoli <span class="count">4</span></button>
 
     <div class="catalog-group" data-group="economia">
         <div class="catalog-cat-row">
@@ -416,6 +422,20 @@
         </div>
     </div>
 
+    <div class="catalog-group" data-group="sport">
+        <div class="catalog-cat-row">
+            <button class="catalog-cat" data-filter="sport">
+                <span class="label">🎾 Sport &amp; Società</span> <span class="count">1</span>
+            </button>
+            <button class="catalog-toggle" aria-label="Apri/chiudi categoria">›</button>
+        </div>
+        <div class="catalog-articles">
+            <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/effetto-campione-o-moda.html" class="catalog-article">
+                <span class="code">SPO·01</span> Si vince per talento o si segue una moda?
+            </a>
+        </div>
+    </div>
+
     <div class="sidebar-footer">© nuMericA 2026<br>Alessia Magro</div>
 </aside>
 
@@ -443,7 +463,7 @@
     <div class="container">
         <div class="results-bar">
             <span id="results-title">Tutti gli articoli</span>
-            <span id="results-count">3 report</span>
+            <span id="results-count">4 report</span>
         </div>
 
         <div class="grid" id="grid">
@@ -496,6 +516,22 @@
                 </div>
             </div>
 
+            <div class="card" data-category="sport">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1678734491865-d4dc8a5f5399?auto=format&fit=crop&w=1000&q=80" class="card-img" alt="Vista aerea di campi da tennis">
+                    <span class="catalog-code-badge">SPO·01</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-header-info">
+                        <span class="card-tag sport">Sport &amp; Società</span>
+                        <span class="card-meta">6 MIN</span>
+                    </div>
+                    <h2 class="card-title">Si vince per talento, o si segue una moda?</h2>
+                    <p class="card-excerpt">Sinner, il padel e la corsa a confronto: quando un campione converte davvero i suoi tifosi in praticanti, e quando invece è solo una moda a spingere la crescita.</p>
+                    <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/effetto-campione-o-moda.html" class="card-link">Esplora i Dati &rarr;</a>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -509,7 +545,7 @@
     const resultsTitle = document.getElementById('results-title');
     const resultsCount = document.getElementById('results-count');
 
-    const categoryNames = { all: 'Tutti gli articoli', economia: 'Economia & Società', energia: 'Energia & Ambiente', lavoro: 'Lavoro' };
+    const categoryNames = { all: 'Tutti gli articoli', economia: 'Economia & Società', energia: 'Energia & Ambiente', lavoro: 'Lavoro', sport: 'Sport & Società' };
 
     function setActiveFilter(filter) {
         catalogItemAll.classList.toggle('active', filter === 'all');
