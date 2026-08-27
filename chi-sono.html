@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chi sono — nuMericA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --bg: #F3F3F5;
+        --ink: #17171B;
+        --muted: #6B6A70;
+        --faint: #A0A0A6;
+        --line: rgba(23,23,27,0.08);
+        --glass: rgba(255,255,255,0.55);
+        --glass-strong: rgba(255,255,255,0.72);
+        --glass-border: rgba(255,255,255,0.85);
+        --coral: #FF6A4D;
+        --coral-deep: #E14F31;
+        --coral-light: rgba(255,106,77,0.14);
+        --emerald: #059669;
+        --violet: #7C5CFC;
+        --violet-deep: #5D3FD9;
+        --rosa: #D6338A;
+        --rosa-deep: #A81F6B;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: 'Inter', sans-serif;
+        background: var(--bg);
+        color: var(--ink);
+        margin: 0;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        position: relative;
+        overflow-x: hidden;
+        min-height: 100vh;
+    }
+    a { color: inherit; }
+    h1, h2, h3 { font-family: 'Bricolage Grotesque', sans-serif; margin: 0; }
+
+    .blob { position: fixed; border-radius: 50%; filter: blur(90px); z-index: 0; pointer-events: none; animation: drift 26s ease-in-out infinite alternate; }
+    .blob-1 { width: 620px; height: 620px; background: radial-gradient(circle, rgba(255,106,77,0.5), transparent 70%); top: -220px; left: 6%; }
+    .blob-2 { width: 520px; height: 520px; background: radial-gradient(circle, rgba(124,92,252,0.4), transparent 70%); top: 100px; right: -160px; animation-delay: -9s; }
+    .blob-3 { width: 480px; height: 480px; background: radial-gradient(circle, rgba(214,51,138,0.3), transparent 70%); bottom: -180px; left: 30%; animation-delay: -17s; }
+    @keyframes drift { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(40px,30px) scale(1.1); } }
+    @media (prefers-reduced-motion: reduce) { .blob { animation: none; } }
+
+    .wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
+
+    .back-link {
+        display: inline-flex; align-items: center; gap: 8px; margin: 34px 0 0;
+        background: var(--glass-strong); backdrop-filter: blur(16px) saturate(1.6); -webkit-backdrop-filter: blur(16px) saturate(1.6);
+        border: 1px solid var(--glass-border); border-radius: 999px; padding: 9px 18px;
+        text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--ink);
+        transition: transform .2s ease;
+    }
+    .back-link:hover { transform: translateX(-4px); }
+
+    .intro-row { display: flex; align-items: center; gap: 44px; margin: 46px 0 10px; }
+    .avatar { width: 168px; height: 168px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 4px solid var(--glass-strong); box-shadow: 0 20px 40px -18px rgba(23,23,27,0.35); }
+    .eyebrow { font-family: 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; font-size: 11.5px; color: var(--coral-deep); font-weight: 700; margin-bottom: 14px; }
+    .intro-row h1 { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 700; letter-spacing: -0.5px; line-height: 1.15; }
+    .intro-row .role { color: var(--muted); font-size: 1rem; margin-top: 8px; }
+
+    @media (max-width: 640px) {
+        .intro-row { flex-direction: column; align-items: flex-start; gap: 22px; }
+        .avatar { width: 140px; height: 140px; }
+    }
+
+    .card {
+        background: var(--glass); backdrop-filter: blur(20px) saturate(1.6); -webkit-backdrop-filter: blur(20px) saturate(1.6);
+        border: 1px solid var(--glass-border); border-radius: 24px; padding: 32px 34px; margin-top: 26px;
+        box-shadow: 0 24px 50px -28px rgba(23,23,27,0.18);
+    }
+    .card p { font-size: 1.02rem; color: var(--ink); margin: 0 0 16px; }
+    .card p:last-child { margin-bottom: 0; }
+    .card p b { font-weight: 700; }
+
+    .section-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; color: var(--muted); margin: 46px 0 16px; }
+
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .tl-item { display: flex; gap: 18px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+    .tl-item:last-child { border-bottom: none; }
+    .tl-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--coral); margin-top: 6px; flex-shrink: 0; }
+    .tl-item:nth-child(2) .tl-dot { background: var(--violet); }
+    .tl-item:nth-child(3) .tl-dot { background: var(--emerald); }
+    .tl-item:nth-child(4) .tl-dot { background: var(--rosa); }
+    .tl-title { font-weight: 700; font-size: 0.98rem; }
+    .tl-sub { font-size: 0.86rem; color: var(--muted); margin-top: 2px; }
+
+    .cta-row { margin: 46px 0 70px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; font-size: 0.92rem; padding: 13px 24px; border-radius: 999px; transition: transform .2s ease, box-shadow .2s ease; }
+    .btn-primary { background: var(--ink); color: #fff; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 26px -14px rgba(23,23,27,0.5); }
+    .btn-ghost { background: var(--glass-strong); border: 1px solid var(--glass-border); color: var(--ink); }
+    .btn-ghost:hover { transform: translateY(-2px); }
+
+    footer { padding: 20px 0 50px; text-align: center; color: var(--muted); font-size: 0.78rem; position: relative; z-index: 1; }
+</style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+
+<div class="wrap">
+    <a href="index.html" class="back-link">&larr; Torna alla Home</a>
+
+    <div class="intro-row">
+        <img src="alessia-foto.jpg" alt="Alessia Magro" class="avatar">
+        <div>
+            <div class="eyebrow">Chi sono</div>
+            <h1>Alessia Magro</h1>
+            <div class="role">Fondatrice di nuMericA — analisi dati e data storytelling</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <p>Sono Alessia, e i numeri mi hanno sempre incuriosita più delle parole. Ho iniziato a inseguirli fin dalle superiori, con il diploma in <b>Amministrazione, Finanza e Marketing</b>, poi con la laurea in <b>Economia e Commercio</b> — e non mi sono più fermata: due certificazioni, una in <b>Python</b> (Mac Formazione) e una come <b>Data Analyst</b> (IBM), per trasformare quella curiosità in un mestiere vero.</p>
+        <p>Quello che mi affascina dei dati è la loro capacità di rendere visibile ciò che a occhio nudo non si vede: un pattern nascosto in migliaia di righe, un confronto che cambia prospettiva, una domanda che nessuno si era ancora fatto nel modo giusto. Non li uso per complicare le cose — al contrario, per renderle più chiare, più efficienti, più utili a chi le legge.</p>
+        <p><b>nuMericA</b> nasce da questa idea: prendere dataset pubblici, spesso enormi e poco raccontati, e trasformarli in storie che si leggono in cinque minuti — invece che restare chiusi in un file Excel che nessuno apre mai.</p>
+    </div>
+
+    <div class="section-label">Percorso</div>
+    <div class="card" style="padding:14px 34px;">
+        <div class="timeline">
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div>
+                    <div class="tl-title">Diploma in Amministrazione, Finanza e Marketing</div>
+                    <div class="tl-sub">Istituto tecnico</div>
+                </div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div>
+                    <div class="tl-title">Laurea in Economia e Commercio</div>
+                    <div class="tl-sub">Percorso universitario</div>
+                </div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div>
+                    <div class="tl-title">Certificazione Python</div>
+                    <div class="tl-sub">Mac Formazione</div>
+                </div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div>
+                    <div class="tl-title">Certificazione Data Analyst</div>
+                    <div class="tl-sub">IBM</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-label">Come lavoro</div>
+    <div class="card">
+        <p>Ogni report parte da fonti pubbliche verificabili — enti statistici, dataset open data, studi di settore — incrociate quando possibile con più fonti, così un numero non racconta mai la storia da solo. I grafici sono costruiti su misura per ogni analisi e pensati per essere leggibili sia da desktop che da mobile.</p>
+        <p>Se noti un errore, una fonte da controllare o hai un dataset interessante da suggerire, scrivimi pure — nuMericA cresce anche grazie a chi lo legge con occhio critico.</p>
+    </div>
+
+    <div class="cta-row">
+        <a href="index.html" class="btn btn-primary">Esplora i report &rarr;</a>
+    </div>
+</div>
+
+<footer>© nuMericA 2026 · Alessia Magro</footer>
+
+</body>
+</html>
