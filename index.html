@@ -272,6 +272,44 @@
 
     .container { max-width: 1080px; margin: 0 auto; padding: 26px 44px 50px; }
 
+    /* ============ Numeri in breve — tendina a comparsa ============ */
+    .briefstats-wrap { max-width: 1080px; margin: 0 auto; padding: 0 44px 22px; }
+    .briefstats-details { border: none; }
+    .briefstats-summary {
+        list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+        font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 1px;
+        color: var(--ink); font-weight: 700;
+        background: rgba(255,255,255,0.6);
+        backdrop-filter: blur(16px) saturate(1.6); -webkit-backdrop-filter: blur(16px) saturate(1.6);
+        border: 1px solid var(--glass-border); border-radius: 999px; padding: 9px 16px;
+        transition: background .15s ease;
+    }
+    .briefstats-summary::-webkit-details-marker { display: none; }
+    .briefstats-summary:hover { background: rgba(255,255,255,0.85); }
+    .briefstats-summary .chev { transition: transform .2s ease; font-size: 0.9em; }
+    .briefstats-details[open] .briefstats-summary .chev { transform: rotate(180deg); }
+    .briefstats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 14px; }
+    .briefstat {
+        background: rgba(255,255,255,0.6);
+        backdrop-filter: blur(16px) saturate(1.6);
+        -webkit-backdrop-filter: blur(16px) saturate(1.6);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 16px 18px;
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .briefstat:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -16px rgba(23,23,27,0.25); }
+    .briefstat .bs-num { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 1.7rem; line-height: 1; }
+    .briefstat .bs-cat { font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); margin-top: 8px; }
+    .briefstat .bs-label { font-size: 0.78rem; color: var(--ink); margin-top: 3px; line-height: 1.35; }
+    @media (max-width: 760px) {
+        .briefstats-row { grid-template-columns: 1fr 1fr; }
+        .briefstats-wrap { padding: 0 18px 18px; }
+    }
+
     .results-bar { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; color: var(--muted); }
     #results-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--ink); }
 
@@ -436,10 +474,7 @@
         </div>
     </div>
 
-    <div class="sidebar-footer">
-        <a href="numeri-in-breve.html" style="display:inline-flex;align-items:center;gap:6px;color:var(--ink);font-family:'Inter',sans-serif;font-weight:600;font-size:0.8rem;text-decoration:none;background:rgba(23,23,27,0.06);padding:8px 12px;border-radius:10px;margin-bottom:14px;">📊 Numeri in breve</a>
-        <br>© nuMericA 2026<br>Alessia Magro
-    </div>
+    <div class="sidebar-footer">© nuMericA 2026<br>Alessia Magro</div>
 </aside>
 
 <div class="main">
@@ -463,6 +498,13 @@
         </div>
     </header>
 
+    <div class="briefstats-wrap">
+        <details class="briefstats-details">
+            <summary class="briefstats-summary">📊 Numeri in breve <span class="chev">▾</span></summary>
+            <div class="briefstats-row" id="briefstats-row"></div>
+        </details>
+    </div>
+
     <div class="container">
         <div class="results-bar">
             <span id="results-title">Tutti gli articoli</span>
@@ -471,7 +513,7 @@
 
         <div class="grid" id="grid">
 
-            <div class="card" data-category="sport">
+            <div class="card" data-category="sport" data-stat="+266%" data-stat-label="Tesserati FITP dal 2020">
                 <div class="card-img-wrapper">
                     <img src="https://images.unsplash.com/photo-1694234487030-1e8c988be7b0?auto=format&fit=crop&w=1000&q=80" class="card-img" alt="Palla da tennis a fuoco su un campo colorato">
                     <span class="catalog-code-badge">SPO·01</span>
@@ -487,7 +529,7 @@
                 </div>
             </div>
 
-            <div class="card" data-category="economia">
+            <div class="card" data-category="economia" data-stat="149%" data-stat-label="Margine a Copenaghen, contro l'82% speso a Milano">
                 <div class="card-img-wrapper">
                     <img src="https://images.unsplash.com/photo-1614521272693-73052eaefc51?auto=format&fit=crop&w=1000&q=80" class="card-img" alt="Skyline europeo al tramonto">
                     <span class="catalog-code-badge">ECO·01</span>
@@ -503,7 +545,7 @@
                 </div>
             </div>
 
-            <div class="card" data-category="energia">
+            <div class="card" data-category="energia" data-stat="~98%" data-stat-label="Energia pulita in Norvegia e Islanda">
                 <div class="card-img-wrapper">
                     <img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=1000&q=80" class="card-img" alt="Vista aerea di pannelli solari">
                     <span class="catalog-code-badge">ENE·01</span>
@@ -519,7 +561,7 @@
                 </div>
             </div>
 
-            <div class="card" data-category="lavoro">
+            <div class="card" data-category="lavoro" data-stat="$109.798" data-stat-label="Stipendio medio di un Research Scientist AI">
                 <div class="card-img-wrapper">
                     <img src="https://images.unsplash.com/photo-1751200065697-4461cc2b43cb?auto=format&fit=crop&w=1000&q=80" class="card-img" alt="Postazione di lavoro in penombra">
                     <span class="catalog-code-badge">LAV·01</span>
@@ -549,6 +591,27 @@
     const resultsCount = document.getElementById('results-count');
 
     const categoryNames = { all: 'Tutti gli articoli', economia: 'Economia', energia: 'Ambiente', lavoro: 'Lavoro', sport: 'Sport' };
+
+    // Numeri in breve: generata dalle card stesse (data-stat / data-stat-label),
+    // così si aggiorna da sola quando si aggiunge un nuovo report — nessun file a parte da tenere sincronizzato.
+    (function renderBriefStats() {
+        const row = document.getElementById('briefstats-row');
+        if (!row) return;
+        cards.forEach(card => {
+            const stat = card.dataset.stat;
+            if (!stat) return;
+            const label = card.dataset.statLabel || '';
+            const cat = card.dataset.category;
+            const badge = card.querySelector('.catalog-code-badge');
+            const link = card.querySelector('.card-link');
+            const catName = categoryNames[cat] || cat;
+            const a = document.createElement('a');
+            a.className = 'briefstat';
+            a.href = link ? link.href : '#';
+            a.innerHTML = `<div class="bs-num">${stat}</div><div class="bs-cat">${catName}${badge ? ' · ' + badge.textContent : ''}</div><div class="bs-label">${label}</div>`;
+            row.appendChild(a);
+        });
+    })();
 
     function setActiveFilter(filter) {
         catalogItemAll.classList.toggle('active', filter === 'all');
@@ -610,6 +673,10 @@
 
 </body>
 </html>
+
+
+
+
 
 
 
