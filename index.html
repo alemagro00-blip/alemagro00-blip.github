@@ -273,7 +273,7 @@
     .container { max-width: 1080px; margin: 0 auto; padding: 26px 44px 50px; }
 
     /* ============ Numeri in breve — tendina a comparsa ============ */
-    .briefstats-wrap { max-width: 1080px; margin: 0 auto; padding: 0 44px 22px; }
+    .briefstats-wrap { max-width: 1080px; margin: 0 auto; padding: 0 44px 22px; text-align: right; }
     .briefstats-details { border: none; }
     .briefstats-summary {
         list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
@@ -288,7 +288,7 @@
     .briefstats-summary:hover { background: rgba(255,255,255,0.85); }
     .briefstats-summary .chev { transition: transform .2s ease; font-size: 0.9em; }
     .briefstats-details[open] .briefstats-summary .chev { transform: rotate(180deg); }
-    .briefstats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 14px; }
+    .briefstats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 14px; text-align: left; }
     .briefstat {
         background: rgba(255,255,255,0.6);
         backdrop-filter: blur(16px) saturate(1.6);
@@ -312,6 +312,33 @@
 
     .results-bar { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; color: var(--muted); }
     #results-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--ink); }
+
+    /* ============ Sondaggio "Cosa analizzo dopo?" ============ */
+    .poll-card {
+        margin-top: 54px;
+        background: var(--glass-strong);
+        backdrop-filter: blur(20px) saturate(1.6); -webkit-backdrop-filter: blur(20px) saturate(1.6);
+        border: 1px solid var(--glass-border); border-radius: 26px;
+        padding: 34px 38px;
+    }
+    .poll-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: var(--coral-deep); font-weight: 700; margin-bottom: 10px; }
+    .poll-card h2 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.5rem; font-weight: 700; margin: 0 0 6px; }
+    .poll-sub { color: var(--muted); font-size: 0.92rem; margin: 0 0 24px; }
+    .poll-opts { display: flex; flex-direction: column; gap: 10px; }
+    .poll-opt {
+        position: relative; display: block; width: 100%; text-align: left; cursor: pointer;
+        background: rgba(255,255,255,0.55); border: 1px solid var(--glass-border); border-radius: 14px;
+        padding: 14px 18px; font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--ink);
+        overflow: hidden; transition: transform .15s ease;
+    }
+    .poll-opt:hover:not(:disabled) { transform: translateY(-1px); }
+    .poll-opt:disabled { cursor: default; }
+    .poll-opt .fill { position: absolute; top: 0; left: 0; bottom: 0; width: 0%; background: linear-gradient(100deg, var(--coral-light), rgba(255,106,77,0.28)); transition: width .6s ease; z-index: 0; }
+    .poll-opt .label-row { position: relative; z-index: 1; display: flex; justify-content: space-between; gap: 12px; }
+    .poll-opt .pct { font-family: 'JetBrains Mono', monospace; color: var(--muted); font-weight: 700; opacity: 0; transition: opacity .3s ease; }
+    .poll-card.voted .poll-opt .pct { opacity: 1; }
+    .poll-note { margin-top: 16px; font-size: 0.76rem; color: var(--faint); }
+
 
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 26px; }
 
@@ -581,6 +608,19 @@
             </div>
 
         </div>
+
+        <div class="poll-card" id="pollCard">
+            <div class="poll-eyebrow">Sondaggio</div>
+            <h2>Cosa analizzo dopo?</h2>
+            <p class="poll-sub">Scegli tu il prossimo argomento — i voti sono reali e condivisi tra tutti i visitatori.</p>
+            <div class="poll-opts" id="pollOpts">
+                <button class="poll-opt" data-key="casa"><span class="fill"></span><span class="label-row"><span>🏠 Casa: comprare o affittare conviene di più?</span><span class="pct">0%</span></span></button>
+                <button class="poll-opt" data-key="streaming"><span class="fill"></span><span class="label-row"><span>📺 Streaming: quanto costano davvero gli abbonamenti nel tempo?</span><span class="pct">0%</span></span></button>
+                <button class="poll-opt" data-key="social"><span class="fill"></span><span class="label-row"><span>📱 Social media: quanto tempo (e soldi) ci costano?</span><span class="pct">0%</span></span></button>
+                <button class="poll-opt" data-key="salute"><span class="fill"></span><span class="label-row"><span>🩺 Salute: cosa dicono davvero i dati sul benessere in Italia?</span><span class="pct">0%</span></span></button>
+            </div>
+            <p class="poll-note" id="pollNote">Un voto per persona.</p>
+        </div>
     </div>
 
     <footer>© nuMericA 2026 · Alessia Magro</footer>
@@ -613,6 +653,79 @@
             a.href = link ? link.href : '#';
             a.innerHTML = `<div class="bs-num">${stat}</div><div class="bs-cat">${catName}${badge ? ' · ' + badge.textContent : ''}</div><div class="bs-label">${label}</div>`;
             row.appendChild(a);
+        });
+    })();
+
+    // ============ Sondaggio "Cosa analizzo dopo?" — countapi.xyz, voti reali e condivisi ============
+    (function initPoll() {
+        const NAMESPACE = 'numerica-alessiamagro-poll2026';
+        const card = document.getElementById('pollCard');
+        const opts = Array.from(document.querySelectorAll('.poll-opt'));
+        const note = document.getElementById('pollNote');
+        if (!card || !opts.length) return;
+
+        const votedKey = 'numerica_poll_voted';
+        const hasVoted = () => localStorage.getItem(votedKey);
+
+        function renderCounts(counts) {
+            const total = Object.values(counts).reduce((a, b) => a + b, 0) || 1;
+            opts.forEach(btn => {
+                const k = btn.dataset.key;
+                const c = counts[k] || 0;
+                const pct = Math.round((c / total) * 100);
+                btn.querySelector('.fill').style.width = pct + '%';
+                btn.querySelector('.pct').textContent = pct + '%';
+            });
+        }
+
+        function lockVoting(chosenKey) {
+            card.classList.add('voted');
+            opts.forEach(btn => {
+                btn.disabled = true;
+                if (btn.dataset.key === chosenKey) btn.style.borderColor = 'var(--coral)';
+            });
+            note.textContent = 'Grazie per il voto! Risultati in tempo reale, condivisi con tutti.';
+        }
+
+        async function fetchCounts() {
+            const counts = {};
+            await Promise.all(opts.map(async btn => {
+                const k = btn.dataset.key;
+                try {
+                    const res = await fetch(`https://api.countapi.xyz/get/${NAMESPACE}/${k}`);
+                    const data = await res.json();
+                    counts[k] = data.value || 0;
+                } catch (e) {
+                    counts[k] = 0;
+                }
+            }));
+            return counts;
+        }
+
+        async function vote(key) {
+            try {
+                const res = await fetch(`https://api.countapi.xyz/hit/${NAMESPACE}/${key}`);
+                const data = await res.json();
+                const counts = await fetchCounts();
+                counts[key] = data.value || counts[key];
+                renderCounts(counts);
+            } catch (e) {
+                note.textContent = 'Voto non riuscito — riprova tra poco.';
+            }
+        }
+
+        opts.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (hasVoted()) return;
+                localStorage.setItem(votedKey, btn.dataset.key);
+                lockVoting(btn.dataset.key);
+                vote(btn.dataset.key);
+            });
+        });
+
+        fetchCounts().then(counts => {
+            renderCounts(counts);
+            if (hasVoted()) lockVoting(localStorage.getItem(votedKey));
         });
     })();
 
@@ -676,6 +789,9 @@
 
 </body>
 </html>
+
+
+
 
 
 
