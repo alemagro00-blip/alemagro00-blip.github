@@ -64,6 +64,24 @@
     .eyebrow { font-family: 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; font-size: 11.5px; color: var(--coral-deep); font-weight: 700; margin-bottom: 14px; }
     .intro-row h1 { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 700; letter-spacing: -0.5px; line-height: 1.15; }
     .intro-row .role { color: var(--muted); font-size: 1rem; margin-top: 8px; }
+	
+	.tools-marquee {
+		margin-top: 22px; overflow: hidden; width: 100%;
+		-webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+		mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+	}
+	.tools-track {
+		display: flex; gap: 36px; width: max-content;
+		animation: scroll-tools 18s linear infinite;
+		font-family: 'Bricolage Grotesque', sans-serif; font-style: italic; font-weight: 500;
+		font-size: 0.95rem; color: var(--muted); white-space: nowrap;
+	}
+	.tools-track span::after { content: '•'; margin-left: 36px; color: var(--coral); font-style: normal; }
+	@keyframes scroll-tools {
+		0% { transform: translateX(0); }
+		100% { transform: translateX(-50%); }
+	}
+	@media (prefers-reduced-motion: reduce) { .tools-track { animation: none; } }
 
     @media (max-width: 640px) {
         .intro-row { flex-direction: column; align-items: flex-start; gap: 22px; }
@@ -167,12 +185,15 @@
             <div class="ms-label">Quantità di cose che si possono scoprire quando inizi a guardare i dati con troppa curiosità</div>
         </div>
     </div>
+	
+	
 
     <div class="card">
         <p>Sono Alessia, e i numeri mi hanno sempre incuriosita più delle parole. Ho iniziato a inseguirli fin dalle superiori, con il diploma in <b>Amministrazione, Finanza e Marketing</b>, poi con la laurea in <b>Economia e Commercio</b> — e non mi sono più fermata: due certificazioni, una in <b>Python</b> (Mac Formazione) e una come <b>Data Analyst</b> (IBM), per trasformare quella curiosità in un mestiere vero.</p>
         <p>Quello che mi affascina dei dati è la loro capacità di rendere visibile ciò che a occhio nudo non si vede: un pattern nascosto in migliaia di righe, un confronto che cambia prospettiva, una domanda che nessuno si era ancora fatto nel modo giusto. Non li uso per complicare le cose — al contrario, per renderle più chiare, più efficienti, più utili a chi le legge.</p>
         <p><b>nuMericA</b> nasce da questa idea: prendere dataset pubblici, spesso enormi e poco raccontati, e trasformarli in storie che si leggono in cinque minuti — invece che restare chiusi in un file Excel che nessuno apre mai.</p>
     </div>
+
 
     <!-- 2. Citazione -->
     <div class="quote-block">
@@ -210,6 +231,13 @@
                     <div class="tl-sub">IBM</div>
                 </div>
             </div>
+        </div>
+    </div>
+
+	<div class="tools-marquee">
+        <div class="tools-track">
+            <span>SQL</span><span>Python</span><span>HTML</span><span>R</span><span>DBeaver</span><span>VS Code</span>
+            <span>SQL</span><span>Python</span><span>HTML</span><span>R</span><span>DBeaver</span><span>VS Code</span>
         </div>
     </div>
 
