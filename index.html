@@ -386,6 +386,10 @@
     .card-tag.energia { background: var(--emerald-light); color: var(--emerald); }
     .card-tag.lavoro { background: var(--violet-light); color: var(--violet-deep); }
     .card-tag.sport { background: var(--rosa-light); color: var(--rosa-deep); }
+	.interactive-tag {
+    font-size: 0.7rem; font-weight: 700; padding: 4px 11px; border-radius: 999px;
+    color: var(--muted); border: 1px dashed var(--faint); letter-spacing: 0.2px;
+	}
 
     .card-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--faint); }
 
@@ -549,33 +553,39 @@
                     <span class="catalog-code-badge">SPO·01</span>
                 </div>
                 <div class="card-body">
-                    <div class="card-header-info">
-                        <span class="card-tag sport">Sport</span>
-                        <span class="card-meta">6 MIN</span>
-                    </div>
+				  <div class="card-header-info">
+					<div style="display:flex; align-items:center; gap:8px;">
+						<span class="card-tag sport">Sport</span>
+						<span class="interactive-tag">Interattivo</span>
+					</div>
+					<span class="card-meta">6 MIN</span>
+					</div>
                     <h2 class="card-title">Si vince per talento, o si segue una moda?</h2>
                     <p class="card-excerpt">Sinner, il padel e la corsa a confronto: quando un campione converte davvero i suoi tifosi in praticanti, e quando invece è solo una moda a spingere la crescita.</p>
                     <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/effetto_campione_o_moda.html" class="card-link">Esplora i Dati &rarr;</a>
                 </div>
             </div>
 
-            <div class="card" data-category="economia" data-stat="149%" data-stat-label="Margine a Copenaghen, contro l'82% speso a Milano">
+            <div class="card" data-category="economia" data-stat="82%" data-stat-label="dello stipendio se ne va solo per i costi essenziali a Milano">
                 <div class="card-img-wrapper">
                     <img src="https://images.unsplash.com/photo-1614521272693-73052eaefc51?auto=format&fit=crop&w=1000&q=80" class="card-img" alt="Skyline europeo al tramonto">
                     <span class="catalog-code-badge">ECO·01</span>
                 </div>
                 <div class="card-body">
-                    <div class="card-header-info">
-                        <span class="card-tag economia">Economia</span>
-                        <span class="card-meta">5 MIN</span>
-                    </div>
+					<div class="card-header-info">
+						<div style="display:flex; align-items:center; gap:8px;">
+							<span class="card-tag economia">Economia</span>
+							<span class="interactive-tag">Interattivo</span>
+						</div>
+						<span class="card-meta">5 MIN</span>
+					</div>
                     <h2 class="card-title">Il costo nascosto della vita</h2>
                     <p class="card-excerpt">Dieci città europee a confronto attraverso la metrica che conta davvero: non gli euro, ma le ore di vita necessarie per sostenere il costo della vita.</p>
                     <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/costo_della_vita_report.html" class="card-link">Esplora i Dati &rarr;</a>
                 </div>
             </div>
 
-            <div class="card" data-category="energia" data-stat="~98%" data-stat-label="Energia pulita in Norvegia e Islanda">
+            <div class="card" data-category="energia" data-stat=">60%" data-stat-label="della domanda Primaria Globale rimane vincolata a petrolio, gas e carbone">
                 <div class="card-img-wrapper">
                     <img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=1000&q=80" class="card-img" alt="Vista aerea di pannelli solari">
                     <span class="catalog-code-badge">ENE·01</span>
@@ -591,7 +601,7 @@
                 </div>
             </div>
 
-            <div class="card" data-category="lavoro" data-stat="$109.798" data-stat-label="Stipendio medio di un Research Scientist AI">
+            <div class="card" data-category="lavoro" data-stat="NLP Engineer" data-stat-label="Ruolo AI più richiesto">
                 <div class="card-img-wrapper">
                     <img src="https://images.unsplash.com/photo-1751200065697-4461cc2b43cb?auto=format&fit=crop&w=1000&q=80" class="card-img" alt="Postazione di lavoro in penombra">
                     <span class="catalog-code-badge">LAV·01</span>
@@ -811,6 +821,7 @@
 
 </body>
 </html>
+
 
 
 
