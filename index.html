@@ -723,7 +723,6 @@
         // positiva dal server — mai prima, per non bloccare l'utente su un tentativo fallito.
 		async function vote(key) {
 			const previous = hasVoted();
-			if (previous === key) return; // hai già votato questa, non fare nulla
 
 			note.textContent = 'Invio in corso…';
 			try {
@@ -747,8 +746,34 @@
 			}
 		}
 
+		async function removeVote() {
+			const previous = hasVoted();
+			if (!previous) return;
+			note.textContent = 'Rimozione in corso…';
+			try {
+				const res = await fetch(`${BASE}/get/${fullKey(previous)}`);
+				const data = await res.json();
+				const newValue = Math.max(0, (data.value || 1) - 1);
+				await fetch(`${BASE}/set/${fullKey(previous)}?value=${newValue}`);
+				const counts = await fetchCounts();
+				renderCounts(counts);
+				localStorage.removeItem(votedKey);
+				body.classList.remove('voted');
+				opts.forEach(btn => { btn.style.borderColor = ''; });
+				note.textContent = 'Voto rimosso. Puoi votare di nuovo quando vuoi.';
+			} catch (e) {
+				note.textContent = 'Rimozione non riuscita — riprova tra poco.';
+			}
+		}
+
 		opts.forEach(btn => {
-			btn.addEventListener('click', () => vote(btn.dataset.key));
+			btn.addEventListener('click', () => {
+				if (hasVoted() === btn.dataset.key) {
+					removeVote();
+				} else {
+					vote(btn.dataset.key);
+				}
+			});
 		});
 
         fetchCounts().then(counts => {
