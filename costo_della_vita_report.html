@@ -32,7 +32,7 @@
   .eyebrow { font-family:'JetBrains Mono',monospace; letter-spacing:.16em; text-transform:uppercase; font-size:11.5px; color:var(--amber); margin-bottom:22px; font-weight:700; }
   .hero h1 { font-size:clamp(2.4rem,6vw,3.6rem); font-weight:700; line-height:1.05; letter-spacing:-.01em; color:#fff; }
   .hero h1 em { font-style:italic; color:var(--coral); padding-right:.08em; }
-  .hero .sub { max-width:620px; margin-top:22px; font-size:16.5px; line-height:1.6; color:#C9C4B4; }
+  .hero .sub  {margin-top:22px; font-size:16.5px; line-height:1.6; color:#C9C4B4; }
   .ticker {
     margin-top:44px; display:grid; grid-template-columns:1fr 1fr; gap:1px;
     background:rgba(255,255,255,0.12); border-radius:18px; overflow:hidden;
@@ -50,7 +50,7 @@
   .ticker .cap { font-size:13px; color:#9C9788; margin-top:6px; line-height:1.5; }
 
   .intro { padding:52px 0 0; }
-  .lede { font-size:19px; color:#2B2B23; max-width:760px; font-family:'Bricolage Grotesque',sans-serif; font-weight:500; line-height:1.5; }
+  .lede { font-size:19px; color:#2B2B23; font-family:'Bricolage Grotesque',sans-serif; font-weight:500; line-height:1.5; }
   .lede b { font-style:italic; font-weight:600; }
 
   .method-row { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:36px 0 8px; }
@@ -58,14 +58,14 @@
   .method-row .card .t { font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.06em; font-weight:700; margin-bottom:8px; }
   .method-row .card.c1 .t{color:var(--coral);} .method-row .card.c2 .t{color:var(--moss);} .method-row .card.c3 .t{color:var(--amber);}
   .method-row .card .d { font-size:13.5px; color:var(--slate); line-height:1.5; }
-  .foot-note { font-size:13px; color:var(--slate); margin-top:16px; max-width:760px; }
+  .foot-note { font-size:13px; color:var(--slate); margin-top:16px; }
 
   section.q { padding:40px 0; }
   .qhead { display:flex; align-items:baseline; gap:12px; margin-bottom:10px; }
   .qnum { font-family:'JetBrains Mono',monospace; color:var(--coral); font-size:13px; font-weight:700; }
   .qline { flex:1; height:1px; background:var(--line); }
   section.q h2 { font-size:clamp(24px,3.4vw,32px); letter-spacing:-.01em; font-weight:600; }
-  .qtext { max-width:740px; color:#3A392F; font-size:16px; margin-top:14px; }
+  .qtext {color:#3A392F; font-size:16px; margin-top:14px; }
   .qtext b { color:var(--ink); }
   .conclusion .qtext b { color:#fff; }
 
@@ -139,7 +139,7 @@
   .conclusion h2 { color:#fff; }
   .conclusion .qtext { color:#B8B3A2; }
   .conclusion .chartbox { background:rgba(255,255,255,0.05); backdrop-filter:blur(16px); border-color:rgba(255,255,255,0.14); }
-  .final-line { margin-top:32px; padding-top:26px; border-top:1px solid #2A2D35; font-family:'Bricolage Grotesque',sans-serif; font-style:italic; font-weight:500; font-size:21px; color:var(--amber); max-width:740px; line-height:1.4; }
+  .final-line { margin-top:32px; padding-top:26px; border-top:1px solid #2A2D35; font-family:'Bricolage Grotesque',sans-serif; font-style:italic; font-weight:500; font-size:21px; color:var(--amber); line-height:1.4; }
 
   footer { padding:30px 0 56px; text-align:center; color:var(--slate); font-size:12px; }
 
@@ -165,13 +165,13 @@
     <div class="ticker">
       <div class="cell">
         <div class="label">Milano</div>
-        <div class="num bad">82%</div>
-        <div class="cap">dello stipendio se ne va solo per i costi essenziali in centro. È l'unica città del gruppo in rosso.</div>
+        <div class="num bad">120%</div>
+        <div class="cap">Le spese mensili (affitto, bollette, spesa, tempo libero) costano il 20% in più dello stipendio — ma solo vivendo da soli in centro.</div>
       </div>
       <div class="cell">
         <div class="label">Copenaghen</div>
-        <div class="num good">149%</div>
-        <div class="cap">di margine sullo stipendio anche vivendo in centro — il miglior rapporto tra guadagno e spesa del gruppo.</div>
+        <div class="num good">52%</div>
+        <div class="cap">Dopo aver pagato affitto, bollette, spesa e tempo libero, resta ancora il 52% dello stipendio — il miglior rapporto tra guadagno e spesa del gruppo, anche vivendo in centro.</div>
       </div>
     </div>
   </div>
@@ -185,18 +185,18 @@
   <section class="q" id="paniere" style="border-top:none;">
     <div class="qhead"><span class="qnum mono">01</span><span class="qline"></span></div>
     <h2>Il paniere: cosa confrontiamo</h2>
-    <div class="qtext"><p>Abbiamo incrociato due fonti: i prezzi reali raccolti da chi vive in queste città, e i numeri ufficiali pubblicati dall'Unione Europea su redditi e prezzi.</p></div>
+    <div class="qtext"><p>Abbiamo incrociato due fonti: i prezzi reali raccolti da chi vive in queste città, e i numeri ufficiali pubblicati dall'Unione Europea su redditi e prezzi. <br/>Una premessa fondamentale prima di partire: <b>analizziamo sempre due scenari per una persona sola</b> — vivere in <i><b>centro</b></i> e vivere <i><b>fuori centro</b></i>. Se il primo rappresenta il caso più severo e gravoso, la periferia rispecchia più da vicino il budget di un lavoratore medio, offrendo una fotografia più equilibrata.</p></div>
     <div class="method-row">
       <div class="card c1"><div class="t">Prezzi quotidiani</div><div class="d">Affitto, bollette, trasporti, caffè, birra, cena, palestra — raccolti città per città da chi ci vive</div></div>
       <div class="card c2"><div class="t">Dati ufficiali</div><div class="d">Redditi, inflazione e livello dei prezzi pubblicati dall'UE — più affidabili, ma quasi mai a livello di singola città</div></div>
-      <div class="card c3"><div class="t">Spesa alimentare</div><div class="d">Partiamo dalla media nazionale e la correggiamo in base a quanto è ricca la zona — Milano più cara di Bologna, per esempio</div></div>
+      <div class="card c3"><div class="t">Spesa alimentare</div><div class="d">Partiamo dalla media nazionale e la correggiamo in base a quanto è ricca la zona — ad esempio, Milano rispetto a Bologna.</div></div>
     </div>
-    <p class="foot-note">Il paniere completo — stipendio, costi fissi, tempo libero — è nella Sezione 06, confrontato direttamente con quanto resta in tasca a fine mese. <i>Fonti: Numbeo · Eurostat</i></p>
+    <p class="foot-note">Il paniere completo — stipendio, costi fissi, tempo libero — è nella Sezione 06, confrontato direttamente con quanto resta in tasca a fine mese. Lo stipendio netto è la media tra Numbeo e una fonte indipendente per città (Deutsche Bank Research "Mapping the World's Prices" 2025, JobPricing, CGIA Mestre-INPS) <br/><br/><i>Fonti: Numbeo · Eurostat · Deutsche Bank Research 2025</i></p>
   </section>
 
   <section class="q" id="caffe">
     <div class="qhead"><span class="qnum mono">02</span><span class="qline"></span></div>
-    <h2>Chi ha il caffè più caro?</h2>
+    <h2>Quanto costano i piccoli piaceri quotidiani?</h2>
     <div class="qtext"><p>Prima dei numeri seri, i piccoli piaceri quotidiani: cappuccino, birra, cena, palestra. Spese che facciamo senza pensarci — ma che raccontano già molto.</p></div>
     <div class="chartbox">
       <div class="itemgrid">
@@ -230,13 +230,13 @@
         </div>
       </div>
     </div>
-    <div class="callout"><b>L'Italia ha il cappuccino più economico ovunque</b> — Bologna, Roma e Milano occupano i tre gradini più bassi — ma <b>Milano ha la palestra più cara di tutte e dieci le città</b> (quasi 78€ al mese). <b>Copenaghen</b> è la più cara su cappuccino e birra, ma nemmeno lei lo è su tutto: sulla palestra è nella media.</div>
+    <div class="callout"><b>L'Italia ha il cappuccino più economico ovunque</b> — Bologna, Roma e Milano occupano i tre gradini più bassi — ma <b>Milano ha la palestra più cara di tutte e dieci le città</b> (in media 78€ al mese). <b>Copenaghen</b> è la più cara su cappuccino e birra, ma nemmeno lei lo è su tutto: sul costo della palestra si riallinea alla media</div>
   </section>
 
   <section class="q" id="trend">
     <div class="qhead"><span class="qnum mono">03</span><span class="qline"></span></div>
     <h2>I prezzi corrono più veloce degli stipendi?</h2>
-    <div class="qtext"><p>Un confronto fatto oggi racconta solo un istante. Guardando come sono cambiati i prezzi negli ultimi 5 anni, il quadro si muove parecchio.</p></div>
+    <div class="qtext"><p>Un confronto istantaneo dice molto, ma non tutto. Analizzando il trend dei prezzi negli ultimi cinque anni, la prospettiva cambia radicalmente.</p></div>
     <div class="chartbox">
       <div class="barlist-head">Variazione dei prezzi, 2021 → 2025</div>
       <div class="barlist">
@@ -249,11 +249,17 @@
         <div class="row"><div class="name">Francia</div><div class="track"><div class="fill" style="width:35%;background:var(--moss)"></div></div><div class="val mono">+16%</div></div>
         <div class="row"><div class="name">Danimarca</div><div class="track"><div class="fill" style="width:34%;background:var(--moss)"></div></div><div class="val mono">+16%</div></div>
       </div>
+	  <p style="font-size:12px; color:var(--slate); margin:14px 0 0;"><i>Variazione dell'indice HICP (prezzi al consumo), 2021 → 2025 · Fonte: Eurostat</i></p>
     </div>
-    <div class="callout"><b>L'Ungheria è il paese dove i prezzi sono corsi più veloce di tutti</b>: +46% in 5 anni, quasi il triplo della Francia (+16%, la più stabile). <b>Budapest, la città più economica nella spesa quotidiana, è anche quella dove il potere d'acquisto si sta erodendo più in fretta</b> — la convenienza di oggi potrebbe non durare.</div>
+    <div class="callout"><b>L'Ungheria è il paese dove i prezzi sono cresciuti più velocemente in assoluto:</b>: +46% in 5 anni, quasi il triplo rispetto alla stabilità della Francia (+16%). <b> Così Budapest, pur rimanendo la città più economica nella spesa quotidiana, è anche quella dove il potere d'acquisto si sta erodendo più in fretta</b> — un segnale del fatto che la sua convenienza potrebbe non durare a lungo.</div>
     <div class="aside-box">
       <div class="t">Un controllo di qualità</div>
-      Quanto sono d'accordo tra loro i prezzi "sentiti" da chi vive in città e i numeri ufficiali? Non moltissimo. <b>Amsterdam</b> si percepisce come la più cara del gruppo — più di quanto dica il dato ufficiale olandese, forse colpa del turismo. <b>Berlino</b> è il contrario: il dato ufficiale tedesco dice "caro", la vita reale sembra molto più abbordabile. E <b>Milano e Bologna, stesso paese, hanno lo stesso numero ufficiale — ma nella vita di tutti i giorni sono due mondi diversi.</b>
+      Quanto concordano i prezzi percepiti dai residenti con i dati ufficiali dell'Unione Europea? Meno di quanto si creda. 
+	  <ul>
+		<li><b>Amsterdam</b>, ad esempio, viene percepita come la città più cara in assoluto — ben oltre quello che dicono le statistiche sui consumi olandesi, probabilmente per via della pressione turistica.</li>
+		<li><b>Berlino</b> mostra la tendenza opposta: mentre i dati ufficiali la descrivono come costosa, la routine quotidiana la rende molto più accessibile.</li>
+		<li><b>Milano e Bologna</b>, pur condividendo lo stesso dato ufficiale nazionale, nella vita di tutti i giorni sono due mondi diversi.</li>
+	  </ul>
     </div>
   </section>
 
@@ -261,47 +267,14 @@
     <div class="qhead"><span class="qnum mono">04</span><span class="qline"></span></div>
     <h2>Il paradosso del potere d'acquisto</h2>
     <div class="qtext"><p>Un prezzo senza uno stipendio a fianco non dice niente. Qui capovolgiamo la domanda: non "quanto costa", ma quanti <b>minuti di lavoro</b> servono per permetterselo.</p></div>
-    <div class="chartbox">
-      <div class="tworank">
-        <div class="col">
-          <div class="barlist-head" style="color:var(--coral);">☕ Minuti di lavoro — Cappuccino</div>
-          <div class="barlist">
-            <div class="row"><div class="name">Milano</div><div class="track"><div class="fill" style="width:49%;background:var(--coral)"></div></div><div class="val mono">9,4m</div></div>
-            <div class="row"><div class="name">Amsterdam</div><div class="track"><div class="fill" style="width:50%;background:var(--coral)"></div></div><div class="val mono">9,6m</div></div>
-            <div class="row"><div class="name">Bologna</div><div class="track"><div class="fill" style="width:52%;background:var(--coral)"></div></div><div class="val mono">10,0m</div></div>
-            <div class="row"><div class="name">Roma</div><div class="track"><div class="fill" style="width:57%;background:var(--coral)"></div></div><div class="val mono">10,8m</div></div>
-            <div class="row"><div class="name">Barcellona</div><div class="track"><div class="fill" style="width:66%;background:var(--coral)"></div></div><div class="val mono">12,7m</div></div>
-            <div class="row"><div class="name">Berlino</div><div class="track"><div class="fill" style="width:70%;background:var(--coral)"></div></div><div class="val mono">13,4m</div></div>
-            <div class="row"><div class="name">Parigi</div><div class="track"><div class="fill" style="width:72%;background:var(--coral)"></div></div><div class="val mono">13,7m</div></div>
-            <div class="row"><div class="name">Copenaghen</div><div class="track"><div class="fill" style="width:78%;background:var(--coral)"></div></div><div class="val mono">14,9m</div></div>
-            <div class="row"><div class="name">Praga</div><div class="track"><div class="fill" style="width:81%;background:var(--coral)"></div></div><div class="val mono">15,5m</div></div>
-            <div class="row"><div class="name">Budapest</div><div class="track"><div class="fill" style="width:100%;background:var(--coral)"></div></div><div class="val mono">19,1m</div></div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="barlist-head" style="color:var(--moss);">🍺 Minuti di lavoro — Birra</div>
-          <div class="barlist">
-            <div class="row"><div class="name">Praga</div><div class="track"><div class="fill" style="width:42%;background:var(--moss)"></div></div><div class="val mono">12,6m</div></div>
-            <div class="row"><div class="name">Berlino</div><div class="track"><div class="fill" style="width:53%;background:var(--moss)"></div></div><div class="val mono">16,1m</div></div>
-            <div class="row"><div class="name">Amsterdam</div><div class="track"><div class="fill" style="width:52%;background:var(--moss)"></div></div><div class="val mono">15,7m</div></div>
-            <div class="row"><div class="name">Barcellona</div><div class="track"><div class="fill" style="width:57%;background:var(--moss)"></div></div><div class="val mono">17,3m</div></div>
-            <div class="row"><div class="name">Copenaghen</div><div class="track"><div class="fill" style="width:65%;background:var(--moss)"></div></div><div class="val mono">19,5m</div></div>
-            <div class="row"><div class="name">Budapest</div><div class="track"><div class="fill" style="width:69%;background:var(--moss)"></div></div><div class="val mono">20,9m</div></div>
-            <div class="row"><div class="name">Parigi</div><div class="track"><div class="fill" style="width:73%;background:var(--moss)"></div></div><div class="val mono">22,0m</div></div>
-            <div class="row"><div class="name">Roma</div><div class="track"><div class="fill" style="width:92%;background:var(--moss)"></div></div><div class="val mono">27,9m</div></div>
-            <div class="row"><div class="name">Milano</div><div class="track"><div class="fill" style="width:98%;background:var(--moss)"></div></div><div class="val mono">29,7m</div></div>
-            <div class="row"><div class="name">Bologna</div><div class="track"><div class="fill" style="width:100%;background:var(--moss)"></div></div><div class="val mono">30,2m</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
+
     <div class="stat-pair">
-      <div class="chip">Cappuccino più veloce da guadagnare<b>Milano, 9,4 min</b></div>
-      <div class="chip">Cappuccino più lento<b>Budapest, 19,1 min</b></div>
-      <div class="chip">Birra più veloce<b>Praga, 12,6 min</b></div>
-      <div class="chip">Birra più lenta<b>Bologna, 30,2 min</b></div>
+      <div class="chip">Cappuccino più veloce da guadagnare<b>Milano, 9,2 min</b></div>
+      <div class="chip">Cappuccino più lento<b>Budapest, 18,5 min</b></div>
+      <div class="chip">Birra più veloce<b>Praga, 12,7 min</b></div>
+      <div class="chip">Birra più lenta<b>Bologna, 29,9 min</b></div>
     </div>
-    <div class="callout">Il quadro si ribalta rispetto ai prezzi assoluti. <b>Amsterdam ha alcuni dei prezzi più alti in euro — ma è tra le città più convenienti in tempo di lavoro</b>, grazie al secondo stipendio orario più alto del gruppo. L'opposto per <b>Budapest</b>: prezzi nella media, ma il tempo di lavoro per un cappuccino è il più lungo di tutte e dieci le città.</div>
+    <div class="callout">Il quadro si ribalta rispetto ai prezzi assoluti. <b>Amsterdam ha tra i prezzi nominali più alti del gruppo, ma risulta tra le città più convenienti in tempo di lavoro</b>, grazie a stipendi orari molto elevati. L'opposto per <b>Budapest</b>: i prezzi sembrano accessibili, ma l'impatto sul monte ore di lavoro è il più pesante di tutte e dieci le città.</div>
 	<div class="qtext"><p>Prova con i tuoi numeri: scegli cosa bevi e quanto, e scopri quanto tempo di lavoro ti costa città per città.</p></div>
     <div class="simulator-controls" style="margin-top:32px;">
       <div class="sim-toggle" role="group">
@@ -335,10 +308,10 @@
         <div class="row"><div class="name">Spesa alimentare</div><div class="track"><div class="fill" style="width:38%;background:#7A9B8A"></div></div><div class="val mono">23,3%</div></div>
         <div class="row"><div class="name">Palestra</div><div class="track"><div class="fill" style="width:37%;background:#7A9B8A"></div></div><div class="val mono">22,6%</div></div>
         <div class="row"><div class="name">Benzina</div><div class="track"><div class="fill" style="width:19%;background:var(--moss)"></div></div><div class="val mono">11,8%</div></div>
-      </div>
-      <p style="font-size:12px; color:var(--slate); margin:16px 0 0;">Coefficiente di variazione tra le 10 città (%) — più alto, più il prezzo cambia da città a città</p>
+	 </div>
+		<p style="font-size:12px; color:var(--slate); margin:14px 0 0;"><i>Coefficiente di variazione (%): più è alto, più il prezzo cambia da città a città — Fonti: Numbeo · Eurostat</i></p>
     </div>
-    <div class="callout"><b>I trasporti pubblici sono la voce più diseguale</b> — riflesso di scelte politiche diverse sui sussidi. <b>La benzina è quasi un prezzo unico europeo</b>: è una materia prima scambiata sugli stessi mercati. Sorpresa: <b>il cappuccino è più diseguale dell'affitto</b> — il mercato immobiliare tende a riflettere la ricchezza media di un paese, un caffè al bar dipende da fattori molto più locali.</div>
+    <div class="callout"><b>I trasporti pubblici sono la voce più diseguale del paniere</b> — specchio diretto delle differenti politiche nazionali sui sussidi. <br/><b>La benzina è quasi un prezzo unico europeo</b>: è una materia prima scambiata sugli stessi mercati. <br/>La vera sorpresa? <b> il cappuccino è più diseguale dell'affitto</b> — il mercato immobiliare tende a riflettere la ricchezza media di un paese, mentre il costo di una tazzina di caffè al bar dipende da fattori molto più locali.</div>
   </section>
 
   <section class="q" id="conto-finale">
@@ -350,16 +323,16 @@
     <h3 class="sub-h centro">Scenario centro</h3>
     <div class="chartbox">
       <div class="hoursrow">
-        <div class="row"><div class="name">Copenaghen</div><div class="track"><div class="seg-fissi" style="width:41.8%"></div><div class="seg-libero" style="width:7.1%"></div></div><div class="val mono">107h</div></div>
-        <div class="row"><div class="name">Berlino</div><div class="track"><div class="seg-fissi" style="width:47.9%"></div><div class="seg-libero" style="width:6.4%"></div></div><div class="val mono">120h</div></div>
-        <div class="row"><div class="name">Parigi</div><div class="track"><div class="seg-fissi" style="width:49.5%"></div><div class="seg-libero" style="width:6.9%"></div></div><div class="val mono">124h</div></div>
-        <div class="row"><div class="name">Amsterdam</div><div class="track"><div class="seg-fissi" style="width:52.2%"></div><div class="seg-libero" style="width:5.8%"></div></div><div class="val mono">128h</div></div>
-        <div class="row"><div class="name">Praga</div><div class="track"><div class="seg-fissi" style="width:54.8%"></div><div class="seg-libero" style="width:7.6%"></div></div><div class="val mono">137h</div></div>
-        <div class="row"><div class="name">Budapest</div><div class="track"><div class="seg-fissi" style="width:54.7%"></div><div class="seg-libero" style="width:11.0%"></div></div><div class="val mono">145h</div></div>
-        <div class="row"><div class="name">Bologna</div><div class="track"><div class="seg-fissi" style="width:60.2%"></div><div class="seg-libero" style="width:9.3%"></div></div><div class="val mono">153h</div></div>
-        <div class="row"><div class="name">Barcellona</div><div class="track"><div class="seg-fissi" style="width:64.3%"></div><div class="seg-libero" style="width:7.9%"></div></div><div class="val mono">159h</div></div>
-        <div class="row"><div class="name">Roma</div><div class="track"><div class="seg-fissi" style="width:68.1%"></div><div class="seg-libero" style="width:9.2%"></div></div><div class="val mono over">170h</div></div>
-        <div class="row"><div class="name">Milano</div><div class="track"><div class="seg-fissi" style="width:79.0%"></div><div class="seg-libero" style="width:9.9%"></div></div><div class="val mono over">195h</div></div>
+        <div class="row"><div class="name">Copenaghen</div><div class="track"><div class="seg-fissi" style="width:41.0%"></div><div class="seg-libero" style="width:6.9%"></div></div><div class="val mono">106h</div></div>
+        <div class="row"><div class="name">Berlino</div><div class="track"><div class="seg-fissi" style="width:43.2%"></div><div class="seg-libero" style="width:5.8%"></div></div><div class="val mono">108h</div></div>
+        <div class="row"><div class="name">Parigi</div><div class="track"><div class="seg-fissi" style="width:45.3%"></div><div class="seg-libero" style="width:6.3%"></div></div><div class="val mono">113h</div></div>
+        <div class="row"><div class="name">Amsterdam</div><div class="track"><div class="seg-fissi" style="width:51.7%"></div><div class="seg-libero" style="width:5.7%"></div></div><div class="val mono">126h</div></div>
+        <div class="row"><div class="name">Praga</div><div class="track"><div class="seg-fissi" style="width:55.5%"></div><div class="seg-libero" style="width:7.7%"></div></div><div class="val mono">139h</div></div>
+        <div class="row"><div class="name">Budapest</div><div class="track"><div class="seg-fissi" style="width:53.3%"></div><div class="seg-libero" style="width:10.7%"></div></div><div class="val mono">141h</div></div>
+        <div class="row"><div class="name">Barcellona</div><div class="track"><div class="seg-fissi" style="width:60.3%"></div><div class="seg-libero" style="width:7.4%"></div></div><div class="val mono">149h</div></div>
+        <div class="row"><div class="name">Bologna</div><div class="track"><div class="seg-fissi" style="width:59.6%"></div><div class="seg-libero" style="width:9.2%"></div></div><div class="val mono">151h</div></div>
+        <div class="row"><div class="name">Roma</div><div class="track"><div class="seg-fissi" style="width:63.9%"></div><div class="seg-libero" style="width:8.6%"></div></div><div class="val mono">159h</div></div>
+        <div class="row"><div class="name">Milano</div><div class="track"><div class="seg-fissi" style="width:77.3%"></div><div class="seg-libero" style="width:9.6%"></div></div><div class="val mono over">191h</div></div>
       </div>
       <div class="hours-legend">
         <span><i style="background:var(--moss)"></i>Costi fissi</span>
@@ -371,16 +344,16 @@
     <h3 class="sub-h periferia">Scenario periferia</h3>
     <div class="chartbox">
       <div class="hoursrow">
-        <div class="row"><div class="name">Copenaghen</div><div class="track"><div class="seg-fissi" style="width:33.9%"></div><div class="seg-libero" style="width:7.1%"></div></div><div class="val mono">90h</div></div>
-        <div class="row"><div class="name">Berlino</div><div class="track"><div class="seg-fissi" style="width:39.4%"></div><div class="seg-libero" style="width:6.4%"></div></div><div class="val mono">101h</div></div>
-        <div class="row"><div class="name">Amsterdam</div><div class="track"><div class="seg-fissi" style="width:41.1%"></div><div class="seg-libero" style="width:5.8%"></div></div><div class="val mono">103h</div></div>
-        <div class="row"><div class="name">Parigi</div><div class="track"><div class="seg-fissi" style="width:40.5%"></div><div class="seg-libero" style="width:6.9%"></div></div><div class="val mono">104h</div></div>
-        <div class="row"><div class="name">Praga</div><div class="track"><div class="seg-fissi" style="width:49.3%"></div><div class="seg-libero" style="width:7.6%"></div></div><div class="val mono">125h</div></div>
-        <div class="row"><div class="name">Budapest</div><div class="track"><div class="seg-fissi" style="width:46.2%"></div><div class="seg-libero" style="width:11.0%"></div></div><div class="val mono">126h</div></div>
-        <div class="row"><div class="name">Barcellona</div><div class="track"><div class="seg-fissi" style="width:52.4%"></div><div class="seg-libero" style="width:7.9%"></div></div><div class="val mono">133h</div></div>
-        <div class="row"><div class="name">Bologna</div><div class="track"><div class="seg-fissi" style="width:51.6%"></div><div class="seg-libero" style="width:9.3%"></div></div><div class="val mono">134h</div></div>
-        <div class="row"><div class="name">Roma</div><div class="track"><div class="seg-fissi" style="width:54.5%"></div><div class="seg-libero" style="width:9.2%"></div></div><div class="val mono">140h</div></div>
-        <div class="row"><div class="name">Milano</div><div class="track"><div class="seg-fissi" style="width:62.0%"></div><div class="seg-libero" style="width:9.9%"></div></div><div class="val mono">158h</div></div>
+        <div class="row"><div class="name">Copenaghen</div><div class="track"><div class="seg-fissi" style="width:33.3%"></div><div class="seg-libero" style="width:6.9%"></div></div><div class="val mono">89h</div></div>
+        <div class="row"><div class="name">Berlino</div><div class="track"><div class="seg-fissi" style="width:35.5%"></div><div class="seg-libero" style="width:5.8%"></div></div><div class="val mono">91h</div></div>
+        <div class="row"><div class="name">Amsterdam</div><div class="track"><div class="seg-fissi" style="width:40.7%"></div><div class="seg-libero" style="width:5.7%"></div></div><div class="val mono">102h</div></div>
+        <div class="row"><div class="name">Parigi</div><div class="track"><div class="seg-fissi" style="width:37.0%"></div><div class="seg-libero" style="width:6.3%"></div></div><div class="val mono">95h</div></div>
+        <div class="row"><div class="name">Praga</div><div class="track"><div class="seg-fissi" style="width:49.9%"></div><div class="seg-libero" style="width:7.7%"></div></div><div class="val mono">127h</div></div>
+        <div class="row"><div class="name">Budapest</div><div class="track"><div class="seg-fissi" style="width:45.0%"></div><div class="seg-libero" style="width:10.7%"></div></div><div class="val mono">123h</div></div>
+        <div class="row"><div class="name">Barcellona</div><div class="track"><div class="seg-fissi" style="width:49.1%"></div><div class="seg-libero" style="width:7.4%"></div></div><div class="val mono">124h</div></div>
+        <div class="row"><div class="name">Bologna</div><div class="track"><div class="seg-fissi" style="width:51.1%"></div><div class="seg-libero" style="width:9.2%"></div></div><div class="val mono">133h</div></div>
+        <div class="row"><div class="name">Roma</div><div class="track"><div class="seg-fissi" style="width:51.1%"></div><div class="seg-libero" style="width:8.6%"></div></div><div class="val mono">131h</div></div>
+        <div class="row"><div class="name">Milano</div><div class="track"><div class="seg-fissi" style="width:60.6%"></div><div class="seg-libero" style="width:9.6%"></div></div><div class="val mono">155h</div></div>
       </div>
       <div class="hours-legend">
         <span><i style="background:var(--moss)"></i>Costi fissi</span>
@@ -388,7 +361,14 @@
       </div>
     </div>
 
-    <div class="callout">In centro, <b>Milano è in deficit di 430€/mese</b> e <b>Roma di 109€/mese</b> — <b>Barcellona regge per soli 17,50€ di margine</b>, un caso limite. Fuori centro la situazione si ribalta per tutti: anche Milano torna positiva, ma con appena <b>24€ di margine mensile</b> — il più risicato del gruppo.</div>
+    <div class="callout">In centro, <b>Milano è l'unica città ad andare in deficit</b>, con un margine negativo di 387 euro al mese — <b>Roma è quasi in pareggio</b> (appena +6€ di margine). Fuori centro la prospettiva cambia per tutti: anche Milano torna in territorio positivo con un saldo di 67 euro mensili — che rimane comunque il margine più risicato dell'intero gruppo.</div>
+
+    <div class="qtext" style="margin-top:26px;"><p><b>Nella realtà, però, quasi nessuno vive da solo nel cuore della città.</b> Basta dividere l'affitto in due — con un coinquilino o un partner — per ribaltare completamente i conti: il deficit di Milano non si limita a ridursi, sparisce del tutto.</p></div>
+    <div class="stat-pair">
+      <div class="chip">Milano, da soli in centro<b style="color:var(--coral);">-387€/mese</b></div>
+      <div class="chip">Milano, in due (affitto diviso)<b style="color:var(--moss);">+365€/mese</b></div>
+    </div>
+    <p style="font-size:12px; color:var(--slate); margin:12px 0 0;">Stesso stipendio, stesso paniere di spese personali (spesa alimentare, tempo libero, bollette a testa) — cambia solo l'affitto, diviso tra due persone invece che una.</p>
   </section>
 
   <section class="q" id="simulatore">
@@ -427,7 +407,7 @@
     <div class="qtext"><p>Ore di lavoro mensili necessarie per coprire il paniere completo, scenario centro, per area geografica.</p></div>
     <div class="chartbox"><div id="plot-mappa" style="width:100%;height:480px;"></div></div>
     <div class="qtext" style="margin-top:22px;">
-      <p><b>Copenaghen</b> offre il miglior potere d'acquisto reale: appena <b>107 ore</b> al mese coprono l'intero paniere — meno di 4 ore al giorno. <b>Milano chiude la classifica</b>: quasi <b>196 ore</b> necessarie, l'unica città dove il solo stipendio non basta.</p>
+      <p><b>Copenaghen</b> offre il miglior potere d'acquisto reale: appena <b>106 ore</b> al mese coprono l'intero paniere — meno di 4 ore al giorno. <b>Milano chiude la classifica</b>: oltre <b>191 ore</b> necessarie nello scenario più esigente (persona sola, centro) — l'unica città dove da soli il solo stipendio non basta, anche se in due il quadro si ribalta completamente.</p>
       <p>Ma la lezione più interessante è che nessuna singola metrica racconta la storia intera. Budapest ha i prezzi assoluti più bassi ma il tempo di lavoro più lungo per un cappuccino. Amsterdam ha prezzi alti in euro ma tra i migliori in tempo di lavoro. L'Ungheria è il paese più economico oggi, ma quello dove i prezzi corrono più veloce.</p>
     </div>
     <p class="final-line">Il vero costo della vita non è mai un solo numero — è la relazione tra quel numero, lo stipendio che lo deve coprire, e la direzione in cui entrambi si stanno muovendo.</p>
@@ -435,7 +415,7 @@
 </div>
 
 <footer>
-  <div class="wrap">Dati: Numbeo · Eurostat · Elaborazione indipendente su 10 città europee · Milano, Roma, Bologna, Amsterdam, Berlino, Barcellona, Praga, Budapest, Copenaghen, Parigi</div>
+  <div class="wrap">Dati: Numbeo · Eurostat · Deutsche Bank Research "Mapping the World's Prices" 2025 (Euronews/Visual Capitalist) · JobPricing · CGIA Mestre-INPS · Elaborazione indipendente su 10 città europee · Milano, Roma, Bologna, Amsterdam, Berlino, Barcellona, Praga, Budapest, Copenaghen, Parigi</div>
 </footer>
 
 <script>
@@ -459,8 +439,8 @@ document.addEventListener('DOMContentLoaded', function(){
 
   /* MINI-SIMULATORE QUANTITA CAFFE/BIRRA */
   const paradossoCitta = ["Milano","Amsterdam","Bologna","Roma","Barcellona","Berlino","Parigi","Copenaghen","Praga","Budapest"];
-  const minCaffe = [9.4,9.6,10.0,10.8,12.7,13.4,13.7,14.9,15.5,19.1];
-  const minBirra = [29.7,15.7,30.2,27.9,17.3,16.1,22.0,19.5,12.6,20.9];
+  const minCaffe = [9.2,9.5,9.9,10.1,11.9,12.1,12.6,14.6,15.7,18.5];
+  const minBirra = [29.1,15.6,29.9,26.2,16.3,14.5,20.1,19.2,12.7,20.3];
 
   const drinkBtns = document.querySelectorAll('.sim-toggle-btn[data-drink]');
   const drinkQtyInput = document.getElementById('sim-qty');
@@ -502,12 +482,12 @@ document.addEventListener('DOMContentLoaded', function(){
   renderDrink();
 
   /* SIMULATORE STIPENDIO */
-  const cittaOrdinamento = ["Copenaghen", "Berlino", "Parigi", "Amsterdam", "Praga", "Budapest", "Bologna", "Barcellona", "Roma", "Milano"];
-  const oreFissiCentro = [91.94, 105.47, 108.86, 114.89, 120.44, 120.38, 132.50, 141.42, 149.89, 173.79];
-  const oreLiberoCentro = [15.53, 14.05, 15.10, 12.71, 16.82, 24.18, 20.51, 17.27, 20.27, 21.69];
-  const euroCentro = [2652.48, 2187.24, 2371.20, 3208.91, 1763.68, 1370.53, 1825.48, 2058.19, 1829.24, 2369.21];
-  const oreFissiPerif = [74.68, 86.60, 89.03, 90.35, 108.34, 101.72, 113.54, 115.26, 119.94, 136.36];
-  const euroPerif = [2226.15, 1841.96, 1991.84, 2591.78, 1608.31, 1193.61, 1599.31, 1718.91, 1507.31, 1915.59];
+  const cittaOrdinamento = ["Copenaghen", "Berlino", "Parigi", "Amsterdam", "Praga", "Budapest", "Barcellona", "Bologna", "Roma", "Milano"];
+  const oreFissiCentro = [90.23, 95.12, 99.59, 113.80, 122.05, 117.17, 132.63, 131.07, 140.48, 170.00];
+  const oreLiberoCentro = [15.24, 12.68, 13.81, 12.59, 17.04, 23.54, 16.19, 20.30, 19.00, 21.22];
+  const euroCentro = [2652.48, 2187.24, 2371.20, 3208.91, 1763.68, 1370.53, 2058.19, 1825.48, 1829.24, 2369.21];
+  const oreFissiPerif = [73.28, 78.11, 81.45, 89.49, 109.80, 99.01, 108.10, 112.32, 112.42, 133.39];
+  const euroPerif = [2226.15, 1841.96, 1991.84, 2591.78, 1608.31, 1193.61, 1718.91, 1599.31, 1507.31, 1915.59];
 
   const simSalaryInput = document.getElementById('sim-salary');
   const simScenarioBtns = document.querySelectorAll('.sim-toggle-btn[data-scenario]');
