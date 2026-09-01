@@ -31,7 +31,7 @@
   .eyebrow { font-family:'JetBrains Mono',monospace; letter-spacing:.16em; text-transform:uppercase; font-size:11.5px; color:var(--amber); margin-bottom:22px; font-weight:700; }
   .hero h1 { font-size:clamp(2.2rem,5.4vw,3.4rem); font-weight:700; line-height:1.08; letter-spacing:-.01em; color:#fff; }
   .hero h1 em { font-style:italic; color:var(--violet); padding-right:.08em; }
-  .hero .sub { max-width:620px; margin-top:22px; font-size:16.5px; line-height:1.6; color:#C9C4B4; }
+  .hero .sub { margin-top:22px; font-size:16.5px; line-height:1.6; color:#C9C4B4; }
 
   .ticker { margin-top:44px; display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.14); border-radius:18px; overflow:hidden; }
   .ticker .cell { background:rgba(255,255,255,0.06); backdrop-filter:blur(16px) saturate(1.6); -webkit-backdrop-filter:blur(16px) saturate(1.6); padding:26px 28px; }
@@ -40,7 +40,7 @@
   .ticker .cap { font-size:13px; color:#9C9788; margin-top:6px; line-height:1.5; }
 
   .intro { padding:52px 0 0; }
-  .lede { font-size:19px; color:#2B2B23; max-width:760px; font-family:'Bricolage Grotesque',sans-serif; font-weight:500; line-height:1.5; }
+  .lede { font-size:19px; color:#2B2B23; font-family:'Bricolage Grotesque',sans-serif; font-weight:500; line-height:1.5; }
   .lede b { font-style:italic; font-weight:600; }
   .sources { margin-top:18px; font-size:13px; color:var(--slate); }
 
@@ -49,7 +49,7 @@
   .qnum { font-family:'JetBrains Mono',monospace; color:var(--violet); font-size:13px; font-weight:700; }
   .qline { flex:1; height:1px; background:var(--line); }
   section.q h2 { font-size:clamp(24px,3.4vw,32px); letter-spacing:-.01em; font-weight:600; }
-  .qtext { max-width:740px; color:#3A392F; font-size:16px; margin-top:14px; }
+  .qtext { color:#3A392F; font-size:16px; margin-top:14px; }
   .qtext b { color:var(--ink); }
 
   .chartbox { margin-top:24px; background:var(--card); border:1px solid var(--line); border-radius:20px; padding:20px; }
@@ -62,7 +62,7 @@
   .barlist .row .fill { height:100%; border-radius:7px; }
   .barlist .row .val { font-family:'JetBrains Mono',monospace; font-size:12.5px; font-weight:700; text-align:right; }
   .barlist-head { font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--slate); margin-bottom:12px; }
-  .tworank { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+  .tworank { display:grid; grid-template-columns:1fr; gap:28px; }
   .tworank .col:first-child .barlist-head { color:var(--violet-deep); }
   .tworank .col:last-child .barlist-head { color:#9C8FD9; }
 
@@ -104,7 +104,7 @@
   .callout { margin-top:20px; background:var(--violet-light); border-left:4px solid var(--violet); border-radius:4px 10px 10px 4px; padding:18px 24px; font-size:15px; color:#2B2B23; }
   .callout b { color:var(--ink); }
 
-  .final-line { margin-top:32px; padding-top:26px; border-top:1px solid #2A2D35; font-family:'Bricolage Grotesque',sans-serif; font-style:italic; font-weight:500; font-size:21px; color:var(--amber); max-width:740px; line-height:1.4; }
+  .final-line { margin-top:32px; padding-top:26px; border-top:1px solid #2A2D35; font-family:'Bricolage Grotesque',sans-serif; font-style:italic; font-weight:500; font-size:21px; color:var(--amber); line-height:1.4; }
 
   footer { padding:30px 0 56px; text-align:center; color:var(--slate); font-size:12px; }
 
@@ -133,7 +133,7 @@
       </div>
       <div class="cell">
         <div class="label">Stipendio medio più alto</div>
-        <div class="num">$109.798</div>
+        <div class="num">$9.150/mese</div>
         <div class="cap">Research Scientist, dataset globale — il ruolo più specialistico è anche il più pagato.</div>
       </div>
     </div>
@@ -150,31 +150,178 @@
     <div class="qhead"><span class="qnum mono">01</span><span class="qline"></span></div>
     <h2>I ruoli più richiesti</h2>
     <div class="qtext"><p>Confrontando i 5 ruoli più frequenti in entrambi i dataset, un nome emerge in cima a tutti e due: <b>NLP Engineer</b>. Ma le distanze tra un dataset e l'altro raccontano due mercati diversi.</p></div>
-    <div class="chartbox">
-      <div class="tworank">
-        <div class="col">
-          <div class="barlist-head">Offerte 2026</div>
-          <div class="barlist">
-            <div class="row"><div class="name">NLP Engineer</div><div class="track"><div class="fill" style="width:97%;background:var(--violet)"></div></div><div class="val mono">11.025</div></div>
-            <div class="row"><div class="name">Research Scientist</div><div class="track"><div class="fill" style="width:96%;background:var(--violet)"></div></div><div class="val mono">10.963</div></div>
-            <div class="row"><div class="name">ML Engineer</div><div class="track"><div class="fill" style="width:72%;background:var(--violet)"></div></div><div class="val mono">8.166</div></div>
-            <div class="row"><div class="name">Software Eng. AI</div><div class="track"><div class="fill" style="width:48%;background:var(--violet)"></div></div><div class="val mono">5.486</div></div>
-            <div class="row"><div class="name">Computer Vision Eng.</div><div class="track"><div class="fill" style="width:47%;background:var(--violet)"></div></div><div class="val mono">5.396</div></div>
+<div class="chartbox">
+
+  <!-- Legenda in alto a destra -->
+  <div style="display: flex; gap: 24px; justify-content: flex-end; margin-bottom: 24px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">
+    <div style="display: flex; align-items: center; gap: 8px; color: #555555;">
+      <span style="width: 10px; height: 10px; border-radius: 50%; background-color: #6C5CE7; display: inline-block;"></span> 
+      OFFERTE 2026
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px; color: #777777;">
+      <span style="width: 10px; height: 10px; border-radius: 50%; background-color: #D6C7FF; display: inline-block;"></span> 
+      PANORAMA GLOBALE
+    </div>
+  </div>
+
+  <!-- Elenco barre di confronto -->
+  <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+
+    <!-- NLP Engineer -->
+    <div style="display: grid; grid-template-columns: 200px 1fr; align-items: center; gap: 20px; width: 100%;">
+      <div style="font-size: 14px; font-weight: 600; color: #222222;">NLP Engineer</div>
+      <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+        <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+          <div style="flex-grow: 1; background: #F4F4F6; border-radius: 4px; height: 8px; overflow: hidden;">
+            <div style="width: 96.6%; height: 100%; background-color: #6C5CE7; border-radius: 4px;"></div>
           </div>
+          <span style="font-size: 12px; font-weight: 500; color: #666666; min-width: 45px; text-align: right;">11.025</span>
         </div>
-        <div class="col">
-          <div class="barlist-head">Panorama globale</div>
-          <div class="barlist">
-            <div class="row"><div class="name">NLP Engineer</div><div class="track"><div class="fill" style="width:100%;background:#C9BBFF"></div></div><div class="val mono">11.412</div></div>
-            <div class="row"><div class="name">Software Eng. AI</div><div class="track"><div class="fill" style="width:99%;background:#C9BBFF"></div></div><div class="val mono">11.333</div></div>
-            <div class="row"><div class="name">Research Scientist</div><div class="track"><div class="fill" style="width:99%;background:#C9BBFF"></div></div><div class="val mono">11.309</div></div>
-            <div class="row"><div class="name">ML Engineer</div><div class="track"><div class="fill" style="width:99%;background:#C9BBFF"></div></div><div class="val mono">11.263</div></div>
-            <div class="row"><div class="name">AI Engineer</div><div class="track"><div class="fill" style="width:99%;background:#C9BBFF"></div></div><div class="val mono">11.247</div></div>
+        <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+          <div style="flex-grow: 1; background: #F4F4F6; border-radius: 4px; height: 8px; overflow: hidden;">
+            <div style="width: 100%; height: 100%; background-color: #D6C7FF; border-radius: 4px;"></div>
           </div>
+          <span style="font-size: 12px; font-weight: 500; color: #666666; min-width: 45px; text-align: right;">11.412</span>
         </div>
       </div>
-      <p style="font-size:12px; color:var(--slate); margin:16px 0 0;">Occorrenze nel dataset · stessa scala per i due gruppi, per confrontare a colpo d'occhio quanto siano concentrate le offerte 2026 rispetto alla distribuzione più piatta del panorama globale.</p>
     </div>
+
+    <!-- Research Scientist -->
+    <div style="display: grid; grid-template-columns: 200px 1fr; align-items: center; gap: 20px; width: 100%;">
+      <div style="font-size: 14px; font-weight: 600; color: #222222;">Research Scientist</div>
+      <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+        <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+          <div style="flex-grow: 1; background: #F4F4F6; border-radius: 4px; height: 8px; overflow: hidden;">
+            <div style="width: 96%; height: 100%; background-color: #6C5CE7; border-radius: 4px;"></div>
+          </div>
+          <span style="font-size: 12px; font-weight: 500; color: #666666; min-width: 45px; text-align: right;">10.963</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+          <div style="flex-grow: 1; background: #F4F4F6; border-radius: 4px; height: 8px; overflow: hidden;">
+            <div style="width: 99.1%; height: 100%; background-color: #D6C7FF; border-radius: 4px;"></div>
+          </div>
+          <span style="font-size: 12px; font-weight: 500; color: #666666; min-width: 45px; text-align: right;">11.309</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ML Engineer -->
+    <div style="display: grid; grid-template-columns: 200px 1fr; align-items: center; gap: 20px; width: 100%;">
+      <div style="font-size: 14px; font-weight: 600; color: #222222;">ML Engineer</div>
+      <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+        <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+          <div style="flex-grow: 1; background: #F4F4F6; border-radius: 4px; height: 8px; overflow: hidden;">
+            <div style="width: 71.5%; height: 100%; background-color: #6C5CE7; border-radius: 4px;"></div>
+          </div>
+          <span style="font-size: 12px; font-weight: 500; color: #666666; min-width: 45px; text-align: right;">8.166</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+          <div style="flex-grow: 1; background: #F4F4F6; border-radius: 4px; height: 8px; overflow: hidden;">
+            <div style="width: 98.7%; height: 100%; background-color: #D6C7FF; border-radius: 4px;"></div>
+          </div>
+          <span style="font-size: 12px; font-weight: 500; color: #666666; min-width: 45px; text-align: right;">11.263</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Software Eng. AI -->
+    <div style="display: grid; grid-template-columns: 200px 1fr; align-items: center; gap: 20px; width: 100%;">
+      <div style="font-size: 14px; font-weight: 600; color: #222222;">Software Eng. AI</div>
+      <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+        <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+          <div style="flex-grow: 1; background: #F4F4F6; border-radius: 4px; height: 8px; overflow: hidden;">
+            <div style="width: 48%; height: 100%; background-color: #6C5CE7; border-radius: 4px;"></div>
+          </div>
+          <span style="font-size: 12px; font-weight: 500; color: #666666; min-width: 45px; text-align: right;">5.486</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+          <div style="flex-grow: 1; background: #F4F4F6; border-radius: 4px; height: 8px; overflow: hidden;">
+            <div style="width: 99.3%; height: 100%; background-color: #D6C7FF; border-radius: 4px;"></div>
+          </div>
+          <span style="font-size: 12px; font-weight: 500; color: #666666; min-width: 45px; text-align: right;">11.333</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Computer Vision / AI Eng. -->
+    <div style="display: grid; grid-template-columns: 200px 1fr; align-items: center; gap: 20px; width: 100%;">
+      <div style="font-size: 14px; font-weight: 600; color: #222222;">Computer Vision / AI Eng.</div>
+      <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+        <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+          <div style="flex-grow: 1; background: #F4F4F6; border-radius: 4px; height: 8px; overflow: hidden;">
+            <div style="width: 47.2%; height: 100%; background-color: #6C5CE7; border-radius: 4px;"></div>
+          </div>
+          <span style="font-size: 12px; font-weight: 500; color: #666666; min-width: 45px; text-align: right;">5.396</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+          <div style="flex-grow: 1; background: #F4F4F6; border-radius: 4px; height: 8px; overflow: hidden;">
+            <div style="width: 98.5%; height: 100%; background-color: #D6C7FF; border-radius: 4px;"></div>
+          </div>
+          <span style="font-size: 12px; font-weight: 500; color: #666666; min-width: 45px; text-align: right;">11.247</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p style="margin-top: 28px; margin-bottom: 0; font-size: 12px; color: #888888; line-height: 1.5;">
+    Occorrenze nel dataset · stessa scala per i due gruppi, per confrontare a colpo d'occhio quanto siano concentrate le offerte 2026 rispetto alla distribuzione più piatta del panorama globale.
+  </p>
+
+</div>
+		<!-- INIZIO BLOCCO SPIEGAZIONE RUOLI -->
+		<div style="width: 100%; box-sizing: border-box; background: #FAF9FE; border: 1px solid #EAE6FA; border-radius: 12px; padding: 24px; margin-top: 24px; font-family: system-ui, -apple-system, sans-serif;">
+
+		  <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #6C5CE7; margin-bottom: 16px;">
+			Guida rapida ai ruoli più richiesti
+		  </div>
+
+		  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+
+			<!-- NLP Engineer -->
+			<div style="background: #FFFFFF; border: 1px solid #EAEAEA; border-radius: 8px; padding: 14px 16px;">
+			  <div style="font-size: 13px; font-weight: 700; color: #1A1A1A; margin-bottom: 4px;">NLP Engineer</div>
+			  <div style="font-size: 12px; color: #555555; line-height: 1.45;">
+				Sviluppa algoritmi di <i>Natural Language Processing</i> per insegnare alle macchine a comprendere, interpretare e generare il linguaggio umano (chatbot, traduzioni, analisi dei testi).
+			  </div>
+			</div>
+
+			<!-- Research Scientist -->
+			<div style="background: #FFFFFF; border: 1px solid #EAEAEA; border-radius: 8px; padding: 14px 16px;">
+			  <div style="font-size: 13px; font-weight: 700; color: #1A1A1A; margin-bottom: 4px;">Research Scientist</div>
+			  <div style="font-size: 12px; color: #555555; line-height: 1.45;">
+				Si occupa della ricerca teorica avanzata; progetta e sperimenta le nuove architetture di intelligenza artificiale superando i limiti dei modelli esistenti.
+			  </div>
+			</div>
+
+			<!-- ML Engineer -->
+			<div style="background: #FFFFFF; border: 1px solid #EAEAEA; border-radius: 8px; padding: 14px 16px;">
+			  <div style="font-size: 13px; font-weight: 700; color: #1A1A1A; margin-bottom: 4px;">ML Engineer</div>
+			  <div style="font-size: 12px; color: #555555; line-height: 1.45;">
+				Ingegnerizza i modelli di Machine Learning portandoli dalla fase di prototipo all'infrastruttura di produzione reale, ottimizzando prestazioni e scalabilità.
+			  </div>
+			</div>
+
+			<!-- Software Eng. AI -->
+			<div style="background: #FFFFFF; border: 1px solid #EAEAEA; border-radius: 8px; padding: 14px 16px;">
+			  <div style="font-size: 13px; font-weight: 700; color: #1A1A1A; margin-bottom: 4px;">Software Eng. AI</div>
+			  <div style="font-size: 12px; color: #555555; line-height: 1.45;">
+				Sviluppatore software tradizionale specializzato nell'integrare feature e funzionalità di intelligenza artificiale all'interno di applicazioni Web, App o sistemi aziendali.
+			  </div>
+			</div>
+
+			<!-- Computer Vision / AI Eng. -->
+			<div style="background: #FFFFFF; border: 1px solid #EAEAEA; border-radius: 8px; padding: 14px 16px;">
+			  <div style="font-size: 13px; font-weight: 700; color: #1A1A1A; margin-bottom: 4px;">Computer Vision / AI Eng.</div>
+			  <div style="font-size: 12px; color: #555555; line-height: 1.45;">
+				Crea sistemi capaci di analizzare ed elaborare immagini o video (es. riconoscimento facciale, guida autonoma, controllo qualità industriale tramite telecamere).
+			  </div>
+			</div>
+
+		  </div>
+		</div>
+
+		<!-- FINE BLOCCO SPIEGAZIONE RUOLI -->
     <div class="callout"><b>Il dataset delle offerte 2026 è più concentrato</b> — NLP Engineer e Research Scientist dominano nettamente (oltre 10.900 occorrenze ciascuno), il resto si stacca parecchio. <b>Nel dataset globale la distribuzione è più piatta</b>: tutti e 5 i ruoli restano sopra le 11.200 occorrenze — segno di una domanda più matura e diffusa su scala internazionale.</div>
   </section>
 
@@ -203,6 +350,76 @@
       </div>
       <p style="font-size:12px; color:var(--slate); margin:16px 0 0;">% delle offerte 2026 · nel dataset globale le 8 aree principali si dividono la domanda quasi alla pari, tutte tra il 12,3% e il 12,8%.</p>
     </div>
+	
+	<!-- INIZIO LEGENDA SPIEGATORIA SPECIALIZZAZIONI -->
+		<div style="width: 100%; box-sizing: border-box; background: #FAF9FE; border: 1px solid #EAE6FA; border-radius: 12px; padding: 20px 24px; margin-top: 20px; font-family: system-ui, -apple-system, sans-serif;">
+
+		  <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #5A49E0; margin-bottom: 14px;">
+			Cosa indicano le specializzazioni
+		  </div>
+
+		  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px 20px;">
+
+			<!-- Machine Learning -->
+			<div style="display: flex; gap: 10px; align-items: flex-start;">
+			  <span style="width: 8px; height: 8px; border-radius: 50%; background-color: #5A49E0; margin-top: 5px; flex-shrink: 0;"></span>
+			  <div style="font-size: 12px; color: #444; line-height: 1.45;">
+				<strong style="color: #1A1A1A;">Machine Learning:</strong> Modelli statistici generali per analisi predittive, classificazione ed estrazione di pattern dai dati.
+			  </div>
+			</div>
+
+			<!-- Generative AI -->
+			<div style="display: flex; gap: 10px; align-items: flex-start;">
+			  <span style="width: 8px; height: 8px; border-radius: 50%; background-color: #7B68EE; margin-top: 5px; flex-shrink: 0;"></span>
+			  <div style="font-size: 12px; color: #444; line-height: 1.45;">
+				<strong style="color: #1A1A1A;">Generative AI:</strong> Algoritmi capaci di creare nuovi contenuti originali (testo, immagini, codice, audio) a partire dai dati.
+			  </div>
+			</div>
+
+			<!-- MLOps -->
+			<div style="display: flex; gap: 10px; align-items: flex-start;">
+			  <span style="width: 8px; height: 8px; border-radius: 50%; background-color: #9A8CFA; margin-top: 5px; flex-shrink: 0;"></span>
+			  <div style="font-size: 12px; color: #444; line-height: 1.45;">
+				<strong style="color: #1A1A1A;">MLOps:</strong> Pratiche e pipeline per automatizzare il rilascio, monitoraggio e manutenzione dei modelli in produzione.
+			  </div>
+			</div>
+
+			<!-- NLP -->
+			<div style="display: flex; gap: 10px; align-items: flex-start;">
+			  <span style="width: 8px; height: 8px; border-radius: 50%; background-color: #C1B6FF; margin-top: 5px; flex-shrink: 0;"></span>
+			  <div style="font-size: 12px; color: #444; line-height: 1.45;">
+				<strong style="color: #1A1A1A;">NLP:</strong> Elaborazione del linguaggio naturale per l'analisi, comprensione e sintesi del testo umano.
+			  </div>
+			</div>
+
+			<!-- Computer Vision -->
+			<div style="display: flex; gap: 10px; align-items: flex-start;">
+			  <span style="width: 8px; height: 8px; border-radius: 50%; background-color: #DDD6FF; margin-top: 5px; flex-shrink: 0;"></span>
+			  <div style="font-size: 12px; color: #444; line-height: 1.45;">
+				<strong style="color: #1A1A1A;">Computer Vision:</strong> Elaborazione visiva per il riconoscimento automatizzato di oggetti, volti e contesti in immagini/video.
+			  </div>
+			</div>
+
+			<!-- Deep Learning -->
+			<div style="display: flex; gap: 10px; align-items: flex-start;">
+			  <span style="width: 8px; height: 8px; border-radius: 50%; background-color: #D4A359; margin-top: 5px; flex-shrink: 0;"></span>
+			  <div style="font-size: 12px; color: #444; line-height: 1.45;">
+				<strong style="color: #1A1A1A;">Deep Learning:</strong> Reti neurali artificiali a più strati per apprendere pattern complessi da grandi volumi di dati.
+			  </div>
+			</div>
+
+			<!-- Data Science -->
+			<div style="display: flex; gap: 10px; align-items: flex-start;">
+			  <span style="width: 8px; height: 8px; border-radius: 50%; background-color: #EAD096; margin-top: 5px; flex-shrink: 0;"></span>
+			  <div style="font-size: 12px; color: #444; line-height: 1.45;">
+				<strong style="color: #1A1A1A;">Data Science:</strong> Disciplina trasversale focalizzata su analisi dati, statistica e business intelligence per estrarre valore.
+			  </div>
+			</div>
+
+		  </div>
+		</div>
+		<!-- FINE LEGENDA SPIEGATORIA SPECIALIZZAZIONI -->
+		
     <div class="callout"><b>Machine Learning da sola vale il 37% delle offerte</b> — più del doppio della seconda area (MLOps, 15,7%). Nel dataset globale, invece, il quadro è quasi capovolto: le 8 specializzazioni principali (Computer Vision, LLM, Reinforcement Learning, Analytics, Generative AI, MLOps, Forecasting, NLP) si dividono la domanda in modo quasi identico, tutte tra il 12,3% e il 12,8%. Le offerte concrete premiano oggi le competenze operative di ML; il panorama globale è già più maturo e diversificato.</div>
   </section>
 
@@ -230,22 +447,70 @@
     <div class="qhead"><span class="qnum mono">04</span><span class="qline"></span></div>
     <h2>Chi guadagna di più</h2>
     <div class="qtext"><p>Nel dataset globale, i 5 ruoli meglio pagati mostrano differenze marcate in base al grado di specializzazione.</p></div>
-    <div class="chartbox">
-      <div class="statpair">
-        <div class="card"><div class="lbl">Il più pagato</div><div class="big">$109.798</div><div class="cap">Research Scientist</div></div>
-        <div class="card"><div class="lbl">Il meno pagato</div><div class="big">$69.429</div><div class="cap">Data Analyst</div></div>
-      </div>
-      <div class="plainlist">
-        <div class="prow"><span class="n">Research Scientist</span><span class="v">$109.798</span></div>
-        <div class="prow"><span class="n">ML Engineer</span><span class="v">$102.122</span></div>
-        <div class="prow"><span class="n">Computer Vision Eng.</span><span class="v">$101.304</span></div>
-        <div class="prow"><span class="n">NLP Engineer</span><span class="v">$99.745</span></div>
-        <div class="prow"><span class="n">AI Engineer</span><span class="v">$97.975</span></div>
-        <div class="prow"><span class="n">Software Eng. AI</span><span class="v">$97.376</span></div>
-        <div class="prow"><span class="n">Data Analyst</span><span class="v">$69.429</span></div>
-      </div>
-      <p style="font-size:12px; color:var(--slate); margin:16px 0 0;">Salario medio annuo (USD), dataset globale</p>
+<div class="chartbox">
+  <div class="statpair">
+    <div class="card">
+      <div class="lbl">Il più pagato</div>
+      <div class="big">$109.798</div>
+      <div class="cap">Research Scientist <span style="opacity: 0.75; font-weight: normal;">(~$9.150/mese)</span></div>
     </div>
+    <div class="card">
+      <div class="lbl">Il meno pagato</div>
+      <div class="big">$69.429</div>
+      <div class="cap">Data Analyst <span style="opacity: 0.75; font-weight: normal;">(~$5.786/mese)</span></div>
+    </div>
+  </div>
+
+  <!-- Tabella perfettamente allineata -->
+  <table style="width: 100%; border-collapse: collapse; margin-top: 20px; font-family: inherit;">
+    <thead>
+      <tr style="border-bottom: 1px solid #EAEAEA;">
+        <th style="text-align: left; padding: 10px 0; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #888888;">Ruolo</th>
+        <th style="text-align: right; padding: 10px 16px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #888888; width: 110px;">Annuo</th>
+        <th style="text-align: right; padding: 10px 0; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #888888; width: 110px;">Mensile</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid #F0F0F0;">
+        <td style="padding: 14px 0; font-size: 14px; font-weight: 600; color: #1A1A1A; vertical-align: middle;">Research Scientist</td>
+        <td style="padding: 14px 16px; font-size: 14px; font-weight: 600; color: #6C5CE7; text-align: right; vertical-align: middle;">$109.798</td>
+        <td style="padding: 14px 0; font-size: 14px; font-weight: 600; color: #6C5CE7; text-align: right; vertical-align: middle;">$9.150</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #F0F0F0;">
+        <td style="padding: 14px 0; font-size: 14px; font-weight: 600; color: #1A1A1A; vertical-align: middle;">ML Engineer</td>
+        <td style="padding: 14px 16px; font-size: 14px; font-weight: 600; color: #6C5CE7; text-align: right; vertical-align: middle;">$102.122</td>
+        <td style="padding: 14px 0; font-size: 14px; font-weight: 600; color: #6C5CE7; text-align: right; vertical-align: middle;">$8.510</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #F0F0F0;">
+        <td style="padding: 14px 0; font-size: 14px; font-weight: 600; color: #1A1A1A; vertical-align: middle;">Computer Vision Eng.</td>
+        <td style="padding: 14px 16px; font-size: 14px; font-weight: 600; color: #6C5CE7; text-align: right; vertical-align: middle;">$101.304</td>
+        <td style="padding: 14px 0; font-size: 14px; font-weight: 600; color: #6C5CE7; text-align: right; vertical-align: middle;">$8.442</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #F0F0F0;">
+        <td style="padding: 14px 0; font-size: 14px; font-weight: 600; color: #1A1A1A; vertical-align: middle;">NLP Engineer</td>
+        <td style="padding: 14px 16px; font-size: 14px; font-weight: 600; color: #6C5CE7; text-align: right; vertical-align: middle;">$99.745</td>
+        <td style="padding: 14px 0; font-size: 14px; font-weight: 600; color: #6C5CE7; text-align: right; vertical-align: middle;">$8.312</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #F0F0F0;">
+        <td style="padding: 14px 0; font-size: 14px; font-weight: 600; color: #1A1A1A; vertical-align: middle;">AI Engineer</td>
+        <td style="padding: 14px 16px; font-size: 14px; font-weight: 600; color: #6C5CE7; text-align: right; vertical-align: middle;">$97.975</td>
+        <td style="padding: 14px 0; font-size: 14px; font-weight: 600; color: #6C5CE7; text-align: right; vertical-align: middle;">$8.165</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #F0F0F0;">
+        <td style="padding: 14px 0; font-size: 14px; font-weight: 600; color: #1A1A1A; vertical-align: middle;">Software Eng. AI</td>
+        <td style="padding: 14px 16px; font-size: 14px; font-weight: 600; color: #6C5CE7; text-align: right; vertical-align: middle;">$97.376</td>
+        <td style="padding: 14px 0; font-size: 14px; font-weight: 600; color: #6C5CE7; text-align: right; vertical-align: middle;">$8.115</td>
+      </tr>
+      <tr>
+        <td style="padding: 14px 0; font-size: 14px; font-weight: 600; color: #1A1A1A; vertical-align: middle;">Data Analyst</td>
+        <td style="padding: 14px 16px; font-size: 14px; font-weight: 600; color: #6C5CE7; text-align: right; vertical-align: middle;">$69.429</td>
+        <td style="padding: 14px 0; font-size: 14px; font-weight: 600; color: #6C5CE7; text-align: right; vertical-align: middle;">$5.786</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:12px; color:var(--slate); margin:16px 0 0;">Salario medio annuo e mensile lordo (USD / 12 mesi), dataset globale</p>
+</div>
     <div class="callout"><b>Research Scientist guadagna in media $109.798</b>, oltre $12.000 più di un Data Analyst generico. Nel dataset delle offerte 2026 il quadro è opposto: gli stipendi dei 15 ruoli più pagati si concentrano quasi tutti tra $95.000 e $97.400 — una forbice di appena $2.300. <b>Le offerte pubblicate tendono ad appiattire gli stipendi</b>; il mercato reale, invece, premia chiaramente la specializzazione.</div>
   </section>
 
