@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il fumo che cambia: dal tabacco all'elettronico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:#15140F; --paper:#FAFAF6; --card:#FFFFFF;
+    --blu:#2E7DA6; --blu-deep:#1E5A7C; --moss:#4C7A63; --amber:#D9AD5C; --line:#E4E1D6; --slate:#6B6659;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:'Inter',-apple-system,sans-serif; font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3{font-family:'Bricolage Grotesque',sans-serif; margin:0; color:var(--ink);}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .wrap{max-width:900px; margin:0 auto; padding:0 28px;}
+  a{color:var(--blu);}
+  .back-link { display:inline-flex; align-items:center; gap:8px; margin-bottom:26px; background:rgba(255,255,255,0.1); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.16); border-radius:999px; padding:8px 16px; color:var(--paper); opacity:.85; text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; cursor:pointer; transition:.2s ease; position:relative; z-index:1; }
+  .back-link:hover { opacity:1; transform:translateX(-4px); }
+
+  .hero { position:relative; background:var(--ink); color:var(--paper); padding:64px 0 56px; overflow:hidden; }
+  .hero::before, .hero::after {
+    content:''; position:absolute; border-radius:50%; filter:blur(80px); pointer-events:none; z-index:0;
+  }
+  .hero::before { width:480px; height:480px; background:radial-gradient(circle, rgba(46,125,166,0.45), transparent 70%); top:-200px; left:-100px; }
+  .hero::after { width:420px; height:420px; background:radial-gradient(circle, rgba(217,173,92,0.32), transparent 70%); bottom:-220px; right:-80px; }
+  .hero .wrap { position:relative; z-index:1; }
+  .eyebrow { font-family:'JetBrains Mono',monospace; letter-spacing:.16em; text-transform:uppercase; font-size:11.5px; color:var(--amber); margin-bottom:22px; font-weight:700; }
+  .hero h1 { font-size:clamp(2.4rem,6vw,3.6rem); font-weight:700; line-height:1.05; letter-spacing:-.01em; color:#fff; }
+  .hero h1 em { font-style:italic; color:#6EB6DE; padding-right:.08em; }
+  .hero .sub { margin-top:22px; font-size:16.5px; line-height:1.6; color:#C9C4B4; }
+  .ticker {
+    margin-top:44px; display:grid; grid-template-columns:1fr 1fr; gap:1px;
+    background:rgba(255,255,255,0.12); border-radius:18px; overflow:hidden;
+    border:1px solid rgba(255,255,255,0.14);
+  }
+  .ticker .cell {
+    background:rgba(255,255,255,0.06);
+    backdrop-filter:blur(16px) saturate(1.6); -webkit-backdrop-filter:blur(16px) saturate(1.6);
+    padding:26px 28px;
+  }
+  .ticker .label { font-family:'JetBrains Mono',monospace; font-size:11.5px; text-transform:uppercase; letter-spacing:.1em; font-weight:700; color:#8B8677; }
+  .ticker .num { font-family:'Bricolage Grotesque',sans-serif; font-size:40px; font-weight:700; margin-top:8px; }
+  .ticker .num.good { color:#6EB6DE; }
+  .ticker .num.neutral { color:var(--amber); }
+  .ticker .cap { font-size:13px; color:#9C9788; margin-top:6px; line-height:1.5; }
+
+  .intro { padding:52px 0 0; }
+  .lede { font-size:19px; color:#2B2B23; font-family:'Bricolage Grotesque',sans-serif; font-weight:500; line-height:1.5; }
+  .lede b { font-style:italic; font-weight:600; }
+
+  section.q { padding:38px 0; }
+  .qhead { display:flex; align-items:baseline; gap:12px; margin-bottom:10px; }
+  .qnum { font-family:'JetBrains Mono',monospace; color:var(--blu); font-size:13px; font-weight:700; }
+  .qline { flex:1; height:1px; background:var(--line); }
+  section.q h2 { font-size:clamp(24px,3.4vw,32px); letter-spacing:-.01em; font-weight:600; }
+  .qtext { color:#3A392F; font-size:16px; margin-top:14px; }
+  .qtext b { color:var(--ink); }
+  .conclusion .qtext b { color:#fff; }
+
+  .chartbox { margin-top:22px; background:var(--card); border:1px solid var(--line); border-radius:20px; padding:20px; }
+
+  /* barlist orizzontale (usato per confronti tra categorie/paesi) */
+  .barlist { display:flex; flex-direction:column; gap:12px; }
+  .barlist .row { display:grid; grid-template-columns:110px 1fr 60px; align-items:center; gap:10px; }
+  .barlist .row .name { font-size:13px; font-weight:600; color:var(--ink); line-height:1.25; }
+  .barlist .row .track { background:#F1EEE2; border-radius:7px; height:15px; overflow:hidden; }
+  .barlist .row .fill { height:100%; border-radius:7px; }
+  .barlist .row .val { font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; text-align:right; }
+  .barlist-head { font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--slate); margin-bottom:10px; }
+
+  /* year-bars: barre verticali per anno */
+  .year-bars { display:flex; align-items:flex-end; gap:14px; height:180px; padding:0 4px; }
+  .bar-col { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; }
+  .bar-col .bar-val { font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:6px; }
+  .bar-col .bar { width:100%; max-width:44px; border-radius:8px 8px 3px 3px; background:linear-gradient(180deg, var(--blu), var(--blu-deep)); }
+  .bar-col .bar-yr { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--slate); margin-top:8px; }
+
+  /* itemgrid: coppie di card per confronti diretti */
+  .itemgrid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .itemgrid .item-h { font-family:'JetBrains Mono',monospace; font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; font-weight:700; color:var(--slate); margin-bottom:8px; }
+  .itemgrid .pair { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .itemgrid .card { background:var(--ink); border-radius:14px; padding:14px 12px; text-align:center; }
+  .itemgrid .card .c-lbl { font-family:'JetBrains Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.05em; color:#9C9788; }
+  .itemgrid .card .c-num { font-family:'Bricolage Grotesque',sans-serif; font-size:20px; font-weight:800; color:#fff; margin-top:5px; }
+  .itemgrid .card .c-city { font-size:11px; color:#9C9788; margin-top:2px; }
+
+  .trend-list { display:flex; flex-direction:column; gap:18px; margin-top:8px; }
+  .trend-row .trend-name { font-size:13px; font-weight:600; color:var(--ink); margin-bottom:6px; }
+  .trend-track { position:relative; height:22px; background:#F1EEE2; border-radius:8px; overflow:hidden; }
+  .trend-fill-current { position:absolute; left:0; top:0; height:100%; background:var(--blu); border-radius:8px 0 0 8px; }
+  .trend-fill-proj { position:absolute; top:0; height:100%; background:repeating-linear-gradient(45deg, var(--blu) 0 5px, transparent 5px 10px); opacity:.55; }
+  .trend-vals { display:flex; justify-content:space-between; margin-top:6px; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--slate); }
+  .trend-vals b { color:var(--ink); }
+
+  .stat-pair { display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
+  .chip { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px 16px; font-size:13px; color:var(--slate); flex:1; min-width:150px; }
+  .chip b { display:block; font-family:'Bricolage Grotesque',sans-serif; font-size:19px; font-weight:800; color:var(--ink); margin-top:4px; }
+
+  .callout { margin-top:18px; background:linear-gradient(135deg, rgba(46,125,166,0.1), rgba(217,173,92,0.08)); border:1px solid var(--line); border-radius:16px; padding:18px 20px; font-size:14.5px; color:#3A392F; line-height:1.6; }
+  .callout b { color:var(--ink); }
+
+  .timeline-list { display:flex; flex-direction:column; gap:0; }
+  .timeline-list .t-row { display:grid; grid-template-columns:64px 1fr; gap:16px; padding:13px 0; border-bottom:1px solid var(--line); }
+  .timeline-list .t-row:last-child { border-bottom:none; }
+  .timeline-list .t-yr { font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--blu); font-size:14px; }
+  .timeline-list .t-ev { font-size:14px; color:#3A392F; }
+
+  .vs-compare { display:flex; align-items:stretch; gap:0; border-radius:16px; overflow:hidden; }
+  .vs-side { flex:1; padding:26px 20px; text-align:center; }
+  .vs-side.dark { background:var(--ink); }
+  .vs-side.light { background:#F1EEE2; }
+  .vs-label { font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; }
+  .vs-side.dark .vs-label { color:#9C9788; }
+  .vs-side.light .vs-label { color:var(--slate); }
+  .vs-num { font-family:'Bricolage Grotesque',sans-serif; font-size:34px; font-weight:800; margin-top:8px; }
+  .vs-side.dark .vs-num { color:#6EB6DE; }
+  .vs-side.light .vs-num { color:var(--blu-deep); }
+  .vs-num.small { font-size:24px; }
+  .vs-sub { font-size:12px; margin-top:4px; }
+  .vs-side.dark .vs-sub { color:#C9C4B4; }
+  .vs-side.light .vs-sub { color:var(--slate); }
+  .vs-badge { display:flex; align-items:center; justify-content:center; width:44px; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:12px; color:var(--slate); background:var(--paper); }
+
+  .conclusion { background:var(--ink); color:var(--paper); padding:56px 0 60px; margin-top:20px; }
+  .conclusion .verdict { font-family:'Bricolage Grotesque',sans-serif; font-size:22px; font-weight:600; color:#fff; margin:14px 0 18px; }
+  .conclusion .verdict em { color:#6EB6DE; font-style:italic; }
+  .conclusion .qtext { color:#C9C4B4; }
+  .conclusion .qtext em { color:#fff; font-style:italic; }
+  .recap-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-top:28px; }
+  .recap-grid .rc { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:14px; padding:16px; }
+  .recap-grid .rc .t { font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.06em; font-weight:700; color:var(--amber); margin-bottom:8px; }
+  .recap-grid .rc .d { font-size:13px; color:#C9C4B4; line-height:1.5; }
+  .recap-grid .rc .d b { color:#fff; }
+ .final-line { margin-top:26px; padding-top:26px; border-top:1px solid rgba(255,255,255,0.14); text-align:center; font-size:17px; font-weight:600; color:#fff; font-style:normal; }
+ .final-line em { color:#6EB6DE; font-style:italic; }
+
+  .crosslinks { padding:44px 0 0; }
+  .crosslinks .ch { font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--slate); margin-bottom:16px; }
+  .cl-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+  .cl-card { display:block; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; text-decoration:none; transition:transform .2s ease; }
+  .cl-card:hover { transform:translateY(-3px); }
+  .cl-tag { font-family:'JetBrains Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.06em; font-weight:700; color:var(--blu); }
+  .cl-title { font-family:'Bricolage Grotesque',sans-serif; font-size:14.5px; font-weight:700; color:var(--ink); margin-top:6px; line-height:1.3; }
+
+  footer { padding:28px 0 52px; text-align:center; color:var(--slate); font-size:12px; }
+
+  @media (max-width:640px) {
+    .ticker { grid-template-columns:1fr; }
+    .itemgrid { grid-template-columns:1fr; }
+    .recap-grid { grid-template-columns:1fr; }
+    .cl-grid { grid-template-columns:1fr; }
+    .barlist .row { grid-template-columns:80px 1fr 50px; }
+    .year-bars { gap:8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <a href="index.html" class="back-link">&larr; Torna alla Home</a>
+    <div class="eyebrow">Data Stories — Salute</div>
+    <h1>Il fumo <em>non sparisce</em>, <em>si trasforma</em></h1>
+    <p class="sub">I fumatori "tradizionali" calano appena. Sigaretta elettronica e tabacco riscaldato raddoppiano in 4 anni. Non è un addio al fumo — è un cambio di forma, soprattutto tra i più giovani.</p>
+    <div class="ticker">
+      <div class="cell">
+        <div class="label">Fumatori tradizionali 2025</div>
+        <div class="num good">18,6%</div>
+        <div class="cap">in calo di appena 0,6 punti rispetto al 2024 — il trend rallenta dal 2018.</div>
+      </div>
+      <div class="cell">
+        <div class="label">E-cig + tabacco riscaldato</div>
+        <div class="num neutral">×2 in 4 anni</div>
+        <div class="cap">dal 3,9% (2021) al 7,4% (2025) della popolazione — la crescita più rapida del settore.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="intro">
+    <p class="lede">Da vent'anni i dati raccontano un calo lento del fumo in Italia. Ma se si guarda oltre le sigarette tradizionali, il quadro cambia: sigaretta elettronica e tabacco riscaldato stanno crescendo a un ritmo che il fumo classico non ha mai avuto, <b>soprattutto tra i più giovani</b>. Abbiamo incrociato dati ISTAT, Eurostat e sorveglianza PASSI per capire cosa sta davvero cambiando, perché, e cosa significa per la salute.</p>
+  </div>
+
+  <section class="q" id="quadro" style="border-top:none; padding-bottom:10px;">
+    <div class="qhead"><span class="qnum mono">01</span><span class="qline"></span></div>
+    <h2>Il quadro di partenza: quanti fumano oggi</h2>
+    <div class="qtext"><p>Nel 2025 il <b>18,6%</b> della popolazione italiana (11 anni e più) è fumatore — circa <b>10 milioni di persone</b>. Il calo rispetto al 2001 (24%) è reale, ma non è stato lineare: dal 2018 il trend ha rallentato, quasi fermandosi.</p></div>
+    <div class="chartbox">
+      <div class="year-bars">
+        <div class="bar-col"><div class="bar-val">24%</div><div class="bar" style="height:80%;"></div><div class="bar-yr">2001</div></div>
+        <div class="bar-col"><div class="bar-val">23%</div><div class="bar" style="height:77%;"></div><div class="bar-yr">2010</div></div>
+        <div class="bar-col"><div class="bar-val">20%</div><div class="bar" style="height:67%;"></div><div class="bar-yr">2015</div></div>
+        <div class="bar-col"><div class="bar-val">18%</div><div class="bar" style="height:60%;"></div><div class="bar-yr">2019</div></div>
+        <div class="bar-col"><div class="bar-val">20%</div><div class="bar" style="height:67%;"></div><div class="bar-yr">2022</div></div>
+        <div class="bar-col"><div class="bar-val">19%</div><div class="bar" style="height:63%;"></div><div class="bar-yr">2025</div></div>
+      </div>
+      <p style="font-size:12px; color:var(--slate); margin:14px 0 0;">% popolazione 14 anni e più · Fonte: ISTAT, "Aspetti della vita quotidiana"</p>
+    </div>
+    <div class="stat-pair">
+      <div class="chip">Uomini fumatori 2025<b>22,3%</b></div>
+      <div class="chip">Donne fumatrici 2025<b>15,2%</b></div>
+      <div class="chip">Divario di genere<b>ridotto da 9,2 a 7,1 punti (2015→2025)</b></div>
+    </div>
+  </section>
+
+  <section class="q" id="cambiamento">
+    <div class="qhead"><span class="qnum mono">02</span><span class="qline"></span></div>
+    <h2>Come sta cambiando davvero</h2>
+    <div class="qtext"><p>Qui sta il punto centrale: il calo del fumo "tradizionale" non è un vero calo dei consumatori di nicotina. Secondo la sorveglianza PASSI, tra il 2008 e il 2025 chi fuma <b>solo</b> sigarette tradizionali è sceso dal 30% al 18% — ma il consumo <b>complessivo</b> di nicotina (trad. + e-cig + riscaldato) è sceso appena dal 30% al 27%.</p></div>
+    <div class="chartbox">
+      <div class="barlist-head">Popolazione 18-69 anni, 2008 vs 2025 (fonte: PASSI/ISS)</div>
+      <div class="barlist">
+        <div class="row"><div class="name">Tradizionali <br/>2008</div><div class="track"><div class="fill" style="width:100%; background:var(--slate);"></div></div><div class="val">30%</div></div>
+        <div class="row"><div class="name">Tradizionali <br/>2025</div><div class="track"><div class="fill" style="width:60%; background:var(--slate);"></div></div><div class="val">18%</div></div>
+        <div class="row"><div class="name">Complessivo <br/>2008</div><div class="track"><div class="fill" style="width:100%; background:var(--blu);"></div></div><div class="val">30%</div></div>
+        <div class="row"><div class="name">Complessivo <br/>2025</div><div class="track"><div class="fill" style="width:90%; background:var(--blu);"></div></div><div class="val">27%</div></div>
+      </div>
+    </div>
+    <div class="itemgrid" style="margin-top:18px;">
+      <div>
+        <div class="item-h">Utilizzatori 2021 (milioni)</div>
+        <div class="pair">
+          <div class="card"><div class="c-lbl">E-cig</div><div class="c-num">1,5M</div></div>
+          <div class="card"><div class="c-lbl">Riscaldato</div><div class="c-num">1,0M</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="item-h">Utilizzatori 2025 (milioni)</div>
+        <div class="pair">
+          <div class="card"><div class="c-lbl">E-cig</div><div class="c-num">3,0M</div></div>
+          <div class="card"><div class="c-lbl">Riscaldato</div><div class="c-num">2,0M</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="callout">Nello stesso periodo (2021-2025) i fumatori di sole sigarette tradizionali restano quasi fermi: <b>9,96 milioni nel 2021, 9,99 milioni nel 2025</b> (fonte ISTAT). Chi si sposta ai nuovi prodotti, nella maggior parte dei casi, <b>continua anche a fumare quelli tradizionali</b> — un'aggiunta, non una sostituzione.</div>
+  </section>
+
+  <section class="q" id="giovani">
+    <div class="qhead"><span class="qnum mono">03</span><span class="qline"></span></div>
+    <h2>Il fenomeno più marcato: i giovani</h2>
+    <div class="qtext"><p>Tra gli 11-17enni il "policonsumo" — uso combinato di sigarette, e-cig e tabacco riscaldato — è quasi raddoppiato tra il 2022 e il 2025, secondo le indagini ISS sugli studenti.</p></div>
+    <div class="chartbox">
+      <div class="barlist-head">Policonsumo tra gli studenti (fonte: ISS/PASSI d'Argento)</div>
+      <div class="barlist">
+        <div class="row"><div class="name">11-13 anni · 2022</div><div class="track"><div class="fill" style="width:36%; background:var(--amber);"></div></div><div class="val">26%</div></div>
+        <div class="row"><div class="name">11-13 anni · 2025</div><div class="track"><div class="fill" style="width:64%; background:var(--blu);"></div></div><div class="val">45,5%</div></div>
+        <div class="row"><div class="name">14-17 anni · 2022</div><div class="track"><div class="fill" style="width:55%; background:var(--amber);"></div></div><div class="val">38,7%</div></div>
+        <div class="row"><div class="name">14-17 anni · 2025</div><div class="track"><div class="fill" style="width:100%; background:var(--blu);"></div></div><div class="val">70,7%</div></div>
+      </div>
+    </div>
+    <div class="callout">Tra i giovani 18-34 anni, e-cig e/o tabacco riscaldato sono usati dal <b>16,5%</b> — la fascia più coinvolta in assoluto, contro appena l'1,4% degli over 65. È il segmento che sta trainando l'intera crescita del fenomeno.</div>
+  </section>
+
+  <section class="q" id="salute">
+    <div class="qhead"><span class="qnum mono">04</span><span class="qline"></span></div>
+    <h2>Cosa comporta per la salute</h2>
+    <div class="qtext"><p>Il fumo resta la prima causa di morte prevenibile in Italia. E i nuovi prodotti non sembrano essere un'alternativa più sicura per chi già fuma — nella maggior parte dei casi si sommano, non sostituiscono.</p></div>
+    <div class="stat-pair">
+      <div class="chip">Morti attribuibili al fumo (Italia, ogni anno)<b>~93.000</b></div>
+      <div class="chip">Usa e-cig/riscaldato e fuma ancora tradizionali<b>~2 su 3</b></div>
+      <div class="chip">Crede (erroneamente) che il riscaldato sia meno dannoso<b>36,6%</b></div>
+    </div>
+    <div class="callout">Solo lo <b>0,5%</b> di chi usa e-cig o tabacco riscaldato non ha mai fumato sigarette tradizionali. Per la stragrande maggioranza degli utilizzatori, questi prodotti non funzionano come "porta d'uscita" dal fumo — restano un consumo aggiuntivo.</div>
+  </section>
+
+  <section class="q" id="perche">
+    <div class="qhead"><span class="qnum mono">05</span><span class="qline"></span></div>
+    <h2>Perché sta cambiando</h2>
+    <div class="qtext"><p>Tre fattori si intrecciano: una normativa che tratta i prodotti in modo diseguale, un prezzo del tradizionale in costante salita, e una percezione del rischio che si sta spostando — non sempre in modo corretto.</p></div>
+    <div class="chartbox">
+      <div class="timeline-list">
+        <div class="t-row"><div class="t-yr">2005</div><div class="t-ev">Legge Sirchia — divieto di fumare nei locali pubblici</div></div>
+        <div class="t-row"><div class="t-yr">2016</div><div class="t-ev">D.Lgs. 6/2016 — avvertenze grafiche e limiti sugli aromi per il tabacco tradizionale</div></div>
+        <div class="t-row"><div class="t-yr">2021</div><div class="t-ev">ISTAT inizia a rilevare il tabacco riscaldato nell'indagine annuale</div></div>
+        <div class="t-row"><div class="t-yr">2026</div><div class="t-ev">Le accise sulle sigarette tradizionali salgono; alcuni prodotti elettronici vedono invece un calo di tassazione</div></div>
+      </div>
+    </div>
+    <div class="stat-pair">
+      <div class="chip">Prezzo medio pacchetto tradizionale, 2025→2028<b>+7,4%</b></div>
+      <div class="chip">Crede che il riscaldato sia meno dannoso, 2019→2022<b>25,3% → 36,6%</b></div>
+    </div>
+    <div class="callout">Mentre il pacchetto tradizionale continua a costare di più, alcuni prodotti a sigaretta elettronica hanno visto l'accisa <b>scendere</b> nel 2026 (da 275 a 250€ ogni 1000 unità equivalenti) — una direzione normativa opposta che, insieme alla percezione crescente (ma non sempre corretta) di minor danno, aiuta a spiegare lo spostamento.</div>
+  </section>
+
+  <section class="q" id="europa">
+    <div class="qhead"><span class="qnum mono">06</span><span class="qline"></span></div>
+    <h2>L'Italia rispetto all'Europa</h2>
+    <div class="qtext"><p>Nel confronto europeo (dati Eurostat, ultima rilevazione comparabile 2019), l'Italia si colloca <b>a metà classifica</b>, leggermente sopra la media UE, ma lontana dai paesi con le prevalenze più alte.</p></div>
+    <div class="chartbox">
+      <div class="barlist-head">Fumatori attuali per paese, % popolazione (fonte: Eurostat, 2019)</div>
+      <div class="barlist">
+        <div class="row"><div class="name">Bulgaria</div><div class="track"><div class="fill" style="width:100%; background:var(--slate);"></div></div><div class="val">36,2%</div></div>
+        <div class="row"><div class="name">Grecia</div><div class="track"><div class="fill" style="width:79%; background:var(--slate);"></div></div><div class="val">28,6%</div></div>
+        <div class="row"><div class="name">Germania</div><div class="track"><div class="fill" style="width:78%; background:var(--slate);"></div></div><div class="val">28,3%</div></div>
+        <div class="row"><div class="name">Francia</div><div class="track"><div class="fill" style="width:66%; background:var(--slate);"></div></div><div class="val">24,0%</div></div>
+        <div class="row"><div class="name">Media UE27</div><div class="track"><div class="fill" style="width:67%; background:var(--amber);"></div></div><div class="val">24,2%</div></div>
+        <div class="row"><div class="name">Italia</div><div class="track"><div class="fill" style="width:62%; background:var(--blu);"></div></div><div class="val">22,4%</div></div>
+        <div class="row"><div class="name">Spagna</div><div class="track"><div class="fill" style="width:61%; background:var(--slate);"></div></div><div class="val">22,1%</div></div>
+        <div class="row"><div class="name">Paesi Bassi</div><div class="track"><div class="fill" style="width:58%; background:var(--slate);"></div></div><div class="val">21,1%</div></div>
+        <div class="row"><div class="name">Danimarca</div><div class="track"><div class="fill" style="width:55%; background:var(--slate);"></div></div><div class="val">20,0%</div></div>
+      </div>
+		<p style="font-size:12px; color:var(--slate); margin:14px 0 0;">Selezione di paesi rappresentativi su 24 rilevati · Fonte: Eurostat, indagine europea sulla salute (EHIS), ultima rilevazione comparabile 2019 (l'indagine si svolge ogni 5 anni)</p>
+    </div>
+  </section>
+
+  <section class="q" id="futuro">
+    <div class="qhead"><span class="qnum mono">07</span><span class="qline"></span></div>
+    <h2>Se il trend continua</h2>
+    <div class="qtext"><p>Non esiste un dataset di previsione ufficiale: quella che segue è una semplice estrapolazione del ritmo osservato tra 2021 e 2025, non una stima statistica rigorosa. Ma dà un'idea della direzione.</p></div>
+<div class="chartbox">
+  <svg viewBox="0 0 680 300" width="100%" height="300" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace">
+    <line x1="70" y1="230" x2="650" y2="230" stroke="#E4E1D6" stroke-width="1"/>
+    <text x="62" y="234" font-size="11" fill="#6B6659" text-anchor="end">0</text>
+    <line x1="70" y1="191.8" x2="650" y2="191.8" stroke="#E4E1D6" stroke-width="1"/>
+    <text x="62" y="195.8" font-size="11" fill="#6B6659" text-anchor="end">2M</text>
+    <line x1="70" y1="153.6" x2="650" y2="153.6" stroke="#E4E1D6" stroke-width="1"/>
+    <text x="62" y="157.6" font-size="11" fill="#6B6659" text-anchor="end">4M</text>
+    <line x1="70" y1="115.5" x2="650" y2="115.5" stroke="#E4E1D6" stroke-width="1"/>
+    <text x="62" y="119.5" font-size="11" fill="#6B6659" text-anchor="end">6M</text>
+    <line x1="70" y1="77.3" x2="650" y2="77.3" stroke="#E4E1D6" stroke-width="1"/>
+    <text x="62" y="81.3" font-size="11" fill="#6B6659" text-anchor="end">8M</text>
+    <line x1="70" y1="39.1" x2="650" y2="39.1" stroke="#E4E1D6" stroke-width="1"/>
+    <text x="62" y="43.1" font-size="11" fill="#6B6659" text-anchor="end">10M</text>
+
+    <text x="90" y="248" font-size="11" fill="#6B6659" text-anchor="middle">2021</text>
+    <text x="350" y="248" font-size="11" fill="#6B6659" text-anchor="middle">2025</text>
+    <text x="610" y="248" font-size="11" fill="#6B6659" text-anchor="middle">2029</text>
+
+    <line x1="90" y1="39.9" x2="350" y2="39.3" stroke="#6B6659" stroke-width="2.6" stroke-linecap="round"/>
+    <line x1="350" y1="39.3" x2="610" y2="38.7" stroke="#6B6659" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="6,5"/>
+    <circle cx="90" cy="39.9" r="4" fill="#6B6659"/>
+    <circle cx="350" cy="39.3" r="4" fill="#6B6659"/>
+    <circle cx="610" cy="38.7" r="4" fill="#6B6659"/>
+
+    <line x1="90" y1="201.4" x2="350" y2="172.7" stroke="#2E7DA6" stroke-width="2.6" stroke-linecap="round"/>
+    <line x1="350" y1="172.7" x2="610" y2="144.1" stroke="#2E7DA6" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="6,5"/>
+    <circle cx="90" cy="201.4" r="4" fill="#2E7DA6"/>
+    <circle cx="350" cy="172.7" r="4" fill="#2E7DA6"/>
+    <circle cx="610" cy="144.1" r="4" fill="#2E7DA6"/>
+
+
+    <line x1="90" y1="210.9" x2="350" y2="191.8" stroke="#D9AD5C" stroke-width="2.6" stroke-linecap="round"/>
+    <line x1="350" y1="191.8" x2="610" y2="172.7" stroke="#D9AD5C" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="6,5"/>
+    <circle cx="90" cy="210.9" r="4" fill="#D9AD5C"/>
+    <circle cx="350" cy="191.8" r="4" fill="#D9AD5C"/>
+    <circle cx="610" cy="172.7" r="4" fill="#D9AD5C"/>
+
+
+    <line x1="70" y1="270" x2="86" y2="270" stroke="#6B6659" stroke-width="3"/>
+    <text x="92" y="274" font-size="11" fill="#3A392F" font-family="Inter, sans-serif">Tradizionali</text>
+    <line x1="220" y1="270" x2="236" y2="270" stroke="#2E7DA6" stroke-width="3"/>
+    <text x="242" y="274" font-size="11" fill="#3A392F" font-family="Inter, sans-serif">E-cig</text>
+    <line x1="330" y1="270" x2="346" y2="270" stroke="#D9AD5C" stroke-width="3"/>
+    <text x="352" y="274" font-size="11" fill="#3A392F" font-family="Inter, sans-serif">Riscaldato</text>
+  </svg>
+  <p style="font-size:12px; color:var(--slate); margin:14px 0 0;">Tratto continuo = dato osservato (ISTAT, 2021-2025) · tratto tratteggiato = proiezione lineare</p>
+</div>
+    <div class="callout" style="margin-top:16px;">Il tabacco riscaldato, sullo stesso ritmo, passerebbe da 2,0 a circa <b>3,0 milioni</b> di utilizzatori entro il 2029. Se il trend attuale si conferma, entro pochi anni i prodotti alternativi insieme potrebbero avvicinarsi a un terzo del numero di fumatori tradizionali — oggi sono circa un quinto.</div>
+  </section>
+</div>
+
+<div class="conclusion" id="conclusione">
+  <div class="wrap">
+    <div class="qhead"><span class="qnum mono" style="color:var(--amber);">08 · Conclusione</span></div>
+    <h2>Meno fumo, o solo fumo diverso?</h2>
+    <p class="verdict">La risposta è <em>fumo diverso</em> — non meno fumo.</p>
+    <div class="qtext"><p>I dati ISTAT raccontano un calo storico del fumo tradizionale, ma quel calo si è quasi fermato dal 2018, e non racconta tutta la storia. Se si guarda al consumo <em>complessivo</em> di nicotina — sigarette, e-cig, tabacco riscaldato insieme — il calo reale è minimo. Quello che sta davvero cambiando è la <em>forma</em> del consumo: più giovane, più diversificata, sempre più spesso "doppia" invece che sostitutiva. E la normativa, per ora, fatica a starle dietro.</p></div>
+    <div class="recap-grid">
+      <div class="rc a"><div class="t">Il dato ufficiale</div><div class="d"><b>18,6%</b> di fumatori tradizionali — il numero che si racconta di solito, in calo lento.</div></div>
+      <div class="rc b"><div class="t">Il dato nascosto</div><div class="d"><b>27%</b> di consumatori di nicotina totali — quasi invariato dal 2008.</div></div>
+      <div class="rc c"><div class="t">Chi guida il cambiamento</div><div class="d"><b>I giovani</b> — policonsumo quasi raddoppiato in 3 anni tra gli 11-17enni.</div></div>
+    </div>
+    <p class="final-line"><em>La popolazione non ha smesso di fumare. Ha soltanto diversificato l'abitudine</em></p>
+  </div>
+</div>
+
+
+<footer>
+  <div class="wrap">Dati: ISTAT ("Aspetti della vita quotidiana", "Fattori di rischio per la salute" 2025) · Eurostat (EHIS) · ISS/PASSI · Elaborazione indipendente</div>
+</footer>
+
+</body>
+</html>
