@@ -29,6 +29,9 @@
         --rosa: #D6338A;
         --rosa-deep: #A81F6B;
         --rosa-light: rgba(214,51,138,0.14);
+        --azzurro: #2E7DA6;
+        --azzurro-deep: #1E5A7C;
+        --azzurro-light: rgba(46,125,166,0.14);
         --sidebar-w: 272px;
         --gap: 18px;
     }
@@ -361,6 +364,7 @@
     .card[data-category="energia"]:hover { box-shadow: 0 26px 46px -16px rgba(5,150,105,0.35); }
     .card[data-category="lavoro"]:hover { box-shadow: 0 26px 46px -16px rgba(124,92,252,0.35); }
     .card[data-category="sport"]:hover { box-shadow: 0 26px 46px -16px rgba(214,51,138,0.35); }
+    .card[data-category="salute"]:hover { box-shadow: 0 26px 46px -16px rgba(46,125,166,0.35); }
 
     .card-img-wrapper { position: relative; height: 200px; overflow: hidden; background: #e2e8f0; }
     .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
@@ -386,6 +390,7 @@
     .card-tag.energia { background: var(--emerald-light); color: var(--emerald); }
     .card-tag.lavoro { background: var(--violet-light); color: var(--violet-deep); }
     .card-tag.sport { background: var(--rosa-light); color: var(--rosa-deep); }
+    .card-tag.salute { background: var(--azzurro-light); color: var(--azzurro-deep); }
 	.interactive-tag {
     font-size: 0.7rem; font-weight: 700; padding: 4px 11px; border-radius: 999px;
     color: var(--muted); border: 1px dashed var(--faint); letter-spacing: 0.2px;
@@ -412,6 +417,7 @@
     .card[data-category="energia"] .card-link:hover { background: var(--emerald); gap: 10px; }
     .card[data-category="lavoro"] .card-link:hover { background: var(--violet); gap: 10px; }
     .card[data-category="sport"] .card-link:hover { background: linear-gradient(100deg, var(--rosa), var(--rosa-deep)); gap: 10px; }
+    .card[data-category="salute"] .card-link:hover { background: linear-gradient(100deg, var(--azzurro), var(--azzurro-deep)); gap: 10px; }
 
     .card.hidden { display: none; }
 
@@ -447,7 +453,7 @@
 
     <div class="catalog-label">Indice</div>
 
-    <button class="catalog-item-all active" data-filter="all">Tutti gli articoli <span class="count">4</span></button>
+    <button class="catalog-item-all active" data-filter="all">Tutti gli articoli <span class="count">5</span></button>
 
     <div class="catalog-group" data-group="sport">
         <div class="catalog-cat-row">
@@ -505,6 +511,20 @@
         </div>
     </div>
 
+    <div class="catalog-group" data-group="salute">
+        <div class="catalog-cat-row">
+            <button class="catalog-cat" data-filter="salute">
+                <span class="label">🩺 Salute</span> <span class="count">1</span>
+            </button>
+            <button class="catalog-toggle" aria-label="Apri/chiudi categoria">›</button>
+        </div>
+        <div class="catalog-articles">
+            <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/il-fumo-che-cambia.html" class="catalog-article">
+                <span class="code">SAL·01</span> Il fumo che cambia: dal tabacco all'elettronico
+            </a>
+        </div>
+    </div>
+
     <div class="sidebar-footer">
         <a href="chi-sono.html" style="display:inline-flex;align-items:center;gap:6px;color:var(--ink);font-family:'Inter',sans-serif;font-weight:600;font-size:0.8rem;text-decoration:none;background:rgba(23,23,27,0.06);padding:8px 12px;border-radius:10px;margin-bottom:14px;">🧑‍💻 Chi sono</a>
         <br>© nuMericA 2026<br>Alessia Magro
@@ -542,11 +562,28 @@
     <div class="container">
         <div class="results-bar">
             <span id="results-title">Tutti gli articoli</span>
-            <span id="results-count">4 report</span>
+            <span id="results-count">5 report</span>
         </div>
 
         <div class="grid" id="grid">
 
+
+            <div class="card" data-category="salute" data-stat="×2 in 4 anni" data-stat-label="e-cig e tabacco riscaldato raddoppiati dal 2021 al 2025">
+                <div class="card-img-wrapper">
+					<img src="https://images.unsplash.com/photo-1711912811692-2325d6365fcb?auto=format&fit=crop&w=1000&q=80" class="card-img" alt="Uomo che fuma una sigaretta nel buio">
+					<span class="catalog-code-badge">SAL·01</span>
+				</div>
+                <div class="card-body">
+                    <div class="card-header-info">
+                        <span class="card-tag salute">Salute</span>
+                        <span class="card-meta">6 MIN</span>
+                    </div>
+                    <h2 class="card-title">Il fumo che cambia: dal tabacco all'elettronico</h2>
+                    <p class="card-excerpt">I fumatori tradizionali calano appena, ma sigaretta elettronica e tabacco riscaldato raddoppiano in 4 anni. Cosa dicono davvero i dati su come — e perché — sta cambiando l'abitudine al fumo in Italia.</p>
+                    <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/il-fumo-che-cambia.html" class="card-link">Esplora i Dati &rarr;</a>
+                </div>
+            </div>
+			
             <div class="card" data-category="sport" data-stat="+266%" data-stat-label="Tesserati FITP dal 2020">
                 <div class="card-img-wrapper">
                     <img src="https://images.unsplash.com/photo-1694234487030-1e8c988be7b0?auto=format&fit=crop&w=1000&q=80" class="card-img" alt="Palla da tennis a fuoco su un campo colorato">
@@ -649,7 +686,7 @@
     const resultsTitle = document.getElementById('results-title');
     const resultsCount = document.getElementById('results-count');
 
-    const categoryNames = { all: 'Tutti gli articoli', economia: 'Economia', energia: 'Ambiente', lavoro: 'Lavoro', sport: 'Sport' };
+    const categoryNames = { all: 'Tutti gli articoli', economia: 'Economia', energia: 'Ambiente', lavoro: 'Lavoro', sport: 'Sport', salute: 'Salute' };
 
     // Numeri in breve: generata dalle card stesse (data-stat / data-stat-label),
     // così si aggiorna da sola quando si aggiunge un nuovo report — nessun file a parte da tenere sincronizzato.
