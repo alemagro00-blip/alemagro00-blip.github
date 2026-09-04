@@ -453,7 +453,7 @@
 
     <div class="catalog-label">Indice</div>
 
-    <button class="catalog-item-all active" data-filter="all">Tutti gli articoli <span class="count">5</span></button>
+    <button class="catalog-item-all active" data-filter="all">Tutti gli articoli <span class="count">6</span></button>
 
     <div class="catalog-group" data-group="sport">
         <div class="catalog-cat-row">
@@ -472,13 +472,16 @@
     <div class="catalog-group" data-group="economia">
         <div class="catalog-cat-row">
             <button class="catalog-cat" data-filter="economia">
-                <span class="label">💰 Economia</span> <span class="count">1</span>
+                <span class="label">💰 Economia</span> <span class="count">2</span>
             </button>
             <button class="catalog-toggle" aria-label="Apri/chiudi categoria">›</button>
         </div>
         <div class="catalog-articles">
             <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/costo_della_vita_report.html" class="catalog-article">
                 <span class="code">ECO·01</span> Il costo nascosto della vita
+            </a>
+            <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/perche-la-benzina-costa-cosi-tanto.html" class="catalog-article">
+                <span class="code">ECO·02</span> Un litro di benzina, tante storie
             </a>
         </div>
     </div>
@@ -562,12 +565,30 @@
     <div class="container">
         <div class="results-bar">
             <span id="results-title">Tutti gli articoli</span>
-            <span id="results-count">5 report</span>
+            <span id="results-count">6 report</span>
         </div>
 
         <div class="grid" id="grid">
 
-
+            <div class="card" data-category="economia" data-stat="+48/75%" data-stat-label="l'aumento di benzina e diesel dal 2005 a oggi">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1644246905181-c3753e9a82bd?fm=jpg&q=60&w=1000&auto=format&fit=crop" class="card-img" alt="Rifornimento di carburante a un distributore">
+                    <span class="catalog-code-badge">ECO·02</span>
+                </div>
+                <div class="card-body">
+					<div class="card-header-info">
+						<div style="display:flex; align-items:center; gap:8px;">
+							<span class="card-tag economia">Economia</span>
+							<span class="interactive-tag">Interattivo</span>
+						</div>
+						<span class="card-meta">6 MIN</span>
+					</div>
+                    <h2 class="card-title">Un litro di benzina, tante storie</h2>
+                    <p class="card-excerpt">Il prezzo è raddoppiato in 21 anni. A volte segue il petrolio, a volte no. E per la prima volta il diesel è più caro della benzina. <br/>Scopri quanto pagavi allora — e quanto risparmieresti oggi, calcolato sui tuoi chilometri.</p>
+                    <a href="https://alemagro00-blip.github.io/alemagro00-blip.github/perche-la-benzina-costa-cosi-tanto.html" class="card-link">Esplora i Dati &rarr;</a>
+                </div>
+            </div>
+			
             <div class="card" data-category="salute" data-stat="×2 in 4 anni" data-stat-label="e-cig e tabacco riscaldato raddoppiati dal 2021 al 2025">
                 <div class="card-img-wrapper">
 					<img src="https://images.unsplash.com/photo-1711912811692-2325d6365fcb?auto=format&fit=crop&w=1000&q=80" class="card-img" alt="Uomo che fuma una sigaretta nel buio">
@@ -883,6 +904,7 @@
 
 </body>
 </html>
+
 
 
 
