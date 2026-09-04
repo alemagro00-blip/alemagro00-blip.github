@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Un litro di benzina, tante storie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:#15140F; --paper:#FAFAF6; --card:#FFFFFF;
+    --coral:#FF6A4D; --coral-deep:#E14F31; --moss:#4C7A63; --amber:#D9AD5C; --line:#E4E1D6; --slate:#6B6659;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:'Inter',-apple-system,sans-serif; font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3{font-family:'Bricolage Grotesque',sans-serif; margin:0; color:var(--ink);}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .wrap{max-width:900px; margin:0 auto; padding:0 28px;}
+  a{color:var(--coral);}
+  .back-link { display:inline-flex; align-items:center; gap:8px; margin-bottom:26px; background:rgba(255,255,255,0.1); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.16); border-radius:999px; padding:8px 16px; color:var(--paper); opacity:.85; text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; cursor:pointer; transition:.2s ease; position:relative; z-index:1; }
+  .back-link:hover { opacity:1; transform:translateX(-4px); }
+
+  .hero { position:relative; background:var(--ink); color:var(--paper); padding:64px 0 56px; overflow:hidden; }
+  .hero::before, .hero::after { content:''; position:absolute; border-radius:50%; filter:blur(80px); pointer-events:none; z-index:0; }
+  .hero::before { width:480px; height:480px; background:radial-gradient(circle, rgba(255,106,77,0.45), transparent 70%); top:-200px; left:-100px; }
+  .hero::after { width:420px; height:420px; background:radial-gradient(circle, rgba(155,107,255,0.3), transparent 70%); bottom:-220px; right:-80px; }
+  .hero .wrap { position:relative; z-index:1; }
+  .eyebrow { font-family:'JetBrains Mono',monospace; letter-spacing:.16em; text-transform:uppercase; font-size:11.5px; color:var(--amber); margin-bottom:22px; font-weight:700; }
+  .hero h1 { font-size:clamp(2.4rem,6vw,3.6rem); font-weight:700; line-height:1.05; letter-spacing:-.01em; color:#fff; }
+  .hero h1 em { font-style:italic; color:var(--coral); padding-right:.08em; }
+  .hero .sub { margin-top:22px; font-size:16.5px; line-height:1.6; color:#C9C4B4; }
+  .ticker { margin-top:44px; display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(255,255,255,0.12); border-radius:18px; overflow:hidden; border:1px solid rgba(255,255,255,0.14); }
+  .ticker .cell { background:rgba(255,255,255,0.06); backdrop-filter:blur(16px) saturate(1.6); -webkit-backdrop-filter:blur(16px) saturate(1.6); padding:26px 28px; }
+  .ticker .label { font-family:'JetBrains Mono',monospace; font-size:11.5px; text-transform:uppercase; letter-spacing:.1em; font-weight:700; color:#8B8677; }
+  .ticker .num { font-family:'Bricolage Grotesque',sans-serif; font-size:44px; font-weight:700; margin-top:8px; }
+  .ticker .num.bad { color:var(--coral); }
+  .ticker .num.good { color:#6FBF8F; }
+  .ticker .cap { font-size:13px; color:#9C9788; margin-top:6px; line-height:1.5; }
+
+  .intro { padding:52px 0 0; }
+  .lede { font-size:19px; color:#2B2B23; font-family:'Bricolage Grotesque',sans-serif; font-weight:500; line-height:1.5; }
+  .lede b { font-style:italic; font-weight:600; }
+
+  section.q { padding:38px 0; }
+  .qhead { display:flex; align-items:baseline; gap:12px; margin-bottom:10px; }
+  .qnum { font-family:'JetBrains Mono',monospace; color:var(--coral-deep); font-size:13px; font-weight:700; }
+  .qline { flex:1; height:1px; background:var(--line); }
+  section.q h2 { font-size:clamp(24px,3.4vw,32px); letter-spacing:-.01em; font-weight:600; }
+  .qtext { color:#3A392F; font-size:16px; margin-top:14px; }
+  .qtext b { color:var(--ink); }
+
+  .chartbox { margin-top:22px; background:var(--card); border:1px solid var(--line); border-radius:20px; padding:20px; }
+
+  .stat-pair { display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
+  .chip { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px 16px; font-size:13px; color:var(--slate); flex:1; min-width:150px; }
+  .chip b { display:block; font-family:'Bricolage Grotesque',sans-serif; font-size:19px; font-weight:800; color:var(--ink); margin-top:4px; }
+
+  .callout { margin-top:18px; background:linear-gradient(135deg, rgba(255,106,77,0.1), rgba(217,173,92,0.08)); border:1px solid var(--line); border-radius:16px; padding:18px 20px; font-size:14.5px; color:#3A392F; line-height:1.6; }
+  .callout b { color:var(--ink); }
+
+  .barlist { display:flex; flex-direction:column; gap:10px; }
+  .barlist .row { display:grid; grid-template-columns:78px 1fr 58px; align-items:center; gap:8px; }
+  .barlist .row .name { font-size:12.5px; font-weight:600; color:var(--ink); min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .barlist .row .track { background:#F1EEE2; border-radius:7px; height:15px; overflow:hidden; }
+  .barlist .row .fill { height:100%; border-radius:7px; }
+  .barlist .row .val { font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; text-align:right; }
+  .barlist-head { font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--slate); margin-bottom:10px; }
+
+	.timeline-list, .timeline-grid { display:flex; flex-direction:column; gap:0; }
+	.timeline-grid { display:grid; grid-template-columns:1fr 1fr; gap:0 20px; }
+	.t-row { display:grid; grid-template-columns:56px 1fr; gap:14px; padding:11px 0; border-bottom:1px solid var(--line); }
+	.timeline-list .t-row:last-child { border-bottom:none; }
+	.t-yr { font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--coral-deep); font-size:14px; }
+	.t-ev { font-size:14px; color:#3A392F; line-height:1.4; }
+	@media (max-width:640px) { .timeline-grid { grid-template-columns:1fr; } }
+
+  .myth-box { display:flex; gap:14px; align-items:flex-start; background:#FBEEEA; border:1px solid rgba(225,79,49,0.25); border-radius:16px; padding:16px 18px; margin-bottom:18px; }
+  .myth-box .myth-tag { font-family:'JetBrains Mono',monospace; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--coral-deep); background:#fff; border-radius:999px; padding:4px 10px; flex-shrink:0; }
+  .myth-box p { margin:0; font-size:13.5px; color:#3A392F; line-height:1.55; }
+
+  .composition-bar { display:flex; height:56px; border-radius:12px; overflow:hidden; margin-top:6px; }
+  .composition-bar .seg { display:flex; align-items:center; justify-content:center; color:#fff; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; }
+  .composition-legend { display:flex; flex-wrap:wrap; gap:14px; margin-top:14px; font-size:12.5px; color:var(--slate); }
+  .composition-legend i { display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:6px; vertical-align:middle; }
+
+  .legend-inline { display:flex; gap:16px; margin-top:10px; font-size:12px; color:var(--slate); }
+  .legend-inline i { display:inline-block; width:16px; height:3px; margin-right:6px; vertical-align:middle; border-radius:2px; }
+  
+  
+  .cards-mobile { display:none; }
+	@media (max-width:640px) {
+	  .table-desktop { display:none; }
+	  .table-desktop { display:none; }
+	  .cards-mobile { display:flex; flex-direction:column; gap:8px; }
+	  .yc { border:1px solid var(--line); border-radius:12px; padding:10px 12px; }
+	  .yc-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:7px; gap:8px; }
+	  .yc-year { font-family:'JetBrains Mono',monospace; font-weight:700; font-size:13px; flex-shrink:0; }
+	  .yc-event { font-size:10.5px; color:var(--slate); text-align:right; }
+	  .yc-fuels { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+	  .yc-fuel-box { border-radius:8px; padding:6px 8px; text-align:center; }
+	  .yc-fuel-box.benzina { background:rgba(225,79,49,0.06); }
+	  .yc-fuel-box.diesel { background:rgba(217,173,92,0.12); }
+	  .yc-fuel-label { font-family:'JetBrains Mono',monospace; font-size:9px; text-transform:uppercase; font-weight:700; }
+	  .yc-fuel-box.benzina .yc-fuel-label { color:#E14F31; }
+	  .yc-fuel-box.diesel .yc-fuel-label { color:#8A6B2E; }
+	  .yc-fuel-val { font-family:'JetBrains Mono',monospace; font-weight:700; font-size:13px; margin-top:2px; }
+	  .yc-fuel-delta { font-size:10px; color:var(--slate); margin-left:3px; }
+
+	}
+	.timeline-vert { position:relative; }
+	.timeline-vert::before {
+	  content:''; position:absolute; top:8px; bottom:8px; left:58px;
+	  width:1px; background:var(--line);
+	}
+	.tv-item { display:flex; align-items:flex-start; padding-bottom:20px; position:relative; z-index:1; }
+	.tv-item:last-child { padding-bottom:0; }
+	.tv-year { width:46px; flex-shrink:0; text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--coral-deep); font-size:14px; padding-top:2px; }
+	.tv-spine { width:24px; flex-shrink:0; display:flex; justify-content:center; }
+	.tv-spine .dot { width:11px; height:11px; border-radius:50%; background:var(--coral-deep); border:2px solid var(--card); box-shadow:0 0 0 1px var(--coral-deep); margin-top:3px; }
+	.tv-event { flex:1; padding-top:2px; font-size:13.5px; color:#3A392F; line-height:1.5; }
+		
+	.yc-compact { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:9px 12px; border:1px solid var(--line); border-radius:10px; font-size:11.5px; }
+	.yc-compact .ycc-year { font-family:'JetBrains Mono',monospace; font-weight:700; flex-shrink:0; width:38px; }
+	.yc-compact .ycc-event { color:var(--slate); flex:1; font-size:10.5px; }
+	.yc-compact .ycc-vals { display:flex; gap:8px; flex-shrink:0; font-family:'JetBrains Mono',monospace; font-weight:700; }
+
+  /* Calcolatore interattivo */
+  .simulator-controls { margin-top:20px; display:flex; flex-wrap:wrap; gap:14px; align-items:flex-end; }
+  .sim-field label { display:block; font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.06em; font-weight:700; color:var(--slate); margin-bottom:6px; }
+  .sim-input-wrap { display:flex; align-items:center; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:8px 12px; gap:6px; }
+  .sim-input-wrap input { border:none; outline:none; font-family:'JetBrains Mono',monospace; font-size:15px; font-weight:700; color:var(--ink); width:90px; background:transparent; }
+  .sim-toggle { display:inline-flex; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:3px; gap:3px; }
+  .sim-toggle-btn { border:none; background:transparent; padding:8px 14px; border-radius:9px; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:var(--slate); cursor:pointer; transition:.15s ease; }
+  .sim-toggle-btn.active { background:var(--ink); color:#fff; }
+  .sim-year-wrap { flex:1; min-width:220px; }
+  .sim-year-wrap input[type="range"] { width:100%; accent-color:var(--coral-deep); }
+  .sim-year-label { font-family:'JetBrains Mono',monospace; font-size:15px; font-weight:700; color:var(--ink); text-align:center; margin-top:4px; }
+
+  .conclusion { background:var(--ink); color:var(--paper); padding:56px 0 60px; margin-top:20px; }
+  .conclusion .verdict { font-family:'Bricolage Grotesque',sans-serif; font-size:22px; font-weight:600; color:#fff; margin:14px 0 18px; }
+  .conclusion .verdict em { color:var(--coral); font-style:italic; }
+  .conclusion .qtext { color:#C9C4B4; }
+  .conclusion .qtext em { color:#fff; font-style:italic; }
+  .recap-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-top:28px; }
+  .recap-grid .rc { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:14px; padding:16px; }
+  .recap-grid .rc .t { font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.06em; font-weight:700; color:var(--amber); margin-bottom:8px; }
+  .recap-grid .rc .d { font-size:13px; color:#C9C4B4; line-height:1.5; }
+  .recap-grid .rc .d b { color:#fff; }
+  .final-line { margin-top:26px; padding-top:26px; border-top:1px solid rgba(255,255,255,0.14); text-align:center; font-size:17px; font-weight:600; color:#fff; font-style:normal; }
+  .final-line em { color:var(--coral); font-style:italic; }
+
+  .crosslinks { padding:44px 0 0; }
+  .crosslinks .ch { font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--slate); margin-bottom:16px; }
+  .cl-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+  .cl-card { display:block; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; text-decoration:none; transition:transform .2s ease; }
+  .cl-card:hover { transform:translateY(-3px); }
+  .cl-tag { font-family:'JetBrains Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.06em; font-weight:700; color:var(--coral-deep); }
+  .cl-title { font-family:'Bricolage Grotesque',sans-serif; font-size:14.5px; font-weight:700; color:var(--ink); margin-top:6px; line-height:1.3; }
+
+  footer { padding:28px 0 52px; text-align:center; color:var(--slate); font-size:12px; }
+
+  @media (max-width:640px) {
+    .ticker { grid-template-columns:1fr; }
+    .recap-grid { grid-template-columns:1fr; }
+    .cl-grid { grid-template-columns:1fr; }
+	.barlist .row { grid-template-columns:66px 1fr 50px; gap:6px; }
+	.barlist .row .name { font-size:11px; }
+    .simulator-controls { flex-direction:column; align-items:stretch; }
+	.composition-bar { height:36px; border-radius:8px; }
+	.composition-bar .seg { font-size:11px; }
+	.chartbox { padding:14px 10px; }
+    .chartbox svg text { font-size:13px !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <a href="index.html" class="back-link">&larr; Torna alla Home</a>
+    <div class="eyebrow">Data Stories — Economia</div>
+    <h1>Un litro di benzina, <em>tante storie</em></h1>
+        <p class="sub">In 21 anni benzina e diesel sono saliti entrambi, ma non allo stesso modo. A volte seguono il petrolio, a volte no. Le tasse pesano più della metà — alcune nate da eventi che con il carburante non c'entravano nulla. E l'Italia, in Europa, è a metà classifica. Abbiamo messo insieme i pezzi.</p>
+   <div class="ticker">
+      <div class="cell">
+        <div class="label">Benzina 2005 → oggi</div>
+        <div class="num bad">+48,7%</div>
+        <div class="cap">da 1,22€/L a 1,81€/L di media annuale — il rincaro minore tra i due carburanti.</div>
+      </div>
+      <div class="cell">
+        <div class="label">Diesel 2005 → oggi</div>
+        <div class="num bad">+75,3%</div>
+        <div class="cap">da 1,11€/L a 1,94€/L di media annuale — partito più economico, oggi ha superato la benzina.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="intro">
+        <p class="lede">Benzina e diesel sono saliti entrambi negli ultimi 21 anni — ma non allo stesso ritmo, e la ragione non è mai una sola. C'è il petrolio, che a volte guida il prezzo e a volte no. Ci sono le tasse, che pesano più di quanto si pensi. C'è una storia fatta di decenni di emergenze — vere e leggendarie. E c'è l'Europa, dove lo stesso litro costa in modo molto diverso da un paese all'altro. Abbiamo incrociato i bollettini settimanali della Commissione Europea (dal 2005 a oggi) con lo storico del petrolio Brent per mettere insieme i pezzi di questo puzzle.</p>
+  </div>
+
+<section class="q" id="quadro" style="padding-bottom:10px;">
+    <div class="qhead"><span class="qnum mono">01</span><span class="qline"></span></div>
+    <h2>Il quadro di oggi</h2>
+    <div class="qtext"><p>Nell'ultima settimana disponibile (31 agosto 2026) la benzina costava <b>2,02 €/litro</b>, il diesel <b>2,12 €/litro</b>. Guardando le medie annuali, la benzina è salita da <b>1,22 €/L (2005)</b> a <b>1,81 €/L (2026)</b> — <b>+48,7%</b>. Il diesel, partito più economico, è salito ancora di più: da <b>1,11 €/L</b> a <b>1,94 €/L</b> — <b>+75,3%</b>, tanto da superare oggi la benzina come prezzo assoluto.</p></div>
+
+    <div class="chartbox">
+        <svg viewBox="0 0 680 260" style="width:100%; height:auto; display:block;" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace">
+        <line x1="60" y1="20" x2="60" y2="210" stroke="#E4E1D6" stroke-width="1"/>
+        <line x1="60" y1="210" x2="650" y2="210" stroke="#E4E1D6" stroke-width="1"/>
+        <text x="52" y="213" font-size="11" fill="#6B6659" text-anchor="end">1,03€</text>
+        <text x="52" y="118" font-size="11" fill="#6B6659" text-anchor="end">1,53€</text>
+        <text x="52" y="23" font-size="11" fill="#6B6659" text-anchor="end">2,04€</text>
+        <text x="60" y="228" font-size="11" fill="#6B6659" text-anchor="middle">2005</text>
+        <text x="650" y="228" font-size="11" fill="#6B6659" text-anchor="middle">2026</text>
+
+        <polyline points="60.0,195.0 88.1,183.9 116.2,184.6 144.3,149.0 172.4,199.8 200.5,174.9 228.6,131.8 256.7,82.2 284.8,91.3 312.9,99.9 341.0,138.3 369.0,162.3 397.1,143.2 425.2,122.8 453.3,125.2 481.4,155.4 509.5,123.7 537.6,61.8 565.7,65.6 593.8,80.3 621.9,92.3 650.0,38.3" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+        <polyline points="60.0,173.8 88.1,161.2 116.2,158.8 144.3,142.2 172.4,171.1 200.5,146.8 228.6,111.4 256.7,66.9 284.8,74.3 312.9,80.4 341.0,114.0 369.0,131.8 397.1,115.9 425.2,101.5 453.3,107.5 481.4,133.9 509.5,97.6 537.6,62.0 565.7,52.1 593.8,60.8 621.9,77.2 650.0,61.9" fill="none" stroke="#E14F31" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <circle cx="60.0" cy="173.8" r="4" fill="#E14F31" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="60.0" cy="195.0" r="4" fill="var(--amber)" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="481.4" cy="133.9" r="4" fill="#E14F31" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="481.4" cy="155.4" r="4" fill="var(--amber)" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="565.7" cy="52.1" r="4.5" fill="#E14F31" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="650.0" cy="61.9" r="4" fill="#E14F31" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="650.0" cy="38.3" r="4.5" fill="var(--amber)" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="256.7" cy="66.9" r="4" fill="#E14F31" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="256.7" cy="82.2" r="4" fill="var(--amber)" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="172.4" cy="171.1" r="4" fill="#E14F31" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="172.4" cy="199.8" r="4" fill="var(--amber)" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="369.0" cy="131.8" r="4" fill="#E14F31" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="369.0" cy="162.3" r="4" fill="var(--amber)" stroke="#fff" stroke-width="1.5"/>
+      </svg>
+      <div class="legend-inline">
+        <span><i style="background:#E14F31;"></i>Benzina</span>
+        <span><i style="background:var(--amber);"></i>Diesel</span>
+      </div>
+      <p style="font-size:12px; color:var(--slate); margin:12px 0 0;">Prezzo medio annuale, con tasse incluse · <i>Fonte: Commissione Europea, Weekly Oil Bulletin</i></p>
+    </div>
+
+        <div class="chartbox" style="margin-top:16px;">
+        <p style="font-size:11px; color:var(--slate); margin:0 0 10px; font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.06em;">Punti chiave (medie annuali, variazione cumulata dal 2005)</p>
+        <div style="overflow-x:auto;">
+       <table class="table-desktop" style="width:100%; border-collapse:collapse; font-size:13px; min-width:560px;">
+          <tr>
+            <td style="padding:0; border:none;"></td>
+            <td style="padding:0; border:none;"></td>
+            <td colspan="2" style="padding:5px 6px; text-align:center; background:rgba(225,79,49,0.1); font-family:'JetBrains Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; font-weight:700; color:#E14F31; border-radius:6px 6px 0 0;">Benzina</td>
+            <td colspan="2" style="padding:5px 6px; text-align:center; background:rgba(217,173,92,0.18); font-family:'JetBrains Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; font-weight:700; color:#8A6B2E; border-radius:6px 6px 0 0; border-left:10px solid var(--card);">Diesel</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line);">
+            <td style="padding:8px 6px; color:var(--slate); font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase;">Anno</td>
+            <td style="padding:8px 6px; color:var(--slate); font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase;">Evento</td>
+            <td style="padding:8px 6px; text-align:right; font-family:'JetBrains Mono',monospace; font-size:11px; background:rgba(225,79,49,0.05);">€/L</td>
+            <td style="padding:8px 6px; text-align:right; font-family:'JetBrains Mono',monospace; font-size:11px; background:rgba(225,79,49,0.05);">Δ 2005</td>
+            <td style="padding:8px 6px; text-align:right; font-family:'JetBrains Mono',monospace; font-size:11px; background:rgba(217,173,92,0.1); border-left:10px solid var(--card);">€/L</td>
+            <td style="padding:8px 6px; text-align:right; font-family:'JetBrains Mono',monospace; font-size:11px; background:rgba(217,173,92,0.1);">Δ 2005</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line);">
+            <td style="padding:9px 6px; font-weight:700;">2005</td>
+            <td style="padding:9px 6px; color:#3A392F;">Punto di partenza</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; background:rgba(225,79,49,0.04); color:#4C7A63;">1,22€</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; color:var(--slate); background:rgba(225,79,49,0.04);">—</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; background:rgba(217,173,92,0.08); border-left:10px solid var(--card);">1,11€</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; color:var(--slate); background:rgba(217,173,92,0.08);">—</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line);">
+            <td style="padding:9px 6px; font-weight:700;">2009</td>
+            <td style="padding:9px 6px; color:#3A392F;">Crisi finanziaria globale</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; background:rgba(225,79,49,0.04);">1,23€</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; background:rgba(225,79,49,0.04);">+1,2%</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; color:#4C7A63; background:rgba(217,173,92,0.08); border-left:10px solid var(--card);">1,08€</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; color:#4C7A63; background:rgba(217,173,92,0.08);">-2,3%</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line);">
+            <td style="padding:9px 6px; font-weight:700;">2012</td>
+            <td style="padding:9px 6px; color:#3A392F;">Primo picco, era del petrolio a +100$</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; background:rgba(225,79,49,0.04);">1,79€</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; background:rgba(225,79,49,0.04);">+46,6%</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; background:rgba(217,173,92,0.08); border-left:10px solid var(--card);">1,71€</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; background:rgba(217,173,92,0.08);">+54,1%</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line);">
+            <td style="padding:9px 6px; font-weight:700;">2016</td>
+            <td style="padding:9px 6px; color:#3A392F;">Eccesso offerta petrolio (guerra prezzi OPEC/shale USA)</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; background:rgba(225,79,49,0.04);">1,44€</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; background:rgba(225,79,49,0.04);">+18,3%</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; background:rgba(217,173,92,0.08); border-left:10px solid var(--card);">1,28€</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; background:rgba(217,173,92,0.08);">+15,7%</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line);">
+            <td style="padding:9px 6px; font-weight:700;">2020</td>
+            <td style="padding:9px 6px; color:#3A392F;">Crollo Covid</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; background:rgba(225,79,49,0.04);">1,43€</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; background:rgba(225,79,49,0.04);">+17,4%</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; background:rgba(217,173,92,0.08); border-left:10px solid var(--card);">1,32€</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; background:rgba(217,173,92,0.08);">+19,0%</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line);">
+            <td style="padding:9px 6px; font-weight:700;">2023</td>
+            <td style="padding:9px 6px; color:#3A392F;">Massimo storico benzina</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; color:#E14F31; font-weight:700; background:rgba(225,79,49,0.04);">1,87€</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; color:#E14F31; font-weight:700; background:rgba(225,79,49,0.04);">+53,0%</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; background:rgba(217,173,92,0.08); border-left:10px solid var(--card);">1,80€</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; background:rgba(217,173,92,0.08);">+62,1%</td>
+          </tr>
+          <tr>
+            <td style="padding:9px 6px; font-weight:700;">2026</td>
+            <td style="padding:9px 6px; color:#3A392F;">Oggi — massimo storico diesel</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; background:rgba(225,79,49,0.04); border-radius:0 0 0 6px;">1,81€</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; background:rgba(225,79,49,0.04); border-radius:0 0 6px 0;">+48,7%</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; color:var(--amber); font-weight:700; background:rgba(217,173,92,0.08); border-left:10px solid var(--card); border-radius:0 0 0 6px;">1,94€</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; color:var(--amber); font-weight:700; background:rgba(217,173,92,0.08); border-radius:0 0 6px 0;">+75,3%</td>
+          </tr>
+        </table>
+        </div>
+        <div class="cards-mobile">
+          <div class="yc">
+            <div class="yc-head"><span class="yc-year">2005</span><span class="yc-event">Punto di partenza</span></div>
+            <div class="yc-fuels">
+              <div class="yc-fuel-box benzina"><div class="yc-fuel-label">Benzina</div><div class="yc-fuel-val">1,22€ <span class="yc-fuel-delta">—</span></div></div>
+              <div class="yc-fuel-box diesel"><div class="yc-fuel-label">Diesel</div><div class="yc-fuel-val">1,11€ <span class="yc-fuel-delta">—</span></div></div>
+            </div>
+          </div>
+          <div class="yc">
+            <div class="yc-head"><span class="yc-year">2009</span><span class="yc-event">Crisi finanziaria</span></div>
+            <div class="yc-fuels">
+              <div class="yc-fuel-box benzina"><div class="yc-fuel-label">Benzina</div><div class="yc-fuel-val">1,23€ <span class="yc-fuel-delta">+1,2%</span></div></div>
+              <div class="yc-fuel-box diesel"><div class="yc-fuel-label">Diesel</div><div class="yc-fuel-val">1,08€ <span class="yc-fuel-delta" style="color:#4C7A63;">-2,3%</span></div></div>
+            </div>
+          </div>
+          <div class="yc">
+            <div class="yc-head"><span class="yc-year">2012</span><span class="yc-event">Picco petrolio +100$</span></div>
+            <div class="yc-fuels">
+              <div class="yc-fuel-box benzina"><div class="yc-fuel-label">Benzina</div><div class="yc-fuel-val">1,79€ <span class="yc-fuel-delta">+46,6%</span></div></div>
+              <div class="yc-fuel-box diesel"><div class="yc-fuel-label">Diesel</div><div class="yc-fuel-val">1,71€ <span class="yc-fuel-delta">+54,1%</span></div></div>
+            </div>
+          </div>
+          <div class="yc">
+            <div class="yc-head"><span class="yc-year">2016</span><span class="yc-event">Guerra prezzi OPEC/shale</span></div>
+            <div class="yc-fuels">
+              <div class="yc-fuel-box benzina"><div class="yc-fuel-label">Benzina</div><div class="yc-fuel-val">1,44€ <span class="yc-fuel-delta">+18,3%</span></div></div>
+              <div class="yc-fuel-box diesel"><div class="yc-fuel-label">Diesel</div><div class="yc-fuel-val">1,28€ <span class="yc-fuel-delta">+15,7%</span></div></div>
+            </div>
+          </div>
+          <div class="yc">
+            <div class="yc-head"><span class="yc-year">2020</span><span class="yc-event">Crollo Covid</span></div>
+            <div class="yc-fuels">
+              <div class="yc-fuel-box benzina"><div class="yc-fuel-label">Benzina</div><div class="yc-fuel-val">1,43€ <span class="yc-fuel-delta">+17,4%</span></div></div>
+              <div class="yc-fuel-box diesel"><div class="yc-fuel-label">Diesel</div><div class="yc-fuel-val">1,32€ <span class="yc-fuel-delta">+19,0%</span></div></div>
+            </div>
+          </div>
+          <div class="yc">
+            <div class="yc-head"><span class="yc-year">2023</span><span class="yc-event">Massimo benzina</span></div>
+            <div class="yc-fuels">
+              <div class="yc-fuel-box benzina"><div class="yc-fuel-label">Benzina</div><div class="yc-fuel-val" style="color:#E14F31;">1,87€ <span class="yc-fuel-delta" style="color:#E14F31;">+53,0%</span></div></div>
+              <div class="yc-fuel-box diesel"><div class="yc-fuel-label">Diesel</div><div class="yc-fuel-val">1,80€ <span class="yc-fuel-delta">+62,1%</span></div></div>
+            </div>
+          </div>
+          <div class="yc">
+            <div class="yc-head"><span class="yc-year">2026</span><span class="yc-event">Oggi, massimo diesel</span></div>
+            <div class="yc-fuels">
+              <div class="yc-fuel-box benzina"><div class="yc-fuel-label">Benzina</div><div class="yc-fuel-val">1,81€ <span class="yc-fuel-delta">+48,7%</span></div></div>
+              <div class="yc-fuel-box diesel"><div class="yc-fuel-label">Diesel</div><div class="yc-fuel-val" style="color:var(--amber);">1,94€ <span class="yc-fuel-delta" style="color:var(--amber);">+75,3%</span></div></div>
+            </div>
+          </div>
+        </div>
+    </div>
+</section>
+
+  <section class="q" id="composizione">
+    <div class="qhead"><span class="qnum mono">02</span><span class="qline"></span></div>
+    <h2>Di cosa è fatto davvero un litro</h2>
+    <div class="qtext"><p>Del prezzo della benzina, solo <b>0,98€ (48,6%)</b> è il costo industriale — greggio, raffinazione, margini di distribuzione. Il resto è fiscalità: <b>0,67€ di accisa</b> e <b>0,36€ di IVA</b>. Il diesel è tassato meno: l'accisa è più bassa (<b>0,53€</b>), quindi la quota fiscale scende al <b>43,1%</b> contro il 51,4% della benzina.</p></div>
+
+    <div class="chartbox">
+      <p style="font-size:11px; color:var(--slate); margin:0 0 8px; font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.06em;">Benzina</p>
+      <div class="composition-bar">
+        <div class="seg" style="width:48.6%; background:#6B6659;">0,98€</div>
+        <div class="seg" style="width:33.4%; background:#E14F31;">0,67€</div>
+        <div class="seg" style="width:18.0%; background:var(--amber); color:#15140F;">0,36€</div>
+      </div>
+      <div class="composition-legend">
+        <span><i style="background:#6B6659;"></i>Prodotto — 48,6%</span>
+        <span><i style="background:#E14F31;"></i>Accisa — 33,4%</span>
+        <span><i style="background:var(--amber);"></i>IVA — 18,0%</span>
+      </div>
+
+      <p style="font-size:11px; color:var(--slate); margin:22px 0 8px; font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.06em;">Diesel</p>
+      <div class="composition-bar">
+        <div class="seg" style="width:56.9%; background:#6B6659;">1,21€</div>
+        <div class="seg" style="width:25.1%; background:#4C7A63;">0,53€</div>
+        <div class="seg" style="width:18.0%; background:var(--amber); color:#15140F;">0,38€</div>
+      </div>
+      <div class="composition-legend">
+        <span><i style="background:#6B6659;"></i>Prodotto — 56,9%</span>
+        <span><i style="background:#4C7A63;"></i>Accisa — 25,1%</span>
+        <span><i style="background:var(--amber);"></i>IVA — 18,0%</span>
+      </div>
+    </div>
+
+    <div class="callout">In totale, <b>51,4%</b> del prezzo della benzina è tasse, contro il <b>43,1%</b> del diesel — quasi 9 punti di differenza, dovuti tutti all'accisa (0,67€ vs 0,53€, l'IVA è identica al 22% per entrambi). E a differenza dell'IVA (proporzionale), l'accisa è un importo <b>fisso in euro</b> per litro: non scende mai, nemmeno quando il petrolio crolla.</p></div>
+  </section>
+
+  <section class="q" id="storia">
+    <div class="qhead"><span class="qnum mono">03</span><span class="qline"></span></div>
+    <h2>Perché è così alta: la vera storia dell'accisa</h2>
+     <div class="myth-box">
+      <span class="myth-tag">Falso mito</span>
+      <p>Si racconta spesso che paghiamo ancora oggi un'accisa introdotta per finanziare la guerra d'Etiopia (1935). <b>Non è vero</b>: quell'aumento specifico fu abolito già il 12 settembre 1936, con un Regio Decreto pubblicato sulla Gazzetta Ufficiale — appena 4 mesi dopo la fine del conflitto (fonti: Pagella Politica, fact-checking; <i>La Stampa</i>, 12 settembre 1936).</p>
+    </div>
+    <div class="qtext"><p>La storia vera, verificata su più fonti indipendenti, è comunque sorprendente: per decenni lo Stato ha aggiunto una micro-accisa "straordinaria" ogni volta che serviva finanziare un'emergenza — e quelle accise, una volta introdotte, spesso non sono mai state tolte.</p></div>
+    <div class="chartbox">
+      <div class="timeline-vert">
+        <div class="tv-item"><div class="tv-year">1956</div><div class="tv-spine"><span class="dot"></span></div><div class="tv-event">Crisi di Suez</div></div>
+        <div class="tv-item"><div class="tv-year">1963</div><div class="tv-spine"><span class="dot"></span></div><div class="tv-event">Disastro del Vajont</div></div>
+        <div class="tv-item"><div class="tv-year">1976</div><div class="tv-spine"><span class="dot"></span></div><div class="tv-event">Terremoto del Friuli</div></div>
+        <div class="tv-item"><div class="tv-year">1980</div><div class="tv-spine"><span class="dot"></span></div><div class="tv-event">Terremoto dell'Irpinia</div></div>
+        <div class="tv-item"><div class="tv-year">2009</div><div class="tv-spine"><span class="dot"></span></div><div class="tv-event">Terremoto dell'Aquila</div></div>
+        <div class="tv-item"><div class="tv-year">2011</div><div class="tv-spine"><span class="dot"></span></div><div class="tv-event">Crisi migranti (Libia) e alluvione Liguria/Toscana</div></div>
+        <div class="tv-item"><div class="tv-year">2012</div><div class="tv-spine"><span class="dot"></span></div><div class="tv-event">Terremoto in Emilia</div></div>
+      </div>
+    </div>
+        <div class="callout">Nel 1995 (governo Dini) tutti questi micro-prelievi accumulati furono unificati in un'unica accisa, che da allora finanzia il bilancio statale nel suo complesso, senza più un vincolo legato a eventi specifici. È una dinamica comune alla fiscalità di molti paesi: gli aumenti introdotti in emergenza raramente vengono rimossi una volta rientrata l'emergenza.</div>
+  </section>
+
+  <section class="q" id="petrolio">
+    <div class="qhead"><span class="qnum mono">04</span><span class="qline"></span></div>
+    <h2>Il prezzo segue il petrolio? Non proprio</h2>
+        <div class="qtext"><p>Per confrontare l'andamento di due prezzi molto diversi tra loro (euro al litro contro dollari al barile), usiamo un <b>indice</b>: mettiamo entrambi i valori del 2005 a <b>quota 100</b> (il punto di partenza) e seguiamo come crescono o calano rispetto a quel punto — non i prezzi assoluti, ma <b>la variazione percentuale nel tempo</b>. Se una linea arriva a 150, significa che quel prezzo è cresciuto del 50% rispetto al 2005; se scende a 80, è calato del 20%. Guardando le due linee così, si vede chiaramente che benzina e petrolio non si muovono insieme: nel 2016 e nel 2020, quando il petrolio è crollato di oltre il 20% sotto il livello 2005, il prezzo della benzina in Italia è rimasto stabilmente il 17-18% <b>più alto</b> di 21 anni prima.</p></div>
+    <div class="chartbox">
+      <svg viewBox="0 0 680 260" style="width:100%; height:auto; display:block;" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace">
+        <line x1="60" y1="20" x2="60" y2="210" stroke="#E4E1D6" stroke-width="1"/>
+        <line x1="60" y1="210" x2="650" y2="210" stroke="#E4E1D6" stroke-width="1"/>
+        <text x="52" y="213" font-size="11" fill="#6B6659" text-anchor="end">71</text>
+        <text x="52" y="118" font-size="11" fill="#6B6659" text-anchor="end">143</text>
+        <text x="52" y="23" font-size="11" fill="#6B6659" text-anchor="end">215</text>
+        <text x="60" y="228" font-size="11" fill="#6B6659" text-anchor="middle">2005</text>
+        <text x="650" y="228" font-size="11" fill="#6B6659" text-anchor="middle">2026</text>
+
+        <polyline points="60.0,171.4 88.1,145.7 116.2,128.2 144.3,68.9 172.4,154.1 200.5,110.8 228.6,34.2 256.7,33.5 284.8,40.8 312.9,64.0 341.0,176.8 369.0,197.8 397.1,172.4 425.2,130.8 453.3,147.9 481.4,201.9 509.5,132.0 537.6,59.2 565.7,103.8 593.8,108.6 621.9,136.1 650.0,84.6" fill="none" stroke="#6B6659" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+        <polyline points="60.0,171.4 88.1,164.1 116.2,162.8 144.3,153.3 172.4,169.8 200.5,155.9 228.6,135.4 256.7,109.8 284.8,114.2 312.9,117.6 341.0,137.0 369.0,147.2 397.1,138.1 425.2,129.8 453.3,133.2 481.4,148.4 509.5,127.5 537.6,107.1 565.7,101.4 593.8,106.4 621.9,115.8 650.0,107.1" fill="none" stroke="#E14F31" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <circle cx="60.0" cy="171.4" r="4.5" fill="#E14F31" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="369.0" cy="197.8" r="4" fill="#6B6659" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="369.0" cy="147.2" r="4" fill="#E14F31" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="481.4" cy="201.9" r="4" fill="#6B6659" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="481.4" cy="148.4" r="4" fill="#E14F31" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="650.0" cy="84.6" r="4.5" fill="#6B6659" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="650.0" cy="107.1" r="4.5" fill="#E14F31" stroke="#fff" stroke-width="1.5"/>
+		<circle cx="172.4" cy="154.1" r="4" fill="#6B6659" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="172.4" cy="169.8" r="4" fill="#E14F31" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="256.7" cy="33.5" r="4.5" fill="#6B6659" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="256.7" cy="109.8" r="4" fill="#E14F31" stroke="#fff" stroke-width="1.5"/>
+      </svg>
+      <div class="legend-inline">
+        <span><i style="background:#E14F31;"></i>Benzina alla pompa (Italia)</span>
+        <span><i style="background:#6B6659;"></i>Petrolio (Brent, $/barile)</span>
+      </div>
+      <p style="font-size:12px; color:var(--slate); margin:12px 0 0;">Indice 2005=100 · <i>Fonte: Commissione Europea, EIA/FRED</i></p>
+    </div>
+    <div class="chartbox" style="margin-top:16px;">
+        <p style="font-size:11px; color:var(--slate); margin:0 0 10px; font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.06em;">Punti chiave (indice 2005=100)</p>
+        <div style="overflow-x:auto;">
+        <table class="table-desktop" style="width:100%; border-collapse:collapse; font-size:13px; min-width:480px;">
+          <tr style="border-bottom:1px solid var(--line);">
+            <td style="padding:8px 6px; color:var(--slate); font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase;">Anno</td>
+            <td style="padding:8px 6px; color:var(--slate); font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase;">Evento</td>
+            <td style="padding:8px 6px; text-align:right; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--slate);">Petrolio</td>
+            <td style="padding:8px 6px; text-align:right; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--slate);">Benzina</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line);">
+            <td style="padding:9px 6px; font-weight:700;">2005</td>
+            <td style="padding:9px 6px; color:#3A392F;">Partenza (entrambi = 100)</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace;">100</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace;">100</td>
+          </tr>
+		  <tr style="border-bottom:1px solid var(--line);">
+            <td style="padding:9px 6px; font-weight:700;">2009</td>
+            <td style="padding:9px 6px; color:#3A392F;">Crisi finanziaria — primo crollo petrolio</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; color:#4C7A63; font-weight:700;">113</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace;">101</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line);">
+            <td style="padding:9px 6px; font-weight:700;">2012</td>
+            <td style="padding:9px 6px; color:#3A392F;">Picco massimo assoluto del petrolio</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700;">204</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace;">147</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line);">
+            <td style="padding:9px 6px; font-weight:700;">2016</td>
+            <td style="padding:9px 6px; color:#3A392F;">Guerra prezzi OPEC/shale — petrolio crollato</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; color:#4C7A63; font-weight:700;">80</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; color:#E14F31; font-weight:700;">118</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line);">
+            <td style="padding:9px 6px; font-weight:700;">2020</td>
+            <td style="padding:9px 6px; color:#3A392F;">Crollo Covid — petrolio crollato</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; color:#4C7A63; font-weight:700;">77</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; color:#E14F31; font-weight:700;">117</td>
+          </tr>
+          <tr>
+            <td style="padding:9px 6px; font-weight:700;">2026</td>
+            <td style="padding:9px 6px; color:#3A392F;">Oggi — per la prima volta il petrolio corre di più</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace; font-weight:700;">166</td>
+            <td style="padding:9px 6px; text-align:right; font-family:'JetBrains Mono',monospace;">149</td>
+          </tr>
+        </table>
+        </div>
+        
+                <div class="cards-mobile" style="gap:6px;">
+				<p style="font-size:10.5px; color:var(--slate); margin:0 0 8px;"><span style="color:#6B6659;">●</span> Petrolio &nbsp; <span style="color:#E14F31;">●</span> Benzina</p>
+          <div class="yc-compact"><span class="ycc-year">2005</span><span class="ycc-event">Partenza</span><span class="ycc-vals"><span style="color:#6B6659;">100</span><span style="color:#E14F31;">100</span></span></div>
+          <div class="yc-compact"><span class="ycc-year">2009</span><span class="ycc-event">Crisi finanziaria</span><span class="ycc-vals"><span style="color:#4C7A63;">113</span><span style="color:#E14F31;">101</span></span></div>
+          <div class="yc-compact"><span class="ycc-year">2012</span><span class="ycc-event">Picco petrolio</span><span class="ycc-vals"><span style="color:#6B6659;">204</span><span style="color:#E14F31;">147</span></span></div>
+          <div class="yc-compact"><span class="ycc-year">2016</span><span class="ycc-event">Guerra prezzi</span><span class="ycc-vals"><span style="color:#4C7A63;">80</span><span style="color:#E14F31;">118</span></span></div>
+          <div class="yc-compact"><span class="ycc-year">2020</span><span class="ycc-event">Crollo Covid</span><span class="ycc-vals"><span style="color:#4C7A63;">77</span><span style="color:#E14F31;">117</span></span></div>
+          <div class="yc-compact"><span class="ycc-year">2026</span><span class="ycc-event">Oggi</span><span class="ycc-vals"><span style="color:#6B6659;">166</span><span style="color:#E14F31;">149</span></span></div>
+        </div>
+		<p style="font-size:12px; color:var(--slate); margin:12px 0 0;">Indice 2005=100 · Punti evidenziati: 2016 e 2020, quando il petrolio crolla ma la pompa resta alta · <i>Fonte: Commissione Europea, EIA/FRED</i></p>
+    </div>
+
+    <div class="callout">La spiegazione: l'accisa è <b>fissa in euro al litro</b>, quindi non scala mai col prezzo del greggio. Quando il petrolio crolla, quella parte del prezzo resta identica — e nel 2026, per la prima volta dal 2022, è successo il contrario: il petrolio è salito più della benzina.</div>
+  </section>
+
+     <section class="q" id="europa">
+    <div class="qhead"><span class="qnum mono">05</span><span class="qline"></span></div>
+    <h2>L'Italia rispetto all'Europa</h2>
+    <div class="qtext"><p>Considerando la media tra benzina e diesel, su 27 paesi UE l'Italia è al <b>6° posto</b> per prezzo del carburante — tra i più cari, ma lontana dal primato della Danimarca.</p></div>
+
+    <div class="chartbox">
+      <div class="barlist-head">Prezzo medio carburante (benzina + diesel), €/litro </div>
+      <div class="barlist">
+        <div class="row"><div class="name">Danimarca</div><div class="track"><div class="fill" style="width:100%; background:#6B6659;"></div></div><div class="val">2,40€</div></div>
+        <div class="row"><div class="name">Paesi Bassi</div><div class="track"><div class="fill" style="width:97%; background:#6B6659;"></div></div><div class="val">2,34€</div></div>
+        <div class="row"><div class="name">Germania</div><div class="track"><div class="fill" style="width:93%; background:#6B6659;"></div></div><div class="val">2,23€</div></div>
+        <div class="row"><div class="name">Francia</div><div class="track"><div class="fill" style="width:89%; background:#6B6659;"></div></div><div class="val">2,14€</div></div>
+        <div class="row"><div class="name">Italia</div><div class="track"><div class="fill" style="width:86%; background:#E14F31;"></div></div><div class="val">2,07€</div></div>
+        <div class="row"><div class="name">Spagna</div><div class="track"><div class="fill" style="width:75%; background:#6B6659;"></div></div><div class="val">1,80€</div></div>
+        <div class="row"><div class="name">Polonia</div><div class="track"><div class="fill" style="width:67%; background:#6B6659;"></div></div><div class="val">1,60€</div></div>
+        <div class="row"><div class="name">Malta</div><div class="track"><div class="fill" style="width:53%; background:#6B6659;"></div></div><div class="val">1,28€</div></div>
+      </div>
+      <p style="font-size:12px; color:var(--slate); margin:14px 0 0;">Media aritmetica benzina/diesel · Selezione di paesi rappresentativi su 27 rilevati · <i>Fonte: Commissione Europea, Weekly Oil Bulletin</i></p>
+    </div>
+  </section>
+
+  <section class="q" id="calcolatore">
+    <div class="qhead"><span class="qnum mono">06</span><span class="qline"></span></div>
+    <h2>Quanto ti costa davvero, anno per anno</h2>
+    <div class="qtext"><p>Inserisci i chilometri che percorri ogni giorno e il consumo medio della tua auto, poi scegli un anno tra il 2005 e oggi per vedere quanto avresti speso allora — confrontato con quello che spendi ora.</p></div>
+
+    <div class="simulator-controls">
+      <div class="sim-field">
+        <label for="calc-km">Km al giorno</label>
+        <div class="sim-input-wrap"><input type="number" id="calc-km" value="30" min="1" max="500" step="1"></div>
+      </div>
+	<div class="sim-field">
+	  <label for="calc-tipo-auto">Tipo di auto</label>
+	  <select id="calc-tipo-auto" style="font-family:'Inter',sans-serif; font-size:14px; padding:10px 12px; border-radius:12px; border:1px solid var(--line); background:var(--card); color:var(--ink); min-width:260px;">
+		<option value="4.5">Citycar (es. Panda, 500) — ~4,5 L/100km</option>
+		<option value="5.5">Utilitaria (es. Yaris, Corsa) — ~5,5 L/100km</option>
+		<option value="6.5" selected>Compatta (es. Golf, Focus) — ~6,5 L/100km</option>
+		<option value="7.5">Berlina media — ~7,5 L/100km</option>
+		<option value="9">SUV compatto — ~9 L/100km</option>
+		<option value="12">SUV grande / familiare — ~12 L/100km</option>
+		<option value="4">Ibrida — ~4 L/100km</option>
+		<option value="custom">Conosco il consumo esatto...</option>
+	  </select>
+	</div>
+	<div class="sim-field" id="calc-custom-wrap" style="display:none;">
+	  <label for="calc-consumo-custom">Consumo (L / 100km)</label>
+	  <div class="sim-input-wrap"><input type="number" id="calc-consumo-custom" value="6.5" min="2" max="25" step="0.1"></div>
+	</div>
+	<div class="sim-field" id="calc-custom-wrap" style="display:none;">
+	  <label for="calc-consumo-custom">Consumo (L / 100km)</label>
+	  <div class="sim-input-wrap"><input type="number" id="calc-consumo-custom" value="6.5" min="2" max="25" step="0.1"></div>
+	</div>
+      <div class="sim-toggle" role="group">
+        <button class="sim-toggle-btn active" data-carburante="benzina">Benzina</button>
+        <button class="sim-toggle-btn" data-carburante="diesel">Diesel</button>
+      </div>
+    </div>
+    <div class="sim-year-wrap" style="margin-top:16px;">
+      <input type="range" id="calc-year" min="2005" max="2026" value="2005" step="1">
+      <div class="sim-year-label" id="calc-year-label">2005</div>
+    </div>
+
+    <div class="chartbox">
+      <div class="vs-compare" style="display:flex; border-radius:16px; overflow:hidden;">
+        <div style="flex:1; padding:24px 20px; text-align:center; background:#F1EEE2;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--slate);" id="calc-year-tag">Nel 2005</div>
+          <div style="font-family:'Bricolage Grotesque',sans-serif; font-size:30px; font-weight:800; color:var(--slate); margin-top:8px;" id="calc-val-past">—</div>
+          <div style="font-size:12px; color:var(--slate); margin-top:4px;">al mese</div>
+        </div>
+        <div style="flex:1; padding:24px 20px; text-align:center; background:var(--ink);">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:#9C9788;">Oggi (2026)</div>
+          <div style="font-family:'Bricolage Grotesque',sans-serif; font-size:30px; font-weight:800; color:var(--coral); margin-top:8px;" id="calc-val-oggi">—</div>
+          <div style="font-size:12px; color:#9C9788; margin-top:4px;">al mese</div>
+        </div>
+      </div>
+    </div>
+    <div class="callout" id="calc-summary">Sposta lo slider per vedere il confronto.</div>
+  </section>
+</div>
+
+<div class="conclusion" id="conclusione">
+  <div class="wrap">
+    <div class="qhead"><span class="qnum mono" style="color:var(--amber);">07 · Conclusione</span></div>
+    <h2>Un prezzo, quattro storie</h2>
+        <p class="verdict">Non c'è <em>un'unica spiegazione</em> — ce ne sono almeno quattro.</p>
+    <div class="qtext"><p>Il prezzo del carburante non è un numero semplice da spiegare con una sola causa. È il petrolio, ma non sempre e non del tutto. Sono le tasse, ma non solo — e benzina e diesel non le pagano nella stessa misura. È la storia — a volte vera, a volte leggenda — di decenni di emergenze. Ed è anche una questione di dove vivi: la stessa auto, lo stesso litro, costa in modo diverso a seconda del paese europeo in cui ti fermi a fare rifornimento.</p></div>
+        <div class="recap-grid">
+      <div class="rc a"><div class="t">Il trend</div><div class="d">Benzina <b>+48,7%</b>, diesel <b>+75,3%</b> dal 2005 — il diesel ha superato la benzina, cosa mai successa prima.</div></div>
+      <div class="rc b"><div class="t">Il legame col petrolio</div><div class="d">Nel 2016 e nel 2020 il petrolio è <b>crollato</b>, ma la pompa è rimasta <b>alta</b>.</div></div>
+      <div class="rc c"><div class="t">La curiosità storica</div><div class="d">Il mito dell'accisa "Etiopia" è <b>falso</b> — ma 7 emergenze reali sono finite nel conto.</div></div>
+    </div>
+    <p class="final-line">Il prezzo non mente. <em>Ma va letto tutto, non a pezzi.</em></p>
+  </div>
+</div>
+
+
+<footer>
+  <div class="wrap">Dati: Commissione Europea (Weekly Oil Bulletin) · EIA/FRED (Brent crude) · Sole 24 Ore, Sky TG24, Focus.it, Il Messaggero (storia delle accise) · Elaborazione indipendente</div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+
+  // Medie annuali benzina/diesel (€/L), dal notebook di analisi
+  const prezzi = {
+    benzina: {2005:1.219986,2006:1.286763,2007:1.299509,2008:1.387537,2009:1.234138,2010:1.363131,2011:1.551256,2012:1.788212,2013:1.748751,2014:1.716200,2015:1.537684,2016:1.443236,2017:1.527639,2018:1.604242,2019:1.572416,2020:1.431998,2021:1.625016,2022:1.813873,2023:1.866419,2024:1.820583,2025:1.733293,2026:1.814551},
+    diesel: {2005:1.107196,2006:1.166176,2007:1.162184,2008:1.351734,2009:1.081459,2010:1.213875,2011:1.442837,2012:1.706732,2013:1.658080,2014:1.612616,2015:1.408572,2016:1.280922,2017:1.382510,2018:1.490762,2019:1.478263,2020:1.317785,2021:1.486039,2022:1.815354,2023:1.794771,2024:1.717004,2025:1.653113,2026:1.940271}
+  };
+
+  const kmInput = document.getElementById('calc-km');
+  const consumoInput = document.getElementById('calc-consumo');
+  const yearSlider = document.getElementById('calc-year');
+  const yearLabel = document.getElementById('calc-year-label');
+  const yearTag = document.getElementById('calc-year-tag');
+  const valPast = document.getElementById('calc-val-past');
+  const valOggi = document.getElementById('calc-val-oggi');
+  const summary = document.getElementById('calc-summary');
+  const fuelBtns = document.querySelectorAll('.sim-toggle-btn[data-carburante]');
+  let carburante = 'benzina';
+
+  fuelBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      fuelBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      carburante = btn.dataset.carburante;
+      render();
+    });
+  });
+
+  function formattaEuro(v) {
+    return v.toLocaleString('it-IT', {minimumFractionDigits:0, maximumFractionDigits:0}) + '€';
+  }
+
+  function render() {
+    const km = parseFloat(kmInput.value) || 0;
+    const tipoAuto = document.getElementById('calc-tipo-auto').value;
+	const consumo = tipoAuto === 'custom'
+	  ? (parseFloat(document.getElementById('calc-consumo-custom').value) || 0)
+	  : parseFloat(tipoAuto);
+    const anno = parseInt(yearSlider.value);
+    yearLabel.textContent = anno;
+    yearTag.textContent = 'Nel ' + anno;
+
+    const litriAlMese = (km * 30 / 100) * consumo;
+    const prezzoPassato = prezzi[carburante][anno];
+    const prezzoOggi = prezzi[carburante][2026];
+
+    const costoPassato = litriAlMese * prezzoPassato;
+    const costoOggi = litriAlMese * prezzoOggi;
+
+    valPast.textContent = formattaEuro(costoPassato);
+    valOggi.textContent = formattaEuro(costoOggi);
+
+    const diff = costoOggi - costoPassato;
+    const diffAnno = diff * 12;
+    if (anno === 2026) {
+      summary.innerHTML = 'Stai già guardando il prezzo di oggi — sposta lo slider indietro nel tempo per vedere il confronto.';
+    } else {
+      summary.innerHTML = 'Con ' + km + ' km al giorno, la stessa percorrenza ti sarebbe costata <b>' + formattaEuro(diff) + ' in meno al mese</b> nel ' + anno + ' — una differenza di circa <b>' + formattaEuro(diffAnno) + " all'anno</b>.";
+    }
+  }
+
+ const tipoAutoSelect = document.getElementById('calc-tipo-auto');
+const customInput = document.getElementById('calc-consumo-custom');
+const customWrap = document.getElementById('calc-custom-wrap');
+
+tipoAutoSelect.addEventListener('change', () => {
+  customWrap.style.display = tipoAutoSelect.value === 'custom' ? 'block' : 'none';
+  render();
+});
+
+[kmInput, yearSlider, customInput].forEach(el => el.addEventListener('input', render));
+  render();
+});
+</script>
+
+</body>
+</html>
