@@ -527,10 +527,12 @@
             </a>
         </div>
     </div>
-
+<div style="height:1px; background:rgba(23,23,27,0.08); margin:12px 0;"></div>
+        <a href="giochi-interattivi.html" style="display:inline-flex;align-items:center;gap:6px;color:var(--ink);font-family:'Inter',sans-serif;font-weight:600;font-size:0.8rem;text-decoration:none;background:rgba(23,23,27,0.06);padding:8px 12px;border-radius:10px;margin-bottom:14px;">🎮 Giochi interattivi</a>
     <div class="sidebar-footer">
-        <a href="chi-sono.html" style="display:inline-flex;align-items:center;gap:6px;color:var(--ink);font-family:'Inter',sans-serif;font-weight:600;font-size:0.8rem;text-decoration:none;background:rgba(23,23,27,0.06);padding:8px 12px;border-radius:10px;margin-bottom:14px;">🧑‍💻 Chi sono</a>
-        <br>© nuMericA 2026<br>Alessia Magro
+        <a href="chi-sono.html" style="display:inline-flex;align-items:center;gap:6px;color:var(--ink);font-family:'Inter',sans-serif;font-weight:600;font-size:0.8rem;text-decoration:none;background:rgba(23,23,27,0.06);padding:8px 12px;border-radius:10px;">🧑‍💻 Chi sono</a>
+
+        <br><br>© nuMericA 2026<br>Alessia Magro
     </div>
 </aside>
 
@@ -541,6 +543,7 @@
                 <img src="logo_numerica_mono.png" alt="Logo nuMericA" class="eyebrow-logo">
                 <h1>Comprendere il mondo <span class="grad">attraverso i dati</span></h1>
                 <p>Analisi visive, mappe interattive e storie spiegate con i numeri.</p>
+                                <a href="#giochi-banner" onclick="document.getElementById('giochi-banner').scrollIntoView({behavior:'smooth'}); return false;" style="display:inline-flex; align-items:center; gap:6px; margin-top:16px; background:var(--violet); color:#fff; font-family:'Inter',sans-serif; font-weight:600; font-size:0.82rem; text-decoration:none; padding:9px 16px; border-radius:999px;">🎮 Prova i giochi interattivi ↓</a>
             </div>
             <div class="stats-card">
                 <div class="stat-row">
@@ -676,6 +679,17 @@
             </div>
 
         </div>
+
+         <a href="giochi-interattivi.html" id="giochi-banner" style="display:block; text-decoration:none; color:inherit; margin-top:20px; scroll-margin-top:24px;">
+		<div style="background: linear-gradient(135deg, rgba(124,92,252,0.08), rgba(255,255,255,0.72)); backdrop-filter: blur(20px) saturate(1.6); -webkit-backdrop-filter: blur(20px) saturate(1.6); border: 1px solid var(--glass-border); border-radius: 24px; padding: 30px 34px; box-shadow: 0 24px 50px -28px rgba(23,23,27,0.18); display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; transition: transform .2s ease;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+			<div>
+                <div style="font-family:'JetBrains Mono', monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:1px; color:var(--coral-deep); font-weight:700; margin-bottom:10px;">🎮 Interattivo</div>
+                <h2 style="font-size:1.3rem; margin:0 0 8px;">Giochi interattivi</h2>
+                <p style="font-size:0.9rem; color:var(--muted); margin:0; max-width:480px;">Calcolatori, confronti e piccoli quiz per esplorare i dati in prima persona, non solo leggerli.</p>
+            </div>
+                        <div style="flex-shrink:0; background:var(--violet); color:#fff; font-weight:600; font-size:0.9rem; padding:13px 22px; border-radius:999px;">Scopri &rarr;</div>
+        </div>
+        </a>
 
 		<div class="poll-card" id="pollCard">
 		<div class="poll-eyebrow">Sondaggio</div>
