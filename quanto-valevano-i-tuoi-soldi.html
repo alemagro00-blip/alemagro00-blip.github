@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quanto valevano i tuoi soldi — nuMericA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --bg: #F3F3F5;
+        --ink: #17171B;
+        --muted: #6B6A70;
+        --faint: #A0A0A6;
+        --line: rgba(23,23,27,0.08);
+        --glass: rgba(255,255,255,0.55);
+        --glass-strong: rgba(255,255,255,0.72);
+        --glass-border: rgba(255,255,255,0.85);
+        --coral: #FF6A4D;
+        --coral-deep: #E14F31;
+        --coral-light: rgba(255,106,77,0.14);
+        --emerald: #059669;
+        --emerald-light: rgba(5,150,105,0.12);
+        --violet: #7C5CFC;
+        --violet-deep: #5D3FD9;
+        --violet-light: rgba(124,92,252,0.12);
+        --rosa: #D6338A;
+        --rosa-deep: #A81F6B;
+        --rosa-light: rgba(214,51,138,0.14);
+        --azzurro: #2E7DA6;
+        --azzurro-deep: #1E5A7C;
+        --azzurro-light: rgba(46,125,166,0.14);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: 'Inter', sans-serif;
+        background: var(--bg);
+        color: var(--ink);
+        margin: 0;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        position: relative;
+        overflow-x: hidden;
+        min-height: 100vh;
+    }
+    a { color: inherit; }
+    h1, h2, h3 { font-family: 'Bricolage Grotesque', sans-serif; margin: 0; }
+
+    .blob { position: fixed; border-radius: 50%; filter: blur(90px); z-index: 0; pointer-events: none; animation: drift 26s ease-in-out infinite alternate; }
+    .blob-1 { width: 620px; height: 620px; background: radial-gradient(circle, rgba(255,106,77,0.45), transparent 70%); top: -220px; left: 6%; }
+    .blob-2 { width: 520px; height: 520px; background: radial-gradient(circle, rgba(124,92,252,0.35), transparent 70%); top: 100px; right: -160px; animation-delay: -9s; }
+    .blob-3 { width: 480px; height: 480px; background: radial-gradient(circle, rgba(46,125,166,0.3), transparent 70%); bottom: -180px; left: 30%; animation-delay: -17s; }
+    @keyframes drift { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(40px,30px) scale(1.1); } }
+    @media (prefers-reduced-motion: reduce) { .blob { animation: none; } }
+
+    .wrap { max-width: 900px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
+
+    .back-link {
+        display: inline-flex; align-items: center; gap: 8px; margin: 34px 0 0;
+        background: var(--glass-strong); backdrop-filter: blur(16px) saturate(1.6); -webkit-backdrop-filter: blur(16px) saturate(1.6);
+        border: 1px solid var(--glass-border); border-radius: 999px; padding: 9px 18px;
+        text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--ink);
+        transition: transform .2s ease;
+    }
+    .back-link:hover { transform: translateX(-4px); }
+
+    .intro-row { margin: 46px 0 10px; }
+    .eyebrow { font-family: 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; font-size: 11.5px; color: var(--coral-deep); font-weight: 700; margin-bottom: 14px; }
+    .intro-row h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -0.5px; line-height: 1.15; }
+    .intro-row .sub { color: var(--muted); font-size: 1rem; margin-top: 12px; }
+
+    .topics-marquee {
+        margin-top: 28px; overflow: hidden; width: 100%;
+        -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+        mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    }
+    .topics-track {
+        display: flex; gap: 36px; width: max-content;
+        animation: scroll-topics 22s linear infinite;
+        font-family: 'Bricolage Grotesque', sans-serif; font-style: italic; font-weight: 500;
+        font-size: 0.95rem; color: var(--muted); white-space: nowrap;
+    }
+    .topics-track span::after { content: '•'; margin-left: 36px; color: var(--coral); font-style: normal; }
+    @keyframes scroll-topics { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce) { .topics-track { animation: none; } }
+
+    .card {
+        background: var(--glass); backdrop-filter: blur(20px) saturate(1.6); -webkit-backdrop-filter: blur(20px) saturate(1.6);
+        border: 1px solid var(--glass-border); border-radius: 24px; padding: 30px 32px; margin-top: 24px;
+        box-shadow: 0 24px 50px -28px rgba(23,23,27,0.18);
+    }
+
+    .game-kicker { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; padding: 5px 13px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #fff; }
+    .g-coral .game-kicker { background: var(--coral-deep); }
+    .g-emerald .game-kicker { background: var(--emerald); }
+    .g-violet .game-kicker { background: var(--violet-deep); }
+    .g-rosa .game-kicker { background: var(--rosa-deep); }
+    .g-azzurro .game-kicker { background: var(--azzurro-deep); }
+
+    .game-title { font-size: 1.4rem; font-weight: 700; color: var(--ink); margin: 14px 0 6px; letter-spacing: -0.3px; }
+    .game-sub { font-size: 0.92rem; color: var(--muted);  margin-bottom: 22px; }
+
+    .g-controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; margin-bottom: 18px; }
+    .g-field label { display: block; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin-bottom: 6px; }
+    .g-input-wrap { display: flex; align-items: center; background: var(--glass-strong); border: 1px solid var(--glass-border); border-radius: 12px; padding: 9px 13px; }
+    .g-input-wrap input, .g-input-wrap select { border: none; background: transparent; outline: none; color: var(--ink); font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 14px; width: 100px; }
+
+    .toggle-pill { display: inline-flex; background: var(--glass-strong); border: 1px solid var(--glass-border); border-radius: 999px; padding: 3px; gap: 3px; }
+    .toggle-pill button { border: none; background: transparent; padding: 8px 15px; border-radius: 999px; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: var(--muted); cursor: pointer; transition: .15s ease; }
+    .toggle-pill button.active { background: var(--ink); color: #fff; }
+
+    .g-year-wrap { margin-bottom: 20px; }
+    .g-year-wrap input[type="range"] { width: 100%; }
+    .g-coral input[type="range"] { accent-color: var(--coral-deep); }
+    .g-emerald input[type="range"] { accent-color: var(--emerald); }
+    .g-violet input[type="range"] { accent-color: var(--violet-deep); }
+    .g-rosa input[type="range"] { accent-color: var(--rosa-deep); }
+    .g-azzurro input[type="range"] { accent-color: var(--azzurro-deep); }
+    .g-year-label { font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 700; color: var(--ink); text-align: center; margin-top: 6px; }
+
+    .g-result { display: flex; gap: 0; border-radius: 16px; overflow: hidden; border: 1px solid var(--glass-border); }
+    .g-result-half { flex: 1; padding: 18px; text-align: center; }
+    .g-result-half.past { background: rgba(255,255,255,0.5); }
+    .g-result-half.now { background: var(--ink); }
+    .g-result-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; }
+    .g-result-half.past .g-result-label { color: var(--muted); }
+    .g-result-half.now .g-result-label { color: var(--faint); }
+    .g-result-val { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.7rem; font-weight: 800; margin-top: 5px; display: inline-block; transition: transform .18s ease; }
+    .g-result-half.past .g-result-val { color: var(--ink); }
+    .g-coral .g-result-half.now .g-result-val { color: var(--coral); }
+    .g-emerald .g-result-half.now .g-result-val { color: #34D399; }
+    .g-violet .g-result-half.now .g-result-val { color: #A78BFA; }
+    .g-rosa .g-result-half.now .g-result-val { color: #F472B6; }
+    .g-azzurro .g-result-half.now .g-result-val { color: #7DD3FC; }
+    .g-result-val.pop { transform: scale(1.14); }
+    .g-result-sub { font-size: 11px; margin-top: 3px; }
+    .g-result-half.past .g-result-sub { color: var(--muted); }
+    .g-result-half.now .g-result-sub { color: var(--faint); }
+
+    .g-summary { margin-top: 16px; font-size: 13.5px; color: var(--ink); background: rgba(255,255,255,0.5); border: 1px solid var(--glass-border); border-radius: 12px; padding: 13px 15px; }
+    .g-summary b { font-weight: 700; }
+    .g-note { font-size: 11.5px; color: var(--faint); margin-top: 16px; }
+
+    .receipts { display: flex; gap: 16px; flex-wrap: wrap; }
+    .receipt { flex: 1; min-width: 180px; background: #FFFDF8; border: 1px solid var(--glass-border); color: #2B2416; border-radius: 8px; padding: 18px 16px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; box-shadow: 0 14px 26px -14px rgba(23,23,27,0.2); }
+    .receipt .r-year { text-align: center; font-weight: 700; font-size: 14px; border-bottom: 1px dashed #C9BFA8; padding-bottom: 8px; margin-bottom: 10px; }
+    .receipt .r-row { display: flex; justify-content: space-between; padding: 3px 0; }
+    .receipt .r-total { display: flex; justify-content: space-between; font-weight: 700; border-top: 1px dashed #C9BFA8; margin-top: 8px; padding-top: 8px; }
+
+    .bread-compare { display: flex; gap: 24px; flex-wrap: wrap; }
+    .bread-col { flex: 1; min-width: 200px; text-align: center; background: rgba(255,255,255,0.5); border: 1px solid var(--glass-border); border-radius: 14px; padding: 18px 12px; }
+    .bread-col.now { background: var(--ink); }
+    .bread-col .bc-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .bread-col.now .bc-label { color: var(--faint); }
+    .bread-icons { font-size: 24px; line-height: 1.6; min-height: 60px; }
+    .bread-icon-pop { display: inline-block; animation: breadPop .35s ease backwards; }
+    @keyframes breadPop { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .bread-col .bc-count { font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 800; margin-top: 6px; color: var(--ink); }
+    .bread-col.now .bc-count { color: var(--rosa); }
+
+    .rank-controls { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; align-items: center; }
+    .rank-select select { background: var(--glass-strong); border: 1px solid var(--glass-border); color: var(--ink); font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 13px; padding: 9px 13px; border-radius: 10px; }
+    .rank-list { display: flex; flex-direction: column; gap: 8px; }
+    .rank-row { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.5); border: 1px solid var(--glass-border); border-radius: 10px; padding: 11px 15px; }
+    .rank-medal { font-size: 18px; width: 26px; text-align: center; }
+    .rank-name { flex: 1; color: var(--ink); font-size: 13.5px; font-weight: 600; }
+    .rank-val { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 15px; }
+    .rank-val.up { color: var(--coral-deep); }
+    .rank-val.down { color: var(--emerald); }
+
+    .section-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; color: var(--muted); margin: 46px 0 0; }
+
+    footer { padding: 20px 0 50px; text-align: center; color: var(--muted); font-size: 0.78rem; position: relative; z-index: 1; }
+
+    @media (max-width: 640px) {
+        .g-controls { flex-direction: column; align-items: stretch; }
+        .receipts { flex-direction: column; }
+        .bread-compare { flex-direction: column; }
+        .card { padding: 22px 20px; }
+    }
+</style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+
+<div class="wrap">
+    <a href="index.html" class="back-link">&larr; Torna alla Home</a>
+
+    <div class="intro-row">
+        <div class="eyebrow">Giochi con i dati</div>
+        <h1>Quanto valevano i tuoi soldi</h1>
+        <p class="sub">Sei piccoli giochi, sei modi diversi di guardare la stessa domanda: quanto è davvero cambiato il valore dei tuoi soldi nel tempo. Dati ISTAT reali dal 2010 a oggi.</p>
+    </div>
+
+    <div class="topics-marquee">
+        <div class="topics-track">
+            <span>Caffè</span><span>Affitto</span><span>Pane</span><span>Vino</span><span>Classifica rincari</span><span>Benzina</span>
+            <span>Caffè</span><span>Affitto</span><span>Pane</span><span>Vino</span><span>Classifica rincari</span><span>Benzina</span>
+        </div>
+    </div>
+
+    <!-- ===================== 1. CAFFÈ ===================== -->
+    <div class="card g-coral">
+      <span class="game-kicker">Confronta</span>
+      <h2 class="game-title">Lo scontrino del caffè</h2>
+      <p class="game-sub">Un espresso al bar, anno per anno dal 2010 a oggi. L'impennata del 2025 è reale: la crisi mondiale del prezzo del caffè.</p>
+
+      <div class="g-year-wrap">
+        <input type="range" id="cf-year" min="2010" max="2025" value="2010" step="1">
+        <div class="g-year-label" id="cf-year-label">2010</div>
+      </div>
+
+      <div class="receipts">
+        <div class="receipt">
+          <div class="r-year" id="cf-anno-label">2010</div>
+          <div class="r-row"><span>Espresso al bar</span><span id="cf-prezzo-epoca">—</span></div>
+          <div class="r-row"><span>10 caffè</span><span id="cf-dieci">—</span></div>
+        </div>
+        <div class="receipt">
+          <div class="r-year">Oggi (2025)</div>
+          <div class="r-row"><span>Espresso al bar</span><span id="cf-prezzo-oggi">—</span></div>
+          <div class="r-total"><span>Differenza</span><span id="cf-differenza">—</span></div>
+        </div>
+      </div>
+      <p class="g-note">Prezzo stimato applicando l'indice ISTAT (categoria "Caffè e succedanei") a un valore di riferimento reale (FIPE, espresso al bar 2024 = 1,18€).</p>
+    </div>
+
+    <!-- ===================== 2. AFFITTO ===================== -->
+    <div class="card g-emerald">
+      <span class="game-kicker">Calcola</span>
+      <h2 class="game-title">Lo stesso appartamento, ieri e oggi</h2>
+      <p class="game-sub">Inserisci i metri quadri di casa tua e scopri quanto avresti pagato d'affitto in un altro anno.</p>
+
+      <div class="g-controls">
+        <div class="g-field">
+          <label>Metri quadri</label>
+          <div class="g-input-wrap"><input type="number" id="af-mq" value="70" min="15" max="300"></div>
+        </div>
+      </div>
+      <div class="g-field" style="margin-bottom:20px;">
+        <label>Anno di confronto</label>
+        <div class="g-input-wrap" style="width:auto;">
+          <select id="af-year"></select>
+        </div>
+      </div>
+      <div class="g-result">
+        <div class="g-result-half past">
+          <div class="g-result-label" id="af-year-tag">Nel 2010</div>
+          <div class="g-result-val" id="af-val-past">—</div>
+          <div class="g-result-sub">al mese</div>
+        </div>
+        <div class="g-result-half now">
+          <div class="g-result-label">Oggi (2025)</div>
+          <div class="g-result-val" id="af-val-oggi">—</div>
+          <div class="g-result-sub">al mese</div>
+        </div>
+      </div>
+      <p class="g-note">Basato sull'indice ISTAT dei canoni d'affitto effettivamente pagati, applicato alla media nazionale attuale (13,8€/mq, fonte settore immobiliare 2024).</p>
+    </div>
+
+    <!-- ===================== 3. PANE ===================== -->
+    <div class="card g-rosa">
+      <span class="game-kicker">Visualizza</span>
+      <h2 class="game-title">Quante pagnotte in un'ora</h2>
+      <p class="game-sub">Con un'ora del tuo stipendio, quante pagnotte di pane potevi comprare allora, e quante oggi?</p>
+
+      <div class="g-controls">
+        <div class="g-field">
+          <label>Stipendio netto mensile</label>
+          <div class="g-input-wrap"><input type="number" id="pn-stipendio" value="1800" min="500" max="10000"></div>
+        </div>
+      </div>
+      <div class="g-field" style="margin-bottom:20px;">
+        <label>Anno di confronto</label>
+        <div class="toggle-pill" id="pn-year-chips" style="flex-wrap:wrap;"></div>
+      </div>
+      <div class="bread-compare">
+        <div class="bread-col">
+          <div class="bc-label" id="pn-year-tag">2010</div>
+          <div class="bread-icons" id="pn-icons-past">—</div>
+          <div class="bc-count" id="pn-count-past">—</div>
+        </div>
+        <div class="bread-col now">
+          <div class="bc-label">Oggi (2025)</div>
+          <div class="bread-icons" id="pn-icons-oggi">—</div>
+          <div class="bc-count" id="pn-count-oggi">—</div>
+        </div>
+      </div>
+      <p class="g-note">Basato su 160 ore lavorative/mese e il prezzo medio del pane (ISTAT, 2,91€/kg nel 2015, rivalutato con l'indice ufficiale). Pagnotta standard da 0,5kg.</p>
+    </div>
+
+    <!-- ===================== 4. VINO ===================== -->
+    <div class="card g-violet">
+      <span class="game-kicker">Budget</span>
+      <h2 class="game-title">Con questi soldi, quanto vino?</h2>
+      <p class="game-sub">Fissa un budget: scopri quanti litri di vino comprava allora, e quanti ne compra oggi.</p>
+
+      <div class="g-controls">
+        <div class="g-field">
+          <label>Budget</label>
+          <div class="g-input-wrap"><input type="number" id="vn-budget" value="20" min="5" max="200"></div>
+        </div>
+      </div>
+      <div class="g-field" style="margin-bottom:20px; display:flex; align-items:center; gap:12px;">
+        <label style="margin:0;">Anno</label>
+        <button type="button" id="vn-prev" style="width:34px; height:34px; border-radius:50%; border:1px solid var(--glass-border); background:var(--glass-strong); font-family:'JetBrains Mono',monospace; font-weight:700; font-size:16px; cursor:pointer;">−</button>
+        <div class="g-year-label" id="vn-year-label" style="margin:0; min-width:50px;">2010</div>
+        <button type="button" id="vn-next" style="width:34px; height:34px; border-radius:50%; border:1px solid var(--glass-border); background:var(--glass-strong); font-family:'JetBrains Mono',monospace; font-weight:700; font-size:16px; cursor:pointer;">+</button>
+      </div>
+      <div class="g-result">
+        <div class="g-result-half past">
+          <div class="g-result-label" id="vn-year-tag">Nel 2010</div>
+          <div class="g-result-val" id="vn-val-past">—</div>
+          <div class="g-result-sub">litri di vino</div>
+        </div>
+        <div class="g-result-half now">
+          <div class="g-result-label">Oggi (2025)</div>
+          <div class="g-result-val" id="vn-val-oggi">—</div>
+          <div class="g-result-sub">litri di vino</div>
+        </div>
+      </div>
+      <p class="g-note">Basato sul prezzo medio ISTAT del vino (2,21€/L nel 2015, rivalutato con l'indice ufficiale).</p>
+    </div>
+
+    <!-- ===================== 5. CLASSIFICA ===================== -->
+    <div class="card g-azzurro">
+      <span class="game-kicker">Scopri</span>
+      <h2 class="game-title">La classifica dei rincari</h2>
+      <p class="game-sub">Scegli due anni: scopri quale categoria è aumentata di più (e quale di meno, o è persino calata).</p>
+
+      <div class="rank-controls">
+        <div class="rank-select"><select id="rk-year-from"></select></div>
+        <span style="color: var(--muted);">&rarr;</span>
+        <div class="rank-select"><select id="rk-year-to"></select></div>
+      </div>
+      <div class="rank-list" id="rk-list"></div>
+    </div>
+
+    <!-- ===================== 6. BENZINA/DIESEL ===================== -->
+    <div class="card g-azzurro">
+      <span class="game-kicker">Calcola</span>
+      <h2 class="game-title">Il pieno che non c'è più</h2>
+      <p class="game-sub">Benzina o diesel: quanto ti costerebbe oggi la stessa percorrenza, rispetto a un anno tra il 2005 e oggi.</p>
+
+      <div class="g-controls">
+        <div class="g-field">
+          <label>Carburante</label>
+          <div class="toggle-pill">
+            <button type="button" class="fuel-toggle-btn active" data-fuel="benzina">Benzina</button>
+            <button type="button" class="fuel-toggle-btn" data-fuel="diesel">Diesel</button>
+          </div>
+        </div>
+        <div class="g-field">
+          <label>Km al giorno</label>
+          <div class="g-input-wrap"><input type="number" id="bz-km" value="30" min="1" max="500"></div>
+        </div>
+        <div class="g-field">
+          <label>Tipo di auto</label>
+          <div class="g-input-wrap">
+            <select id="bz-consumo">
+              <option value="4.5">Citycar (~4,5L)</option>
+              <option value="5.5">Utilitaria (~5,5L)</option>
+              <option value="6.5" selected>Compatta (~6,5L)</option>
+              <option value="7.5">Berlina media (~7,5L)</option>
+              <option value="9">SUV compatto (~9L)</option>
+              <option value="12">SUV grande (~12L)</option>
+              <option value="4">Ibrida (~4L)</option>
+              <option value="custom">So il consumo esatto...</option>
+            </select>
+          </div>
+        </div>
+        <div class="g-field" id="bz-custom-wrap" style="display:none;">
+          <label>L/100km</label>
+          <div class="g-input-wrap"><input type="number" id="bz-custom" value="6.5" min="2" max="25" step="0.1"></div>
+        </div>
+      </div>
+      <div class="g-year-wrap">
+        <input type="range" id="bz-year" min="2005" max="2026" value="2005" step="1">
+        <div class="g-year-label" id="bz-year-label">2005</div>
+      </div>
+      <div class="g-result">
+        <div class="g-result-half past">
+          <div class="g-result-label" id="bz-year-tag">Nel 2005</div>
+          <div class="g-result-val" id="bz-val-past">—</div>
+          <div class="g-result-sub">al mese</div>
+        </div>
+        <div class="g-result-half now">
+          <div class="g-result-label">Oggi</div>
+          <div class="g-result-val" id="bz-val-oggi">—</div>
+          <div class="g-result-sub">al mese</div>
+        </div>
+      </div>
+      <div class="g-summary" id="bz-summary">Sposta lo slider per vedere il confronto.</div>
+      <p class="g-note">Stessi dati del report "Un litro di benzina, tante storie" — Commissione Europea, Weekly Oil Bulletin (medie annuali 2005-2026).</p>
+    </div>
+
+    <div class="section-label" style="margin: 46px 0 20px;">Fonti</div>
+    <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 50px;">ISTAT (NIC, indici prezzi al consumo per divisione ECOICOP, 1996-2025) · FIPE/Assoutenti (caffè al bar) · Retecasa (affitti 2024) · Commissione Europea (benzina/diesel, Weekly Oil Bulletin)</p>
+
+</div>
+
+<footer>© nuMericA 2026 · Alessia Magro</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+
+  var idx = {
+    generale: {1996:71.5,1997:72.9,1998:74.3,1999:75.6,2000:77.7,2001:79.8,2002:81.8,2003:83.9,2004:85.9,2005:87.3,2006:89.4,2007:90.8,2008:94.2,2009:94.9,2010:96.3,2011:96.3,2012:99.1,2013:100.0,2014:100.0,2015:100.0,2016:100.0,2017:101.0,2018:102.0,2019:102.0,2020:102.0,2021:104.0,2022:114.0,2023:121.0,2024:122.0,2025:123.0},
+    pane: {2010:95.4,2011:95.4,2012:97.2,2013:99.1,2014:100.0,2015:100.0,2016:100.0,2017:101.0,2018:102.0,2019:102.0,2020:103.0,2021:103.0,2022:112.0,2023:125.0,2024:126.0,2025:129.0},
+    caffe: {2010:91.0,2011:91.0,2012:98.4,2013:100.0,2014:99.2,2015:100.0,2016:100.0,2017:101.0,2018:102.0,2019:101.0,2020:100.0,2021:99.0,2022:104.0,2023:111.0,2024:118.0,2025:142.0},
+    vino: {2010:89.5,2011:89.5,2012:92.1,2013:96.5,2014:99.1,2015:100.0,2016:100.0,2017:100.0,2018:105.0,2019:105.0,2020:105.0,2021:103.0,2022:106.0,2023:110.0,2024:109.0,2025:108.0},
+    birra: {2010:94.4,2011:94.4,2012:96.3,2013:97.2,2014:98.1,2015:100.0,2016:100.0,2017:100.0,2018:100.0,2019:101.0,2020:101.0,2021:100.0,2022:105.0,2023:117.0,2024:119.0,2025:119.0},
+    affitto: {2010:97.1,2011:97.1,2012:99.0,2013:100.0,2014:100.0,2015:100.0,2016:100.0,2017:101.0,2018:101.0,2019:101.0,2020:101.0,2021:102.0,2022:103.0,2023:105.0,2024:109.0,2025:113.0},
+    diesel: {2010:92.8,2011:92.8,2012:109.9,2013:107.6,2014:104.5,2015:92.0,2016:92.0,2017:100.0,2018:108.0,2019:107.0,2020:97.0,2021:108.0,2022:132.0,2023:130.0,2024:125.0,2025:121.0},
+    benzina: {2010:94.2,2011:94.2,2012:109.0,2013:107.4,2014:104.9,2015:95.0,2016:95.0,2017:100.0,2018:106.0,2019:104.0,2020:96.0,2021:108.0,2022:121.0,2023:123.0,2024:120.0,2025:115.0}
+  };
+
+  var prezziAssolutiCarburante = {
+    benzina: {2005:1.219986,2006:1.286763,2007:1.299509,2008:1.387537,2009:1.234138,2010:1.363131,2011:1.551256,2012:1.788212,2013:1.748751,2014:1.716200,2015:1.537684,2016:1.443236,2017:1.527639,2018:1.604242,2019:1.572416,2020:1.431998,2021:1.625016,2022:1.813873,2023:1.866419,2024:1.820583,2025:1.733293,2026:1.814551},
+    diesel: {2005:1.107196,2006:1.166176,2007:1.162184,2008:1.351734,2009:1.081459,2010:1.213875,2011:1.442837,2012:1.706732,2013:1.658080,2014:1.612616,2015:1.408572,2016:1.280922,2017:1.382510,2018:1.490762,2019:1.478263,2020:1.317785,2021:1.486039,2022:1.815354,2023:1.794771,2024:1.717004,2025:1.653113,2026:1.940271}
+  };
+
+  function formattaEuro(v) { return v.toLocaleString('it-IT', {minimumFractionDigits:0, maximumFractionDigits:0}) + '€'; }
+  function formattaEuro2(v) { return v.toLocaleString('it-IT', {minimumFractionDigits:2, maximumFractionDigits:2}) + '€'; }
+
+  function flashUpdate(el, testo) {
+    el.textContent = testo;
+    el.classList.remove('pop');
+    void el.offsetWidth;
+    el.classList.add('pop');
+  }
+
+  var bzKm = document.getElementById('bz-km');
+  var bzConsumoSel = document.getElementById('bz-consumo');
+  var bzCustomWrap = document.getElementById('bz-custom-wrap');
+  var bzCustom = document.getElementById('bz-custom');
+  var bzYear = document.getElementById('bz-year');
+  var fuelBtns = document.querySelectorAll('.fuel-toggle-btn');
+  var carburante = 'benzina';
+
+  fuelBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      fuelBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      carburante = btn.dataset.fuel;
+      renderBenzina();
+    });
+  });
+
+  bzConsumoSel.addEventListener('change', function(){
+    bzCustomWrap.style.display = bzConsumoSel.value === 'custom' ? 'block' : 'none';
+    renderBenzina();
+  });
+
+  function renderBenzina() {
+    var km = parseFloat(bzKm.value) || 0;
+    var consumo = bzConsumoSel.value === 'custom' ? (parseFloat(bzCustom.value)||0) : parseFloat(bzConsumoSel.value);
+    var anno = parseInt(bzYear.value);
+    document.getElementById('bz-year-label').textContent = anno;
+    document.getElementById('bz-year-tag').textContent = 'Nel ' + anno;
+
+    var serie = prezziAssolutiCarburante[carburante];
+    var prezzoEpoca = serie[anno];
+    var prezzoOggi = serie[2026];
+
+    var litriAlMese = (km * 30 / 100) * consumo;
+    var costoPassato = litriAlMese * prezzoEpoca;
+    var costoOggi = litriAlMese * prezzoOggi;
+
+    flashUpdate(document.getElementById('bz-val-past'), formattaEuro(costoPassato));
+    flashUpdate(document.getElementById('bz-val-oggi'), formattaEuro(costoOggi));
+
+    var summary = document.getElementById('bz-summary');
+    if (anno === 2026) {
+      summary.innerHTML = 'Stai già guardando il prezzo di oggi.';
+    } else {
+      var diff = costoOggi - costoPassato;
+      summary.innerHTML = 'Con ' + km + ' km al giorno a ' + carburante + ', nel ' + anno + ' avresti speso <b>' + formattaEuro(Math.abs(diff)) + (diff>=0?' in meno':' in più') + ' al mese</b> rispetto a oggi.';
+    }
+  }
+  [bzKm, bzCustom, bzYear].forEach(function(el){ el.addEventListener('input', renderBenzina); });
+  renderBenzina();
+
+  var cfYear = document.getElementById('cf-year');
+  var ANCORA_CAFFE_2024 = 1.18;
+
+  function renderCaffe() {
+    var anno = parseInt(cfYear.value);
+    document.getElementById('cf-year-label').textContent = anno;
+    document.getElementById('cf-anno-label').textContent = anno;
+
+    var prezzoEpoca = ANCORA_CAFFE_2024 * (idx.caffe[anno] / idx.caffe[2024]);
+    var prezzoOggi = ANCORA_CAFFE_2024 * (idx.caffe[2025] / idx.caffe[2024]);
+
+    document.getElementById('cf-prezzo-epoca').textContent = formattaEuro2(prezzoEpoca);
+    document.getElementById('cf-dieci').textContent = formattaEuro2(prezzoEpoca*10);
+    document.getElementById('cf-prezzo-oggi').textContent = formattaEuro2(prezzoOggi);
+
+    var diff = prezzoOggi - prezzoEpoca;
+    document.getElementById('cf-differenza').textContent = (diff>=0?'+':'') + diff.toFixed(2).replace('.',',') + '€';
+  }
+  cfYear.addEventListener('input', renderCaffe);
+  renderCaffe();
+
+  var afMq = document.getElementById('af-mq');
+  var afYear = document.getElementById('af-year');
+  var ANCORA_AFFITTO_2024 = 13.8;
+  Object.keys(idx.affitto).map(Number).sort(function(a,b){return a-b;}).forEach(function(a){
+    afYear.innerHTML += '<option value="' + a + '">' + a + '</option>';
+  });
+
+  function renderAffitto() {
+    var mq = parseFloat(afMq.value) || 0;
+    var anno = parseInt(afYear.value);
+    document.getElementById('af-year-tag').textContent = 'Nel ' + anno;
+
+    var prezzoMqEpoca = ANCORA_AFFITTO_2024 * (idx.affitto[anno] / idx.affitto[2024]);
+    var prezzoMqOggi = ANCORA_AFFITTO_2024 * (idx.affitto[2025] / idx.affitto[2024]);
+
+    flashUpdate(document.getElementById('af-val-past'), formattaEuro(prezzoMqEpoca * mq));
+    flashUpdate(document.getElementById('af-val-oggi'), formattaEuro(prezzoMqOggi * mq));
+  }
+  [afMq, afYear].forEach(function(el){ el.addEventListener('change', renderAffitto); el.addEventListener('input', renderAffitto); });
+  renderAffitto();
+
+  var pnStipendio = document.getElementById('pn-stipendio');
+  var pnYearChips = document.getElementById('pn-year-chips');
+  var pnAnnoSelezionato = 2010;
+  var PREZZO_PANE_KG_100 = 2.91;
+
+  [2010, 2013, 2016, 2019, 2022, 2025].forEach(function(a){
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = a;
+    if (a === 2010) btn.classList.add('active');
+    btn.addEventListener('click', function(){
+      pnYearChips.querySelectorAll('button').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      pnAnnoSelezionato = a;
+      renderPane();
+    });
+    pnYearChips.appendChild(btn);
+  });
+
+  function renderPane() {
+    var stipendio = parseFloat(pnStipendio.value) || 1800;
+    var anno = pnAnnoSelezionato;
+    document.getElementById('pn-year-tag').textContent = anno;
+
+    var oraLavoro = stipendio / 160;
+    var prezzoKgEpoca = PREZZO_PANE_KG_100 * (idx.pane[anno]/100);
+    var prezzoKgOggi = PREZZO_PANE_KG_100 * (idx.pane[2025]/100);
+    var pagnottaEpoca = prezzoKgEpoca * 0.5;
+    var pagnottaOggi = prezzoKgOggi * 0.5;
+
+    var nPast = Math.max(0, Math.round(oraLavoro / pagnottaEpoca));
+    var nOggi = Math.max(0, Math.round(oraLavoro / pagnottaOggi));
+
+    function iconeAnimate(n) {
+      var html = '';
+      for (var i=0; i<Math.min(n,20); i++) {
+        html += '<span class="bread-icon-pop" style="animation-delay:' + (i*0.04) + 's;">🍞</span>';
+      }
+      return html;
+    }
+    document.getElementById('pn-icons-past').innerHTML = iconeAnimate(nPast);
+    document.getElementById('pn-icons-oggi').innerHTML = iconeAnimate(nOggi);
+    document.getElementById('pn-count-past').textContent = nPast + ' pagnotte';
+    document.getElementById('pn-count-oggi').textContent = nOggi + ' pagnotte';
+  }
+  pnStipendio.addEventListener('input', renderPane);
+  renderPane();
+
+  var vnBudget = document.getElementById('vn-budget');
+  var vnPrev = document.getElementById('vn-prev');
+  var vnNext = document.getElementById('vn-next');
+  var vnAnno = 2010;
+  var PREZZO_VINO_L_100 = 2.21;
+
+  vnPrev.addEventListener('click', function(){ if (vnAnno > 2010) { vnAnno--; renderVino(); } });
+  vnNext.addEventListener('click', function(){ if (vnAnno < 2025) { vnAnno++; renderVino(); } });
+
+  function renderVino() {
+    var budget = parseFloat(vnBudget.value) || 0;
+    document.getElementById('vn-year-label').textContent = vnAnno;
+    document.getElementById('vn-year-tag').textContent = 'Nel ' + vnAnno;
+
+    var prezzoLEpoca = PREZZO_VINO_L_100 * (idx.vino[vnAnno]/100);
+    var prezzoLOggi = PREZZO_VINO_L_100 * (idx.vino[2025]/100);
+
+    flashUpdate(document.getElementById('vn-val-past'), (budget/prezzoLEpoca).toFixed(1).replace('.',','));
+    flashUpdate(document.getElementById('vn-val-oggi'), (budget/prezzoLOggi).toFixed(1).replace('.',','));
+  }
+  vnBudget.addEventListener('input', renderVino);
+  renderVino();
+
+  var rkFrom = document.getElementById('rk-year-from');
+  var rkTo = document.getElementById('rk-year-to');
+  var anniDisponibili = Object.keys(idx.pane).map(Number).sort(function(a,b){ return a-b; });
+  anniDisponibili.forEach(function(a){
+    rkFrom.innerHTML += '<option value="' + a + '"' + (a===2010?' selected':'') + '>' + a + '</option>';
+    rkTo.innerHTML += '<option value="' + a + '"' + (a===2025?' selected':'') + '>' + a + '</option>';
+  });
+
+  var nomiCategorie = {
+    generale: 'Costo della vita (generale)', pane: 'Pane', caffe: 'Caffè', vino: 'Vino',
+    birra: 'Birra', affitto: 'Affitto', diesel: 'Diesel', benzina: 'Benzina'
+  };
+  var medaglie = ['🥇','🥈','🥉'];
+
+  function renderClassifica() {
+    var from = parseInt(rkFrom.value);
+    var to = parseInt(rkTo.value);
+    var righe = Object.keys(nomiCategorie).map(function(cat){
+      var serie = idx[cat];
+      if (!(from in serie) || !(to in serie)) return null;
+      var variazione = (serie[to]/serie[from] - 1) * 100;
+      return { cat: cat, nome: nomiCategorie[cat], variazione: variazione };
+    }).filter(function(x){ return x; }).sort(function(a,b){ return b.variazione - a.variazione; });
+
+    var list = document.getElementById('rk-list');
+    list.innerHTML = righe.map(function(r, i){
+      var medaglia = i < 3 ? medaglie[i] : (i+1) + '.';
+      var classe = r.variazione >= 0 ? 'up' : 'down';
+      var segno = r.variazione >= 0 ? '+' : '';
+      return '<div class="rank-row"><span class="rank-medal">' + medaglia + '</span><span class="rank-name">' + r.nome + '</span><span class="rank-val ' + classe + '">' + segno + r.variazione.toFixed(1).replace('.',',') + '%</span></div>';
+    }).join('');
+  }
+  [rkFrom, rkTo].forEach(function(el){ el.addEventListener('change', renderClassifica); });
+  renderClassifica();
+
+});
+</script>
+
+</body>
+</html>

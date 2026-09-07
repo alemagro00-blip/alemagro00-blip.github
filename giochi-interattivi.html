@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Giochi interattivi — nuMericA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --bg: #F3F3F5;
+        --ink: #17171B;
+        --muted: #6B6A70;
+        --faint: #A0A0A6;
+        --line: rgba(23,23,27,0.08);
+        --glass: rgba(255,255,255,0.55);
+        --glass-strong: rgba(255,255,255,0.72);
+        --glass-border: rgba(255,255,255,0.85);
+        --coral: #FF6A4D;
+        --coral-deep: #E14F31;
+        --coral-light: rgba(255,106,77,0.14);
+        --emerald: #059669;
+        --violet: #7C5CFC;
+        --rosa: #D6338A;
+        --azzurro: #2E7DA6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: 'Inter', sans-serif;
+        background: var(--bg);
+        color: var(--ink);
+        margin: 0;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        position: relative;
+        overflow-x: hidden;
+        min-height: 100vh;
+    }
+    a { color: inherit; }
+    h1, h2, h3 { font-family: 'Bricolage Grotesque', sans-serif; margin: 0; }
+
+    .blob { position: fixed; border-radius: 50%; filter: blur(90px); z-index: 0; pointer-events: none; animation: drift 26s ease-in-out infinite alternate; }
+    .blob-1 { width: 620px; height: 620px; background: radial-gradient(circle, rgba(255,106,77,0.45), transparent 70%); top: -220px; left: 6%; }
+    .blob-2 { width: 520px; height: 520px; background: radial-gradient(circle, rgba(124,92,252,0.35), transparent 70%); top: 100px; right: -160px; animation-delay: -9s; }
+    .blob-3 { width: 480px; height: 480px; background: radial-gradient(circle, rgba(46,125,166,0.3), transparent 70%); bottom: -180px; left: 30%; animation-delay: -17s; }
+    @keyframes drift { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(40px,30px) scale(1.1); } }
+    @media (prefers-reduced-motion: reduce) { .blob { animation: none; } }
+
+    .wrap { max-width: 900px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
+
+    .back-link {
+        display: inline-flex; align-items: center; gap: 8px; margin: 34px 0 0;
+        background: var(--glass-strong); backdrop-filter: blur(16px) saturate(1.6); -webkit-backdrop-filter: blur(16px) saturate(1.6);
+        border: 1px solid var(--glass-border); border-radius: 999px; padding: 9px 18px;
+        text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--ink);
+        transition: transform .2s ease;
+    }
+    .back-link:hover { transform: translateX(-4px); }
+
+    .intro-row { margin: 46px 0 40px; }
+    .eyebrow { font-family: 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; font-size: 11.5px; color: var(--coral-deep); font-weight: 700; margin-bottom: 14px; }
+    .intro-row h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -0.5px; line-height: 1.15; }
+    .intro-row .sub { color: var(--muted); font-size: 1rem; margin-top: 12px; max-width: 600px; }
+
+    .games-list { display: grid; grid-template-columns: 1fr; gap: 20px; padding-bottom: 60px; }
+
+    .game-entry {
+        display: block; text-decoration: none; color: inherit;
+        background: var(--glass); backdrop-filter: blur(20px) saturate(1.6); -webkit-backdrop-filter: blur(20px) saturate(1.6);
+        border: 1px solid var(--glass-border); border-radius: 24px; padding: 30px 32px;
+        box-shadow: 0 24px 50px -28px rgba(23,23,27,0.18);
+        display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+        transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .game-entry:hover { transform: translateY(-3px); box-shadow: 0 30px 56px -26px rgba(23,23,27,0.28); }
+    .game-entry .ge-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: var(--coral-deep); font-weight: 700; margin-bottom: 10px; }
+    .game-entry h2 { font-size: 1.3rem; margin: 0 0 8px; }
+    .game-entry p { font-size: 0.9rem; color: var(--muted); margin: 0; max-width: 480px; }
+    .ge-cta { flex-shrink: 0; background: var(--ink); color: #fff; font-weight: 600; font-size: 0.9rem; padding: 13px 22px; border-radius: 999px; }
+
+    .coming-soon {
+        border: 1px dashed var(--glass-border); border-radius: 24px; padding: 30px 32px;
+        display: flex; align-items: center; justify-content: center; text-align: center;
+        color: var(--faint); font-size: 0.9rem; min-height: 100px;
+    }
+
+    footer { padding: 20px 0 50px; text-align: center; color: var(--muted); font-size: 0.78rem; position: relative; z-index: 1; }
+
+    @media (max-width: 640px) {
+        .game-entry { padding: 22px 20px; }
+    }
+</style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+
+<div class="wrap">
+    <a href="index.html" class="back-link">&larr; Torna alla Home</a>
+
+    <div class="intro-row">
+        <div class="eyebrow">🎮 Giochi interattivi</div>
+        <h1>Non solo report da leggere</h1>
+        <p class="sub">Piccole esperienze interattive per esplorare i dati in prima persona — calcolatori, confronti, quiz. Qui trovi tutte quelle pubblicate finora, e ne arriveranno altre.</p>
+    </div>
+
+    <div class="games-list">
+
+        <a href="quanto-valevano-i-tuoi-soldi.html" class="game-entry">
+            <div>
+                <div class="ge-tag">6 mini-giochi</div>
+                <h2>Quanto valevano i tuoi soldi</h2>
+                <p>Sei modi diversi di scoprire come è cambiato il valore dei tuoi soldi nel tempo — dati ISTAT reali, dal 2010 a oggi.</p>
+            </div>
+            <div class="ge-cta">Gioca &rarr;</div>
+        </a>
+
+        <div class="coming-soon">Altre esperienze interattive in arrivo — torna a trovarci.</div>
+
+    </div>
+</div>
+
+<footer>© nuMericA 2026 · Alessia Magro</footer>
+
+</body>
+</html>
