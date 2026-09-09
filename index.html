@@ -437,6 +437,20 @@
         .sidebar-overlay { backdrop-filter: none; }
     }
 </style>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyAxTTNhkicUEUi6tpkr4Y04Y7ZjNUzejpY",
+    authDomain: "numerica-sondaggio.firebaseapp.com",
+    databaseURL: "https://numerica-sondaggio-default-rtdb.firebaseio.com",
+    projectId: "numerica-sondaggio",
+    storageBucket: "numerica-sondaggio.firebasestorage.app",
+    messagingSenderId: "871541607512",
+    appId: "1:871541607512:web:f0b299475ce5b3d55e8e2d"
+  };
+  firebase.initializeApp(firebaseConfig);
+</script>
 </head>
 <body>
 
@@ -748,42 +762,18 @@
 
     // ============ Sondaggio "Vota il prossimo macro-argomento" — countapi.xyz, voti reali e condivisi ============
     (function initPoll() {
-        const BASE = 'https://countapi.mileshilliard.com/api/v1';
-        const PREFIX = 'numerica-am-poll2026-';
-        const details = document.getElementById('pollCard');
         const body = document.getElementById('pollBody');
         const opts = Array.from(document.querySelectorAll('.poll-opt'));
         const note = document.getElementById('pollNote');
-        if (!details || !body || !opts.length) return;
+        if (!body || !opts.length || typeof firebase === 'undefined') return;
 
+        const db = firebase.database();
+        const pathBase = 'sondaggio2026/';
         const votedKey = 'numerica_poll_voted_v2';
-        const cacheKey = 'numerica_poll_counts_cache_v1';
-        const cacheTtlMs = 2 * 60 * 1000; // 2 minuti: non ribombardiamo il servizio a ogni apertura pagina
         const hasVoted = () => localStorage.getItem(votedKey);
-        const fullKey = k => PREFIX + k;
-
-        // Ultimi conteggi noti (in memoria), per evitare una GET extra prima di ogni SET
-        let ultimiConteggiNoti = {};
-
-        // fetch con un tentativo di ripetizione automatica, per assorbire i fallimenti temporanei
-        // del servizio gratuito di conteggio (rate limit, hiccup di rete)
-        async function fetchConRetry(url, tentativi = 1) {
-            try {
-                const res = await fetch(url);
-                if (!res.ok) throw new Error('risposta non ok');
-                return res;
-            } catch (e) {
-                if (tentativi > 0) {
-                    await new Promise(r => setTimeout(r, 700));
-                    return fetchConRetry(url, tentativi - 1);
-                }
-                throw e;
-            }
-        }
 
         function renderCounts(counts) {
-            ultimiConteggiNoti = counts;
-            const total = Object.values(counts).reduce((a, b) => a + b, 0) || 1;
+            const total = Object.values(counts).reduce((a, b) => a + (b || 0), 0) || 1;
             opts.forEach(btn => {
                 const k = btn.dataset.key;
                 const c = counts[k] || 0;
@@ -793,109 +783,69 @@
             });
         }
 
-		function markSelected(chosenKey) {
-			body.classList.add('voted');
-			opts.forEach(btn => {
-				btn.style.borderColor = (btn.dataset.key === chosenKey) ? 'var(--coral)' : '';
-			});
-		}
-
-        function leggiCache() {
-            try {
-                const raw = localStorage.getItem(cacheKey);
-                if (!raw) return null;
-                const parsed = JSON.parse(raw);
-                if (Date.now() - parsed.t > cacheTtlMs) return null;
-                return parsed.counts;
-            } catch (e) { return null; }
-        }
-        function scriviCache(counts) {
-            try { localStorage.setItem(cacheKey, JSON.stringify({ t: Date.now(), counts })); } catch (e) {}
+        function markSelected(chosenKey) {
+            body.classList.add('voted');
+            opts.forEach(btn => {
+                btn.style.borderColor = (btn.dataset.key === chosenKey) ? 'var(--coral)' : '';
+            });
         }
 
-        async function fetchCounts(forzaAggiornamento) {
-            if (!forzaAggiornamento) {
-                const cache = leggiCache();
-                if (cache) return cache;
-            }
-            const counts = {};
-            await Promise.all(opts.map(async btn => {
-                const k = btn.dataset.key;
-                try {
-                    const res = await fetchConRetry(`${BASE}/get/${fullKey(k)}`);
-                    const data = await res.json();
-                    counts[k] = data.value || 0;
-                } catch (e) {
-                    counts[k] = ultimiConteggiNoti[k] || 0;
-                }
-            }));
-            scriviCache(counts);
-            return counts;
-        }
-
-        // Il voto viene registrato come "fatto" (localStorage) solo DOPO una risposta
-        // positiva dal server — mai prima, per non bloccare l'utente su un tentativo fallito.
-		async function vote(key) {
-			const previous = hasVoted();
-
-			note.textContent = 'Invio in corso…';
-			try {
-				// Se stai cambiando idea, togli 1 alla scelta precedente
-				// (usiamo l'ultimo conteggio noto invece di rifare una GET, per ridurre le richieste)
-				if (previous) {
-					const valorePrecedente = ultimiConteggiNoti[previous] || 1;
-					const newValue = Math.max(0, valorePrecedente - 1);
-					await fetchConRetry(`${BASE}/set/${fullKey(previous)}?value=${newValue}`);
-				}
-				// Aggiungi 1 alla nuova scelta
-				await fetchConRetry(`${BASE}/hit/${fullKey(key)}`);
-				const counts = await fetchCounts(true);
-				renderCounts(counts);
-				localStorage.setItem(votedKey, key);
-				markSelected(key);
-				note.textContent = 'Voto aggiornato! Grazie per il voto!';
-			} catch (e) {
-				note.textContent = 'Il servizio di voto è momentaneamente occupato — riprova tra poco.';
-			}
-		}
-
-		async function removeVote() {
-			const previous = hasVoted();
-			if (!previous) return;
-			note.textContent = 'Rimozione in corso…';
-			try {
-				const valorePrecedente = ultimiConteggiNoti[previous] || 1;
-				const newValue = Math.max(0, valorePrecedente - 1);
-				await fetchConRetry(`${BASE}/set/${fullKey(previous)}?value=${newValue}`);
-				const counts = await fetchCounts(true);
-				renderCounts(counts);
-				localStorage.removeItem(votedKey);
-				body.classList.remove('voted');
-				opts.forEach(btn => { btn.style.borderColor = ''; });
-				note.textContent = 'Voto rimosso. Puoi votare di nuovo quando vuoi.';
-			} catch (e) {
-				note.textContent = 'Il servizio di voto è momentaneamente occupato — riprova tra poco.';
-			}
-		}
-
-		opts.forEach(btn => {
-			btn.addEventListener('click', () => {
-				if (hasVoted() === btn.dataset.key) {
-					removeVote();
-				} else {
-					vote(btn.dataset.key);
-				}
-			});
-		});
-
-        fetchCounts().then(counts => {
-            renderCounts(counts);
-            if (hasVoted()) {
-                markSelected(localStorage.getItem(votedKey));
-                note.textContent = 'Grazie per il voto!';
-            }
+        // Ascolto in tempo reale: i conteggi si aggiornano da soli anche se vota qualcun altro,
+        // senza bisogno di ricaricare la pagina.
+        db.ref(pathBase).on('value', snapshot => {
+            renderCounts(snapshot.val() || {});
         });
+
+        function incrementa(key, delta) {
+            // transazione atomica: evita che due voti quasi simultanei si "perdano" a vicenda
+            return db.ref(pathBase + key).transaction(current => Math.max(0, (current || 0) + delta));
+        }
+
+        async function vote(key) {
+            const previous = hasVoted();
+            note.textContent = 'Invio in corso…';
+            try {
+                if (previous) await incrementa(previous, -1);
+                await incrementa(key, 1);
+                localStorage.setItem(votedKey, key);
+                markSelected(key);
+                note.textContent = 'Voto aggiornato! Grazie per il voto!';
+            } catch (e) {
+                note.textContent = 'Voto non riuscito — riprova tra poco.';
+            }
+        }
+
+        async function removeVote() {
+            const previous = hasVoted();
+            if (!previous) return;
+            note.textContent = 'Rimozione in corso…';
+            try {
+                await incrementa(previous, -1);
+                localStorage.removeItem(votedKey);
+                body.classList.remove('voted');
+                opts.forEach(btn => { btn.style.borderColor = ''; });
+                note.textContent = 'Voto rimosso. Puoi votare di nuovo quando vuoi.';
+            } catch (e) {
+                note.textContent = 'Rimozione non riuscita — riprova tra poco.';
+            }
+        }
+
+        opts.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (hasVoted() === btn.dataset.key) {
+                    removeVote();
+                } else {
+                    vote(btn.dataset.key);
+                }
+            });
+        });
+
+        if (hasVoted()) {
+            markSelected(localStorage.getItem(votedKey));
+            note.textContent = 'Grazie per il voto!';
+        }
     })();
+
 
     function setActiveFilter(filter) {
         catalogItemAll.classList.toggle('active', filter === 'all');
