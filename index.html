@@ -757,10 +757,32 @@
         if (!details || !body || !opts.length) return;
 
         const votedKey = 'numerica_poll_voted_v2';
+        const cacheKey = 'numerica_poll_counts_cache_v1';
+        const cacheTtlMs = 2 * 60 * 1000; // 2 minuti: non ribombardiamo il servizio a ogni apertura pagina
         const hasVoted = () => localStorage.getItem(votedKey);
         const fullKey = k => PREFIX + k;
 
+        // Ultimi conteggi noti (in memoria), per evitare una GET extra prima di ogni SET
+        let ultimiConteggiNoti = {};
+
+        // fetch con un tentativo di ripetizione automatica, per assorbire i fallimenti temporanei
+        // del servizio gratuito di conteggio (rate limit, hiccup di rete)
+        async function fetchConRetry(url, tentativi = 1) {
+            try {
+                const res = await fetch(url);
+                if (!res.ok) throw new Error('risposta non ok');
+                return res;
+            } catch (e) {
+                if (tentativi > 0) {
+                    await new Promise(r => setTimeout(r, 700));
+                    return fetchConRetry(url, tentativi - 1);
+                }
+                throw e;
+            }
+        }
+
         function renderCounts(counts) {
+            ultimiConteggiNoti = counts;
             const total = Object.values(counts).reduce((a, b) => a + b, 0) || 1;
             opts.forEach(btn => {
                 const k = btn.dataset.key;
@@ -778,18 +800,36 @@
 			});
 		}
 
-        async function fetchCounts() {
+        function leggiCache() {
+            try {
+                const raw = localStorage.getItem(cacheKey);
+                if (!raw) return null;
+                const parsed = JSON.parse(raw);
+                if (Date.now() - parsed.t > cacheTtlMs) return null;
+                return parsed.counts;
+            } catch (e) { return null; }
+        }
+        function scriviCache(counts) {
+            try { localStorage.setItem(cacheKey, JSON.stringify({ t: Date.now(), counts })); } catch (e) {}
+        }
+
+        async function fetchCounts(forzaAggiornamento) {
+            if (!forzaAggiornamento) {
+                const cache = leggiCache();
+                if (cache) return cache;
+            }
             const counts = {};
             await Promise.all(opts.map(async btn => {
                 const k = btn.dataset.key;
                 try {
-                    const res = await fetch(`${BASE}/get/${fullKey(k)}`);
+                    const res = await fetchConRetry(`${BASE}/get/${fullKey(k)}`);
                     const data = await res.json();
                     counts[k] = data.value || 0;
                 } catch (e) {
-                    counts[k] = 0;
+                    counts[k] = ultimiConteggiNoti[k] || 0;
                 }
             }));
+            scriviCache(counts);
             return counts;
         }
 
@@ -801,22 +841,21 @@
 			note.textContent = 'Invio in corso…';
 			try {
 				// Se stai cambiando idea, togli 1 alla scelta precedente
+				// (usiamo l'ultimo conteggio noto invece di rifare una GET, per ridurre le richieste)
 				if (previous) {
-					const res = await fetch(`${BASE}/get/${fullKey(previous)}`);
-					const data = await res.json();
-					const newValue = Math.max(0, (data.value || 1) - 1);
-					await fetch(`${BASE}/set/${fullKey(previous)}?value=${newValue}`);
+					const valorePrecedente = ultimiConteggiNoti[previous] || 1;
+					const newValue = Math.max(0, valorePrecedente - 1);
+					await fetchConRetry(`${BASE}/set/${fullKey(previous)}?value=${newValue}`);
 				}
 				// Aggiungi 1 alla nuova scelta
-				const res2 = await fetch(`${BASE}/hit/${fullKey(key)}`);
-				if (!res2.ok) throw new Error('risposta non valida');
-				const counts = await fetchCounts();
+				await fetchConRetry(`${BASE}/hit/${fullKey(key)}`);
+				const counts = await fetchCounts(true);
 				renderCounts(counts);
 				localStorage.setItem(votedKey, key);
 				markSelected(key);
 				note.textContent = 'Voto aggiornato! Grazie per il voto!';
 			} catch (e) {
-				note.textContent = 'Voto non riuscito — riprova tra poco.';
+				note.textContent = 'Il servizio di voto è momentaneamente occupato — riprova tra poco.';
 			}
 		}
 
@@ -825,18 +864,17 @@
 			if (!previous) return;
 			note.textContent = 'Rimozione in corso…';
 			try {
-				const res = await fetch(`${BASE}/get/${fullKey(previous)}`);
-				const data = await res.json();
-				const newValue = Math.max(0, (data.value || 1) - 1);
-				await fetch(`${BASE}/set/${fullKey(previous)}?value=${newValue}`);
-				const counts = await fetchCounts();
+				const valorePrecedente = ultimiConteggiNoti[previous] || 1;
+				const newValue = Math.max(0, valorePrecedente - 1);
+				await fetchConRetry(`${BASE}/set/${fullKey(previous)}?value=${newValue}`);
+				const counts = await fetchCounts(true);
 				renderCounts(counts);
 				localStorage.removeItem(votedKey);
 				body.classList.remove('voted');
 				opts.forEach(btn => { btn.style.borderColor = ''; });
 				note.textContent = 'Voto rimosso. Puoi votare di nuovo quando vuoi.';
 			} catch (e) {
-				note.textContent = 'Rimozione non riuscita — riprova tra poco.';
+				note.textContent = 'Il servizio di voto è momentaneamente occupato — riprova tra poco.';
 			}
 		}
 
@@ -855,7 +893,6 @@
             if (hasVoted()) {
                 markSelected(localStorage.getItem(votedKey));
                 note.textContent = 'Grazie per il voto!';
-                details.open = true;
             }
         });
     })();
