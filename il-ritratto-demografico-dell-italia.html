@@ -65,6 +65,21 @@
     .intro-row h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -0.5px; line-height: 1.15; }
     .intro-row .sub { color: var(--muted); font-size: 1rem; margin-top: 12px; }
 
+    .topics-marquee {
+        margin-top: 28px; overflow: hidden; width: 100%;
+        -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+        mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    }
+    .topics-track {
+        display: flex; gap: 36px; width: max-content;
+        animation: scroll-topics 22s linear infinite;
+        font-family: 'Bricolage Grotesque', sans-serif; font-style: italic; font-weight: 500;
+        font-size: 0.95rem; color: var(--muted); white-space: nowrap;
+    }
+    .topics-track span::after { content: '•'; margin-left: 36px; color: var(--violet); font-style: normal; }
+    @keyframes scroll-topics { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce) { .topics-track { animation: none; } }
+
     .card {
         background: var(--glass); backdrop-filter: blur(20px) saturate(1.6); -webkit-backdrop-filter: blur(20px) saturate(1.6);
         border: 1px solid var(--glass-border); border-radius: 24px; padding: 30px 32px; margin-top: 24px;
@@ -73,7 +88,7 @@
 
     .game-kicker { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; padding: 5px 13px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #fff; background: var(--violet-deep); }
     .game-title { font-size: 1.4rem; font-weight: 700; color: var(--ink); margin: 14px 0 6px; letter-spacing: -0.3px; }
-    .game-sub { font-size: 0.92rem; color: var(--muted); margin-bottom: 22px; }
+    .game-sub { font-size: 0.92rem; color: var(--muted);  margin-bottom: 22px; }
 
     .g-controls { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
     .g-field label { display: block; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin-bottom: 8px; }
@@ -132,6 +147,13 @@
         <div class="eyebrow">🎲 Giochi con i dati</div>
         <h1>Il ritratto demografico dell'Italia</h1>
         <p class="sub">Come sta cambiando l'Italia: quanto viviamo, quanti siamo per età, e come. Dati ISTAT, dal 1899 a oggi.</p>
+    </div>
+
+    <div class="topics-marquee">
+        <div class="topics-track">
+            <span>Speranza di vita</span><span>Figli per donna</span><span>Età al parto</span><span>Bilancia demografica</span><span>Nuzialità</span><span>Classifica regioni</span>
+            <span>Speranza di vita</span><span>Figli per donna</span><span>Età al parto</span><span>Bilancia demografica</span><span>Nuzialità</span><span>Classifica regioni</span>
+        </div>
     </div>
 
     <!-- ===================== 1. SPERANZA DI VITA ===================== -->
