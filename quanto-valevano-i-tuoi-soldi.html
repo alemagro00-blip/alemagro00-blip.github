@@ -63,12 +63,14 @@
         text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--ink);
         transition: transform .2s ease;
     }
-    .back-link:hover { transform: translateX(-4px); }
+    @media (hover: hover) and (pointer: fine) {
+        .back-link:hover { transform: translateX(-4px); }
+    }
 
     .intro-row { margin: 46px 0 10px; }
     .eyebrow { font-family: 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; font-size: 11.5px; color: var(--coral-deep); font-weight: 700; margin-bottom: 14px; }
     .intro-row h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -0.5px; line-height: 1.15; }
-    .intro-row .sub { color: var(--muted); font-size: 1rem; margin-top: 12px; }
+    .intro-row .sub { color: var(--muted); font-size: 1rem; margin-top: 12px; max-width: 620px; }
 
     .topics-marquee {
         margin-top: 28px; overflow: hidden; width: 100%;
@@ -99,7 +101,7 @@
     .g-azzurro .game-kicker { background: var(--azzurro-deep); }
 
     .game-title { font-size: 1.4rem; font-weight: 700; color: var(--ink); margin: 14px 0 6px; letter-spacing: -0.3px; }
-    .game-sub { font-size: 0.92rem; color: var(--muted);  margin-bottom: 22px; }
+    .game-sub { font-size: 0.92rem; color: var(--muted); max-width: 540px; margin-bottom: 22px; }
 
     .g-controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; margin-bottom: 18px; }
     .g-field label { display: block; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin-bottom: 6px; }
@@ -259,13 +261,13 @@
           <div class="g-result-sub">al mese</div>
         </div>
       </div>
-      <p class="g-note">Basato sull'<b>indice ISTAT dei canoni d'affitto effettivamente pagati</b>, applicato alla <b>media nazionale attuale</b> (13,8€/mq, fonte settore immobiliare 2024).</p>
+      <p class="g-note">Basato sull'indice ISTAT dei canoni d'affitto effettivamente pagati, applicato alla media nazionale attuale (13,8€/mq, fonte settore immobiliare 2024).</p>
     </div>
 
     <!-- ===================== 3. PANE ===================== -->
     <div class="card g-rosa">
       <span class="game-kicker">Visualizza</span>
-      <h2 class="game-title">Tempo per un bene primario</h2>
+      <h2 class="game-title">Quante pagnotte in un'ora</h2>
       <p class="game-sub">Con un'ora del tuo stipendio, quante pagnotte di pane potevi comprare allora, e quante oggi?</p>
 
       <div class="g-controls">
@@ -296,8 +298,8 @@
     <!-- ===================== 4. VINO ===================== -->
     <div class="card g-violet">
       <span class="game-kicker">Budget</span>
-      <h2 class="game-title">Quanti soldi per un sfizio</h2>
-      <p class="game-sub">Fissa un budget: scopri quanti litri di vino si potevano comprare allora rispetto a oggi.</p>
+      <h2 class="game-title">Con questi soldi, quanto vino?</h2>
+      <p class="game-sub">Fissa un budget: scopri quanti litri di vino comprava allora, e quanti ne compra oggi.</p>
 
       <div class="g-controls">
         <div class="g-field">
@@ -325,7 +327,21 @@
       </div>
       <p class="g-note">Basato sul prezzo medio ISTAT del vino (2,21€/L nel 2015, rivalutato con l'indice ufficiale).</p>
     </div>
-	
+
+    <!-- ===================== 5. CLASSIFICA ===================== -->
+    <div class="card g-azzurro">
+      <span class="game-kicker">Scopri</span>
+      <h2 class="game-title">La classifica dei rincari</h2>
+      <p class="game-sub">Scegli due anni: scopri quale categoria è aumentata di più (e quale di meno, o è persino calata).</p>
+
+      <div class="rank-controls">
+        <div class="rank-select"><select id="rk-year-from"></select></div>
+        <span style="color: var(--muted);">&rarr;</span>
+        <div class="rank-select"><select id="rk-year-to"></select></div>
+      </div>
+      <div class="rank-list" id="rk-list"></div>
+    </div>
+
     <!-- ===================== 6. BENZINA/DIESEL ===================== -->
     <div class="card g-azzurro">
       <span class="game-kicker">Calcola</span>
@@ -381,21 +397,7 @@
         </div>
       </div>
       <div class="g-summary" id="bz-summary">Sposta lo slider per vedere il confronto.</div>
-      <p class="g-note">Basato su Commissione Europea, Weekly Oil Bulletin (medie annuali 2005-2026).</p>
-    </div>
-	
-    <!-- ===================== 5. CLASSIFICA ===================== -->
-    <div class="card g-azzurro">
-      <span class="game-kicker">Scopri</span>
-      <h2 class="game-title">La classifica dei rincari</h2>
-      <p class="game-sub">Metti a confronto 2 anni e scopri quali categorie sono variate di più nel tempo</p>
-
-      <div class="rank-controls">
-        <div class="rank-select"><select id="rk-year-from"></select></div>
-        <span style="color: var(--muted);">&rarr;</span>
-        <div class="rank-select"><select id="rk-year-to"></select></div>
-      </div>
-      <div class="rank-list" id="rk-list"></div>
+      <p class="g-note">Stessi dati del report "Un litro di benzina, tante storie" — Commissione Europea, Weekly Oil Bulletin (medie annuali 2005-2026).</p>
     </div>
 
     <div class="section-label" style="margin: 46px 0 20px;">Fonti</div>
