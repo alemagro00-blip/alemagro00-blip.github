@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il ritratto demografico dell'Italia — nuMericA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --bg: #F3F3F5;
+        --ink: #17171B;
+        --muted: #6B6A70;
+        --faint: #A0A0A6;
+        --line: rgba(23,23,27,0.08);
+        --glass: rgba(255,255,255,0.55);
+        --glass-strong: rgba(255,255,255,0.72);
+        --glass-border: rgba(255,255,255,0.85);
+        --coral: #FF6A4D;
+        --coral-deep: #E14F31;
+        --emerald: #059669;
+        --violet: #7C5CFC;
+        --violet-deep: #5D3FD9;
+        --rosa: #D6338A;
+        --azzurro: #2E7DA6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: 'Inter', sans-serif;
+        background: var(--bg);
+        color: var(--ink);
+        margin: 0;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        position: relative;
+        overflow-x: hidden;
+        min-height: 100vh;
+    }
+    a { color: inherit; }
+    h1, h2, h3 { font-family: 'Bricolage Grotesque', sans-serif; margin: 0; }
+
+    .blob { position: fixed; border-radius: 50%; filter: blur(90px); z-index: 0; pointer-events: none; animation: drift 26s ease-in-out infinite alternate; }
+    .blob-1 { width: 620px; height: 620px; background: radial-gradient(circle, rgba(124,92,252,0.4), transparent 70%); top: -220px; left: 6%; }
+    .blob-2 { width: 520px; height: 520px; background: radial-gradient(circle, rgba(255,106,77,0.32), transparent 70%); top: 100px; right: -160px; animation-delay: -9s; }
+    .blob-3 { width: 480px; height: 480px; background: radial-gradient(circle, rgba(5,150,105,0.28), transparent 70%); bottom: -180px; left: 30%; animation-delay: -17s; }
+    @keyframes drift { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(40px,30px) scale(1.1); } }
+    @media (prefers-reduced-motion: reduce) { .blob { animation: none; } }
+
+    .wrap { max-width: 900px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
+
+    .back-link {
+        display: inline-flex; align-items: center; gap: 8px; margin: 34px 0 0;
+        background: var(--glass-strong); backdrop-filter: blur(16px) saturate(1.6); -webkit-backdrop-filter: blur(16px) saturate(1.6);
+        border: 1px solid var(--glass-border); border-radius: 999px; padding: 9px 18px;
+        text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--ink);
+        transition: transform .2s ease;
+    }
+    @media (hover: hover) and (pointer: fine) {
+        .back-link:hover { transform: translateX(-4px); }
+    }
+
+    .intro-row { margin: 46px 0 30px; }
+    .eyebrow { font-family: 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; font-size: 11.5px; color: var(--violet-deep); font-weight: 700; margin-bottom: 14px; }
+    .intro-row h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -0.5px; line-height: 1.15; }
+    .intro-row .sub { color: var(--muted); font-size: 1rem; margin-top: 12px; }
+
+    .card {
+        background: var(--glass); backdrop-filter: blur(20px) saturate(1.6); -webkit-backdrop-filter: blur(20px) saturate(1.6);
+        border: 1px solid var(--glass-border); border-radius: 24px; padding: 30px 32px; margin-top: 24px;
+        box-shadow: 0 24px 50px -28px rgba(23,23,27,0.18);
+    }
+
+    .game-kicker { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; padding: 5px 13px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #fff; background: var(--violet-deep); }
+    .game-title { font-size: 1.4rem; font-weight: 700; color: var(--ink); margin: 14px 0 6px; letter-spacing: -0.3px; }
+    .game-sub { font-size: 0.92rem; color: var(--muted); margin-bottom: 22px; }
+
+    .g-controls { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+    .g-field label { display: block; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin-bottom: 8px; }
+
+    .toggle-pill { display: inline-flex; background: var(--glass-strong); border: 1px solid var(--glass-border); border-radius: 999px; padding: 3px; gap: 3px; }
+    .toggle-pill button { border: none; background: transparent; padding: 8px 15px; border-radius: 999px; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: var(--muted); cursor: pointer; transition: .15s ease; }
+    .toggle-pill button.active { background: var(--ink); color: #fff; }
+
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip-btn { border: 1px solid var(--glass-border); background: var(--glass-strong); padding: 8px 14px; border-radius: 999px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; font-weight: 700; color: var(--ink); cursor: pointer; transition: .15s ease; }
+    .chip-btn.active { background: var(--violet-deep); color: #fff; border-color: var(--violet-deep); }
+
+    .g-result { display: flex; gap: 0; border-radius: 16px; overflow: hidden; border: 1px solid var(--glass-border); margin-top: 8px; }
+    .g-result-half { flex: 1; padding: 20px; text-align: center; }
+    .g-result-half.past { background: rgba(255,255,255,0.5); }
+    .g-result-half.now { background: var(--ink); }
+    .g-result-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; }
+    .g-result-half.past .g-result-label { color: var(--muted); }
+    .g-result-half.now .g-result-label { color: var(--faint); }
+    .g-result-val { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.9rem; font-weight: 800; margin-top: 6px; display: inline-block; transition: transform .18s ease; }
+    .g-result-half.past .g-result-val { color: var(--ink); }
+    .g-result-half.now .g-result-val { color: #A78BFA; }
+    .g-result-val.pop { transform: scale(1.14); }
+    .g-result-sub { font-size: 11px; margin-top: 4px; }
+    .g-result-half.past .g-result-sub { color: var(--muted); }
+    .g-result-half.now .g-result-sub { color: var(--faint); }
+
+    .g-summary { margin-top: 16px; font-size: 13.5px; color: var(--ink); background: rgba(255,255,255,0.5); border: 1px solid var(--glass-border); border-radius: 12px; padding: 13px 15px; }
+    .g-summary b { font-weight: 700; }
+    .g-note { font-size: 11.5px; color: var(--faint); margin-top: 16px; }
+
+    .coming-soon {
+        border: 1px dashed var(--glass-border); border-radius: 24px; padding: 30px 32px; margin-top: 24px;
+        display: flex; align-items: center; justify-content: center; text-align: center;
+        color: var(--faint); font-size: 0.9rem; min-height: 90px;
+    }
+
+    footer { padding: 20px 0 50px; text-align: center; color: var(--muted); font-size: 0.78rem; position: relative; z-index: 1; }
+
+    @media (max-width: 640px) {
+        .card { padding: 22px 20px; }
+        .g-result-val { font-size: 1.5rem; }
+    }
+</style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+
+<div class="wrap">
+    <a href="giochi-interattivi.html" class="back-link">&larr; Torna ai Giochi</a>
+
+    <div class="intro-row">
+        <div class="eyebrow">🎲 Giochi con i dati</div>
+        <h1>Il ritratto demografico dell'Italia</h1>
+        <p class="sub">Come sta cambiando l'Italia: quanto viviamo, quanti siamo per età, e come. Dati ISTAT, dal 1899 a oggi.</p>
+    </div>
+
+    <!-- ===================== 1. SPERANZA DI VITA ===================== -->
+    <div class="card">
+      <span class="game-kicker">Calcola</span>
+      <h2 class="game-title">Quanto vivrai (secondo le statistiche)</h2>
+      <p class="game-sub">Scegli sesso ed età di riferimento, poi confronta la speranza di vita di un'epoca storica con quella di oggi.</p>
+
+      <div class="g-controls">
+        <div class="g-field">
+          <label>Sesso</label>
+          <div class="toggle-pill" id="sv-sesso-toggle">
+            <button type="button" class="active" data-sesso="M">Uomo</button>
+            <button type="button" data-sesso="F">Donna</button>
+          </div>
+        </div>
+        <div class="g-field">
+          <label>Età di riferimento</label>
+          <div class="toggle-pill" id="sv-eta-toggle">
+            <button type="button" class="active" data-eta="0">Appena nato</button>
+            <button type="button" data-eta="65">A 65 anni</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="g-field" style="margin-bottom:20px;">
+        <label>Periodo storico di confronto</label>
+        <div class="chip-row" id="sv-periodo-chips"></div>
+      </div>
+
+      <div class="g-result">
+        <div class="g-result-half past">
+          <div class="g-result-label" id="sv-periodo-tag">1899-1902</div>
+          <div class="g-result-val" id="sv-val-past">—</div>
+          <div class="g-result-sub">anni di vita attesi</div>
+        </div>
+        <div class="g-result-half now">
+          <div class="g-result-label">Oggi (2025)</div>
+          <div class="g-result-val" id="sv-val-oggi">—</div>
+          <div class="g-result-sub">anni di vita attesi</div>
+        </div>
+      </div>
+      <div class="g-summary" id="sv-summary">Scegli un periodo per vedere il confronto.</div>
+      <p class="g-note">Dati storici: ISTAT, Serie storiche (Tavola 2.8, tavole di mortalità 1899-2014). Dati moderni: ISTAT, Indicatori demografici (2002-2025). Il valore "a 65 anni" per i periodi storici è stimato per interpolazione tra i dati reali a 60 e 70 anni.</p>
+    </div>
+
+    <!-- ===================== 2. FIGLI PER DONNA ===================== -->
+    <div class="card">
+      <span class="game-kicker" style="background:var(--rosa);">Confronta</span>
+      <h2 class="game-title">Quanti figli per donna</h2>
+      <p class="game-sub">Il numero medio di figli per donna in Italia, ieri e oggi.</p>
+
+      <div class="g-field" style="margin-bottom:20px;">
+        <label>Anno di confronto</label>
+        <div class="toggle-pill" style="flex-wrap:wrap;"><select id="fd-year" style="border:none; background:transparent; font-family:'JetBrains Mono',monospace; font-weight:700; padding:6px 10px;"></select></div>
+      </div>
+
+      <div class="g-result">
+        <div class="g-result-half past">
+          <div class="g-result-label" id="fd-year-tag">2002</div>
+          <div class="g-result-val" id="fd-val-past">—</div>
+          <div class="g-result-sub">figli per donna</div>
+        </div>
+        <div class="g-result-half now">
+          <div class="g-result-label">Oggi (2025)</div>
+          <div class="g-result-val" id="fd-val-oggi">—</div>
+          <div class="g-result-sub">figli per donna</div>
+        </div>
+      </div>
+      <div class="g-summary" id="fd-summary"></div>
+      <p class="g-note">Fonte: ISTAT, Indicatori demografici (dato nazionale).</p>
+    </div>
+
+    <!-- ===================== 3. ETÀ MEDIA AL PARTO ===================== -->
+    <div class="card">
+      <span class="game-kicker" style="background:var(--azzurro);">Confronta</span>
+      <h2 class="game-title">A che età si diventa genitori</h2>
+      <p class="game-sub">L'età media della madre al momento del parto (dal 2002); per gli anni precedenti, il dato più vicino disponibile è l'età media al matrimonio delle spose.</p>
+
+      <div class="g-field" style="margin-bottom:20px;">
+        <label>Anno di confronto</label>
+        <div class="toggle-pill" style="flex-wrap:wrap;"><select id="em-year" style="border:none; background:transparent; font-family:'JetBrains Mono',monospace; font-weight:700; padding:6px 10px;"></select></div>
+      </div>
+
+      <div class="g-result">
+        <div class="g-result-half past">
+          <div class="g-result-label" id="em-year-tag">Nel 2002</div>
+          <div class="g-result-val" id="em-val-past">—</div>
+          <div class="g-result-sub">anni</div>
+        </div>
+        <div class="g-result-half now">
+          <div class="g-result-label">Oggi (2025)</div>
+          <div class="g-result-val" id="em-val-oggi">—</div>
+          <div class="g-result-sub">anni</div>
+        </div>
+      </div>
+      <p class="g-note">Fonte: ISTAT, Indicatori demografici (dato nazionale).</p>
+    </div>
+
+    <!-- ===================== 4. BILANCIA GIOVANI/ANZIANI ===================== -->
+    <div class="card">
+      <span class="game-kicker" style="background:var(--violet-deep);">Visualizza</span>
+      <h2 class="game-title">La bilancia demografica</h2>
+      <p class="game-sub">Sposta l'anno e guarda come cambia il peso tra giovanissimi (0-14 anni) e anziani (65+) sulla popolazione totale.</p>
+
+      <div class="g-year-wrap">
+        <input type="range" id="bd-year" min="0" max="0" value="0" step="1">
+        <div class="g-year-label" id="bd-year-label">2002</div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div>
+          <div style="display:flex; justify-content:space-between; font-size:11.5px; color:var(--muted); font-family:'JetBrains Mono',monospace; margin-bottom:4px;"><span>0-14 anni</span><span id="bd-val-giovani">—</span></div>
+          <div style="background:rgba(255,255,255,0.5); border:1px solid var(--glass-border); border-radius:8px; height:18px; overflow:hidden;"><div id="bd-bar-giovani" style="height:100%; background:var(--rosa); border-radius:8px;"></div></div>
+        </div>
+        <div>
+          <div style="display:flex; justify-content:space-between; font-size:11.5px; color:var(--muted); font-family:'JetBrains Mono',monospace; margin-bottom:4px;"><span>65 anni e più</span><span id="bd-val-anziani">—</span></div>
+          <div style="background:rgba(255,255,255,0.5); border:1px solid var(--glass-border); border-radius:8px; height:18px; overflow:hidden;"><div id="bd-bar-anziani" style="height:100%; background:var(--violet-deep); border-radius:8px;"></div></div>
+        </div>
+      </div>
+      <div class="g-summary" id="bd-summary" style="margin-top:16px;"></div>
+      <p class="g-note">Fonte: ISTAT, Indicatori demografici (dato nazionale, % sul 1° gennaio dell'anno).</p>
+    </div>
+
+    <!-- ===================== 5. INDOVINA LE NOZZE ===================== -->
+    <div class="card">
+      <span class="game-kicker" style="background:var(--coral-deep);">Indovina</span>
+      <h2 class="game-title">Indovina il tasso di nuzialità</h2>
+      <p class="game-sub">Nel 2020, con le restrizioni Covid, quante persone su 1.000 si sono sposate in Italia? (Il valore "normale" negli altri anni è circa 3,0-3,4 su 1.000.)</p>
+
+      <div class="chip-row" id="nz-options"></div>
+      <div class="g-summary" id="nz-reveal" style="display:none;"></div>
+      <p class="g-note">Fonte: ISTAT, Indicatori demografici (dato nazionale).</p>
+    </div>
+
+    <!-- ===================== 6. CLASSIFICA REGIONI PIÙ "VECCHIE" ===================== -->
+    <div class="card">
+      <span class="game-kicker" style="background:var(--emerald);">Scopri</span>
+      <h2 class="game-title">La classifica delle regioni più "vecchie"</h2>
+      <p class="game-sub">L'indice di vecchiaia (65+ ogni 100 under 14) per tutte le regioni italiane, 2025. Più il numero è alto, più la popolazione è anziana rispetto ai giovani.</p>
+
+      <div id="rv-rank-list" style="display:flex; flex-direction:column; gap:7px;"></div>
+      <p class="g-note">Fonte: ISTAT, Indicatori demografici, 2025.</p>
+    </div>
+
+</div>
+
+<footer>© nuMericA 2026 · Alessia Magro</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+
+  const speranzaStorica = {
+    M: {
+      0:  {'1899-1902':42.6,'1921-1922':49.3,'1930-1932':53.8,'1950-1952':63.7,'1960-1962':67.2,'1970-1972':69.0,'1981':71.1,'1991':73.8,'2001':77.0,'2011':79.5,'2014':80.3,'2017':80.5,'2019':81.1,'2020':79.8,'2022':80.6,'2025':81.7},
+      65: {'1899-1902':10.6,'1921-1922':11.4,'1930-1932':12.1,'1950-1952':12.8,'1960-1962':13.6,'1970-1972':13.5,'1981':13.8,'1991':15.4,'2001':17.1,'2011':18.5,'2014':19.0,'2017':19.0,'2019':19.4,'2020':18.3,'2022':18.9,'2025':20.0}
+    },
+    F: {
+      0:  {'1899-1902':43.0,'1921-1922':50.8,'1930-1932':56.0,'1950-1952':67.2,'1960-1962':72.3,'1970-1972':74.9,'1981':77.8,'1991':80.3,'2001':82.8,'2011':84.4,'2014':85.0,'2017':84.9,'2019':85.4,'2020':84.5,'2022':84.8,'2025':85.7},
+      65: {'1899-1902':10.7,'1921-1922':11.7,'1930-1932':12.9,'1950-1952':13.9,'1960-1962':15.6,'1970-1972':16.3,'1981':17.4,'1991':19.1,'2001':20.8,'2011':21.9,'2014':22.4,'2017':22.1,'2019':22.6,'2020':21.7,'2022':21.9,'2025':22.8}
+    }
+  };
+
+  const speranzaOggi = {
+    M: { 0: 81.7, 65: 20.0 },
+    F: { 0: 85.7, 65: 22.8 }
+  };
+
+  const serieFigli = {1926:3.5,1952:2.3,1964:2.7,1995:1.19,2002:1.3,2003:1.3,2004:1.3,2005:1.3,2006:1.4,2007:1.4,2008:1.4,2009:1.4,2010:1.4,2011:1.4,2012:1.4,2013:1.4,2014:1.4,2015:1.4,2016:1.4,2017:1.3,2018:1.3,2019:1.3,2020:1.2,2021:1.2,2022:1.2,2023:1.2,2024:1.2,2025:1.1};
+  const serieEtaMadre = {2002:30.5,2003:30.7,2004:30.7,2005:30.8,2006:30.9,2007:31.0,2008:31.0,2009:31.1,2010:31.2,2011:31.3,2012:31.3,2013:31.4,2014:31.5,2015:31.7,2016:31.8,2017:31.9,2018:32.0,2019:32.1,2020:32.2,2021:32.4,2022:32.4,2023:32.5,2024:32.6,2025:32.7};
+  const seriePop014 = {2002:14.2,2003:14.2,2004:14.2,2005:14.1,2006:14.1,2007:14.1,2008:14.1,2009:14.1,2010:14.1,2011:14.1,2012:14.0,2013:14.0,2014:13.9,2015:13.8,2016:13.7,2017:13.5,2018:13.4,2019:13.2,2020:13.0,2021:12.9,2022:12.7,2023:12.4,2024:12.2,2025:11.9};
+  const seriePop65 = {2002:18.7,2003:19.0,2004:19.2,2005:19.5,2006:19.8,2007:20.1,2008:20.2,2009:20.2,2010:20.4,2011:20.4,2012:20.8,2013:21.1,2014:21.5,2015:21.9,2016:22.1,2017:22.4,2018:22.6,2019:22.9,2020:23.2,2021:23.5,2022:23.8,2023:24.0,2024:24.3,2025:24.7};
+
+  // ===== GIOCO 2: figli per donna =====
+  const fdYear = document.getElementById('fd-year');
+  Object.keys(serieFigli).map(Number).sort((a,b)=>a-b).forEach(a => {
+    fdYear.innerHTML += `<option value="${a}" ${a===2002?'selected':''}>${a}</option>`;
+  });
+  function renderFigli() {
+    const anno = parseInt(fdYear.value);
+    document.getElementById('fd-year-tag').textContent = anno;
+    const vPast = serieFigli[anno], vOggi = serieFigli[2025];
+    document.getElementById('fd-val-past').textContent = vPast.toFixed(1).replace('.',',');
+    document.getElementById('fd-val-oggi').textContent = vOggi.toFixed(1).replace('.',',');
+    const diff = vOggi - vPast;
+    document.getElementById('fd-summary').innerHTML = anno === 2025
+      ? 'Stai già guardando il dato di oggi.'
+      : `Nel ${anno} si facevano in media <b>${vPast.toFixed(1).replace('.',',')} figli</b> per donna. Oggi sono <b>${vOggi.toFixed(1).replace('.',',')}</b> — ${diff<0 ? `<b>${Math.abs(diff).toFixed(1).replace('.',',')} in meno</b>` : `<b>${diff.toFixed(1).replace('.',',')} in più</b>`}.`;
+  }
+  fdYear.addEventListener('change', renderFigli);
+  renderFigli();
+
+  // ===== GIOCO 3: età media al parto (+ punti storici età al matrimonio) =====
+  const serieEtaMadreEstesa = Object.assign({1952:27.1,1976:25.1}, serieEtaMadre);
+  const emYear = document.getElementById('em-year');
+  Object.keys(serieEtaMadreEstesa).map(Number).sort((a,b)=>a-b).forEach(a => {
+    emYear.innerHTML += `<option value="${a}" ${a===1952?'selected':''}>${a}</option>`;
+  });
+  function renderEtaMadre() {
+    const anno = parseInt(emYear.value);
+    document.getElementById('em-year-tag').textContent = 'Nel ' + anno;
+    const vPast = serieEtaMadreEstesa[anno], vOggi = serieEtaMadreEstesa[2025];
+    document.getElementById('em-val-past').textContent = vPast.toFixed(1).replace('.',',');
+    document.getElementById('em-val-oggi').textContent = vOggi.toFixed(1).replace('.',',');
+  }
+  emYear.addEventListener('change', renderEtaMadre);
+  renderEtaMadre();
+
+  // ===== GIOCO 4: bilancia demografica (censimenti 1861-2011 + annuale 2002-2025) =====
+  const bilanciaStorica = {
+    1861:[34.2,4.2],1871:[32.5,5.1],1881:[32.2,5.1],1901:[34.4,6.1],1911:[33.8,6.5],
+    1921:[31.0,6.7],1931:[29.7,7.3],1936:[30.6,7.4],1951:[26.1,8.2],1961:[24.5,9.5],
+    1971:[24.4,11.3],1981:[21.4,13.2],1991:[15.9,15.3]
+  };
+  const bilanciaCombinata = Object.assign({}, bilanciaStorica);
+  Object.keys(seriePop014).forEach(a => { bilanciaCombinata[a] = [seriePop014[a], seriePop65[a]]; });
+  const anniBilancia = Object.keys(bilanciaCombinata).map(Number).sort((a,b)=>a-b);
+
+  const bdYear = document.getElementById('bd-year');
+  bdYear.max = anniBilancia.length - 1;
+  bdYear.value = 0;
+
+  function renderBilancia() {
+    const idx = parseInt(bdYear.value);
+    const anno = anniBilancia[idx];
+    document.getElementById('bd-year-label').textContent = anno;
+    const [giovani, anziani] = bilanciaCombinata[anno];
+    document.getElementById('bd-val-giovani').textContent = giovani.toFixed(1).replace('.',',') + '%';
+    document.getElementById('bd-val-anziani').textContent = anziani.toFixed(1).replace('.',',') + '%';
+    const maxScala = 36;
+    document.getElementById('bd-bar-giovani').style.width = (giovani/maxScala*100) + '%';
+    document.getElementById('bd-bar-anziani').style.width = (anziani/maxScala*100) + '%';
+    document.getElementById('bd-summary').innerHTML = anziani > giovani
+      ? `Nel ${anno} gli anziani superano i giovanissimi: <b>${anziani.toFixed(1).replace('.',',')}%</b> contro <b>${giovani.toFixed(1).replace('.',',')}%</b>.`
+      : `Nel ${anno} i giovanissimi (<b>${giovani.toFixed(1).replace('.',',')}%</b>) erano ancora più numerosi degli anziani (<b>${anziani.toFixed(1).replace('.',',')}%</b>).`;
+  }
+  bdYear.addEventListener('input', renderBilancia);
+  renderBilancia();
+
+
+  // ===== GIOCO 5: indovina nuzialità 2020 =====
+  const nzOpzioni = [1.6, 2.4, 3.2, 4.0];
+  const nzCorretta = 1.6;
+  const nzWrap = document.getElementById('nz-options');
+  let nzRisposto = false;
+  nzOpzioni.forEach(val => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'chip-btn';
+    btn.textContent = val.toFixed(1).replace('.',',') + ' su 1.000';
+    btn.addEventListener('click', () => {
+      if (nzRisposto) return;
+      nzRisposto = true;
+      const reveal = document.getElementById('nz-reveal');
+      reveal.style.display = 'block';
+      if (val === nzCorretta) {
+        btn.style.background = 'var(--emerald)'; btn.style.color = '#fff'; btn.style.borderColor = 'var(--emerald)';
+        reveal.innerHTML = '<b>Esatto!</b> Nel 2020 il tasso di nuzialità è crollato a 1,6 matrimoni ogni 1.000 abitanti — quasi la metà del solito, per via delle restrizioni Covid sui matrimoni ed eventi pubblici.';
+      } else {
+        btn.style.background = 'var(--coral-deep)'; btn.style.color = '#fff'; btn.style.borderColor = 'var(--coral-deep)';
+        reveal.innerHTML = 'La risposta corretta è <b>1,6 su 1.000</b> — nel 2020 il tasso di nuzialità è crollato quasi alla metà del solito, per via delle restrizioni Covid sui matrimoni ed eventi pubblici.';
+      }
+    });
+    nzWrap.appendChild(btn);
+  });
+
+  // ===== GIOCO 6: classifica regioni indice di vecchiaia =====
+  const indiceVecchiaiaRegioni = [
+    {nome:'Liguria', val:283.3},{nome:'Sardegna', val:282.5},{nome:'Molise', val:261.9},
+    {nome:'Friuli-Venezia Giulia', val:252.9},{nome:'Umbria', val:247.4},{nome:'Toscana', val:242.5},
+    {nome:'Piemonte', val:240.3},{nome:'Basilicata', val:240.0},{nome:'Marche', val:235.4},
+    {nome:'Abruzzo', val:228.9},{nome:"Valle d'Aosta", val:227.1},{nome:'Veneto', val:212.0},
+    {nome:'Emilia-Romagna', val:211.1},{nome:'Puglia', val:209.4},{nome:'Lazio', val:199.5},
+    {nome:'Calabria', val:196.7},{nome:'Lombardia', val:195.4},{nome:'Sicilia', val:184.2},
+    {nome:'Trentino-Alto Adige', val:162.2},{nome:'Campania', val:161.2}
+  ];
+  const medaglieRv = ['🥇','🥈','🥉'];
+  document.getElementById('rv-rank-list').innerHTML = indiceVecchiaiaRegioni.map((r,i) => {
+    const medaglia = i < 3 ? medaglieRv[i] : (i+1) + '.';
+    return `<div style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.5); border:1px solid var(--glass-border); border-radius:10px; padding:10px 15px;">
+      <span style="font-size:17px; width:24px; text-align:center;">${medaglia}</span>
+      <span style="flex:1; font-size:13px; font-weight:600; color:var(--ink);">${r.nome}</span>
+      <span style="font-family:'JetBrains Mono',monospace; font-weight:800; font-size:14px; color:var(--ink);">${r.val.toFixed(1).replace('.',',')}</span>
+    </div>`;
+  }).join('');
+
+
+  const periodi = ['1899-1902','1921-1922','1930-1932','1950-1952','1960-1962','1970-1972','1981','1991','2001','2011','2014','2017','2019','2020','2022','2025'];
+
+  let sesso = 'M';
+  let eta = '0';
+  let periodoSelezionato = periodi[0];
+
+  const chipsWrap = document.getElementById('sv-periodo-chips');
+  periodi.forEach((p, i) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'chip-btn' + (i === 0 ? ' active' : '');
+    btn.textContent = p;
+    btn.addEventListener('click', () => {
+      chipsWrap.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      periodoSelezionato = p;
+      render();
+    });
+    chipsWrap.appendChild(btn);
+  });
+
+  document.querySelectorAll('#sv-sesso-toggle button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#sv-sesso-toggle button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      sesso = btn.dataset.sesso;
+      render();
+    });
+  });
+
+  document.querySelectorAll('#sv-eta-toggle button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#sv-eta-toggle button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      eta = btn.dataset.eta;
+      render();
+    });
+  });
+
+  function flashUpdate(el, testo) {
+    el.textContent = testo;
+    el.classList.remove('pop');
+    void el.offsetWidth;
+    el.classList.add('pop');
+  }
+
+  function render() {
+    document.getElementById('sv-periodo-tag').textContent = periodoSelezionato;
+
+    const valPassato = speranzaStorica[sesso][eta][periodoSelezionato];
+    const valOggi = speranzaOggi[sesso][eta];
+
+    flashUpdate(document.getElementById('sv-val-past'), valPassato.toFixed(1).replace('.',',') + ' anni');
+    flashUpdate(document.getElementById('sv-val-oggi'), valOggi.toFixed(1).replace('.',',') + ' anni');
+
+    const diff = valOggi - valPassato;
+    const etaLabel = eta === '0' ? 'alla nascita' : 'a 65 anni';
+    const sessoLabel = sesso === 'M' ? 'un uomo' : 'una donna';
+
+    document.getElementById('sv-summary').innerHTML =
+      'Nel periodo ' + periodoSelezionato + ', ' + sessoLabel + ' ' + etaLabel + ' poteva aspettarsi in media <b>' + valPassato.toFixed(1).replace('.',',') + ' anni</b> di vita residua. Oggi sono <b>' + valOggi.toFixed(1).replace('.',',') + ' anni</b> — ' + (diff >= 0 ? '<b>' + diff.toFixed(1).replace('.',',') + ' anni in più</b>' : '<b>' + Math.abs(diff).toFixed(1).replace('.',',') + ' anni in meno</b>') + '.';
+  }
+
+  render();
+});
+</script>
+
+</body>
+</html>
