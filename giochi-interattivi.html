@@ -56,7 +56,9 @@
         text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--ink);
         transition: transform .2s ease;
     }
-    .back-link:hover { transform: translateX(-4px); }
+    @media (hover: hover) and (pointer: fine) {
+        .back-link:hover { transform: translateX(-4px); }
+    }
 
     .intro-row { margin: 46px 0 40px; }
     .eyebrow { font-family: 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; font-size: 11.5px; color: var(--coral-deep); font-weight: 700; margin-bottom: 14px; }
@@ -73,7 +75,9 @@
         display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
         transition: transform .2s ease, box-shadow .2s ease;
     }
-    .game-entry:hover { transform: translateY(-3px); box-shadow: 0 30px 56px -26px rgba(23,23,27,0.28); }
+    @media (hover: hover) and (pointer: fine) {
+        .game-entry:hover { transform: translateY(-3px); box-shadow: 0 30px 56px -26px rgba(23,23,27,0.28); }
+    }
     .game-entry .ge-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: var(--coral-deep); font-weight: 700; margin-bottom: 10px; }
     .game-entry h2 { font-size: 1.3rem; margin: 0 0 8px; }
     .game-entry p { font-size: 0.9rem; color: var(--muted); margin: 0; }
@@ -114,6 +118,15 @@
                 <div class="ge-tag">6 mini-giochi</div>
                 <h2>Quanto valevano i tuoi soldi</h2>
                 <p>Sei modi diversi di scoprire come è cambiato il valore dei tuoi soldi nel tempo — dati ISTAT reali, dal 2010 a oggi.</p>
+            </div>
+            <div class="ge-cta">Gioca &rarr;</div>
+        </a>
+
+        <a href="il-ritratto-demografico-dell-italia.html" class="game-entry">
+            <div>
+                <div class="ge-tag">6 mini-giochi</div>
+                <h2>Il ritratto demografico dell'Italia</h2>
+                <p>Speranza di vita, natalità, l'equilibrio tra giovani e anziani — come è cambiata l'Italia dal 1861 a oggi, dati ISTAT alla mano.</p>
             </div>
             <div class="ge-cta">Gioca &rarr;</div>
         </a>
